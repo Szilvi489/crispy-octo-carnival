@@ -1,6 +1,10 @@
 ---
-# Feel free to add content and custom Front Matter to this file.
-# To modify the layout, see https://jekyllrb.com/docs/themes/#overriding-theme-defaults
-
-layout: home
+layout: projects/home
+stylesheets:
+  - /assets/css/base/reset.css
+  - /assets/css/base/typography.css
+  - /assets/css/base/base.css
+  - /assets/css/projects/home/hero.css
+  - /assets/css/projects/home/gallery.css
 ---
+
