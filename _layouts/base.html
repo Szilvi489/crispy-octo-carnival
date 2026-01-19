@@ -6,7 +6,7 @@
     {%- else -%}
     <link rel="stylesheet" href="/assets/main.css">
     {%- endif -%}
-    <link rel="icon" href="/assets/images/SzV32x32.png" type="image/x-icon">
+    <link rel="icon" href="/assets/images/base/logo/1pic.png" type="image/png">
     {%- include head.html -%}
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="/assets/tools/toc.js"></script>
@@ -29,6 +29,11 @@
         </div>
     </main>
     {%- include projects/home/footer.html -%}
-
+    {%- if page.scripts -%}
+    {%- for src in page.scripts -%}
+    <script src="{{ src }}" defer></script>
+    {%- endfor -%}
+    {%- endif -%}
+</div>
 </body>
 </html>
