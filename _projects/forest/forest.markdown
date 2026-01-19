@@ -1,5 +1,9 @@
 ---
-layout: base
+layout: projects/forest
+
 stylesheets:
-  - /assets/css/projects/home/forestStylesheet.css
+  - /assets/css/projects/forest/forestStylesheet.css
+
+scripts:
+  - /assets/js/projects/forest/forest.js
 ---

@@ -22,13 +22,13 @@
 </head>
 <body>
 <div class="page-container">
-    {%- include projects/home/header.html -%}
+    {%- include projects/base/header.html -%}
     <main class="site-content" aria-label="Content">
         <div class="wrapper">
             {{ content }}
         </div>
     </main>
-    {%- include projects/home/footer.html -%}
+    {%- include projects/base/footer.html -%}
     {%- if page.scripts -%}
     {%- for src in page.scripts -%}
     <script src="{{ src }}" defer></script>

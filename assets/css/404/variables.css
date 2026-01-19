@@ -1,0 +1,8 @@
+:root {
+  --error-bg: radial-gradient(circle at top left, #0b1324, #04070f 55%, #02040a);
+  --error-accent: #71c5ff;
+  --error-accent-soft: rgba(113, 197, 255, 0.2);
+  --error-surface: rgba(7, 14, 30, 0.7);
+  --error-text: #f4f7ff;
+  --error-muted: rgba(244, 247, 255, 0.6);
+}
