@@ -5,9 +5,11 @@ description: >- # this means to ignore newlines until "baseurl:"
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 github_username: Szilvi489
+icon : /assets/images/base/logo/1pic.png
+navSquareColour : '#0a0a0a'
 
 # Build settings
-theme: minima
+theme: null
 plugins:
   - jekyll-feed
 

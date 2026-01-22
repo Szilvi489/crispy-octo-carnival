@@ -1,7 +1,0 @@
----
-layout: 404.html
-title: 404 Page Not Found
-
-stylesheet: 
-  - /assets/css/404/404.css
----

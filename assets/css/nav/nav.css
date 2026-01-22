@@ -1,0 +1,82 @@
+.navShell {
+    position: relative;
+    z-index: 40;
+}
+
+.navSquare{
+  border: 0;
+    cursor: pointer;
+    display: block;
+    height: 60px;
+    padding: 0;
+}
+
+.navSquareColour {
+    background: linear-gradient(
+        to bottom,
+        var(--navSquareColour) 0%,
+        var(--navSquareColour) 40%,
+        transparent 40%,
+        transparent 60%,
+        var(--navSquareColour) 60%,
+        var(--navSquareColour) 100%
+    );
+}
+
+.navSquarePosition {
+    position: fixed;
+    right: 24px;
+    top: 18%;
+    transform: translateY(-50%);
+    width: 60px;
+    z-index: 20;
+}
+
+#navOverlay {
+    background-color: var(--navSquareColour);
+    inset: 0;
+    position: fixed;
+    transform: scale(0);
+    transform-origin: right center;
+    transition: transform 260ms ease;
+    z-index: 30;
+    pointer-events: none;
+}
+
+.nav-open #navOverlay {
+    pointer-events: auto;
+    transform: scale(1);
+}
+
+#navClose {
+    background: transparent;
+    border: 0;
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 32px;
+    line-height: 1;
+    padding: 12px;
+    position: absolute;
+    right: 16px;
+    top: 16px;
+}
+
+.navMenu {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    left: 10%;
+    position: absolute;
+    top: 25%;
+}
+
+.navMenu a {
+    color: #ffffff;
+    font-size: 28px;
+    text-decoration: none;
+}
+
+.navMenu a:hover,
+.navMenu a:focus-visible {
+    text-decoration: underline;
+}

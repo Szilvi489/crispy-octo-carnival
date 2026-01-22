@@ -1,0 +1,11 @@
+<div class="navShell" style="--navSquareColour: {{ page.navSquareColour | default: site.navSquareColour }};">
+    <button class="navSquare navSquareColour navSquarePosition" type="button" aria-controls="navOverlay" aria-expanded="false"></button>
+    <div id="navOverlay" aria-hidden="true">
+        <button id="navClose" type="button" aria-label="Close menu">&times;</button>
+        <nav class="navMenu" aria-label="Site">
+            <a href="/projects/">Projects</a>
+            <a href="/about/">About</a>
+            <a href="/contact/">Contact</a>
+        </nav>
+    </div>
+</div>
