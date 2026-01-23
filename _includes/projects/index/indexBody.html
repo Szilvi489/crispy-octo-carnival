@@ -1,5 +1,17 @@
-<section>
-    <div>
+<section class="index-gallery">
+    <div class="index-gallery_grid">
+        {% assign index_sources = site.projects %}
+        {% for page in index_sources %}
+            {% if page.indexImage %}
+                {% for image in page.indexImage %}
+                    <figure class="index-gallery_item">
+                        {% if page.title %}
+                        <img src="{{ image }}" alt="{{ page.title }}">
+                        {% endif %}
+                    </figure>
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
 
     </div>
 </section>

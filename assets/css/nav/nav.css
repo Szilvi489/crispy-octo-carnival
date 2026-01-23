@@ -29,7 +29,7 @@
     top: 18%;
     transform: translateY(-50%);
     width: 60px;
-    z-index: 20;
+    z-index: 10;
 }
 
 #navOverlay {
@@ -37,7 +37,7 @@
     inset: 0;
     position: fixed;
     transform: scale(0);
-    transform-origin: right center;
+    transform-origin: calc(100% - 54px) 18%;
     transition: transform 260ms ease;
     z-index: 30;
     pointer-events: none;
@@ -58,7 +58,7 @@
     padding: 12px;
     position: absolute;
     right: 16px;
-    top: 16px;
+    top: 40px;
 }
 
 .navMenu {
