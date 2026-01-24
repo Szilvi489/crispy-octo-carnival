@@ -103,10 +103,17 @@ function setupInfiniteIndexGallery() {
 
   const onScroll = () => {
     if (isAppending) return;
-    const buffer = window.innerHeight * 1.5;
+    const bufferWidth = window.innerWidth * 1.5;
+    const bufferHeight = window.innerHeight * 1.5;
+
+    const right = window.scrollX + window.innerWidth;
     const bottom = window.scrollY + window.innerHeight;
+
+    const pageWidth = document.documentElement.scrollWidth;
     const pageHeight = document.documentElement.scrollHeight;
-    if (bottom + buffer < pageHeight) return;
+
+    if (right + bufferWidth < pageWidth) return;
+    if (bottom + bufferHeight < pageHeight) return;
 
     isAppending = true;
     requestAnimationFrame(() => {
