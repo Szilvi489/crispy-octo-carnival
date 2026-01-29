@@ -78,7 +78,8 @@
 
 .navMenu a:hover,
 .navMenu a:focus-visible {
-    text-decoration: underline;
+    color: var(--navSquareColour);
+    filter: invert(1);
 }
 
 .navHeartButton {
