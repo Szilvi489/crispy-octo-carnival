@@ -3,10 +3,10 @@
     <div class="imageOfTheDayContent">
         <h2 class="imageOfTheDayTitle">Image of the Day</h2>
         <div class="imageOfTheDayImageWrapper">
-            {% if site.imageOfTheDay %}
-            <img class="imageOfTheDayImage" src="{{ site.imageOfTheDay.url }}" alt="{{ site.imageOfTheDay.alt }}">
+            {% if site.data.imageOfTheDay %}
+            <img class="imageOfTheDayImage" src="{{ site.data.imageOfTheDay.url }}" alt="{{ site.data.imageOfTheDay.alt }}">
             {% else %}
-            <p class="imageOfTheDayFallback">Set site.imageOfTheDay in _config.yml.</p>
+            <p class="imageOfTheDayFallback">Set _data/imageOfTheDay.yml.</p>
             {% endif %}
         </div>
     </div>

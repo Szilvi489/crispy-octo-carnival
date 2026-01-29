@@ -47,7 +47,7 @@
             return;
         }
 
-        closeMenu();
+        //closeMenu();
         root.classList.add("image-of-the-day-open");
         imageOfTheDayOverlay.setAttribute("aria-hidden", "false");
     };
