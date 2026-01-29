@@ -6,7 +6,7 @@
                 {% for image in page.indexImage %}
                     <figure class="index-gallery_item">
                         {% if page.title %}
-                        <img src="{{ image }}" alt="{{ page.title }}">
+                        <img src="{{ image }}" alt="{{ page.title }}" loading="lazy">
                         {% endif %}
                     </figure>
                 {% endfor %}

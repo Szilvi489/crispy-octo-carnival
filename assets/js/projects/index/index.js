@@ -30,6 +30,7 @@ function resizeIndexGallery() {
 
 function assignIndexGallerySizes(items) {
   const sizeClasses = ["size-s", "size-m", "size-l"];
+
   items.forEach((item) => {
     item.classList.remove("size-s", "size-m", "size-l");
     const size =
@@ -45,7 +46,6 @@ function setupInfiniteIndexGallery() {
   const baseItems = Array.from(
     grid.querySelectorAll(".index-gallery_item")
   );
-  console.log(baseItems.length);
   if (!baseItems.length) return;
 
   const sources = baseItems
@@ -58,8 +58,8 @@ function setupInfiniteIndexGallery() {
 
   if (!sources.length) return;
 
-  assignIndexGallerySizes(baseItems);
-  resizeIndexGallery();
+  const poolSize = 18;
+  const recycleBatchSize = 5;
 
   let lastSrc = sources[0].src;
   let isAppending = false;
@@ -87,17 +87,43 @@ function setupInfiniteIndexGallery() {
     return pick;
   };
 
-  const appendBatch = () => {
-    const batchSize = Math.max(6, sources.length);
-    const newItems = [];
+  while (baseItems.length < poolSize) {
+    const item = createItem(getRandomSource());
+    baseItems.push(item);
+    grid.appendChild(item);
+  }
+
+  assignIndexGallerySizes(baseItems);
+  resizeIndexGallery();
+
+  const recycleBatch = () => {
+    const currentItems = Array.from(
+      grid.querySelectorAll(".index-gallery_item")
+    );
+    if (!currentItems.length) return;
+
+    const batchSize = Math.min(recycleBatchSize, currentItems.length);
+    const movedItems = [];
 
     for (let i = 0; i < batchSize; i += 1) {
-      const item = createItem(getRandomSource());
-      newItems.push(item);
-      grid.appendChild(item);
+      const item = currentItems[i];
+      const img = item.querySelector("img");
+      if (!img) continue;
+
+      const next = getRandomSource();
+      img.src = next.src;
+      img.alt = next.alt;
+      img.addEventListener(
+        "load",
+        () => requestAnimationFrame(resizeIndexGallery),
+        { once: true }
+      );
+
+      movedItems.push(item);
     }
 
-    assignIndexGallerySizes(newItems);
+    assignIndexGallerySizes(movedItems);
+    movedItems.forEach((item) => grid.appendChild(item));
     resizeIndexGallery();
   };
 
@@ -117,7 +143,7 @@ function setupInfiniteIndexGallery() {
 
     isAppending = true;
     requestAnimationFrame(() => {
-      appendBatch();
+      recycleBatch();
       isAppending = false;
     });
   };
@@ -125,8 +151,50 @@ function setupInfiniteIndexGallery() {
   window.addEventListener("scroll", onScroll, { passive: true });
 }
 
+function setupIndexCursor() {
+  const supportsHover = window.matchMedia(
+    "(hover: hover) and (pointer: fine)"
+  ).matches;
+  if (!supportsHover) return;
+
+  const grid = document.querySelector(".index-gallery_grid");
+  if (!grid) return;
+
+  const cursor = document.createElement("div");
+  cursor.className = "cursor-circle";
+  document.body.appendChild(cursor);
+
+  const randomColor = () => {
+    const hue = Math.floor(Math.random() * 360);
+    return `hsla(${hue}, 70%, 55%, 0.9)`;
+  };
+
+  document.addEventListener("mousemove", (event) => {
+    cursor.style.left = `${event.clientX}px`;
+    cursor.style.top = `${event.clientY}px`;
+  });
+
+  grid.addEventListener("mouseover", (event) => {
+    const target = event.target.closest(".index-gallery_item img");
+    if (!target) return;
+    cursor.style.backgroundColor = randomColor();
+    cursor.classList.add("is-visible");
+    document.body.classList.add("cursor-hidden");
+  });
+
+  grid.addEventListener("mouseout", (event) => {
+    const target = event.target.closest(".index-gallery_item img");
+    if (!target) return;
+    const related = event.relatedTarget;
+    if (related && related.closest(".index-gallery_item img")) return;
+    cursor.classList.remove("is-visible");
+    document.body.classList.remove("cursor-hidden");
+  });
+}
+
 window.addEventListener("load", () => {
   setupInfiniteIndexGallery();
+  setupIndexCursor();
 });
 window.addEventListener("resize", () =>
   requestAnimationFrame(resizeIndexGallery)
