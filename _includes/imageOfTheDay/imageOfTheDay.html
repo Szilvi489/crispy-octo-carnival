@@ -1,7 +1,7 @@
 <div class="imageOfTheDayOverlay" id="imageOfTheDayOverlay" aria-hidden="true">
-    <button class="imageOfTheDayClose" type="button" aria-label="Close image of the day">&times;</button>
+    <button class="imageOfTheDayClose" type="button" style="--navFontColour: {{ page.navFontColour | default: site.navFontColour }};" aria-label="Close image of the day">&times;</button>
     <div class="imageOfTheDayContent">
-        <h2 class="imageOfTheDayTitle">Image of the Day</h2>
+        <h2 class="imageOfTheDayTitle" style="--navFontColour: {{ page.navFontColour | default: site.navFontColour }};">Image of the Day</h2>
         <div class="imageOfTheDayImageWrapper">
             {% if site.data.imageOfTheDay %}
             <img class="imageOfTheDayImage" src="{{ site.data.imageOfTheDay.url }}" alt="{{ site.data.imageOfTheDay.alt }}">

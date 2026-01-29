@@ -22,24 +22,27 @@
 }
 
 .imageOfTheDayContent {
-    background: #ffffff;
-    border-radius: 16px;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+    display: flex;
+    gap: 20px;
     max-width: min(720px, 92vw);
-    padding: 32px;
     position: relative;
-    text-align: center;
+    text-align: left;
 }
 
 .imageOfTheDayTitle {
-    color: #111111;
-    font-size: 28px;
-    margin: 0 0 16px;
+    color: var(--navFontColour);
+    font-size: 14px;
+    margin: 0;
+    order: 2;
+    transform: rotate(90deg);
+    transform-origin: bottom left;
+    white-space: nowrap;
 }
 
 .imageOfTheDayImageWrapper {
     display: flex;
     justify-content: center;
+    order: 1;
 }
 
 .imageOfTheDayImage {
@@ -50,10 +53,8 @@
 }
 
 .imageOfTheDayClose {
-
     border: 0;
-
-    color: #ffffff;
+    color: var(--navFontColour);
     cursor: pointer;
     font-size: 50px;
     height: 44px;
@@ -72,4 +73,17 @@
 .imageOfTheDayFallback {
     color: #444444;
     margin: 0;
+}
+
+@media (max-width: 640px) {
+    .imageOfTheDayContent {
+        align-items: center;
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .imageOfTheDayTitle {
+        order: 0;
+        transform: none;
+    }
 }
