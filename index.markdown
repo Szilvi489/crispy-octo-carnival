@@ -11,7 +11,9 @@ description : "Home Description"
 
 title : "index"
 
-navSquareColour: "#d10000"
+navSquareColour: "#0012b6"
+
+navFontColour: "#ffffff"
 
 indexImage:
   - /assets/images/projects/index/2pic.png

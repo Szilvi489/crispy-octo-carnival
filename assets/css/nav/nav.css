@@ -51,7 +51,7 @@
 #navClose {
     background: transparent;
     border: 0;
-    color: #ffffff;
+    color: var(--navFontColour);
     cursor: pointer;
     font-size: 32px;
     line-height: 1;
@@ -71,12 +71,44 @@
 }
 
 .navMenu a {
-    color: #ffffff;
+    color: var(--navFontColour);
     font-size: 28px;
     text-decoration: none;
 }
 
 .navMenu a:hover,
 .navMenu a:focus-visible {
-    text-decoration: underline;
+    color: var(--navSquareColour);
+    filter: invert(1);
+}
+
+.navHeartButton {
+    align-items: center;
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    cursor: pointer;
+    display: inline-flex;
+    height: 32px;
+    justify-content: center;
+    margin-top: 12px;
+    padding: 0;
+    width: 32px;
+}
+
+.navHeartButton:hover .navHeartIcon {
+    fill: var(--navSquareColour);
+    filter: invert(1);
+}
+
+.navHeartButton:focus-visible {
+    outline: 3px solid var(--navFontColour);
+    outline-offset: 4px;
+}
+
+.navHeartIcon {
+    fill: var(--navFontColour);
+    filter: none;
+    height: 22px;
+    width: 22px;
 }

@@ -7,6 +7,7 @@ url: "" # the base hostname & protocol for your site, e.g. http://example.com
 github_username: Szilvi489
 icon : /assets/images/base/logo/1pic.png
 navSquareColour : '#0a0a0a'
+navFontColour : '#ff0000'
 
 # Build settings
 theme: null
