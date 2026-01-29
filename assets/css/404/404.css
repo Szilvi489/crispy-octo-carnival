@@ -1,5 +1,16 @@
 @import url("/assets/css/404/variables.css");
 
+body,
+.page-container,
+.site-content,
+.wrapper {
+  background: var(--error-bg);
+}
+
+.wrapper {
+  padding: 0;
+}
+
 /* 1) Page canvas */
 .error-404 {
   width: 100%;
