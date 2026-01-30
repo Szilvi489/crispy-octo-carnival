@@ -11,7 +11,10 @@ scripts:
 
 permalink: /projects/forest/
 
+gallery_images:
+- /assets/images/projects/forest/gallery_images/
+
 indexImage:
-  - /assets/images/projects/forest/3pic.png
+  - /assets/images/projects/forest/gallery_images/3pic.png
   - /assets/images/projects/forest/4pic.png
 ---
