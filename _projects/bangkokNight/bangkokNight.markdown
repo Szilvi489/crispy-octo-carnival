@@ -1,6 +1,7 @@
 ---
 layout: projects/bangkokNight
 title: Bangkok Night
+description: Streetphotography in Bangkok
 permalink: /projects/bangkok-night/
 stylesheets: 
   - /assets/css/projects/bangkokNight/bangkokNightStylesheet.css

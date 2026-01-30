@@ -1,5 +1,5 @@
 ---
-layout: base
+layout: contactPage
 title: Contact
 permalink: /contactPage/
 

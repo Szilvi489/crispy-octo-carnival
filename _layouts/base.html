@@ -37,14 +37,14 @@
 <body>
 <div class="page-container">
     {%- unless page.hide_nav -%}
-    {%- include projects/base/header.html -%}
+    {%- include base/header.html -%}
     {%- endunless -%}
     <main class="site-content" aria-label="Content">
         <div class="wrapper">
             {{ content }}
         </div>
     </main>
-    {%- include projects/base/footer.html -%}
+    {%- include base/footer.html -%}
     <script src="/assets/js/base/base.js" defer></script>
     <script src="/assets/js/nav/nav.js" defer></script>
     {%- if page.scripts -%}

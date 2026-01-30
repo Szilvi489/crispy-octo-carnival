@@ -1,5 +1,5 @@
 ---
-layout: base
+layout: projectsPage
 
 title: Projects Page
 
@@ -12,6 +12,6 @@ scripts:
 
 description: "A list of every project"
 
-navSquareColour: "#ff0101"
+navSquareColour: "#001b91"
 navFontColour: "#f8ff93"
 ---
