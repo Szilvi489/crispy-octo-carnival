@@ -1,7 +1,10 @@
 ---
 layout: base
 title: Contact
-permalink: /contact/
+permalink: /contactPage/
+
+stylesheets:
+  - /assets/css/contactPage/contactPageStylesheet.css
 ---
 
 <section class="page">

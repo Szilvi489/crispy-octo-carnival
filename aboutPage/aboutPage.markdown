@@ -1,7 +1,12 @@
 ---
 layout: base
+
 title: About
-permalink: /about/
+
+permalink: /aboutPage/
+
+stylesheets:
+  - /assets/css/aboutPage/aboutPageStylesheet.css
 ---
 
 <section class="page">
