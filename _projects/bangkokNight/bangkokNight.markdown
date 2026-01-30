@@ -8,7 +8,8 @@ stylesheets:
 scripts:
   - /assets/js/projects/index/index.js
 hero_image: /assets/images/projects/bangkokNight/hero.jpg
-gallery_images: /assets/images/projects/bangkokNight/gallery_images/
+gallery_images:
+  - /assets/images/projects/bangkokNight/gallery_images/
 
 indexImage:
   - /assets/images/projects/bangkokNight/gallery_images/5pic.png

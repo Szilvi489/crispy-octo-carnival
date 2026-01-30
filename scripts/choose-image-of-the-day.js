@@ -14,7 +14,7 @@ const collectImages = (dir, collected = []) => {
     if (entry.isDirectory()) {
       collectImages(fullPath, collected);
     } else if (entry.isFile() && isImage(entry.name)) {
-      const relative = `/${path.relative(rootDir, fullPath).replace(/\\\\/g, "/gallery_images/")}`;
+      const relative = `/${path.relative(rootDir, fullPath).replace(/\\/g, "/")}`;
       collected.push(relative);
     }
   }

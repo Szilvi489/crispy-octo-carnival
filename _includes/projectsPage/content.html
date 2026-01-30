@@ -7,7 +7,13 @@
             </h3>
             <p>{{ project.description }}</p>
             <div class="project-card-images-flexbox">
-                
+                {% assign gallery_folder = project.gallery_images | first %}
+                {% assign gallery_files = site.static_files | where_exp: "file", "file.path contains gallery_folder" %}
+                {% for file in gallery_files %}
+                {% if file.extname == ".png" or file.extname == ".jpg" or file.extname == ".jpeg" or file.extname == ".webp" %}
+                <img src="{{ file.path }}" alt="Gallery image for {{ project.title }}">
+                {% endif %}
+                {% endfor %}
             </div>
         </div>
         {% endfor %}

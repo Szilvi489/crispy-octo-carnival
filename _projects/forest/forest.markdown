@@ -16,5 +16,5 @@ gallery_images:
 
 indexImage:
   - /assets/images/projects/forest/gallery_images/3pic.png
-  - /assets/images/projects/forest/4pic.png
+  - /assets/images/projects/forest/gallery_images/4pic.png
 ---
