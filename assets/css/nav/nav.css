@@ -70,6 +70,13 @@
     top: 25%;
 }
 
+.navIconRow {
+    display: flex;
+    gap: 12px;
+    margin-top: 8px;
+    align-items: center;
+}
+
 .navMenu a {
     color: var(--navFontColour);
     font-size: 28px;
@@ -87,6 +94,7 @@
     background: transparent;
     border: 0;
     border-radius: 0;
+    color: var(--navFontColour);
     cursor: pointer;
     display: inline-flex;
     height: 32px;
@@ -96,8 +104,8 @@
     width: 32px;
 }
 
-.navHeartButton:hover .navHeartIcon {
-    fill: var(--navSquareColour);
+.navHeartButton:hover {
+    color: var(--navSquareColour);
     filter: invert(1);
 }
 
@@ -106,9 +114,37 @@
     outline-offset: 4px;
 }
 
-.navHeartIcon {
-    fill: var(--navFontColour);
-    filter: none;
-    height: 22px;
-    width: 22px;
+.navHomeButton {
+    align-items: center;
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    color: var(--navFontColour);
+    cursor: pointer;
+    display: inline-flex;
+    height: 32px;
+    justify-content: center;
+    padding: 0;
+    width: 32px;
+}
+
+.navHomeButton:hover {
+    color: var(--navSquareColour);
+    filter: invert(1);
+}
+
+.navHomeButton:focus-visible {
+    outline: 3px solid var(--navFontColour);
+    outline-offset: 4px;
+}
+
+.navIcon {
+    color: currentColor;
+    display: inline-flex;
+    font-size: 22px;
+    line-height: 1;
+}
+
+.navHomeIcon {
+    transform: translateY(5px);
 }

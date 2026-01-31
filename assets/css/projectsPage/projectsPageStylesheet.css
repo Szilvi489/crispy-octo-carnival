@@ -1,0 +1,46 @@
+.project-page-section {
+   background: color-mix(in srgb, var(--navSquareColour) 20%, var(--navFontColour) 80%);
+min-height: 100vh;
+  width: 100%;
+
+}
+
+.projects-page-flexbox {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 90px;
+}
+
+.project-card-flexbox {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+    padding: 5px;
+}
+
+.project-card-title a,
+.project-card-flexbox p {
+  color: color-mix(in srgb, var(--navFontColour) 20%, var(--navSquareColour) 80%);
+  text-decoration: none;
+}
+
+.project-card-title {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.project-card-images-flexbox {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 12px;
+}
+
+.project-card-images-flexbox img {
+    height: 50px;
+    width: auto;
+    object-fit: cover;
+}
