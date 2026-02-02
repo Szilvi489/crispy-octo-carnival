@@ -9,8 +9,8 @@ stylesheets:
 scripts:
   - /assets/js/projects/mountains/mountains.js
 
-gallery_images:
-- /assets/images/projects/mountains/gallery_images/
+thumbnails:
+- /assets/images/projects/mountains/thumbnails/
 
 permalink: /projects/mountains/
 ---

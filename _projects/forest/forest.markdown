@@ -11,8 +11,8 @@ scripts:
 
 permalink: /projects/forest/
 
-gallery_images:
-- /assets/images/projects/forest/gallery_images/
+thumbnails:
+- /assets/images/projects/forest/thumbnails/
 
 indexImage:
   - /assets/images/projects/forest/gallery_images/3pic.png
