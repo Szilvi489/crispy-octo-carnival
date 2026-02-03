@@ -13,8 +13,9 @@ thumbnails:
   - /assets/images/projects/bangkokNight/thumbnails/
 
 indexImage:
-  - /assets/images/projects/bangkokNight/gallery_images/5pic.png
-  - /assets/images/projects/bangkokNight/gallery_images/2pic.png
-  - /assets/images/projects/bangkokNight/gallery_images/6pic.png
-  - /assets/images/projects/bangkokNight/gallery_images/7pic.png
+  - /assets/images/projects/bangkokNight/gallery_images/medium_images/5pic.png
+  - /assets/images/projects/bangkokNight/gallery_images/medium_images/2pic.png
+  - /assets/images/projects/bangkokNight/gallery_images/medium_images/6pic.png
+  - /assets/images/projects/bangkokNight/gallery_images/small_images/7pic.png
+  
 ---

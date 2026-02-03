@@ -1,12 +1,14 @@
 <section class="index-gallery">
     <div class="index-gallery_grid">
         {% assign index_sources = site.projects %}
-        {% for page in index_sources %}
-            {% if page.indexImage %}
-                {% for image in page.indexImage %}
+        {% for project in index_sources %}
+            {% if project.indexImage %}
+                {% for image in project.indexImage %}
                     <figure class="index-gallery_item">
-                        {% if page.title %}
-                        <img src="{{ image }}" alt="{{ page.title }}" loading="lazy">
+                        {% if project.title %}
+                        <a href="{{ project.permalink}}">
+                             <img src="{{ image }}" alt="{{ project.title }}" loading="lazy" decoding="async" tooltip="{{ project.title }}">
+                        </a>
                         {% endif %}
                     </figure>
                 {% endfor %}

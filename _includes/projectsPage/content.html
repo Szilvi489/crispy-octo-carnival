@@ -11,7 +11,7 @@
                 {% for file in thumbnails_files %}
                 {% if file.extname == ".png" or file.extname == ".jpg" or file.extname == ".jpeg" or file.extname == ".webp" %}
                  <a href="{{ project.permalink }}">
-                    <img loading="lazy" decoding="async" src="{{ file.path }}" alt="Gallery image for {{ project.title }}">
+                    <img src="{{ file.path }}" alt="Gallery image for {{ project.title }}" loading="lazy" decoding="async">
                 </a>
                 {% endif %}
                 {% endfor %}
