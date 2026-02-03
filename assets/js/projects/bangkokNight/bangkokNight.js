@@ -29,29 +29,13 @@
         medium: Array.isArray(data.medium) ? data.medium : [],
         large: Array.isArray(data.large) ? data.large : []
     };
-    const layers = {
-        back: Array.isArray(data.layerBack) ? data.layerBack : [],
-        middle: Array.isArray(data.layerMiddle) ? data.layerMiddle : [],
-        front: Array.isArray(data.layerFront) ? data.layerFront : []
-    };
-
     const sizePriority = ["large", "medium", "small"];
-    const layerPriority = ["front", "middle", "back"];
     const sizeMap = new Map();
-    const layerMap = new Map();
 
-    sizePriority.forEach((key) => {
-        sizes[key].forEach((path) => {
+    sizePriority.forEach((size) => {
+        sizes[size].forEach((path) => {
             if (!sizeMap.has(path)) {
-                sizeMap.set(path, key);
-            }
-        });
-    });
-
-    layerPriority.forEach((key) => {
-        layers[key].forEach((path) => {
-            if (!layerMap.has(path)) {
-                layerMap.set(path, key);
+                sizeMap.set(path, size);
             }
         });
     });
@@ -81,24 +65,27 @@
 
     const items = all.map((path) => {
         const size = sizeMap.get(path) || chooseByHash(path, sizeOrder, "size");
-        const layer = layerMap.get(path) || chooseByHash(path, layerOrder, "layer");
+        const layer = chooseByHash(path, layerOrder, "layer");
         return { path, size, layer };
     });
 
-    let x = 80;
+    let currentHorizontalPosition = 80;
+    const parallaxItems = [];
     items.forEach((item, index) => {
         const baseWidth = sizeDimensions[item.size] || sizeDimensions.medium;
-        const jitter = (hashToUnit(`${item.path}-x`) - 0.5) * 80;
+        const xjitter = (hashToUnit(`${item.path}-x`) - 0.5) * 80;
         const depthOffset = item.layer === "back" ? 50 : item.layer === "middle" ? 20 : -10;
         const yBase = item.layer === "back" ? 80 : item.layer === "middle" ? 140 : 200;
         const yJitter = (hashToUnit(`${item.path}-y`) - 0.5) * 90;
         const y = Math.max(30, yBase + yJitter + depthOffset);
+        const depth = item.layer === "front" ? 1 : item.layer === "middle" ? 0.6 : 0.35;
 
         const wrapper = document.createElement("div");
         wrapper.className = `carousel-item size-${item.size}`;
-        wrapper.style.setProperty("--x", `${x + jitter}px`);
+        wrapper.style.setProperty("--x", `${currentHorizontalPosition + xjitter}px`);
         wrapper.style.setProperty("--y", `${y}px`);
         wrapper.style.setProperty("--z", item.layer === "front" ? "3" : item.layer === "middle" ? "2" : "1");
+        wrapper.dataset.depth = `${depth}`;
 
         const img = new Image();
         img.src = item.path;
@@ -106,30 +93,48 @@
 
         wrapper.appendChild(img);
         layerEls[item.layer].appendChild(wrapper);
+        parallaxItems.push(wrapper);
 
-        const overlap = index % 2 === 0 ? 0.6 : 0.7;
-        x += baseWidth * overlap;
+        const overlap = index % 2 === 0 ? 0.5 : 0.6;
+        currentHorizontalPosition += baseWidth * overlap;
     });
 
-    track.style.width = `${Math.max(1200, x + 200)}px`;
+    track.style.width = `${Math.max(1200, currentHorizontalPosition + 200)}px`;
 
-    let rafId = null;
-    let pendingDelta = 0;
+    let parallaxRafId = null;
+    const updateParallax = () => {
+        parallaxRafId = null;
+        const scrollLeft = carousel.scrollLeft;
+        parallaxItems.forEach((el) => {
+            const depth = parseFloat(el.dataset.depth || "0");
+            const shift = -scrollLeft * depth * 0.18;
+            el.style.setProperty("--parallax-x", `${shift}px`);
+        });
+    };
+
+    carousel.addEventListener("scroll", () => {
+        if (!parallaxRafId) {
+            parallaxRafId = requestAnimationFrame(updateParallax);
+        }
+    });
+
+    let scrollRafId = null;
+    let targetScroll = 0;
 
     const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
     const getMaxScroll = () => Math.max(0, carousel.scrollWidth - carousel.clientWidth);
 
-    const applyScroll = () => {
-        if (pendingDelta === 0) {
-            rafId = null;
-            return;
-        }
-
-        const maxScroll = getMaxScroll();
-        const next = clamp(carousel.scrollLeft + pendingDelta, 0, maxScroll);
+    const animateScroll = () => {
+        const current = carousel.scrollLeft;
+        const next = current + (targetScroll - current) * 0.14;
         carousel.scrollLeft = next;
-        pendingDelta = 0;
-        rafId = requestAnimationFrame(applyScroll);
+
+        if (Math.abs(targetScroll - next) > 0.5) {
+            scrollRafId = requestAnimationFrame(animateScroll);
+        } else {
+            carousel.scrollLeft = targetScroll;
+            scrollRafId = null;
+        }
     };
 
     const onWheel = (event) => {
@@ -138,16 +143,16 @@
         }
 
         event.preventDefault();
-        const lineScale = 24;
+        const lineScale = 32;
         const pageScale = carousel.clientWidth;
         const modeScale = event.deltaMode === 1 ? lineScale : event.deltaMode === 2 ? pageScale : 1;
         const delta = (event.deltaY !== 0 ? event.deltaY : event.deltaX) * modeScale;
-        pendingDelta += delta;
+        targetScroll = clamp((scrollRafId ? targetScroll : carousel.scrollLeft) + delta, 0, getMaxScroll());
 
-        if (!rafId) {
-            rafId = requestAnimationFrame(applyScroll);
+        if (!scrollRafId) {
+            scrollRafId = requestAnimationFrame(animateScroll);
         }
     };
 
-    window.addEventListener("wheel", onWheel, { passive: false });
+    carousel.addEventListener("wheel", onWheel, { passive: false });
 })();
