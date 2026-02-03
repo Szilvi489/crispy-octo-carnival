@@ -1,7 +1,7 @@
 .project-page-section {
-   background: color-mix(in srgb, var(--navSquareColour) 20%, var(--navFontColour) 80%);
-min-height: 100vh;
-  width: 100%;
+    background: var(--backgroundColour);
+    min-height: 100vh;
+    width: 100%;
 
 }
 
@@ -10,7 +10,7 @@ min-height: 100vh;
     flex-direction: column;
     flex-wrap: wrap;
     justify-content: center;
-    padding: 90px;
+    padding: 110px;
 }
 
 .project-card-flexbox {
@@ -19,17 +19,34 @@ min-height: 100vh;
     align-items: center;
     gap: 16px;
     padding: 5px;
+    width: 100%;
+    position: relative;
 }
 
-.project-card-title a,
+.project-card-title-overlay a,
 .project-card-flexbox p {
-  color: color-mix(in srgb, var(--navFontColour) 20%, var(--navSquareColour) 80%);
+    font-family: "Oswald", sans-serif;
+  color: var(--fontColour);
   text-decoration: none;
 }
 
-.project-card-title {
-    font-size: 18px;
-    font-weight: bold;
+.project-card-title-overlay {
+    position: fixed;
+    left: 24px;
+    bottom: 24px;
+    z-index: 3;
+    font-size: clamp(2.5rem, 8vw, 10rem);
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(8px);
+    transition: opacity 180ms ease, transform 180ms ease;
+}
+
+.project-card-flexbox:hover .project-card-title-overlay {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .project-card-images-flexbox {
@@ -37,10 +54,41 @@ min-height: 100vh;
     flex-direction: row;
     flex-wrap: nowrap;
     gap: 12px;
+    justify-content: flex-start;
+    flex: 1;
+    position: relative;
+    z-index: 1;
 }
 
 .project-card-images-flexbox img {
-    height: 50px;
+    height: clamp(3rem, 10vw, 7rem);
     width: auto;
     object-fit: cover;
+}
+
+@media (max-width: 600px) {
+    .project-card-title-overlay {
+        visibility: hidden;
+    }
+
+    .project-card-images-flexbox img{
+        height: 20vw;
+    }
+
+    .project-card-description{
+        display: none;
+    }
+
+    .project-card-title{
+        overflow: visible;
+        display: none;
+    }
+
+    .projects-page-flexbox {
+        padding: 10px;
+    }
+
+    .project-card-images-flexbox a:nth-child(n + 4) {
+        display: none;
+    }
 }

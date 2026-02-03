@@ -148,3 +148,9 @@
 .navHomeIcon {
     transform: translateY(5px);
 }
+
+@media (max-width: 600px) {
+  .projects-page-menuitem{
+    visibility: hidden;
+  }
+}

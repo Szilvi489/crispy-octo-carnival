@@ -1,17 +1,18 @@
-<section class="project-page-section" style="--navSquareColour: {{ page.navSquareColour | default: site.navSquareColour }}; --navFontColour: {{ page.navFontColour | default: site.navFontColour }};">
+<section class="project-page-section" style="--backgroundColour: {{ page.backgroundColour | default: site.backgroundColour }}; --fontColour: {{ page.fontColour | default: site.fontColour }};">
     <div class="projects-page-flexbox">
         {% for project in site.projects %}
         <div class="project-card-flexbox">
-            <h3 class="project-card-title">
-                <a href="{{project.permalink}}">{{ project.title }}</a>
-            </h3>
-            <p>{{ project.description }}</p>
+            <div class="project-card-title-overlay">
+                <a href="{{ project.permalink }}">{{ project.title }}</a>
+            </div>
             <div class="project-card-images-flexbox">
                 {% assign thumbnails_folder = project.thumbnails | first %}
                 {% assign thumbnails_files = site.static_files | where_exp: "file", "file.path contains thumbnails_folder" %}
                 {% for file in thumbnails_files %}
                 {% if file.extname == ".png" or file.extname == ".jpg" or file.extname == ".jpeg" or file.extname == ".webp" %}
-                <img loading="lazy" decoding="async" src="{{ file.path }}" alt="Gallery image for {{ project.title }}">
+                 <a href="{{ project.permalink }}">
+                    <img loading="lazy" decoding="async" src="{{ file.path }}" alt="Gallery image for {{ project.title }}">
+                </a>
                 {% endif %}
                 {% endfor %}
             </div>
