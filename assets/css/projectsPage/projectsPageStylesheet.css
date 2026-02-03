@@ -5,6 +5,12 @@
 
 }
 
+.project-content{
+    background: var(--backgroundColour);
+    min-height: 100vh;
+    width: 100%;
+}
+
 .projects-page-flexbox {
     display: flex;
     flex-direction: column;

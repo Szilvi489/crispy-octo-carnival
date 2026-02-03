@@ -1,6 +1,22 @@
-﻿<section class="project">
+<section class="project-page-section">
     <div class="project-content" style="--backgroundColour: {{ page.backgroundColour | default: site.backgroundColour }}; --fontColour: {{ page.fontColour | default: site.fontColour }};">
-        
+        {%- assign gallery_path = "/assets/images/projects/bangkokNight/gallery_images/" -%}
+        {%- assign gallery_files = site.static_files | where_exp: "f", "f.path contains gallery_path" -%}
+        {%- assign gallery_list = gallery_files | map: "path" | sort -%}
+        <div class="image-carousel" aria-label="Bangkok Night gallery">
+            <div class="image-track">
+                <div class="layer layer-back"></div>
+                <div class="layer layer-middle"></div>
+                <div class="layer layer-front"></div>
+            </div>
+        </div>
+        <script id="bn-gallery-data" type="application/json">
+        {
+          "all": {{ gallery_list | jsonify }},
+          "small": {% if page.smallImages %}{{ page.smallImages | jsonify }}{% else %}[]{% endif %},
+          "medium": {% if page.mediumImages %}{{ page.mediumImages | jsonify }}{% else %}[]{% endif %},
+          "large": {% if page.largeImages %}{{ page.largeImages | jsonify }}{% else %}[]{% endif %}
+        }
+        </script>
     </div>
 </section>
-
