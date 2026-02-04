@@ -1,0 +1,15 @@
+- path: /assets/images/projects/forest/gallery_images/double_expo_images/01pic.png
+  group: 1
+  position: first
+
+- path: /assets/images/projects/forest/gallery_images/double_expo_images/04pic.png
+  group: 1
+  position: second
+
+- path: /assets/images/projects/forest/gallery_images/double_expo_images/02pic.png
+  group: 2
+  position: first
+
+- path: /assets/images/projects/forest/gallery_images/double_expo_images/05pic.png
+  group: 2
+  position: second

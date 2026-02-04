@@ -167,6 +167,8 @@
         parallaxRafId = null;
         const scrollLeft = carousel.scrollLeft;
         parallaxItems.forEach((el) => {
+            console.log(el.dataset)
+            console.log(el.dataset.depth);
             const depth = parseFloat(el.dataset.depth || "0");
             const shift = -scrollLeft * depth * 0.38;
             el.style.setProperty("--parallax-x", `${shift}px`);
