@@ -24,6 +24,7 @@
     }
 
     const all = Array.isArray(data.all) ? data.all : [];
+    const layout = Array.isArray(data.layout) ? data.layout : [];
     const sizes = {
         small: Array.isArray(data.small) ? data.small : [],
         medium: Array.isArray(data.medium) ? data.medium : [],
@@ -63,26 +64,56 @@
         return options[Math.min(index, options.length - 1)];
     };
 
-    const items = all.map((path) => {
-        const size = sizeMap.get(path) || chooseByHash(path, sizeOrder, "size");
-        const layer = chooseByHash(path, layerOrder, "layer");
-        return { path, size, layer };
+    const layoutEntries = layout
+        .filter((entry) => entry && typeof entry.path === "string" && entry.path.length > 0)
+        .map((entry) => ({
+            path: entry.path,
+            x: typeof entry.x === "number" ? entry.x : Number.parseFloat(entry.x),
+            y: typeof entry.y === "number" ? entry.y : Number.parseFloat(entry.y),
+            size: typeof entry.size === "string" ? entry.size : null
+        }));
+
+    const layoutMap = new Map();
+    layoutEntries.forEach((entry) => {
+        if (!layoutMap.has(entry.path)) {
+            layoutMap.set(entry.path, entry);
+        }
     });
 
+    const items = [
+        ...layoutEntries.map((entry) => {
+            const size = entry.size || sizeMap.get(entry.path) || chooseByHash(entry.path, sizeOrder, "size");
+            const layer = chooseByHash(entry.path, layerOrder, "layer");
+            return { path: entry.path, size, layer, x: entry.x, y: entry.y, pinned: true };
+        }),
+        ...all
+            .filter((path) => !layoutMap.has(path))
+            .map((path) => {
+                const size = sizeMap.get(path) || chooseByHash(path, sizeOrder, "size");
+                const layer = chooseByHash(path, layerOrder, "layer");
+                return { path, size, layer, pinned: false };
+            })
+    ];
+
     let currentHorizontalPosition = 80;
+    let maxExtent = 0;
     const parallaxItems = [];
     items.forEach((item, index) => {
         const baseWidth = sizeDimensions[item.size] || sizeDimensions.medium;
         const xjitter = (hashToUnit(`${item.path}-x`) - 0.5) * 80;
-        const depthOffset = item.layer === "back" ? 50 : item.layer === "middle" ? 20 : -10;
+        const depthOffset = item.layer === "back" ? 50 : item.layer === "middle" ? 10 : -10;
         const yBase = item.layer === "back" ? 80 : item.layer === "middle" ? 140 : 200;
         const yJitter = (hashToUnit(`${item.path}-y`) - 0.5) * 90;
-        const y = Math.max(30, yBase + yJitter + depthOffset);
+        const autoY = Math.max(30, yBase + yJitter + depthOffset);
+        const y = item.pinned && Number.isFinite(item.y) ? item.y : autoY;
         const depth = item.layer === "front" ? 1 : item.layer === "middle" ? 0.6 : 0.35;
+        const xPos = item.pinned && Number.isFinite(item.x)
+            ? item.x
+            : currentHorizontalPosition + xjitter;
 
         const wrapper = document.createElement("div");
         wrapper.className = `carousel-item size-${item.size}`;
-        wrapper.style.setProperty("--x", `${currentHorizontalPosition + xjitter}px`);
+        wrapper.style.setProperty("--x", `${xPos}px`);
         wrapper.style.setProperty("--y", `${y}px`);
         wrapper.style.setProperty("--z", item.layer === "front" ? "3" : item.layer === "middle" ? "2" : "1");
         wrapper.dataset.depth = `${depth}`;
@@ -95,11 +126,14 @@
         layerEls[item.layer].appendChild(wrapper);
         parallaxItems.push(wrapper);
 
-        const overlap = index % 2 === 0 ? 0.5 : 0.6;
-        currentHorizontalPosition += baseWidth * overlap;
+        const overlap = index % 3 === 0 ? 0.9 : 1.9;
+        if (!item.pinned) {
+            currentHorizontalPosition += baseWidth * overlap;
+        }
+        maxExtent = Math.max(maxExtent, xPos + baseWidth);
     });
 
-    track.style.width = `${Math.max(1200, currentHorizontalPosition + 200)}px`;
+    track.style.width = `${Math.max(1200, maxExtent + 200)}px`;
 
     let parallaxRafId = null;
     const updateParallax = () => {
@@ -107,7 +141,7 @@
         const scrollLeft = carousel.scrollLeft;
         parallaxItems.forEach((el) => {
             const depth = parseFloat(el.dataset.depth || "0");
-            const shift = -scrollLeft * depth * 0.18;
+            const shift = -scrollLeft * depth * 0.38;
             el.style.setProperty("--parallax-x", `${shift}px`);
         });
     };

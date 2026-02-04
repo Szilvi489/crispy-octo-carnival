@@ -13,6 +13,7 @@
         <script id="bn-gallery-data" type="application/json">
         {
           "all": {{ gallery_list | jsonify }},
+          "layout": {% if site.data.bangkokNightLayout %}{{ site.data.bangkokNightLayout | jsonify }}{% else %}[]{% endif %},
           "small": {% if page.smallImages %}{{ page.smallImages | jsonify }}{% else %}[]{% endif %},
           "medium": {% if page.mediumImages %}{{ page.mediumImages | jsonify }}{% else %}[]{% endif %},
           "large": {% if page.largeImages %}{{ page.largeImages | jsonify }}{% else %}[]{% endif %}
