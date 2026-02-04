@@ -26,6 +26,26 @@
     min-width: 100%;
 }
 
+.project-page-section .text-layer {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 4;
+}
+
+.project-page-section .floating-letter {
+    position: absolute;
+    left: var(--x, 0px);
+    top: var(--y, 0px);
+    font-size: clamp(12.5rem, 16vw, 17rem);
+    letter-spacing: 0.06em;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: rgba(27, 238, 7);
+    user-select: none;
+    white-space: pre;
+}
+
 .project-page-section .layer {
     position: absolute;
     inset: 0;

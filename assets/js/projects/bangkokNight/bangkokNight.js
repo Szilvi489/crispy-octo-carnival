@@ -18,8 +18,9 @@
         middle: document.querySelector(".layer-middle"),
         front: document.querySelector(".layer-front")
     };
+    const textLayer = document.querySelector(".text-layer");
 
-    if (!track || !carousel || !layerEls.back || !layerEls.middle || !layerEls.front) {
+    if (!track || !carousel || !layerEls.back || !layerEls.middle || !layerEls.front || !textLayer) {
         return;
     }
 
@@ -134,6 +135,32 @@
     });
 
     track.style.width = `${Math.max(1200, maxExtent + 200)}px`;
+
+    const placeFloatingText = () => {
+        const phrase = "BANGKOK NIGHT";
+        const letters = phrase.split("");
+        const trackWidth = track.scrollWidth || track.clientWidth;
+        const startX = 120;
+        const endX = Math.max(startX + 600, trackWidth - 200);
+        const span = endX - startX;
+        const step = span / Math.max(1, letters.length - 1);
+
+        letters.forEach((letter, index) => {
+            const xPos = startX + index * step;
+            const yJitter = (hashToUnit(`${letter}-${index}-text`) - 0.5) * 220;
+            const yBase = 120 + (index % 3) * 140;
+            const yPos = Math.max(40, yBase + yJitter);
+
+            const node = document.createElement("div");
+            node.className = "floating-letter";
+            node.textContent = letter === " " ? " " : letter;
+            node.style.setProperty("--x", `${xPos}px`);
+            node.style.setProperty("--y", `${yPos}px`);
+            textLayer.appendChild(node);
+        });
+    };
+
+    placeFloatingText();
 
     let parallaxRafId = null;
     const updateParallax = () => {
