@@ -23,24 +23,25 @@ thumbnails:
 
 #The image that will be presented on the landing page aka homepage
 indexImage:
-  - /assets/images/projects/bangkokNight/gallery_images/5pic.png
-  - /assets/images/projects/bangkokNight/gallery_images/2pic.png
-  - /assets/images/projects/bangkokNight/gallery_images/6pic.png
-  - /assets/images/projects/bangkokNight/gallery_images/7pic.png
+  - /assets/images/projects/bangkokNight/gallery_images/DSCF0180.avif
+  - /assets/images/projects/bangkokNight/gallery_images/DSCF0286.avif
+  - /assets/images/projects/bangkokNight/gallery_images/DSCF0297.avif
+  - /assets/images/projects/bangkokNight/gallery_images/DSCF0557.avif
 
 #In the Project's layout there are images listed with different sizes on different layers.
 #These positions and sizes are going to be dynamically allocated to each image in the gallery_images folder,
 #BUT if you want some image ultimately to be small, medium or large you can add it to the lists here
 
 smallImages:
-  - /assets/images/projects/bangkokNight/gallery_images/image20.png
-  - /assets/images/projects/bangkokNight/gallery_images/image22.png
+  - /assets/images/projects/bangkokNight/gallery_images/DSCF0776.avif
+  - /assets/images/projects/bangkokNight/gallery_images/DSCF0778.avif
 
 mediumImages:
-  - /assets/images/projects/bangkokNight/gallery_images/image23.png
+  - /assets/images/projects/bangkokNight/gallery_images/DSCF0797.avif
+  - /assets/images/projects/bangkokNight/gallery_images/DSCF0817.avif
 
 largeImages:
-   - /assets/images/projects/bangkokNight/gallery_images/image29.png
-   - /assets/images/projects/bangkokNight/gallery_images/image24.png
+   - /assets/images/projects/bangkokNight/gallery_images/DSCF0827.avif
+   - /assets/images/projects/bangkokNight/gallery_images/DSCF0829.avif
 
 ---
