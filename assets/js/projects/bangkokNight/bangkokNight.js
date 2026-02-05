@@ -98,6 +98,7 @@
 
     let currentHorizontalPosition = 80;
     let maxExtent = 0;
+    let lastPinnedExtent = null;
     const parallaxItems = [];
     items.forEach((item, index) => {
         const baseWidth = sizeDimensions[item.size] || sizeDimensions.medium;
@@ -131,15 +132,21 @@
         if (!item.pinned) {
             currentHorizontalPosition += baseWidth * overlap;
         }
-        maxExtent = Math.max(maxExtent, xPos + baseWidth);
+        const extent = xPos + baseWidth;
+        maxExtent = Math.max(maxExtent, extent);
+        if (item.pinned) {
+            lastPinnedExtent = extent;
+        }
     });
 
-    track.style.width = `${Math.max(1200, maxExtent + 200)}px`;
+    const trackExtent = Number.isFinite(lastPinnedExtent) ? lastPinnedExtent : maxExtent;
+    track.style.width = `${Math.max(1200, trackExtent)}px`;
 
     const placeFloatingText = () => {
         const phrase = "BANGKOK NIGHT";
         const letters = phrase.split("");
-        const trackWidth = track.scrollWidth || track.clientWidth;
+        const textExtent = Number.isFinite(lastPinnedExtent) ? lastPinnedExtent : maxExtent;
+        const trackWidth = Math.max(0, textExtent);
         const startX = 120;
         const endX = Math.max(startX + 600, trackWidth - 200);
         const span = endX - startX;
