@@ -7,8 +7,12 @@
         {%- assign layout_paths = layout | map: "path" -%}
         <div class="image-carousel" aria-label="Forest Double Exposure gallery">
             <div class="image-track">
-                 <div class="image double-expo-first"></div>
-                 <div class="image double-expo-second"></div>
+                 <div class="double-expo-first-container">
+                    <img class = "image double-expo-first-image" src="" alt="">
+                 </div>
+                 <div class="image double-expo-second-container">
+                    <img class= "image double-expo-second-image" src="" alt="">
+                 </div>
             </div>
 
             <script id="forest-gallery-data" type="application/json">
@@ -17,5 +21,6 @@
               "layout": {{ layout | jsonify }}
             }
             </script>
+        </div>
     </div>
    </section>
