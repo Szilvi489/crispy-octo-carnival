@@ -5,9 +5,11 @@ description: Nature is pretty cool!
 
 stylesheets:
   - /assets/css/projects/forest/forestStylesheet.css
+  - /assets/css/projects/forest/doubleExpo.css
 
 scripts:
   - /assets/js/projects/forest/forest.js
+  - /assets/js/projects/forest/doubleExpo.js
 
 permalink: /projects/forest/
 
