@@ -8,7 +8,7 @@
     const lerp = (start, end, t) => start + (end - start) * t;
 
     sections.forEach((section) => {
-        const dataEl = section.querySelector(".forest-gallery-data");
+        const dataEl = section.querySelector(".forest-gallery-data");x
         if (!dataEl) {
             return;
         }
