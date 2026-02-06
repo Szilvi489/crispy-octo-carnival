@@ -8,12 +8,20 @@ stylesheets:
   - /assets/css/projects/forest/doubleExpo.css
   - /assets/css/projects/forest/animatedImageRow.css
   - /assets/css/projects/forest/animatedCircleSection.css
+  - /assets/css/projects/forest/animatedTiles.css
 
 scripts:
   - /assets/js/projects/forest/forest.js
   - /assets/js/projects/forest/doubleExpo.js
   - /assets/js/projects/forest/animatedImageRow.js
   - /assets/js/projects/forest/animatedCircleSection.js
+  - /assets/js/projects/forest/animatedTiles.js
+
+
+navSquareColour: "#ee0707"
+
+
+navFontColour: "#06073b"
 
 permalink: /projects/forest/
 
