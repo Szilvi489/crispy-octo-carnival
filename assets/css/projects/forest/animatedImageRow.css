@@ -1,4 +1,66 @@
 .animated-image-row-section{
     width: 100%;
+    height: 100vh;
+    margin-top: 5em;
+    overflow: hidden;
+    position: relative;
+    perspective: 1200px;
+    --t: 0;
+}
 
+.animated-image-row-images{
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+   justify-content: center;
+   gap: clamp(16px, 4vw, 48px);
+   height: 100%;
+   transform-style: preserve-3d;
+}
+
+.animated-image-row-section .images{
+    width: calc((100vw / 3) - 4vw);
+    height: auto;
+    transform-style: preserve-3d;
+    backface-visibility: visible;
+    will-change: transform, opacity;
+    transform: translate3d(
+        calc(var(--t) * var(--x)),
+        calc(var(--t) * var(--y)),
+        calc(var(--t) * var(--z))
+      )
+      rotateX(calc(var(--t) * var(--rx)))
+      rotateY(calc(var(--t) * var(--ry)))
+      rotateZ(calc(var(--t) * var(--rz)));
+    opacity: calc(1 - (var(--t) * var(--fade)));
+}
+
+.animated-image-row-section .first-animated-image{
+    --x: -360px;
+    --y: 50px;
+    --z: -260px;
+    --rx: 10deg;
+    --ry: -40deg;
+    --rz: -12deg;
+    --fade: 1;
+}
+
+.animated-image-row-section .second-animated-image{
+    --x: 0px;
+    --y: -210px;
+    --z: -360px;
+    --rx: 22deg;
+    --ry: 0deg;
+    --rz: 10deg;
+    --fade: 1;
+}
+
+.animated-image-row-section .third-animated-image{
+    --x: 360px;
+    --y: 40px;
+    --z: -240px;
+    --rx: -8deg;
+    --ry: 40deg;
+    --rz: 14deg;
+    --fade: 1;
 }

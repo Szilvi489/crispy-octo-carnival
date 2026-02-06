@@ -1,0 +1,21 @@
+{%- assign gallery_path = "/assets/images/projects/forest/gallery_images/animated_circle_section_images/" -%}
+{%- assign gallery_files = site.static_files | where_exp: "f", "f.path contains gallery_path" -%}
+{%- assign gallery_list = gallery_files | map: "path" | sort -%}
+<section class="animated-circle-section">
+  <div class="animated-circle-pin">
+    <div class="animated-circle-images" style="--count: {{ gallery_list | size | default: 1 }};">
+
+        {%- for image in gallery_list -%}
+          <div class="circle-item" style="--i: {{ forloop.index0 }};">
+            <img class="images" src="{{ image }}" alt="">
+          </div>
+        {%- endfor -%}
+    </div>
+  </div>
+
+      <script class="forest-gallery-data" type="application/json">
+            {
+              "all": {{ gallery_list | jsonify }}
+            }
+            </script>
+</section>

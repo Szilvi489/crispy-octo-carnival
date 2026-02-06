@@ -1,0 +1,11 @@
+- path: /assets/images/projects/forest/gallery_images/animated_image_row_images/01pic.png
+  group: 1
+  position: first
+
+- path: /assets/images/projects/forest/gallery_images/animated_image_row_images/02pic.png
+  group: 1
+  position: second
+
+- path: /assets/images/projects/forest/gallery_images/animated_image_row_images/04pic.png
+  group: 1
+  position: third
