@@ -17,6 +17,12 @@ scripts:
 #todo implement the dynamically assignable hero image
 hero_image: /assets/images/projects/bangkokNight/hero/image27.png
 
+#Define the colour of the nav
+navSquareColour: "#1bee07"
+
+#Define the colour of the font in the nav
+navFontColour: "#000000"
+
 #this folder contains smaller images for the "Projects" page to list them up all together, but in a smaller format for faster loading
 thumbnails:
   - /assets/images/projects/bangkokNight/thumbnails/
