@@ -25,9 +25,8 @@
 
     sections.forEach((section) => {
       const rect = section.getBoundingClientRect();
-      const sectionTop = rect.top + scrollY;
-      const scrollSpan = Math.max(section.offsetHeight - vh, 1);
-      const raw = (scrollY - sectionTop) / scrollSpan;
+      const total = rect.height + vh;
+      const raw = (vh - rect.top) / total;
       const t = smoothstep(clamp(raw, 0, 1));
       section.style.setProperty('--t', t.toFixed(4));
     });

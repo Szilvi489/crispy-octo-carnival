@@ -21,6 +21,9 @@
     console.log("Animated tiles data:", data);
 
     const imagesWrap = section.querySelector(".animated-tiles-images");
+    const overlay = section.querySelector(".animated-tiles-overlay");
+    const overlayImage = section.querySelector(".animated-tiles-overlay-image");
+    const closeButton = section.querySelector(".animated-tiles-close");
     if (!imagesWrap || !Array.isArray(data.all)) {
       return;
     }
@@ -35,6 +38,42 @@
       img.className = "images";
       imagesWrap.appendChild(img);
     });
+
+    if (overlay && overlayImage && closeButton) {
+      const openOverlay = (src) => {
+        overlayImage.src = src;
+        overlay.classList.add("is-open");
+        overlay.setAttribute("aria-hidden", "false");
+        document.documentElement.classList.add("tiles-overlay-open");
+      };
+
+      const closeOverlay = () => {
+        overlay.classList.remove("is-open");
+        overlay.setAttribute("aria-hidden", "true");
+        overlayImage.src = "";
+        document.documentElement.classList.remove("tiles-overlay-open");
+      };
+
+      imagesWrap.addEventListener("click", (event) => {
+        const target = event.target;
+        if (target && target.tagName === "IMG") {
+          openOverlay(target.currentSrc || target.src);
+        }
+      });
+
+      closeButton.addEventListener("click", closeOverlay);
+      overlay.addEventListener("click", (event) => {
+        if (event.target === overlay) {
+          closeOverlay();
+        }
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+          closeOverlay();
+        }
+      });
+    }
   });
 
   const clamp = (v, min, max) => Math.min(Math.max(v, min), max);

@@ -13,7 +13,8 @@
 
     sections.forEach((section) => {
       const rect = section.getBoundingClientRect();
-      const raw = (vh - rect.top) / (vh + rect.height);
+      // Start once the section is fully in view (top hits the top of viewport).
+      const raw = rect.top <= 0 ? (-rect.top / (rect.height || 1)) : 0;
       const t = smoothstep(clamp(raw, 0, 1));
       section.style.setProperty('--t', t.toFixed(4));
     });

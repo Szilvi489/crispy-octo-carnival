@@ -5,6 +5,10 @@
         {%- assign gallery_list = gallery_files | map: "path" | sort -%}
         <img class="images" src="" alt="">
     </div>
+    <div class="animated-tiles-overlay" aria-hidden="true">
+        <button class="animated-tiles-close" type="button" aria-label="Close image">×</button>
+        <img class="animated-tiles-overlay-image" src="" alt="">
+    </div>
 
       <script class="forest-gallery-data" type="application/json">
             {
