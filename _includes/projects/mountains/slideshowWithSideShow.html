@@ -1,0 +1,26 @@
+<section class="slide-show-with-side-show-section">
+    <div class="slide-show-with-side-show-images">
+       
+        {%- assign gallery_path = "/assets/images/projects/mountains/gallery_images/slide_show_with_side_show/" -%}
+        {%- assign gallery_files = site.static_files | where_exp: "f", "f.path contains gallery_path" -%}
+        {%- assign gallery_list = gallery_files | map: "path" | sort -%}
+
+         <div class="large-image-container">
+            <h1>IMAGE</h1>
+            <img class= "images large-image" src="" alt="">
+        </div>
+
+        <div class="slide-images-container">
+            {% for image in gallery_list %}
+            <img class="images slide-images" src="{{ image }}" alt="">
+            {% endfor %}
+        </div>
+      
+    </div>
+
+      <script class="mountains-gallery-data" type="application/json">
+            {
+              "all": {{ gallery_list | jsonify }}
+            }
+            </script>
+</section>

@@ -20,7 +20,6 @@ scripts:
 
 navSquareColour: "#ee0707"
 
-
 navFontColour: "#06073b"
 
 permalink: /projects/forest/
@@ -29,6 +28,6 @@ thumbnails:
 - /assets/images/projects/forest/thumbnails/
 
 indexImage:
-  - /assets/images/projects/forest/gallery_images/3pic.png
-  - /assets/images/projects/forest/gallery_images/4pic.png
+  - /assets/images/projects/forest/gallery_images/animated_image_row_images/01pic.png
+  - /assets/images/projects/forest/gallery_images/animated_image_row_images/04pic.png
 ---
