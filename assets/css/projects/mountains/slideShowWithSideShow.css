@@ -32,6 +32,7 @@ overflow: hidden;
     width: auto;
     display: flex;
     align-items: center;
+    position: relative;
 }
 .large-image{
     display: block;
@@ -40,6 +41,32 @@ overflow: hidden;
     width: auto;
     height: auto;
     object-fit: contain;
+}
+
+.large-image-container.is-binocular-active .large-image{
+    cursor: none;
+}
+
+.binocular-cursor{
+    position: absolute;
+    display: none;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 0;
+    border: 0;
+    box-shadow: none;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 3;
+}
+
+.binocular-cursor.is-visible{
+    display: grid;
+}
+
+.binocular-pane{
+    background-repeat: no-repeat;
+    background-color: #000;
 }
 
 .slide-images-container{
@@ -83,6 +110,10 @@ overflow: hidden;
 
   .large-image-description {
     display: none;
+  }
+
+  .binocular-cursor {
+    display: none !important;
   }
 
   .slide-images-container {

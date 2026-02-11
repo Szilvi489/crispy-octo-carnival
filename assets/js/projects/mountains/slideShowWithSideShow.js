@@ -9,6 +9,9 @@
   const smoothstep = (t) => t * t * (3 - 2 * t);
   const WHEEL_STEP_THRESHOLD = 100;
   const WHEEL_COOLDOWN_MS = 140;
+  const BINOCULAR_ZOOM = 2;
+  const MIN_BINOCULAR_SIZE = 72;
+  const DESKTOP_MEDIA_QUERY = "(min-width: 601px)";
 
   const setupSection = (section) => {
     const dataEl = section.querySelector(".mountains-gallery-data");
@@ -26,8 +29,9 @@
 
     const largeImage = section.querySelector(".large-image");
     const descriptionEl = section.querySelector(".large-image-description");
+    const largeImageContainer = section.querySelector(".large-image-container");
     const thumbsWrap = section.querySelector(".slide-images-container");
-    if (!largeImage || !thumbsWrap || !Array.isArray(data.all)) {
+    if (!largeImage || !largeImageContainer || !thumbsWrap || !Array.isArray(data.all)) {
       return null;
     }
     const descriptionMap = data.descriptions && typeof data.descriptions === "object"
@@ -52,6 +56,95 @@
     if (!thumbs.length) {
       return null;
     }
+
+    const desktopMq = window.matchMedia(DESKTOP_MEDIA_QUERY);
+    const binocular = document.createElement("div");
+    binocular.className = "binocular-cursor";
+    binocular.setAttribute("aria-hidden", "true");
+
+    const paneClasses = [
+      "binocular-pane top-left",
+      "binocular-pane top-right",
+      "binocular-pane bottom-left",
+      "binocular-pane bottom-right"
+    ];
+    const panes = paneClasses.map((className) => {
+      const pane = document.createElement("div");
+      pane.className = className;
+      binocular.appendChild(pane);
+      return pane;
+    });
+    largeImageContainer.appendChild(binocular);
+
+    const updateBinocularImage = () => {
+      const imgUrl = `url("${largeImage.src}")`;
+      panes.forEach((pane) => {
+        pane.style.backgroundImage = imgUrl;
+      });
+    };
+
+    const hideBinocular = () => {
+      binocular.classList.remove("is-visible");
+      largeImageContainer.classList.remove("is-binocular-active");
+    };
+
+    const updateBinocularPosition = (event) => {
+      if (!desktopMq.matches || !largeImage.src) {
+        hideBinocular();
+        return;
+      }
+
+      const rect = largeImage.getBoundingClientRect();
+      const containerRect = largeImageContainer.getBoundingClientRect();
+      if (!rect.width || !rect.height) {
+        hideBinocular();
+        return;
+      }
+
+      const x = clamp(event.clientX - rect.left, 0, rect.width);
+      const y = clamp(event.clientY - rect.top, 0, rect.height);
+      const lensSize = Math.max(
+        MIN_BINOCULAR_SIZE,
+        Math.min(rect.width, rect.height) / 8
+      );
+      const paneSize = lensSize / 2;
+      const quarter = lensSize / 4;
+
+      binocular.style.width = `${lensSize}px`;
+      binocular.style.height = `${lensSize}px`;
+      binocular.style.left = `${rect.left - containerRect.left + x - lensSize / 2}px`;
+      binocular.style.top = `${rect.top - containerRect.top + y - lensSize / 2}px`;
+
+      const bgSize = `${rect.width * BINOCULAR_ZOOM}px ${rect.height * BINOCULAR_ZOOM}px`;
+      const sourceOffsets = [
+        { dx: quarter, dy: quarter },   // display TL gets source 2B
+        { dx: -quarter, dy: quarter },  // display TR gets source 1B
+        { dx: quarter, dy: -quarter },  // display BL gets source 2A
+        { dx: -quarter, dy: -quarter }  // display BR gets source 1A
+      ];
+
+      panes.forEach((pane, i) => {
+        const sourceX = clamp(x + sourceOffsets[i].dx, 0, rect.width);
+        const sourceY = clamp(y + sourceOffsets[i].dy, 0, rect.height);
+        const posX = paneSize / 2 - sourceX * BINOCULAR_ZOOM;
+        const posY = paneSize / 2 - sourceY * BINOCULAR_ZOOM;
+        pane.style.width = `${paneSize}px`;
+        pane.style.height = `${paneSize}px`;
+        pane.style.backgroundSize = bgSize;
+        pane.style.backgroundPosition = `${posX}px ${posY}px`;
+      });
+
+      binocular.classList.add("is-visible");
+      largeImageContainer.classList.add("is-binocular-active");
+    };
+
+    largeImage.addEventListener("mouseenter", (event) => {
+      updateBinocularImage();
+      updateBinocularPosition(event);
+    });
+    largeImage.addEventListener("mousemove", updateBinocularPosition);
+    largeImage.addEventListener("mouseleave", hideBinocular);
+    window.addEventListener("resize", hideBinocular);
 
     const getDescription = (src) => {
       let path = src || "";
@@ -87,6 +180,7 @@
       const activeThumb = thumbs[activeIndex];
       if (largeImage.src !== activeThumb.src) {
         largeImage.src = activeThumb.src;
+        updateBinocularImage();
       }
       if (descriptionEl) {
         descriptionEl.textContent = getDescription(activeThumb.src);
