@@ -22,7 +22,7 @@ thumbnails:
 permalink: /projects/mountains/
 
 indexImage:
-  - /assets/images/projects/mountains/gallery_images/slide_show_with_side_show/7pic.png
-  - /assets/images/projects/mountains/gallery_images/slide_show_with_side_show/12pic.png
-    - /assets/images/projects/mountains/gallery_images/slide_show_with_side_show/30pic.png
+  - /assets/images/projects/mountains/gallery_images/slide_show_with_side_show/DSCF4297.jpg
+  - /assets/images/projects/mountains/gallery_images/slide_show_with_side_show/DSCF4300.jpg
+  - /assets/images/projects/mountains/gallery_images/slide_show_with_side_show/DSCF4332.jpg
 ---
