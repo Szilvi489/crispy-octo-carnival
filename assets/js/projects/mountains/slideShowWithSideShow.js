@@ -5,7 +5,10 @@
 
 
   const clamp = (v, min, max) => Math.min(Math.max(v, min), max);
+  const wrapIndex = (i, count) => ((i % count) + count) % count;
   const smoothstep = (t) => t * t * (3 - 2 * t);
+  const WHEEL_STEP_THRESHOLD = 100;
+  const WHEEL_COOLDOWN_MS = 140;
 
   const setupSection = (section) => {
     const dataEl = section.querySelector(".mountains-gallery-data");
@@ -22,10 +25,14 @@
     }
 
     const largeImage = section.querySelector(".large-image");
+    const descriptionEl = section.querySelector(".large-image-description");
     const thumbsWrap = section.querySelector(".slide-images-container");
     if (!largeImage || !thumbsWrap || !Array.isArray(data.all)) {
       return null;
     }
+    const descriptionMap = data.descriptions && typeof data.descriptions === "object"
+      ? data.descriptions
+      : {};
 
     let thumbs = Array.from(thumbsWrap.querySelectorAll(".slide-images"));
     if (!thumbs.length) {
@@ -46,37 +53,99 @@
       return null;
     }
 
-    const setActive = (index, scrollIntoView = true) => {
-      const clamped = clamp(index, 0, thumbs.length - 1);
-      const activeThumb = thumbs[clamped];
+    const getDescription = (src) => {
+      let path = src || "";
+      try {
+        path = new URL(src, window.location.origin).pathname;
+      } catch (error) {
+        path = src || "";
+      }
+      const fileName = (path.split("/").pop() || "").trim();
+      return descriptionMap[path] || descriptionMap[fileName] || "";
+    };
+
+    const centerThumb = (activeThumb, smooth = true) => {
+      const containerRect = thumbsWrap.getBoundingClientRect();
+      const thumbRect = activeThumb.getBoundingClientRect();
+      const offsetY = (thumbRect.top + thumbRect.height / 2)
+        - (containerRect.top + containerRect.height / 2);
+      const offsetX = (thumbRect.left + thumbRect.width / 2)
+        - (containerRect.left + containerRect.width / 2);
+      const top = thumbsWrap.scrollTop + offsetY;
+      const left = thumbsWrap.scrollLeft + offsetX;
+
+      if (smooth && typeof thumbsWrap.scrollTo === "function") {
+        thumbsWrap.scrollTo({ top, left, behavior: "smooth" });
+      } else {
+        thumbsWrap.scrollTop = top;
+        thumbsWrap.scrollLeft = left;
+      }
+    };
+
+    const setActive = (index, scrollIntoView = true, smoothScroll = true) => {
+      const activeIndex = wrapIndex(index, thumbs.length);
+      const activeThumb = thumbs[activeIndex];
       if (largeImage.src !== activeThumb.src) {
         largeImage.src = activeThumb.src;
       }
+      if (descriptionEl) {
+        descriptionEl.textContent = getDescription(activeThumb.src);
+      }
       thumbs.forEach((thumb, i) => {
-        thumb.classList.toggle("is-active", i === clamped);
+        thumb.classList.toggle("is-active", i === activeIndex);
       });
       if (scrollIntoView) {
-        const containerRect = thumbsWrap.getBoundingClientRect();
-        const thumbRect = activeThumb.getBoundingClientRect();
-        const offset = (thumbRect.top + thumbRect.height / 2)
-          - (containerRect.top + containerRect.height / 2);
-        thumbsWrap.scrollTop += offset;
+        centerThumb(activeThumb, smoothScroll);
+      } else {
+        centerThumb(activeThumb, false);
       }
     };
 
     let currentIndex = 0;
+    let wheelAccum = 0;
+    let lastWheelStepAt = 0;
     setActive(currentIndex, false);
 
     const onWheel = (event) => {
-      const delta = event.deltaY !== 0 ? event.deltaY : event.deltaX;
+      const deltaBase = event.deltaY !== 0 ? event.deltaY : event.deltaX;
+      if (deltaBase === 0) return;
+
+      // Normalize delta so line/page wheel modes are comparable to pixels.
+      const modeScale = event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? 800 : 1;
+      const delta = deltaBase * modeScale;
       if (delta === 0) return;
       event.preventDefault();
-      const step = delta > 0 ? 1 : -1;
-      currentIndex = clamp(currentIndex + step, 0, thumbs.length - 1);
-      setActive(currentIndex, true);
+
+      const now = performance.now();
+      const prevWheelAccum = wheelAccum;
+      wheelAccum += delta;
+
+      // If direction changes, keep only the fresh direction's momentum.
+      if ((prevWheelAccum > 0 && delta < 0) || (prevWheelAccum < 0 && delta > 0)) {
+        wheelAccum = delta;
+      }
+
+      if (Math.abs(wheelAccum) < WHEEL_STEP_THRESHOLD) return;
+      if (now - lastWheelStepAt < WHEEL_COOLDOWN_MS) return;
+
+      const step = wheelAccum > 0 ? 1 : -1;
+      const nextIndex = wrapIndex(currentIndex + step, thumbs.length);
+      const isWrappingForward = currentIndex === thumbs.length - 1 && step === 1;
+      const isWrappingBackward = currentIndex === 0 && step === -1;
+      const isWrapping = isWrappingForward || isWrappingBackward;
+      currentIndex = nextIndex;
+      setActive(currentIndex, true, !isWrapping);
+      lastWheelStepAt = now;
+      wheelAccum = 0;
     };
 
     section.addEventListener("wheel", onWheel, { passive: false });
+    thumbs.forEach((thumb, i) => {
+      thumb.addEventListener("click", () => {
+        currentIndex = i;
+        setActive(currentIndex, true);
+      });
+    });
 
     return { section, setActive, count: thumbs.length };
   };

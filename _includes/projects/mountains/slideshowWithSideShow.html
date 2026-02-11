@@ -5,8 +5,9 @@
         {%- assign gallery_files = site.static_files | where_exp: "f", "f.path contains gallery_path" -%}
         {%- assign gallery_list = gallery_files | map: "path" | sort -%}
 
+         <div class="large-image-description" aria-live="polite"></div>
+
          <div class="large-image-container">
-            <h1>IMAGE</h1>
             <img class= "images large-image" src="" alt="">
         </div>
 
@@ -20,7 +21,8 @@
 
       <script class="mountains-gallery-data" type="application/json">
             {
-              "all": {{ gallery_list | jsonify }}
+              "all": {{ gallery_list | jsonify }},
+              "descriptions": {% if page.gallery_descriptions %}{{ page.gallery_descriptions | jsonify }}{% else %}{}{% endif %}
             }
             </script>
 </section>

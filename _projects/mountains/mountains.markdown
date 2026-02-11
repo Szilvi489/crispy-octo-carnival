@@ -25,4 +25,9 @@ indexImage:
   - /assets/images/projects/mountains/gallery_images/slide_show_with_side_show/DSCF4297.jpg
   - /assets/images/projects/mountains/gallery_images/slide_show_with_side_show/DSCF4300.jpg
   - /assets/images/projects/mountains/gallery_images/slide_show_with_side_show/DSCF4332.jpg
+
+gallery_descriptions:
+  DSCF4297.jpg: "Description for DSCF4297."
+  DSCF4300.jpg: "Description for DSCF4300."
+  DSCF4332.jpg: "Description for DSCF4332."
 ---
