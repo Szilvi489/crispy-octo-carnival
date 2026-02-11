@@ -31,11 +31,22 @@
     const descriptionEl = section.querySelector(".large-image-description");
     const largeImageContainer = section.querySelector(".large-image-container");
     const thumbsWrap = section.querySelector(".slide-images-container");
+    const galleryFrame = section.querySelector(".slide-show-with-side-show-images");
+    const articlePanel = section.querySelector(".slide-show-article-panel");
+    const articleTitleEl = section.querySelector(".slide-show-article-title");
+    const articleTextEl = section.querySelector(".slide-show-article-text");
+    const articleMapWrap = section.querySelector(".slide-show-article-map-wrap");
+    const articleMapEl = section.querySelector(".slide-show-article-map");
+    const articleExtraImagesEl = section.querySelector(".slide-show-article-extra-images");
+    const articleCloseBtn = section.querySelector(".slide-show-article-close");
     if (!largeImage || !largeImageContainer || !thumbsWrap || !Array.isArray(data.all)) {
       return null;
     }
     const descriptionMap = data.descriptions && typeof data.descriptions === "object"
       ? data.descriptions
+      : {};
+    const articleMap = data.articles && typeof data.articles === "object"
+      ? data.articles
       : {};
 
     let thumbs = Array.from(thumbsWrap.querySelectorAll(".slide-images"));
@@ -57,6 +68,77 @@
       return null;
     }
 
+    const getImagePath = (src) => {
+      let path = src || "";
+      try {
+        path = new URL(src, window.location.origin).pathname;
+      } catch (error) {
+        path = src || "";
+      }
+      return path;
+    };
+    const getFileName = (path) => (path.split("/").pop() || "").trim();
+    const getDescription = (src) => {
+      const path = getImagePath(src);
+      const fileName = getFileName(path);
+      return descriptionMap[path] || descriptionMap[fileName] || "";
+    };
+    const getArticleData = (src) => {
+      const path = getImagePath(src);
+      const fileName = getFileName(path);
+      const entry = articleMap[path] || articleMap[fileName];
+      return entry && typeof entry === "object" ? entry : null;
+    };
+
+    const renderArticle = (src) => {
+      if (!articlePanel) return;
+
+      const articleData = getArticleData(src) || {};
+      const path = getImagePath(src);
+      const fileName = getFileName(path);
+      const readableName = fileName ? fileName.replace(/\.[^/.]+$/, "") : "Photo";
+
+      if (articleTitleEl) {
+        articleTitleEl.textContent = articleData.title || readableName;
+      }
+      if (articleTextEl) {
+        articleTextEl.textContent = articleData.story || getDescription(src) || "Add your story here.";
+      }
+
+      if (articleMapEl && articleMapWrap) {
+        if (articleData.map_image) {
+          articleMapEl.src = articleData.map_image;
+          articleMapEl.alt = articleData.map_alt || `Map location for ${readableName}`;
+          articleMapWrap.hidden = false;
+        } else {
+          articleMapEl.removeAttribute("src");
+          articleMapEl.alt = "";
+          articleMapWrap.hidden = true;
+        }
+      }
+
+      if (articleExtraImagesEl) {
+        articleExtraImagesEl.innerHTML = "";
+        const extra = Array.isArray(articleData.extra_images) ? articleData.extra_images : [];
+        extra.forEach((imageData) => {
+          const img = document.createElement("img");
+          if (typeof imageData === "string") {
+            img.src = imageData;
+            img.alt = "";
+          } else if (imageData && typeof imageData === "object" && imageData.src) {
+            img.src = imageData.src;
+            img.alt = imageData.alt || "";
+          } else {
+            return;
+          }
+          img.className = "images slide-show-article-extra-image";
+          img.loading = "lazy";
+          img.decoding = "async";
+          articleExtraImagesEl.appendChild(img);
+        });
+      }
+    };
+
     const desktopMq = window.matchMedia(DESKTOP_MEDIA_QUERY);
     const binocular = document.createElement("div");
     binocular.className = "binocular-cursor";
@@ -74,6 +156,10 @@
       binocular.appendChild(pane);
       return pane;
     });
+    const clickHint = document.createElement("span");
+    clickHint.className = "binocular-click-hint";
+    clickHint.textContent = "click";
+    binocular.appendChild(clickHint);
     largeImageContainer.appendChild(binocular);
 
     const updateBinocularImage = () => {
@@ -86,6 +172,20 @@
     const hideBinocular = () => {
       binocular.classList.remove("is-visible");
       largeImageContainer.classList.remove("is-binocular-active");
+    };
+
+    let isArticleOpen = false;
+    const openArticle = () => {
+      if (!desktopMq.matches || !galleryFrame || !largeImage.src) return;
+      renderArticle(largeImage.src);
+      hideBinocular();
+      galleryFrame.classList.add("is-article-open");
+      isArticleOpen = true;
+    };
+    const closeArticle = () => {
+      if (!galleryFrame) return;
+      galleryFrame.classList.remove("is-article-open");
+      isArticleOpen = false;
     };
 
     const updateBinocularPosition = (event) => {
@@ -144,18 +244,17 @@
     });
     largeImage.addEventListener("mousemove", updateBinocularPosition);
     largeImage.addEventListener("mouseleave", hideBinocular);
-    window.addEventListener("resize", hideBinocular);
-
-    const getDescription = (src) => {
-      let path = src || "";
-      try {
-        path = new URL(src, window.location.origin).pathname;
-      } catch (error) {
-        path = src || "";
+    largeImage.addEventListener("click", openArticle);
+    binocular.addEventListener("click", openArticle);
+    if (articleCloseBtn) {
+      articleCloseBtn.addEventListener("click", closeArticle);
+    }
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && isArticleOpen) {
+        closeArticle();
       }
-      const fileName = (path.split("/").pop() || "").trim();
-      return descriptionMap[path] || descriptionMap[fileName] || "";
-    };
+    });
+    window.addEventListener("resize", hideBinocular);
 
     const centerThumb = (activeThumb, smooth = true) => {
       const containerRect = thumbsWrap.getBoundingClientRect();
@@ -184,6 +283,9 @@
       }
       if (descriptionEl) {
         descriptionEl.textContent = getDescription(activeThumb.src);
+      }
+      if (isArticleOpen) {
+        renderArticle(activeThumb.src);
       }
       thumbs.forEach((thumb, i) => {
         thumb.classList.toggle("is-active", i === activeIndex);

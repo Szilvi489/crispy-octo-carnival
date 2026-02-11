@@ -16,13 +16,16 @@
             <img class="images slide-images" src="{{ image }}" alt="">
             {% endfor %}
         </div>
+
+        {% include projects/mountains/slideshowWithSideShowArticle.html %}
       
     </div>
 
       <script class="mountains-gallery-data" type="application/json">
             {
               "all": {{ gallery_list | jsonify }},
-              "descriptions": {% if page.gallery_descriptions %}{{ page.gallery_descriptions | jsonify }}{% else %}{}{% endif %}
+              "descriptions": {% if page.gallery_descriptions %}{{ page.gallery_descriptions | jsonify }}{% else %}{}{% endif %},
+              "articles": {% if page.gallery_articles %}{{ page.gallery_articles | jsonify }}{% else %}{}{% endif %}
             }
             </script>
 </section>

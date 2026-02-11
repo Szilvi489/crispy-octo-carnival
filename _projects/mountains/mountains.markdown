@@ -30,4 +30,26 @@ gallery_descriptions:
   DSCF4297.jpg: "Description for DSCF4297."
   DSCF4300.jpg: "Description for DSCF4300."
   DSCF4332.jpg: "Description for DSCF4332."
+
+gallery_articles:
+  DSCF4297.jpg:
+    title: "Sunrise Ridge, Nepal"
+    story: "Longer article text for this image. Add details about weather, route, altitude, and the moment of the shot."
+    map_image: "/assets/images/projects/mountains/maps/DSCF4297-map.jpg"
+    map_alt: "Map showing the exact location of DSCF4297"
+    extra_images:
+      - src: "/assets/images/projects/mountains/maps/DSCF4297-google.jpg"
+        alt: "Satellite context near DSCF4297"
+  DSCF4300.jpg:
+    title: "Cloudline Trail"
+    story: "Add your article paragraph for DSCF4300. This can include local context and trip notes."
+    map_image: "/assets/images/projects/mountains/maps/DSCF4300-map.jpg"
+    map_alt: "Map showing the exact location of DSCF4300"
+    extra_images: []
+  DSCF4332.jpg:
+    title: "Pass Crossing"
+    story: "Add your article paragraph for DSCF4332."
+    map_image: "/assets/images/projects/mountains/maps/DSCF4332-map.jpg"
+    map_alt: "Map showing the exact location of DSCF4332"
+    extra_images: []
 ---
