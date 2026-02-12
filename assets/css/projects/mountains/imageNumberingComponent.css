@@ -12,7 +12,7 @@
 .image-numbering-component__number{
     position: relative;
     display: inline-block;
-    width: 5.2ch;
+    width: 5.8ch;
     height: 1.05em;
     line-height: 1;
     transition: width 420ms ease, height 420ms ease, font-size 420ms ease;
@@ -24,6 +24,7 @@
     position: absolute;
     top: 0;
     transition: left 420ms ease, top 420ms ease, transform 420ms ease;
+    font-variant-numeric: tabular-nums;
 }
 
 .image-numbering-component__current{
@@ -31,15 +32,15 @@
 }
 
 .image-numbering-component__slash{
-    left: 1.35ch;
+    left: 2.00ch;
 }
 
 .image-numbering-component__total{
-    left: 2.1ch;
+    left: 3.25ch;
 }
 
 .slide-show-with-side-show-images.is-article-open .image-numbering-component__number {
-  width: 2.2ch;
+  width: 3.4ch;
   height: 2.8em;
   font-size: 1.5rem;
 }

@@ -4,7 +4,7 @@ justify-content: center;
 align-items: center;
 top: 25px;
 height: 100vh;
-font-family: "Bungee", sans-serif;
+font-family: "Playfair Display", sans-serif;
 }
 
 .slide-show-with-side-show-images {
@@ -167,6 +167,12 @@ overflow: hidden;
     opacity: 1;
     transform: scale(1.02);
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+}
+
+@media (min-width: 601px) {
+    .large-image-description{
+      display: none;
+    }
 }
 
 @media (max-width: 600px) {

@@ -21,6 +21,10 @@
     const articleTextEl = section.querySelector(".slide-show-article-text");
     const articleExtraImagesEl = section.querySelector(".slide-show-article-extra-images");
     const articleCloseBtn = section.querySelector(".slide-show-article-close");
+    const timeValueEl = section.querySelector('[data-meta="time"]');
+    const weatherValueEl = section.querySelector('[data-meta="field2"]');
+    const flagValueEl = section.querySelector('[data-meta="field3"]');
+    const countryValueEl = section.querySelector('[data-meta="field4"]');
     const articleMap = data.articles && typeof data.articles === "object"
       ? data.articles
       : {};
@@ -44,6 +48,154 @@
       const fileName = getFileName(path);
       const entry = articleMap[path] || articleMap[fileName];
       return entry && typeof entry === "object" ? entry : null;
+    };
+    const isValidTimeZone = (timeZone) => {
+      if (!timeZone || typeof timeZone !== "string") return false;
+      try {
+        new Intl.DateTimeFormat("en-GB", { timeZone }).format(new Date());
+        return true;
+      } catch (error) {
+        return false;
+      }
+    };
+    const weatherCodeMap = {
+      0: "Clear",
+      1: "Mainly clear",
+      2: "Partly cloudy",
+      3: "Overcast",
+      45: "Fog",
+      48: "Rime fog",
+      51: "Light drizzle",
+      53: "Drizzle",
+      55: "Dense drizzle",
+      56: "Freezing drizzle",
+      57: "Heavy freezing drizzle",
+      61: "Light rain",
+      63: "Rain",
+      65: "Heavy rain",
+      66: "Freezing rain",
+      67: "Heavy freezing rain",
+      71: "Light snow",
+      73: "Snow",
+      75: "Heavy snow",
+      77: "Snow grains",
+      80: "Rain showers",
+      81: "Rain showers",
+      82: "Violent showers",
+      85: "Snow showers",
+      86: "Heavy snow showers",
+      95: "Thunderstorm",
+      96: "Thunderstorm hail",
+      99: "Severe thunderstorm hail"
+    };
+
+    let currentTimeZone = "";
+    let currentLatitude = null;
+    let currentLongitude = null;
+    let currentCountryCode = "";
+    let timeTimerId = null;
+    const weatherCache = new Map();
+    const countryCache = new Map();
+    const updateLiveTime = () => {
+      if (!timeValueEl) return;
+      if (!isValidTimeZone(currentTimeZone)) {
+        timeValueEl.textContent = "Add timezone";
+        return;
+      }
+      const timeText = new Intl.DateTimeFormat("en-GB", {
+        timeZone: currentTimeZone,
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false
+      }).format(new Date());
+      timeValueEl.textContent = timeText;
+    };
+    const startLiveTime = () => {
+      if (timeTimerId) clearInterval(timeTimerId);
+      updateLiveTime();
+      timeTimerId = window.setInterval(updateLiveTime, 1000);
+    };
+    const stopLiveTime = () => {
+      if (timeTimerId) {
+        clearInterval(timeTimerId);
+        timeTimerId = null;
+      }
+    };
+    const toNumber = (value) => {
+      const n = Number(value);
+      return Number.isFinite(n) ? n : null;
+    };
+    const updateWeather = async () => {
+      if (!weatherValueEl) return;
+      if (!Number.isFinite(currentLatitude) || !Number.isFinite(currentLongitude)) {
+        weatherValueEl.textContent = "Add coordinates";
+        return;
+      }
+
+      const key = `${currentLatitude.toFixed(4)},${currentLongitude.toFixed(4)}`;
+      const cached = weatherCache.get(key);
+      const now = Date.now();
+      if (cached && now - cached.ts < 5 * 60 * 1000) {
+        weatherValueEl.textContent = cached.value;
+        return;
+      }
+
+      weatherValueEl.textContent = "Loading...";
+      try {
+        const url = `https://api.open-meteo.com/v1/forecast?latitude=${encodeURIComponent(currentLatitude)}&longitude=${encodeURIComponent(currentLongitude)}&current=temperature_2m,weather_code`;
+        const response = await fetch(url, { headers: { Accept: "application/json" } });
+        if (!response.ok) {
+          throw new Error(`Weather fetch failed with ${response.status}`);
+        }
+        const json = await response.json();
+        const current = json && json.current ? json.current : null;
+        const temp = current && typeof current.temperature_2m === "number" ? Math.round(current.temperature_2m) : null;
+        const code = current && typeof current.weather_code === "number" ? current.weather_code : null;
+        if (temp == null || code == null) {
+          throw new Error("Weather payload missing fields");
+        }
+        const condition = weatherCodeMap[code] || "Weather";
+        const text = `${temp}C - ${condition}`;
+        weatherCache.set(key, { ts: now, value: text });
+        weatherValueEl.textContent = text;
+      } catch (error) {
+        weatherValueEl.textContent = "Weather unavailable";
+      }
+    };
+    const updateCountryInfo = async () => {
+      if (!countryValueEl) return;
+      const code = (currentCountryCode || "").trim().toLowerCase();
+      if (!/^[a-z]{2}$/.test(code)) {
+        countryValueEl.textContent = "Add country code";
+        return;
+      }
+
+      if (countryCache.has(code)) {
+        countryValueEl.textContent = countryCache.get(code);
+        return;
+      }
+
+      countryValueEl.textContent = "Loading...";
+      try {
+        const url = `https://restcountries.com/v3.1/alpha/${encodeURIComponent(code)}?fields=capital,region,subregion`;
+        const response = await fetch(url, { headers: { Accept: "application/json" } });
+        if (!response.ok) {
+          throw new Error(`Country fetch failed with ${response.status}`);
+        }
+        const payload = await response.json();
+        const country = Array.isArray(payload) ? payload[0] : payload;
+        const capital = country && Array.isArray(country.capital) && country.capital[0]
+          ? country.capital[0]
+          : null;
+        const region = country && typeof country.subregion === "string" && country.subregion
+          ? country.subregion
+          : (country && typeof country.region === "string" ? country.region : null);
+        const value = [capital, region].filter(Boolean).join(" - ") || "Unavailable";
+        countryCache.set(code, value);
+        countryValueEl.textContent = value;
+      } catch (error) {
+        countryValueEl.textContent = "Unavailable";
+      }
     };
 
     const renderArticle = (src) => {
@@ -81,6 +233,26 @@
       }
       if (articleTextEl) {
         articleTextEl.textContent = articleData.story || getDescription(src) || "Add your story here.";
+      }
+
+      currentTimeZone = typeof articleData.timezone === "string" ? articleData.timezone : "";
+      updateLiveTime();
+      currentLatitude = toNumber(articleData.latitude);
+      currentLongitude = toNumber(articleData.longitude);
+      void updateWeather();
+      currentCountryCode = typeof articleData.country_code === "string" ? articleData.country_code : "";
+      void updateCountryInfo();
+
+      if (flagValueEl) {
+        const codeRaw = typeof articleData.country_code === "string" ? articleData.country_code : "";
+        const code = codeRaw.trim().toLowerCase();
+        flagValueEl.innerHTML = "";
+        if (/^[a-z]{2}$/.test(code)) {
+          const flag = document.createElement("span");
+          flag.className = `fi fi-${code}`;
+          flag.setAttribute("aria-label", `Flag ${code.toUpperCase()}`);
+          flagValueEl.appendChild(flag);
+        }
       }
 
       if (articleExtraImagesEl) {
@@ -200,12 +372,14 @@
       renderArticle(largeImage.src);
       galleryFrame.classList.add("is-article-open");
       isArticleOpen = true;
+      startLiveTime();
       playArticleIntro();
     };
 
     const closeArticle = () => {
       galleryFrame.classList.remove("is-article-open");
       isArticleOpen = false;
+      stopLiveTime();
       if (introTimerId) {
         clearTimeout(introTimerId);
         introTimerId = null;
@@ -235,6 +409,7 @@
       onImageChange: (src) => {
         if (!isArticleOpen) return;
         renderArticle(src);
+        startLiveTime();
         playArticleIntro();
       }
     };
