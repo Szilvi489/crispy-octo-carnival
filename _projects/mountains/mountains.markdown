@@ -15,6 +15,9 @@ scripts:
   - /assets/js/projects/mountains/slideShowWithSideShow.js
   - /assets/js/projects/mountains/imageNumberingComponent.js
 
+fonts:
+  - https://fonts.googleapis.com/css2?family=Bungee&family=Rubik+Glitch&display=swap
+
 
 navSquareColour: "#555461"
 

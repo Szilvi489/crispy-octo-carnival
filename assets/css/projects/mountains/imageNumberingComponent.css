@@ -1,0 +1,20 @@
+.image-numbering-component{
+    position: absolute;
+    top: 50vh;
+    left: 2vw;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-family: "Bungee", sans-serif;
+    font-size: 0.9rem;
+    z-index: 10;
+}
+
+@media (max-width: 600px) {
+    .image-numbering-component{
+        top: 3vh;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+}

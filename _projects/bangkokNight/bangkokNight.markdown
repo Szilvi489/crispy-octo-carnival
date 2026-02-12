@@ -10,6 +10,10 @@ permalink: /projects/bangkok-night/
 stylesheets: 
   - /assets/css/projects/bangkokNight/bangkokNightStylesheet.css
 
+#list of fonts you want to use in this project
+fonts:
+  - https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap
+
 #the java script of this project
 scripts:
   - /assets/js/projects/bangkokNight/bangkokNight.js

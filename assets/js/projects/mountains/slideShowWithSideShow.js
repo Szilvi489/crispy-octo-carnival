@@ -212,6 +212,12 @@
       } else {
         centerThumb(activeThumb, false);
       }
+      section.dispatchEvent(new CustomEvent("slideshow:indexchange", {
+        detail: {
+          index: activeIndex + 1,
+          total: thumbs.length
+        }
+      }));
     };
 
     let currentIndex = 0;
