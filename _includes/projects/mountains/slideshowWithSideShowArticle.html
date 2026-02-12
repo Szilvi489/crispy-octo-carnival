@@ -1,9 +1,21 @@
 <article class="slide-show-article-panel" aria-live="polite">
-  <button class="slide-show-article-close" type="button">Back to gallery</button>
-  <h3 class="slide-show-article-title"></h3>
-  <p class="slide-show-article-text"></p>
-  <figure class="slide-show-article-map-wrap">
-    <img class="slide-show-article-map" alt="">
-  </figure>
-  <div class="slide-show-article-extra-images"></div>
+  <button class="slide-show-article-close" type="button" style="--navFontColour: {{ page.navFontColour | default: site.navFontColour }};" aria-label="Close article">
+    <i class="fa-solid fa-arrow-left-long" aria-hidden="true"></i>
+  </button>
+  <h2 class="slide-show-article-intro-title" aria-hidden="true">
+    <span class="slide-show-article-intro-main"></span>
+    <span class="slide-show-article-intro-sub"></span>
+  </h2>
+  <div class="slide-show-article-content">
+     <div class="slide-show-article-content-box1">
+     <h3 class="slide-show-article-title"></h3>
+     <p class="slide-show-article-text"></p>
+     <div class="slide-show-article-extra-images"></div>
+   </div>
+    <div class="slide-show-article-content-box2">
+      <div class="slide-show-article-image slide-show-article-image-a"></div>
+      <div class="slide-show-article-image slide-show-article-image-b"></div>
+      <div class="slide-show-article-image slide-show-article-image-c"></div>
+    </div>
+  </div>
 </article>

@@ -128,38 +128,6 @@ overflow: hidden;
     pointer-events: auto;
 }
 
-.slide-show-article-close{
-    align-self: flex-start;
-    border: 1px solid #333;
-    background: #fff;
-    color: #222;
-    font-size: 0.8rem;
-    padding: 6px 10px;
-    cursor: pointer;
-}
-
-.slide-show-article-title{
-    margin: 0;
-    font-size: 1.35rem;
-}
-
-.slide-show-article-text{
-    margin: 0;
-    line-height: 1.55;
-}
-
-.slide-show-article-map-wrap{
-    margin: 0;
-    width: min(280px, 100%);
-}
-
-.slide-show-article-map{
-    display: block;
-    width: 100%;
-    aspect-ratio: 1 / 1;
-    object-fit: cover;
-}
-
 .slide-show-article-extra-images{
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
