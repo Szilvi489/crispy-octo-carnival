@@ -41,6 +41,7 @@
     --article-unfold-mid-side: 3%;
 }
 
+
 .slide-show-with-side-show-images.is-article-open .slide-show-article-panel.is-article-cursor-active,
 .slide-show-with-side-show-images.is-article-open .slide-show-article-panel.is-article-cursor-active *{
     cursor: none !important;
@@ -70,8 +71,8 @@
 .slide-show-article-content{
     position: relative;
     z-index: 3;
-    width: 90vw;
-    height: 90vh;
+    width: 88vw;
+    height: 88vh;
     overflow: hidden;
     display: grid;
     grid-template-columns: minmax(280px, 30vw) 1fr;

@@ -29,6 +29,10 @@ overflow: hidden;
     color: #1e1e24;
 }
 
+.large-image-mobile-title{
+    display: none;
+}
+
 .large-image-description,
 .large-image-container,
 .slide-images-container{
@@ -182,6 +186,19 @@ overflow: hidden;
 
   .large-image-description {
     display: none;
+  }
+
+  .large-image-mobile-title{
+    display: block;
+    position: absolute;
+    top: 72vh;
+    width: 85%;
+    margin-top: -1.2vh;
+    text-align: left;
+    font-size: 0.72rem;
+    line-height: 1.25;
+    color: #1e1e24;
+    letter-spacing: 0.02em;
   }
 
   .binocular-cursor {

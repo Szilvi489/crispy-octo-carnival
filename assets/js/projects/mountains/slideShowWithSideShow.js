@@ -29,6 +29,7 @@
 
     const largeImage = section.querySelector(".large-image");
     const descriptionEl = section.querySelector(".large-image-description");
+    const mobileTitleEl = section.querySelector(".large-image-mobile-title");
     const largeImageContainer = section.querySelector(".large-image-container");
     const thumbsWrap = section.querySelector(".slide-images-container");
     if (!largeImage || !largeImageContainer || !thumbsWrap || !Array.isArray(data.all)) {
@@ -36,6 +37,9 @@
     }
     const descriptionMap = data.descriptions && typeof data.descriptions === "object"
       ? data.descriptions
+      : {};
+    const articleMap = data.articles && typeof data.articles === "object"
+      ? data.articles
       : {};
 
     let thumbs = Array.from(thumbsWrap.querySelectorAll(".slide-images"));
@@ -71,6 +75,15 @@
       const path = getImagePath(src);
       const fileName = getFileName(path);
       return descriptionMap[path] || descriptionMap[fileName] || "";
+    };
+    const getTitle = (src) => {
+      const path = getImagePath(src);
+      const fileName = getFileName(path);
+      const article = articleMap[path] || articleMap[fileName];
+      if (article && typeof article === "object" && typeof article.title === "string") {
+        return article.title;
+      }
+      return "";
     };
 
     const desktopMq = window.matchMedia(DESKTOP_MEDIA_QUERY);
@@ -200,6 +213,9 @@
       }
       if (descriptionEl) {
         descriptionEl.textContent = getDescription(activeThumb.src);
+      }
+      if (mobileTitleEl) {
+        mobileTitleEl.textContent = getTitle(activeThumb.src) || getDescription(activeThumb.src);
       }
       if (articleController && typeof articleController.onImageChange === "function") {
         articleController.onImageChange(activeThumb.src);

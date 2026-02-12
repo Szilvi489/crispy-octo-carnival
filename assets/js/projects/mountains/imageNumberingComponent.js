@@ -24,7 +24,7 @@
         const render = (index) => {
             const safeTotal = total || 1;
             const safeIndex = Math.min(Math.max(index, 1), safeTotal);
-            numberEl.textContent = `${safeIndex} / ${safeTotal}`;
+            numberEl.innerHTML = `<span class="image-numbering-component__current">${safeIndex}</span><span class="image-numbering-component__slash">/</span><span class="image-numbering-component__total">${safeTotal}</span>`;
         };
 
         render(1);
