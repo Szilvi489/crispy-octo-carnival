@@ -7,10 +7,13 @@ stylesheets:
   - /assets/css/projects/mountains/mountainsStylesheet.css
   - /assets/css/projects/mountains/slideShowWithSideShow.css
   - /assets/css/projects/mountains/slideShowWithSideShowArticle.css
+  - /assets/css/projects/mountains/imageNumberingComponent.css
 
 scripts:
   - /assets/js/projects/mountains/mountains.js
+  - /assets/js/projects/mountains/slideShowWithSideShowArticle.js
   - /assets/js/projects/mountains/slideShowWithSideShow.js
+  - /assets/js/projects/mountains/imageNumberingComponent.js
 
 
 navSquareColour: "#555461"
