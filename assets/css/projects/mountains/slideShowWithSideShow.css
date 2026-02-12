@@ -77,6 +77,10 @@ overflow: hidden;
     cursor: none;
 }
 
+.slide-show-with-side-show-images.is-article-open .large-image-container.is-binocular-active .large-image{
+    cursor: auto;
+}
+
 .binocular-cursor{
     position: absolute;
     display: none;
@@ -92,6 +96,10 @@ overflow: hidden;
 
 .binocular-cursor.is-visible{
     display: grid;
+}
+
+.slide-show-with-side-show-images.is-article-open .binocular-cursor{
+    display: none !important;
 }
 
 .binocular-pane{

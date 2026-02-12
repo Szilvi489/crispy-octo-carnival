@@ -123,12 +123,17 @@
         data,
         largeImage,
         binocular,
+        hideBinocular,
         desktopMq,
         getDescription
       })
       : null;
 
     const updateBinocularPosition = (event) => {
+      if (galleryFrame && galleryFrame.classList.contains("is-article-open")) {
+        hideBinocular();
+        return;
+      }
       if (!desktopMq.matches || !largeImage.src) {
         hideBinocular();
         return;

@@ -1,14 +1,10 @@
 (() => {
-  const BINOCULAR_ZOOM = 2;
-  const ARTICLE_CURSOR_SIZE = 76;
-
-  const clamp = (v, min, max) => Math.min(Math.max(v, min), max);
-
   window.setupSlideShowWithSideShowArticle = ({
     section,
     data,
     largeImage,
     binocular,
+    hideBinocular,
     desktopMq,
     getDescription
   }) => {
@@ -284,28 +280,6 @@
       binocular.appendChild(clickHint);
     }
 
-    const paneClasses = [
-      "top-left",
-      "top-right",
-      "bottom-left",
-      "bottom-right"
-    ];
-    const articleCursor = document.createElement("div");
-    articleCursor.className = "article-binocular-cursor";
-    articleCursor.setAttribute("aria-hidden", "true");
-    const articlePanes = paneClasses.map((positionClass) => {
-      const pane = document.createElement("div");
-      pane.className = `${positionClass} article-binocular-pane`;
-      articleCursor.appendChild(pane);
-      return pane;
-    });
-    articlePanel.appendChild(articleCursor);
-
-    const hideArticleCursor = () => {
-      articleCursor.classList.remove("is-visible");
-      articlePanel.classList.remove("is-article-cursor-active");
-    };
-
     let isArticleOpen = false;
     let introTimerId = null;
     const playArticleIntro = () => {
@@ -321,54 +295,14 @@
       }, 4250);
     };
 
-    const updateArticleCursor = (event) => {
-      if (!desktopMq.matches || !isArticleOpen) {
-        hideArticleCursor();
-        return;
-      }
-      const rect = articlePanel.getBoundingClientRect();
-      if (!rect.width || !rect.height) {
-        hideArticleCursor();
-        return;
-      }
-
-      const x = clamp(event.clientX - rect.left, 0, rect.width);
-      const y = clamp(event.clientY - rect.top, 0, rect.height);
-      const paneSize = ARTICLE_CURSOR_SIZE / 2;
-      const quarter = ARTICLE_CURSOR_SIZE / 4;
-
-      articleCursor.style.width = `${ARTICLE_CURSOR_SIZE}px`;
-      articleCursor.style.height = `${ARTICLE_CURSOR_SIZE}px`;
-      articleCursor.style.left = `${event.clientX - ARTICLE_CURSOR_SIZE / 2}px`;
-      articleCursor.style.top = `${event.clientY - ARTICLE_CURSOR_SIZE / 2}px`;
-
-      const bgSize = `${rect.width * BINOCULAR_ZOOM}px ${rect.height * BINOCULAR_ZOOM}px`;
-      const imgUrl = `url("${largeImage.src}")`;
-      const sourceOffsets = [
-        { dx: quarter, dy: quarter },
-        { dx: -quarter, dy: quarter },
-        { dx: quarter, dy: -quarter },
-        { dx: -quarter, dy: -quarter }
-      ];
-
-      articlePanes.forEach((pane, i) => {
-        const sourceX = clamp(x + sourceOffsets[i].dx, 0, rect.width);
-        const sourceY = clamp(y + sourceOffsets[i].dy, 0, rect.height);
-        const posX = paneSize / 2 - sourceX * BINOCULAR_ZOOM;
-        const posY = paneSize / 2 - sourceY * BINOCULAR_ZOOM;
-        pane.style.width = `${paneSize}px`;
-        pane.style.height = `${paneSize}px`;
-        pane.style.backgroundImage = imgUrl;
-        pane.style.backgroundSize = bgSize;
-        pane.style.backgroundPosition = `${posX}px ${posY}px`;
-      });
-
-      articleCursor.classList.add("is-visible");
-      articlePanel.classList.add("is-article-cursor-active");
-    };
-
     const openArticle = () => {
       if (!desktopMq.matches || !largeImage.src) return;
+      if (typeof hideBinocular === "function") {
+        hideBinocular();
+      }
+      if (binocular) {
+        binocular.style.display = "none";
+      }
       renderArticle(largeImage.src);
       galleryFrame.classList.add("is-article-open");
       isArticleOpen = true;
@@ -379,13 +313,18 @@
     const closeArticle = () => {
       galleryFrame.classList.remove("is-article-open");
       isArticleOpen = false;
+      if (typeof hideBinocular === "function") {
+        hideBinocular();
+      }
+      if (binocular) {
+        binocular.style.removeProperty("display");
+      }
       stopLiveTime();
       if (introTimerId) {
         clearTimeout(introTimerId);
         introTimerId = null;
       }
       articlePanel.classList.remove("is-intro-playing");
-      hideArticleCursor();
     };
 
     largeImage.addEventListener("click", openArticle);
@@ -395,15 +334,11 @@
     if (articleCloseBtn) {
       articleCloseBtn.addEventListener("click", closeArticle);
     }
-    articlePanel.addEventListener("mouseenter", updateArticleCursor);
-    articlePanel.addEventListener("mousemove", updateArticleCursor);
-    articlePanel.addEventListener("mouseleave", hideArticleCursor);
     document.addEventListener("keydown", (event) => {
       if (event.key === "Escape" && isArticleOpen) {
         closeArticle();
       }
     });
-    window.addEventListener("resize", hideArticleCursor);
 
     return {
       onImageChange: (src) => {
