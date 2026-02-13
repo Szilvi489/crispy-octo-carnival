@@ -16,11 +16,19 @@
     const articleIntroSubEl = section.querySelector(".slide-show-article-intro-sub");
     const articleTextEl = section.querySelector(".slide-show-article-text");
     const articleExtraImagesEl = section.querySelector(".slide-show-article-extra-images");
+    const articleMetaBoxEl = section.querySelector(".slide-show-article-content-box2");
+    const articleContainerAEl = section.querySelector(".slide-show-article-container-a");
+    const articleContainerBEl = section.querySelector(".slide-show-article-container-b");
+    const articleContainerCEl = section.querySelector(".slide-show-article-container-c");
+    const articleContentBox3El = section.querySelector(".slide-show-article-content-box3");
+    const articleMapImageWrapEl = section.querySelector(".slide-show-article-container-a");
+    const articleMapImageEl = section.querySelector(".slide-show-article-map-image");
     const articleCloseBtn = section.querySelector(".slide-show-article-close");
     const timeValueEl = section.querySelector('[data-meta="time"]');
     const weatherValueEl = section.querySelector('[data-meta="field2"]');
     const flagValueEl = section.querySelector('[data-meta="field3"]');
     const countryValueEl = section.querySelector('[data-meta="field4"]');
+    const localNameEl = section.querySelector(".local-name");
     const articleMap = data.articles && typeof data.articles === "object"
       ? data.articles
       : {};
@@ -28,6 +36,7 @@
     if (!galleryFrame || !articlePanel || !largeImage || !desktopMq) {
       return null;
     }
+
 
     const getImagePath = (src) => {
       let path = src || "";
@@ -39,12 +48,28 @@
       return path;
     };
     const getFileName = (path) => (path.split("/").pop() || "").trim();
+    const resolveMapImageSrc = (mapImageName) => {
+      if (!mapImageName || typeof mapImageName !== "string") return "";
+      const trimmed = mapImageName.trim();
+      if (!trimmed) return "";
+      if (/^https?:\/\//i.test(trimmed) || trimmed.startsWith("/")) {
+        return trimmed;
+      }
+      return `/assets/images/projects/mountains/maps/${trimmed}`;
+    };
     const getArticleData = (src) => {
       const path = getImagePath(src);
       const fileName = getFileName(path);
       const entry = articleMap[path] || articleMap[fileName];
       return entry && typeof entry === "object" ? entry : null;
     };
+
+    const getLocalName = (articleData) => {
+      const localName = articleData?.local_name;
+      return typeof localName === "string" && localName.trim() ? localName.trim() : "";
+    };
+
+
     const isValidTimeZone = (timeZone) => {
       if (!timeZone || typeof timeZone !== "string") return false;
       try {
@@ -55,34 +80,34 @@
       }
     };
     const weatherCodeMap = {
-      0: "Clear",
-      1: "Mainly clear",
-      2: "Partly cloudy",
-      3: "Overcast",
-      45: "Fog",
-      48: "Rime fog",
-      51: "Light drizzle",
-      53: "Drizzle",
-      55: "Dense drizzle",
-      56: "Freezing drizzle",
-      57: "Heavy freezing drizzle",
-      61: "Light rain",
-      63: "Rain",
-      65: "Heavy rain",
-      66: "Freezing rain",
-      67: "Heavy freezing rain",
-      71: "Light snow",
-      73: "Snow",
-      75: "Heavy snow",
-      77: "Snow grains",
-      80: "Rain showers",
-      81: "Rain showers",
-      82: "Violent showers",
-      85: "Snow showers",
-      86: "Heavy snow showers",
-      95: "Thunderstorm",
-      96: "Thunderstorm hail",
-      99: "Severe thunderstorm hail"
+      0: "Clear ☀️",
+      1: "Mainly clear 🌤️",
+      2: "Partly cloudy ⛅",
+      3: "Overcast ☁️",
+      45: "Fog 🌫️",
+      48: "Rime fog 🌫️",
+      51: "Light drizzle 🌦️",
+      53: "Drizzle 🌦️",
+      55: "Dense drizzle 🌧️",
+      56: "Freezing drizzle 🧊",
+      57: "Heavy freezing drizzle 🧊",
+      61: "Light rain 🌦️",
+      63: "Rain 🌧️",
+      65: "Heavy rain 🌧️",
+      66: "Freezing rain 🧊",
+      67: "Heavy freezing rain 🧊",
+      71: "Light snow 🌨️",
+      73: "Snow ❄️",
+      75: "Heavy snow ❄️",
+      77: "Snow grains ❄️",
+      80: "Rain showers 🌦️",
+      81: "Rain showers 🌦️",
+      82: "Violent showers ⛈️",
+      85: "Snow showers 🌨️",
+      86: "Heavy snow showers 🌨️",
+      95: "Thunderstorm ⛈️",
+      96: "Thunderstorm hail ⛈️",
+      99: "Severe thunderstorm hail ⛈️"
     };
 
     let currentTimeZone = "";
@@ -196,6 +221,7 @@
 
     const renderArticle = (src) => {
       const articleData = getArticleData(src) || {};
+      const localName = getLocalName(articleData);
       const path = getImagePath(src);
       const fileName = getFileName(path);
       const readableName = fileName ? fileName.replace(/\.[^/.]+$/, "") : "Photo";
@@ -229,6 +255,25 @@
       }
       if (articleTextEl) {
         articleTextEl.textContent = articleData.story || getDescription(src) || "Add your story here.";
+      }
+      if (articleMapImageEl && articleMapImageWrapEl) {
+        const mapSrc = resolveMapImageSrc(articleData.map_image_name);
+        if (mapSrc) {
+          articleMapImageEl.src = mapSrc;
+          articleMapImageEl.alt = `${fullTitle} map`;
+          articleMapImageWrapEl.classList.remove("is-empty");
+        } else {
+          articleMapImageEl.removeAttribute("src");
+          articleMapImageEl.alt = "";
+          articleMapImageWrapEl.classList.add("is-empty");
+        }
+      }
+
+      if (localNameEl) {
+        localNameEl.textContent = localName;
+      }
+      if (articleContentBox3El) {
+        articleContentBox3El.classList.remove("is-revealed");
       }
 
       currentTimeZone = typeof articleData.timezone === "string" ? articleData.timezone : "";
@@ -273,15 +318,57 @@
       }
     };
 
-    const clickHint = document.createElement("span");
-    clickHint.className = "binocular-click-hint";
-    clickHint.textContent = "click";
-    if (binocular) {
-      binocular.appendChild(clickHint);
-    }
-
     let isArticleOpen = false;
     let introTimerId = null;
+    let metaRevealRafId = null;
+    let hasMetaRevealed = false;
+    const updateMetaRevealState = () => {
+      if (!articleMetaBoxEl) return;
+      if (!isArticleOpen) {
+        articleMetaBoxEl.classList.remove("is-visible");
+        hasMetaRevealed = false;
+        return;
+      }
+      if (hasMetaRevealed) return;
+      const revealAt = Math.max(1, articleMetaBoxEl.offsetTop - articlePanel.clientHeight * 0.9);
+      if (articlePanel.scrollTop >= revealAt) {
+        articleMetaBoxEl.classList.add("is-visible");
+        hasMetaRevealed = true;
+      }
+    };
+    const updateContainerSideExitState = () => {
+      if (!articleMetaBoxEl || !articleContainerAEl || !articleContainerBEl) return;
+      if (!isArticleOpen) {
+        articleMetaBoxEl.classList.remove("is-past-mid");
+        return;
+      }
+      const panelRect = articlePanel.getBoundingClientRect();
+      const boxRect = articleMetaBoxEl.getBoundingClientRect();
+      const panelMid = panelRect.top + panelRect.height * 0.4;
+      const boxMid = boxRect.top + boxRect.height * 0.5;
+      articleMetaBoxEl.classList.toggle("is-past-mid", boxMid < panelMid);
+    };
+    const updateBox3RevealState = () => {
+      if (!articlePanel || !articleContainerCEl || !articleContentBox3El) return;
+      if (!isArticleOpen) {
+        articleContentBox3El.classList.remove("is-revealed");
+        return;
+      }
+
+      const panelRect = articlePanel.getBoundingClientRect();
+      const panelMid = panelRect.top + panelRect.height * 0.5;
+      const containerCMid = articleContainerCEl.getBoundingClientRect().top + (articleContainerCEl.getBoundingClientRect().height * 0.5);
+      articleContentBox3El.classList.toggle("is-revealed", containerCMid < panelMid);
+    };
+    const queueMetaRevealUpdate = () => {
+      if (metaRevealRafId) return;
+      metaRevealRafId = window.requestAnimationFrame(() => {
+        metaRevealRafId = null;
+        updateMetaRevealState();
+        updateContainerSideExitState();
+        updateBox3RevealState();
+      });
+    };
     const playArticleIntro = () => {
       if (introTimerId) {
         clearTimeout(introTimerId);
@@ -300,14 +387,21 @@
       if (typeof hideBinocular === "function") {
         hideBinocular();
       }
-      if (binocular) {
-        binocular.style.display = "none";
-      }
       renderArticle(largeImage.src);
       galleryFrame.classList.add("is-article-open");
       isArticleOpen = true;
+      articlePanel.scrollTop = 0;
+      if (articleMetaBoxEl) {
+        articleMetaBoxEl.classList.remove("is-visible");
+        articleMetaBoxEl.classList.remove("is-past-mid");
+      }
+      if (articleContentBox3El) {
+        articleContentBox3El.classList.remove("is-revealed");
+      }
+      hasMetaRevealed = false;
       startLiveTime();
       playArticleIntro();
+      queueMetaRevealUpdate();
     };
 
     const closeArticle = () => {
@@ -318,6 +412,8 @@
       }
       if (binocular) {
         binocular.style.removeProperty("display");
+        binocular.style.removeProperty("visibility");
+        binocular.style.removeProperty("opacity");
       }
       stopLiveTime();
       if (introTimerId) {
@@ -325,6 +421,18 @@
         introTimerId = null;
       }
       articlePanel.classList.remove("is-intro-playing");
+      if (articleMetaBoxEl) {
+        articleMetaBoxEl.classList.remove("is-visible");
+        articleMetaBoxEl.classList.remove("is-past-mid");
+      }
+      if (articleContentBox3El) {
+        articleContentBox3El.classList.remove("is-revealed");
+      }
+      hasMetaRevealed = false;
+      if (metaRevealRafId) {
+        window.cancelAnimationFrame(metaRevealRafId);
+        metaRevealRafId = null;
+      }
     };
 
     largeImage.addEventListener("click", openArticle);
@@ -334,18 +442,19 @@
     if (articleCloseBtn) {
       articleCloseBtn.addEventListener("click", closeArticle);
     }
+    articlePanel.addEventListener("scroll", queueMetaRevealUpdate, { passive: true });
+    window.addEventListener("resize", queueMetaRevealUpdate);
     document.addEventListener("keydown", (event) => {
       if (event.key === "Escape" && isArticleOpen) {
         closeArticle();
       }
     });
-
     return {
       onImageChange: (src) => {
         if (!isArticleOpen) return;
         renderArticle(src);
         startLiveTime();
-        playArticleIntro();
+        queueMetaRevealUpdate();
       }
     };
   };

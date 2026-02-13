@@ -32,6 +32,7 @@
     const mobileTitleEl = section.querySelector(".large-image-mobile-title");
     const largeImageContainer = section.querySelector(".large-image-container");
     const thumbsWrap = section.querySelector(".slide-images-container");
+    const galleryFrame = section.querySelector(".slide-show-with-side-show-images");
     if (!largeImage || !largeImageContainer || !thumbsWrap || !Array.isArray(data.all)) {
       return null;
     }
@@ -179,6 +180,10 @@
         pane.style.backgroundPosition = `${posX}px ${posY}px`;
       });
 
+      // Recover from any stale inline hide styles left by previous runs/hot reload.
+      binocular.style.removeProperty("display");
+      binocular.style.removeProperty("visibility");
+      binocular.style.removeProperty("opacity");
       binocular.classList.add("is-visible");
       largeImageContainer.classList.add("is-binocular-active");
     };
@@ -247,6 +252,10 @@
     setActive(currentIndex, false);
 
     const onWheel = (event) => {
+      if (galleryFrame && galleryFrame.classList.contains("is-article-open")) {
+        // In article mode, let native scrolling handle wheel input.
+        return;
+      }
       const deltaBase = event.deltaY !== 0 ? event.deltaY : event.deltaX;
       if (deltaBase === 0) return;
 

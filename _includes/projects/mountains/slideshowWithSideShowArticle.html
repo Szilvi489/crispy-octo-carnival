@@ -1,6 +1,6 @@
 <article class="slide-show-article-panel" aria-live="polite">
   <button class="slide-show-article-close" type="button" style="--navFontColour: {{ page.navFontColour | default: site.navFontColour }};" aria-label="Close article">
-    <i class="fa-solid fa-arrow-left-long" aria-hidden="true"></i>
+    <span aria-hidden="true">&#8592;</span>
   </button>
   <h2 class="slide-show-article-intro-title" aria-hidden="true">
     <span class="slide-show-article-intro-main"></span>
@@ -10,10 +10,11 @@
     <div class="slide-show-article-content-box1">
       <h3 class="slide-show-article-title"></h3>
       <p class="slide-show-article-text"></p>
-      <div class="slide-show-article-extra-images"></div>
     </div>
     <div class="slide-show-article-content-box2">
-      <div class="slide-show-article-container slide-show-article-container-a"></div>
+      <div class="slide-show-article-container slide-show-article-container-a">
+        <img class="slide-show-article-map-image" alt="" loading="lazy" decoding="async">
+      </div>
       <div class="slide-show-article-container slide-show-article-container-b">
         <div class="slide-show-article-meta-grid">
           <div class="slide-show-article-meta-item slide-show-article-meta-time">
@@ -33,7 +34,12 @@
           </div>
         </div>
       </div>
-      <div class="slide-show-article-container slide-show-article-container-c"></div>
+      <div class="slide-show-article-container slide-show-article-container-c">
+        <p class="local-name"></p>
+      </div>
+    </div>
+    <div class="slide-show-article-content-box3">
+      <div class="slide-show-article-extra-images"></div>
     </div>
   </div>
 </article>
