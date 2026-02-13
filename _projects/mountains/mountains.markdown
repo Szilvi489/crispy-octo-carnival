@@ -194,6 +194,33 @@ gallery_articles:
     story: "From above, northern Turkmenistan looks almost abstract—soft ridges, pale clay, and long shadows stitched across the Ustyurt’s southern edge. The place I’m pointing to is Kaplaňgyr (Gaplaňgyr) Nature Reserve, created in 1979 to protect a harsh but living desert-steppe where antelopes, gazelles, and migrating birds still find seasonal routes and refuges. Nearby, the Sarygamysh basin can turn into a surprising wetland pulse in an otherwise dry world: a reminder that even here, water reshapes everything.Kaplaňgyr feels like the edge of a continent: a wide, wind-scoured plateau where the ground turns to chalky clay and stone, and the horizon looks “too far away.” The reserve was established in 1979 to protect and rebuild northern Turkmenistan’s desert wildlife and plant life.This is a borderland ecosystem—part steppe, part desert—where survival is seasonal. In winter, saiga antelope can move through the region, and the reserve is known for desert ungulates like the goitered gazelle, along with a wide set of birds recorded in the area.One of the most striking nearby features is Sarygamysh Lake (linked to the reserve’s sanctuary system): a large, salty, changeable lake basin that becomes a magnet for migratory birds when conditions are right—an oasis effect in the middle of a harsh landscape."
     extra_images: []
 
+  DSCF4362.jpg:
+    title: "Pass Crossing"
+    country_code: "np"
+    timezone: "Asia/Kathmandu"
+    latitude: 28.2096
+    longitude: 83.9856
+    story: "Add your article paragraph for DSCF4332."
+    extra_images: []
+
+  DSCF4365.jpg:
+    title: "Pass Crossing"
+    country_code: "np"
+    timezone: "Asia/Kathmandu"
+    latitude: 28.2096
+    longitude: 83.9856
+    story: "Add your article paragraph for DSCF4332."
+    extra_images: []
+
+  DSCF4370.jpg:
+    title: "Pass Crossing"
+    country_code: "np"
+    timezone: "Asia/Kathmandu"
+    latitude: 28.2096
+    longitude: 83.9856
+    story: "Add your article paragraph for DSCF4332."
+    extra_images: []
+
   DSCF9865.jpg:
     title: "Pass Crossing"
     country_code: "np"
