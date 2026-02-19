@@ -195,24 +195,48 @@ gallery_articles:
     extra_images: []
 
   DSCF4362.jpg:
-    title: "Pass Crossing"
-    country_code: "np"
-    timezone: "Asia/Kathmandu"
-    latitude: 28.2096
-    longitude: 83.9856
-    story: "Add your article paragraph for DSCF4332."
+    title: "Kaçkar Dağı, Turkey"
+    local_name: "Kaçkar Dağı"
+    country_code: "tr"
+    timezone: "Europe/Istanbul"
+    latitude: 40.84
+    longitude: 41.18
+    capital: "Ankara"
+    region: "Western Asia"
+    map_image_name: "/assets/images/projects/mountains/map_images/kackarDagi.png"
+    story: "From the right-hand window on the plane, the horizon isn’t a line—it’s a layered map: dark water in the far distance, then ranks of ridges, and finally a single summit catching the first warm light. In northeastern Türkiye, that pattern often means the Kaçkar Mountains, the highest and most alpine part of the Pontic range, where steep peaks rise quickly from valleys that run down toward the Black Sea.Kaçkar is not just a peak name—it’s a whole mountain identity. The range has been known historically under other names, including Lazistan Mountains, echoing the region’s cultural geography along the Black Sea. The landscapes here are famously tight: narrow valleys, sharp divides, and high plateaus where weather can change by the hour. When winter snow sits on the shoulders of the ridgelines, the mountains read like carved relief—dark rock, bright snow, then the sea-toned haze behind it.What makes this corner of Türkiye especially dramatic from the air is the proximity of extremes: the moisture and scale of a major sea, and the hard, glaciated character of high mountains. Kaçkar Dağı itself reaches 3937 meters, and the range contains steep rocky peaks and many high mountain lakes—features that give it that stark, sculpted look even when you only glimpse it for minutes.Seen at sunrise, the summit glow becomes a kind of natural signal flare. Down below, countless routes—historic and modern—thread the valleys: seasonal paths between plateaus, river corridors, and passes that have long connected coast to interior. From cruising altitude, you don’t see the footpaths individually; you see the logic of the land that created them."
     extra_images: []
 
   DSCF4365.jpg:
-    title: "Pass Crossing"
-    country_code: "np"
-    timezone: "Asia/Kathmandu"
-    latitude: 28.2096
-    longitude: 83.9856
-    story: "Add your article paragraph for DSCF4332."
-    extra_images: []
+     title: "Kaçkar Mountains, Turkey"
+     local_name: "Kaçkar Dağları"
+     country_code: "tr"
+     timezone: "Europe/Istanbul"
+     latitude: 40.85
+     longitude: 41.10
+     capital: "Ankara"
+     region: "Western Asia"
+     map_image_name: "/assets/images/projects/mountains/map_images/kackarMountains.png"
+     story: "This view looks like a fortress landscape: a broad, high surface capped with snow, cut by cliff edges and broken into amphitheaters of shadow. That ‘tabletop + wall’ geometry is common in the upper parts of the Kaçkar Mountains, where high plateaus sit around roughly the same altitude before dropping suddenly into deep valleys. The Kaçkars are described as alpine in character, with steep peaks, rocky faces, and widespread glaciation in places—exactly the kind of terrain that produces sharp edges and hard contrasts from above.The Kaçkar range also has a layered identity: it can mean the whole chain, or a specific group around the highest peak, depending on local usage. Even the name carries a history—its etymology is commonly linked to the Armenian term khachkar (‘cross stone’), a reminder that these mountains sit in a broader historical crossroads zone of the eastern Black Sea and Caucasus margins.And then there’s the water in the distance—the quiet, dark mass that makes the mountains feel even more vertical. The Kaçkars rise above the Black Sea coast, so it’s possible to have a single gaze that includes sea haze, coastal foothills, and high winter country all at once. That’s why, from an airplane, this region can look almost ‘two-world’: maritime atmosphere up top, alpine severity down below.If you were to visit on foot, you’d find the opposite rhythm: slow climbs to plateaus, sudden descents into valleys, then another staircase of ridges. From the air, it compresses into one instant—a cold crown of snow, cliff shadows, and the sea’s distant, steady presence behind."
+     extra_images: []
 
   DSCF4370.jpg:
+     title: "Pontic Mountains, Turkey"
+     local_name: "Kuzey Anadolu Dağları"
+     country_code: "tr"
+     timezone: "Europe/Istanbul"
+     latitude: 41.10
+     longitude: 41.30
+     capital: "Ankara"
+     region: "Western Asia"
+     map_image_name: "/assets/images/projects/mountains/map_images/ponticMountains.png"
+     story: "In this frame, the geography tells the story in one line: mountains in front, a vast body of water behind. That’s the signature of the Pontic Mountains along Türkiye’s Black Sea rim—where ridges run like long knuckles near the coast, and winter snow stays visible across high ground while the sea sits darker and heavier beyond.
+      The Kaçkar Mountains are the most dramatic high section of this system, described as rising above the Black Sea coast in northeastern Turkey and forming the highest part of the Pontic chain. When your plane tracks west-northwest across this belt, the view can shift quickly: one moment you see inland basins and shadowed valleys; then the horizon opens into a dim, enormous water surface as the coastline comes into range.
+      What makes this coast special is how the sea shapes the mountains. Moist air rolling off the Black Sea meets cold altitudes; weather builds fast; snow lines and cloud lines can sit almost like boundaries drawn on a map. Even when clouds aren’t obvious, the atmosphere thickens toward the water—haze flattening the far distance while the near ridges remain sharp.
+      If you’re using this as a ‘place story’ for your series, the emotional hook here is contrast: a wild, cold spine of rock and snow, and behind it one of the great inland seas of Eurasia. The land looks inhospitable from above, but those valleys and ridges have long held human routes—coastal-to-interior passages, seasonal upland grazing zones, and settlements that learned to live between storm and slope. From altitude, you don’t see the villages—you see the stage they’ve always had to negotiate: steep ground, fast weather, and a sea that never really disappears."
+     extra_images: []
+
+  DSCF4371.jpg:
     title: "Pass Crossing"
     country_code: "np"
     timezone: "Asia/Kathmandu"
@@ -221,7 +245,43 @@ gallery_articles:
     story: "Add your article paragraph for DSCF4332."
     extra_images: []
 
-  DSCF9865.jpg:
+  DSCF4377.jpg:
+    title: "Pass Crossing"
+    country_code: "np"
+    timezone: "Asia/Kathmandu"
+    latitude: 28.2096
+    longitude: 83.9856
+    story: "Add your article paragraph for DSCF4332."
+    extra_images: []
+
+  DSCF4380.jpg:
+    title: "Pass Crossing"
+    country_code: "np"
+    timezone: "Asia/Kathmandu"
+    latitude: 28.2096
+    longitude: 83.9856
+    story: "Add your article paragraph for DSCF4332."
+    extra_images: []
+
+  DSCF4382.jpg:
+    title: "Pass Crossing"
+    country_code: "np"
+    timezone: "Asia/Kathmandu"
+    latitude: 28.2096
+    longitude: 83.9856
+    story: "Add your article paragraph for DSCF4332."
+    extra_images: []
+
+  DSCF4383.jpg:
+    title: "Pass Crossing"
+    country_code: "np"
+    timezone: "Asia/Kathmandu"
+    latitude: 28.2096
+    longitude: 83.9856
+    story: "Add your article paragraph for DSCF4332."
+    extra_images: []
+
+  DSCF4393.jpg:
     title: "Pass Crossing"
     country_code: "np"
     timezone: "Asia/Kathmandu"
