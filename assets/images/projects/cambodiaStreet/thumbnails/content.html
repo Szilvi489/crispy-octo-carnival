@@ -1,6 +1,5 @@
 <section class="project-page-section" style="--backgroundColour: {{ page.backgroundColour | default: site.backgroundColour }}; --fontColour: {{ page.fontColour | default: site.fontColour }};">
     <div class="projects-page-flexbox">
-      <p class="counter">0</p>
         {% for project in site.projects %}
         <div class="project-card-flexbox">
             <div class="project-card-title-overlay">
@@ -18,6 +17,8 @@
                     </a>
                   {% endif %}
                 {% endfor %}
+
+    
             </div>
         </div>
         {% endfor %}
