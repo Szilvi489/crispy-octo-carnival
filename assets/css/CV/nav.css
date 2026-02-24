@@ -6,6 +6,7 @@
 }
 
 .cv-nav a{
-    
+    color: rgb(255, 63, 15);
+    font-family: "Playfair Display", sans-serif;
     text-decoration: none;
 }

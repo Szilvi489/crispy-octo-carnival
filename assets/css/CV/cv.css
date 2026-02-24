@@ -1,0 +1,18 @@
+.cv-section{
+    cursor: cell;
+}
+
+.cv-content.page-loading{
+display: none;
+}
+
+.page-loader-anim{
+
+}
+.page-loader-content h1{
+    font-family:"Rubik Mono One", sans-serif ;
+}
+
+.cv-content{
+    background-color: rgb(43, 27, 27);
+}

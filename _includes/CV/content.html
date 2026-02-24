@@ -1,4 +1,10 @@
 <section class="cv-section">
+    <div class="page-loader-anim">
+        <div class="page-loader-content">
+            <h1 class="page-loader-text">{{page.pageLoaderText}}</h1>
+        </div>
+    </div>
+    <div class="cv-content">
     {%- include CV/nav.html -%}
     {%- include CV/intro.html -%}
     {%- include CV/education.html -%}
@@ -7,4 +13,6 @@
     {%- include CV/programmingProjects.html -%}
     {%- include CV/personal.html -%}
     {%- include CV/dreamjob.html -%}
+    </div>
 </section>
+

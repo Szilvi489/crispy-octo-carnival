@@ -94,10 +94,18 @@
     object-fit: cover;
     backface-visibility: hidden;
     transform: translateZ(0);
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 180ms ease;
 }
 
 .project-page-section.page-loading .projects-page-flexbox {
     filter: blur(var(--loading-blur));
+}
+
+.project-card-images-flexbox img:not(.is-loaded) {
+    opacity: 0;
+    visibility: hidden;
 }
 .counter.page-loading{
    display: block;

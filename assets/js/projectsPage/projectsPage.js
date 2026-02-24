@@ -3,9 +3,11 @@
     var counter = document.querySelector(".counter");
     var pageSection = document.querySelector(".project-page-section");
     var imageRows = document.querySelectorAll(".project-card-images-flexbox");
-    var minLoadingMs = 5000;
+    var images = document.querySelectorAll(".project-card-images-flexbox img");
+    var minLoadingMs = 500;
     var loadingStartMs = Date.now();
     var pageIsComplete = document.readyState === "complete";
+    var imagesAreComplete = false;
     var loadingFinished = false;
     var counterTimerId = null;
     var resizeRafId = null;
@@ -155,7 +157,7 @@
     function tryFinishLoading() {
         var elapsedMs = Date.now() - loadingStartMs;
 
-        if (!pageIsComplete || elapsedMs < minLoadingMs || loadingFinished) {
+        if (!pageIsComplete || !imagesAreComplete || elapsedMs < minLoadingMs || loadingFinished) {
             return;
         }
 
@@ -174,7 +176,52 @@
         }
     }
 
+    function watchImagesLoaded() {
+        var pendingCount = images.length;
+        var i;
+
+        function markImageLoaded(img) {
+            if (!img.classList.contains("is-loaded")) {
+                img.classList.add("is-loaded");
+            }
+        }
+
+        if (pendingCount === 0) {
+            imagesAreComplete = true;
+            tryFinishLoading();
+            return;
+        }
+
+        function onImageDone() {
+            pendingCount -= 1;
+
+            if (pendingCount <= 0) {
+                imagesAreComplete = true;
+                tryFinishLoading();
+            }
+        }
+
+        for (i = 0; i < images.length; i++) {
+            var img = images[i];
+
+            if (img.complete) {
+                if (img.naturalWidth > 0) {
+                    markImageLoaded(img);
+                }
+                onImageDone();
+                continue;
+            }
+
+            img.addEventListener("load", function (event) {
+                markImageLoaded(event.currentTarget);
+                onImageDone();
+            }, { once: true });
+            img.addEventListener("error", onImageDone, { once: true });
+        }
+    }
+
     setLoadingClasses(true);
+    watchImagesLoaded();
     layoutImageRows();
     renderCounter();
     tryFinishLoading();

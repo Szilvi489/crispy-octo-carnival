@@ -1,5 +1,5 @@
-<section class="project-page-section">
-    <div class="project-content" style="--backgroundColour: {{ page.backgroundColour | default: site.backgroundColour }}; --fontColour: {{ page.fontColour | default: site.fontColour }};">
+<section class="bangkok-night-section">
+    <div class="bangkok-night-content" style="--backgroundColour: {{ page.backgroundColour | default: site.backgroundColour }}; --fontColour: {{ page.fontColour | default: site.fontColour }};">
         {%- assign gallery_path = "/assets/images/projects/bangkokNight/gallery_images/" -%}
         {%- assign gallery_files = site.static_files | where_exp: "f", "f.path contains gallery_path" -%}
         {%- assign gallery_list = gallery_files | map: "path" | sort -%}
