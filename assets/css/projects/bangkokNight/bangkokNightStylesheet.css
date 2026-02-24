@@ -34,6 +34,7 @@
 }
 
 .project-page-section .floating-letter {
+    font-family:"Oswald", sans-serif;
     position: absolute;
     left: var(--x, 0px);
     top: var(--y, 0px);

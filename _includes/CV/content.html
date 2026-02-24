@@ -1,22 +1,10 @@
 <section class="cv-section">
-    <div class="cv-flexbox">
-        {% for cvItem in site.cvItems %}
-        <div class="cv-item-flexbox">
-            <div class="cv-item-title-overlay">
-                <a href="{{ cvItem.permalink }}">{{ cvItem.title }}</a>
-            </div>
-            <div class="cv-item-images-flexbox">
-                {% assign thumbnails_folder = cvItem.thumbnails | first %}
-                {% assign thumbnails_files = site.static_files | where_exp: "file", "file.path contains thumbnails_folder" %}
-                {% for file in thumbnails_files %}
-                {% if file.extname == ".png" or file.extname == ".jpg" or file.extname == ".jpeg" or file.extname == ".webp" %}
-                 <a href="{{ cvItem.permalink }}">
-                    <img src="{{ file.path }}" alt="Gallery image for {{ cvItem.title }}" loading="lazy" decoding="async">
-                </a>
-                {% endif %}
-                {% endfor %}
-            </div>
-        </div>
-        {% endfor %}
-    </div>
+    {%- include CV/nav.html -%}
+    {%- include CV/intro.html -%}
+    {%- include CV/education.html -%}
+    {%- include CV/experience.html -%}
+    {%- include CV/skills.html -%}
+    {%- include CV/programmingProjects.html -%}
+    {%- include CV/personal.html -%}
+    {%- include CV/dreamjob.html -%}
 </section>

@@ -1,0 +1,11 @@
+.cv-nav{
+    position:fixed;
+    top: 30vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.cv-nav a{
+    
+    text-decoration: none;
+}
