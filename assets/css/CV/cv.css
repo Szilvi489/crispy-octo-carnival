@@ -1,18 +1,120 @@
-.cv-section{
+.cv-section {
     cursor: cell;
 }
 
-.cv-content.page-loading{
-display: none;
+.cv-content.page-loading {
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
 }
 
-.page-loader-anim{
-
+.page-loader-anim {
+    display: none;
+    position: fixed;
+    inset: 0;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 999;
+    background-color: rgb(175, 49, 10);
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    overflow: hidden;
+    transform: translate3d(0, 0, 0);
+    will-change: transform;
+    backface-visibility: hidden;
+    contain: paint;
+    isolation: isolate;
 }
-.page-loader-content h1{
-    font-family:"Rubik Mono One", sans-serif ;
+
+.page-loader-anim.page-loading {
+    display: flex;
+    transform: translate3d(0, 0, 0);
+    pointer-events: auto;
 }
 
-.cv-content{
+.page-loader-anim.page-exit {
+    display: flex;
+    pointer-events: none;
+    animation: cvLoaderExit 2000ms cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+}
+
+.page-loader-anim.page-hidden {
+    display: none;
+}
+
+@keyframes cvLoaderExit {
+    from {
+        transform: translate3d(0, 0, 0);
+    }
+
+    to {
+        transform: translate3d(0, -100%, 0);
+    }
+}
+
+html.is-firefox .page-loader-anim.page-loading {
+    top: 0;
+    transform: none;
+}
+
+html.is-firefox .page-loader-anim.page-exit {
+    animation-name: cvLoaderExitFirefox;
+}
+
+@keyframes cvLoaderExitFirefox {
+    from {
+        top: 0;
+    }
+
+    to {
+        top: -100vh;
+    }
+}
+
+.page-loader-text {
+    opacity: 0;
+    transition: opacity 180ms ease;
+}
+
+.page-loader-text.page-loading {
+    opacity: 1;
+}
+
+.page-loader-content h1 {
+    margin: 0;
+    font-family: "Rubik Mono One", sans-serif;
+    color: #ffffff;
+}
+
+.page-loader-text .loader-letter {
+    display: inline-block;
+}
+
+.cv-content {
+    position: relative;
     background-color: rgb(43, 27, 27);
+}
+
+.page-loader-anim::after,
+.cv-content::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.08;
+    mix-blend-mode: soft-light;
+    background-image:
+        repeating-linear-gradient(
+            37deg,
+            rgba(255, 255, 255, 0.06) 0 1px,
+            rgba(0, 0, 0, 0) 1px 3px
+        ),
+        repeating-linear-gradient(
+            143deg,
+            rgba(0, 0, 0, 0.05) 0 1px,
+            rgba(0, 0, 0, 0) 1px 4px
+        );
 }

@@ -1,23 +1,117 @@
 (function () {
+    var root = document.documentElement;
+    var isFirefox = navigator.userAgent.toLowerCase().indexOf("firefox") !== -1;
     var pageLoaderText = document.querySelector(".page-loader-text");
+    var pageLoaderAnim = document.querySelector(".page-loader-anim");
     var cvContent = document.querySelectorAll(".cv-content");
     var cvSections = Array.prototype.slice.call(document.querySelectorAll(".cv-content section"));
     var sectionStates = new Map();
 
-    var minLoadingMs = 5000;
+    var minLoadingMs = 700;
+    var maxWaitMs = 3000;
+    var loaderFontFamilies = [
+        "\"Playfair Display\", serif",
+        "\"Rubik Mono One\", sans-serif",
+        "\"Aldrich\", sans-serif",
+        "\"Bungee\", sans-serif",
+        "\"Plaster\", sans-serif",
+        "\"Protest Guerrilla\", sans-serif",
+        "\"Stalinist One\", sans-serif",
+        "\"Tulpen One\", sans-serif"
+    ];
     var loadingStartMs = Date.now();
     var pageIsComplete = document.readyState === "complete";
     var sectionsAreComplete = false;
     var loadingFinished = false;
+    var minLoadingTimerId = null;
+    var loaderExitAnimationHandler = null;
+    var loaderFontTimerId = null;
+    var loaderLetterSpans = [];
 
-    function setLoadingClasses(isLoading) {
-        if (pageLoaderText && isLoading) {
-            pageLoaderText.classList.add("page-loading");
-        } else if (pageLoaderText) {
-            pageLoaderText.classList.remove("page-loading");
+    if (isFirefox) {
+        root.classList.add("is-firefox");
+    }
+
+    function setupLoaderTextLetters() {
+        var originalText;
+        var fragment;
+
+        if (!pageLoaderText || pageLoaderText.dataset.lettersReady === "true") {
+            return;
         }
 
-        if (isLoading) {
+        originalText = pageLoaderText.textContent || "";
+        fragment = document.createDocumentFragment();
+        loaderLetterSpans = [];
+
+        pageLoaderText.setAttribute("aria-label", originalText);
+        pageLoaderText.textContent = "";
+
+        Array.prototype.forEach.call(originalText.split(""), function (char) {
+            var span = document.createElement("span");
+
+            span.className = "loader-letter";
+            span.setAttribute("aria-hidden", "true");
+            span.textContent = char === " " ? "\u00A0" : char;
+
+            if (char !== " ") {
+                loaderLetterSpans.push(span);
+            }
+
+            fragment.appendChild(span);
+        });
+
+        pageLoaderText.appendChild(fragment);
+        pageLoaderText.dataset.lettersReady = "true";
+    }
+
+    function startLoaderFontCycle() {
+        if (!pageLoaderText) {
+            return;
+        }
+
+        setupLoaderTextLetters();
+
+        if (loaderFontTimerId !== null) {
+            return;
+        }
+
+        loaderFontTimerId = setInterval(function () {
+            loaderLetterSpans.forEach(function (span) {
+                var randomIndex = Math.floor(Math.random() * loaderFontFamilies.length);
+                span.style.fontFamily = loaderFontFamilies[randomIndex];
+            });
+        }, 120);
+    }
+
+    function stopLoaderFontCycle() {
+        if (loaderFontTimerId !== null) {
+            clearInterval(loaderFontTimerId);
+            loaderFontTimerId = null;
+        }
+
+        loaderLetterSpans.forEach(function (span) {
+            span.style.fontFamily = "";
+        });
+    }
+
+    function setLoadingClasses(isLoading) {
+        if (pageLoaderAnim && isLoading) {
+            if (pageLoaderText) {
+                pageLoaderText.classList.add("page-loading");
+            }
+
+            startLoaderFontCycle();
+            document.dispatchEvent(new CustomEvent("cv-loader-start"));
+
+            if (loaderExitAnimationHandler !== null) {
+                pageLoaderAnim.removeEventListener("animationend", loaderExitAnimationHandler);
+                loaderExitAnimationHandler = null;
+            }
+
+            pageLoaderAnim.classList.remove("page-hidden");
+            pageLoaderAnim.classList.remove("page-exit");
+            pageLoaderAnim.classList.add("page-loading");
             cvContent.forEach(function (el) {
                 el.classList.add("page-loading");
             });
@@ -25,7 +119,16 @@
             cvSections.forEach(function (section) {
                 section.classList.add("page-loading");
             });
-        } else {
+            return;
+        }
+
+        if (pageLoaderAnim) {
+            if (pageLoaderText) {
+                pageLoaderText.classList.remove("page-loading");
+            }
+
+            stopLoaderFontCycle();
+
             cvContent.forEach(function (el) {
                 el.classList.remove("page-loading");
             });
@@ -33,21 +136,99 @@
             cvSections.forEach(function (section) {
                 section.classList.remove("page-loading");
             });
+
+            document.dispatchEvent(new CustomEvent("cv-loader-exit-start"));
+
+            pageLoaderAnim.classList.remove("page-loading");
+            pageLoaderAnim.classList.remove("page-hidden");
+            pageLoaderAnim.classList.add("page-exit");
+            loaderExitAnimationHandler = function (event) {
+                if (event.animationName !== "cvLoaderExit") {
+                    return;
+                }
+
+                pageLoaderAnim.classList.remove("page-exit");
+                pageLoaderAnim.classList.add("page-hidden");
+                pageLoaderAnim.removeEventListener("animationend", loaderExitAnimationHandler);
+                loaderExitAnimationHandler = null;
+            };
+            pageLoaderAnim.addEventListener("animationend", loaderExitAnimationHandler);
+            return;
         }
+
+        if (pageLoaderText) {
+            pageLoaderText.classList.remove("page-loading");
+        }
+
+        stopLoaderFontCycle();
+
+        cvContent.forEach(function (el) {
+            el.classList.remove("page-loading");
+        });
+
+        cvSections.forEach(function (section) {
+            section.classList.remove("page-loading");
+        });
     }
 
     function onResize() {
 
     }
 
+    function markPageComplete() {
+        pageIsComplete = true;
+        tryFinishLoading();
+    }
+
+    function scheduleMinLoadingRecheck() {
+        var remainingMs;
+
+        if (minLoadingTimerId !== null) {
+            return;
+        }
+
+        remainingMs = Math.max(0, minLoadingMs - (Date.now() - loadingStartMs));
+
+        minLoadingTimerId = setTimeout(function () {
+            minLoadingTimerId = null;
+            tryFinishLoading();
+        }, remainingMs);
+    }
+
     function tryFinishLoading() {
         var elapsedMs = Date.now() - loadingStartMs;
 
-        if (!pageIsComplete || !sectionsAreComplete || elapsedMs < minLoadingMs || loadingFinished) {
+        if (loadingFinished) {
+            return;
+        }
+
+        if (elapsedMs < minLoadingMs) {
+            scheduleMinLoadingRecheck();
+            return;
+        }
+
+        if (!pageIsComplete || !sectionsAreComplete) {
             return;
         }
 
         loadingFinished = true;
+        setLoadingClasses(false);
+    }
+
+    function forceFinishLoading() {
+        if (loadingFinished) {
+            return;
+        }
+
+        sectionsAreComplete = true;
+        pageIsComplete = true;
+        loadingFinished = true;
+
+        if (minLoadingTimerId !== null) {
+            clearTimeout(minLoadingTimerId);
+            minLoadingTimerId = null;
+        }
+
         setLoadingClasses(false);
     }
 
@@ -230,10 +411,19 @@
 
     document.addEventListener("readystatechange", function () {
         if (document.readyState === "complete") {
-            pageIsComplete = true;
-            tryFinishLoading();
+            markPageComplete();
         }
     });
+
+    window.addEventListener("load", markPageComplete, { once: true });
+
+    if (document.readyState === "complete") {
+        markPageComplete();
+    }
+
+    setTimeout(function () {
+        forceFinishLoading();
+    }, maxWaitMs);
 
     window.addEventListener("resize", onResize);
 })();
