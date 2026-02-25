@@ -83,6 +83,22 @@
     text-decoration: none;
 }
 
+.projects-page-menuitem{
+    font-family: "Aldrich", sans-serif;
+}
+
+.about-page-menuitem{
+    font-family: "Bungee", sans-serif;
+}
+
+.contact-page-menuitem{
+    font-family: "Plaster";
+}
+
+.cv-page-menuitem{
+    font-family: "Protest Guerilla";
+}
+
 .navMenu a:hover,
 .navMenu a:focus-visible {
     color: var(--navSquareColour);

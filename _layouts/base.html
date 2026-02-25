@@ -27,6 +27,12 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
+    {%- if site.nav_fonts -%}
+    {%- for href in site.nav_fonts -%}
+    <link rel="stylesheet" href="{{ href }}">
+    {%- endfor -%}
+    {%- endif -%}
+
     {%- if page.fonts -%}
     {%- for href in page.fonts -%}
     <link rel="stylesheet" href="{{ href }}">

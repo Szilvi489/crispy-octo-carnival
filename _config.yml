@@ -8,6 +8,15 @@ github_username: Szilvi489
 icon : /assets/images/base/logo/1pic.png
 navSquareColour : '#0a0a0a'
 navFontColour : '#ff0000'
+nav_fonts:
+  - https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap
+  - https://fonts.googleapis.com/css2?family=Rubik+Mono+One&display=swap
+  - https://fonts.googleapis.com/css2?family=Aldrich&display=swap
+  - https://fonts.googleapis.com/css2?family=Bungee&display=swap
+  - https://fonts.googleapis.com/css2?family=Plaster&display=swap
+  - https://fonts.googleapis.com/css2?family=Protest+Guerrilla&display=swap
+  - https://fonts.googleapis.com/css2?family=Stalinist+One&display=swap
+  - https://fonts.googleapis.com/css2?family=Tulpen+One&display=swap
 
 # Build settings
 theme: null
