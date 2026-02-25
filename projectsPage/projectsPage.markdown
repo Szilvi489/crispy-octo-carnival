@@ -1,5 +1,6 @@
 ---
 layout: projectsPage
+enable_crosshair: true
 
 title: Projects Page
 
