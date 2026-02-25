@@ -1,5 +1,6 @@
 ---
 layout: contactPage
+enable_crosshair: true
 title: Contact
 permalink: /contactPage/
 

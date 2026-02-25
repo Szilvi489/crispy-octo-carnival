@@ -1,5 +1,6 @@
 ---
 layout: aboutPage
+enable_crosshair: true
 
 title: About
 

@@ -41,7 +41,6 @@ indexImage:
   - /assets/images/projects/cambodiaStreet/gallery_images/DSCF1523.jpg
   - /assets/images/projects/cambodiaStreet/gallery_images/DSCF1631.jpg
   - /assets/images/projects/cambodiaStreet/gallery_images/DSCF1698.jpg
-  - /assets/images/projects/cambodiaStreet/gallery_images/DSCF1703.jpg
 
 
 

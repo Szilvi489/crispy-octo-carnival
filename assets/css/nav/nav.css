@@ -92,11 +92,11 @@
 }
 
 .contact-page-menuitem{
-    font-family: "Plaster";
+    font-family: "Plaster", sans-serif;
 }
 
 .cv-page-menuitem{
-    font-family: "Protest Guerilla";
+    font-family: "Protest Guerrilla", sans-serif;
 }
 
 .navMenu a:hover,

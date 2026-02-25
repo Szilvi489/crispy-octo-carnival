@@ -1,5 +1,6 @@
 ---
 layout: cv
+enable_crosshair: true
 title: CV; Lebenslauf
 description: CV; Lebenslauf
 

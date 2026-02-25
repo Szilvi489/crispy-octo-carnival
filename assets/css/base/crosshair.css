@@ -1,0 +1,83 @@
+body.cv-crosshair-active,
+body.cv-crosshair-active * {
+    cursor: none !important;
+}
+
+.cv-crosshair-overlay {
+    --crosshair-x: 50vw;
+    --crosshair-y: 50vh;
+    position: fixed;
+    inset: 0;
+    z-index: 80;
+    pointer-events: none;
+}
+
+.cv-crosshair-overlay.is-hidden {
+    opacity: 0;
+}
+
+.cv-crosshair-line {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.78);
+}
+
+.cv-crosshair-line-v {
+    top: 0;
+    bottom: 0;
+    left: var(--crosshair-x);
+    width: 1px;
+    transform: translateX(-0.5px);
+}
+
+.cv-crosshair-line-h {
+    left: 0;
+    right: 0;
+    top: var(--crosshair-y);
+    height: 1px;
+    transform: translateY(-0.5px);
+}
+
+.cv-crosshair-center {
+    position: absolute;
+    left: var(--crosshair-x);
+    top: var(--crosshair-y);
+    width: 20px;
+    height: 20px;
+    transform: translate(-50%, -50%);
+}
+
+.cv-crosshair-center::before,
+.cv-crosshair-center::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    background: rgba(255, 255, 255, 0.98);
+    transform: translate(-50%, -50%);
+}
+
+.cv-crosshair-center::before {
+    width: 14px;
+    height: 3px;
+}
+
+.cv-crosshair-center::after {
+    width: 3px;
+    height: 14px;
+}
+
+.cv-crosshair-overlay.is-nav-hover .cv-crosshair-center::before,
+.cv-crosshair-overlay.is-nav-hover .cv-crosshair-center::after {
+    background: #39ff14;
+}
+
+@media (max-width: 768px) {
+    body.cv-crosshair-active,
+    body.cv-crosshair-active * {
+        cursor: auto !important;
+    }
+
+    .cv-crosshair-overlay {
+        display: none;
+    }
+}

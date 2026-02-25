@@ -11,6 +11,9 @@
     {%- endif -%}
 
     <link rel="stylesheet" href="/assets/main.css">
+    {%- if page.enable_crosshair -%}
+    <link rel="stylesheet" href="/assets/css/base/crosshair.css">
+    {%- endif -%}
     {%- if page.stylesheets -%}
     {%- for href in page.stylesheets -%}
     <link rel="stylesheet" href="{{ href }}">
@@ -31,6 +34,15 @@
     {%- for href in site.nav_fonts -%}
     <link rel="stylesheet" href="{{ href }}">
     {%- endfor -%}
+    {%- else -%}
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik+Mono+One&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Aldrich&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bungee&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plaster&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Protest+Guerrilla&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Stalinist+One&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tulpen+One&display=swap">
     {%- endif -%}
 
     {%- if page.fonts -%}
@@ -53,6 +65,9 @@
     {%- include base/footer.html -%}
     <script src="/assets/js/base/base.js" defer></script>
     <script src="/assets/js/nav/nav.js" defer></script>
+    {%- if page.enable_crosshair -%}
+    <script src="/assets/js/base/crosshair.js" defer></script>
+    {%- endif -%}
     {%- if page.scripts -%}
     {%- for src in page.scripts -%}
     <script src="{{ src }}" defer></script>
