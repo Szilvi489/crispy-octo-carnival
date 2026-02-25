@@ -17,7 +17,7 @@
     width: 100vw;
     height: 100vh;
     z-index: 999;
-    background-color: rgb(175, 49, 10);
+    background-color: var(--color-alternative-orange);
     align-items: center;
     justify-content: center;
     pointer-events: none;
@@ -76,7 +76,7 @@
 
 .cv-content {
     position: relative;
-    background-color: rgb(43, 27, 27);
+    background-color: var(--color-bordeau-chocolate);
 }
 
 .page-loader-anim::after,

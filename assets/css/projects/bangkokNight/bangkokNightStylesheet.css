@@ -1,5 +1,5 @@
 .bangkok-night-section {
-    background: rgb(175, 49, 10);
+    background: var(--color-alternative-orange);
     width: 100%;
 
 }

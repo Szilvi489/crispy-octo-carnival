@@ -98,7 +98,6 @@
 
     let currentHorizontalPosition = 80;
     let maxExtent = 0;
-    let lastPinnedExtent = null;
     const parallaxItems = [];
     items.forEach((item, index) => {
         const baseWidth = sizeDimensions[item.size] || sizeDimensions.medium;
@@ -134,18 +133,16 @@
         }
         const extent = xPos + baseWidth;
         maxExtent = Math.max(maxExtent, extent);
-        if (item.pinned) {
-            lastPinnedExtent = extent;
-        }
     });
 
-    const trackExtent = Number.isFinite(lastPinnedExtent) ? lastPinnedExtent : maxExtent;
-    track.style.width = `${Math.max(1200, trackExtent)}px`;
+    const contentExtent = Math.max(0, maxExtent) + 20;
+    const minTrackWidth = Math.max(carousel.clientWidth, 1);
+    track.style.width = `${Math.max(minTrackWidth, contentExtent)}px`;
 
     const placeFloatingText = () => {
         const phrase = "BANGKOK NIGHT";
         const letters = phrase.split("");
-        const textExtent = Number.isFinite(lastPinnedExtent) ? lastPinnedExtent : maxExtent;
+        const textExtent = Math.max(0, maxExtent);
         const trackWidth = Math.max(0, textExtent);
         const startX = 120;
         const endX = Math.max(startX + 600, trackWidth - 200);
@@ -174,8 +171,6 @@
         parallaxRafId = null;
         const scrollLeft = carousel.scrollLeft;
         parallaxItems.forEach((el) => {
-            console.log(el.dataset)
-            console.log(el.dataset.depth);
             const depth = parseFloat(el.dataset.depth || "0");
             const shift = -scrollLeft * depth * 0.38;
             el.style.setProperty("--parallax-x", `${shift}px`);

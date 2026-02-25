@@ -16,7 +16,7 @@
 }
 
 .cv-nav a{
-    color: rgb(255, 63, 15);
+    color: var(--color-deep-mandarin);
     font-size: clamp(14px, 2.1vw, 4vh);
     text-decoration: none;
     opacity: 1;

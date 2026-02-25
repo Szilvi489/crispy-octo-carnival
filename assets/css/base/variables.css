@@ -20,7 +20,12 @@
   --color-border: #dddddd;
   --color-accent: #1c4a8c;
   --color-accent-contrast: #ffffff;
-
+  --color-deep-mandarin : rgb(255, 63, 15);
+  --color-deep-blood-orange:rgb(246, 29, 23);
+  --color-alternative-orange:  rgb(175, 49, 10);
+  --color-bordeau-chocolate: rgb(43, 27, 27);
+  --color-deep-pastel-blue: rgb(3, 52, 148);
+  --color-frog-green:rgb(26, 190, 37);
   /* Layout */
   --page-max: 72rem;
   --gutter: 1.5rem;
