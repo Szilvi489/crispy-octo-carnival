@@ -1,6 +1,4 @@
 (function () {
-    var root = document.documentElement;
-    var isFirefox = navigator.userAgent.toLowerCase().indexOf("firefox") !== -1;
     var pageLoaderText = document.querySelector(".page-loader-text");
     var pageLoaderAnim = document.querySelector(".page-loader-anim");
     var cvContent = document.querySelectorAll(".cv-content");
@@ -27,10 +25,6 @@
     var loaderExitAnimationHandler = null;
     var loaderFontTimerId = null;
     var loaderLetterSpans = [];
-
-    if (isFirefox) {
-        root.classList.add("is-firefox");
-    }
 
     function setupLoaderTextLetters() {
         var originalText;
@@ -137,11 +131,12 @@
                 section.classList.remove("page-loading");
             });
 
-            document.dispatchEvent(new CustomEvent("cv-loader-exit-start"));
-
             pageLoaderAnim.classList.remove("page-loading");
             pageLoaderAnim.classList.remove("page-hidden");
             pageLoaderAnim.classList.add("page-exit");
+            requestAnimationFrame(function () {
+                document.dispatchEvent(new CustomEvent("cv-loader-exit-start"));
+            });
             loaderExitAnimationHandler = function (event) {
                 if (event.animationName !== "cvLoaderExit") {
                     return;

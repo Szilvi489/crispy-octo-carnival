@@ -4,7 +4,7 @@
 
     function resetNavEntrance() {
         navItems.forEach(function (item) {
-            item.classList.remove("nav-enter", "from-left", "from-right", "from-top", "from-bottom");
+            item.classList.remove("nav-enter");
             item.style.removeProperty("--nav-enter-delay");
         });
 
@@ -14,15 +14,12 @@
     }
 
     function startNavEntrance() {
-        var directions = ["from-left", "from-right", "from-top", "from-bottom"];
-
         if (cvSection) {
             cvSection.classList.add("nav-enter-active");
         }
 
         navItems.forEach(function (item, index) {
-            var directionClass = directions[Math.floor(Math.random() * directions.length)];
-            item.classList.add("nav-enter", directionClass);
+            item.classList.add("nav-enter");
             item.style.setProperty("--nav-enter-delay", (index * 110) + "ms");
         });
     }

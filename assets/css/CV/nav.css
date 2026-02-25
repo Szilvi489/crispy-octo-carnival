@@ -1,50 +1,63 @@
+.nav-section {
+    position: fixed;
+    top: 5vh;
+    left: 2vw;
+    right: 15vw;
+    z-index: 30;
+}
+
 .cv-nav{
-    position:fixed;
-    top: 30vh;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
 }
 
 .cv-nav a{
     color: rgb(255, 63, 15);
-    font-family: "Playfair Display", sans-serif;
+    font-size: 4vh;
     text-decoration: none;
     opacity: 1;
     transform: translate3d(0, 0, 0);
+    white-space: nowrap;
+    text-align: center;
+}
+
+.intro{
+    font-family: "Rubik Mono One, sans-serif";
+}
+.education{
+    font-family: "Aldrich";
+}
+.experience{
+    font-family: "Bungee";
+}
+.skills{
+    font-family: "Plaster";
+}
+.programming-projects{
+    font-family: "Protest Guerilla";
+}
+.personal{
+    font-family: "Stalinist One";
+}
+.dream-job{
+    font-family: "Tulpen One";
 }
 
 .cv-section.nav-enter-active .cv-nav a.nav-enter {
     animation-name: cvNavEnter;
-    animation-duration: 1760ms;
+    animation-duration: 5760ms;
     animation-timing-function: cubic-bezier(0.2, 0.75, 0.2, 1);
     animation-fill-mode: both;
     animation-delay: var(--nav-enter-delay, 0ms);
 }
 
-.cv-section.nav-enter-active .cv-nav a.nav-enter.from-left {
-    --nav-enter-x: -42px;
-    --nav-enter-y: 0;
-}
-
-.cv-section.nav-enter-active .cv-nav a.nav-enter.from-right {
-    --nav-enter-x: 42px;
-    --nav-enter-y: 0;
-}
-
-.cv-section.nav-enter-active .cv-nav a.nav-enter.from-top {
-    --nav-enter-x: 0;
-    --nav-enter-y: -34px;
-}
-
-.cv-section.nav-enter-active .cv-nav a.nav-enter.from-bottom {
-    --nav-enter-x: 0;
-    --nav-enter-y: 34px;
-}
-
 @keyframes cvNavEnter {
     from {
         opacity: 0;
-        transform: translate3d(var(--nav-enter-x, 0), var(--nav-enter-y, 0), 0) rotate(-0.001deg);
+        transform: translate3d(0, -34px, 0) rotate(-0.001deg);
         filter: blur(2px);
     }
 
@@ -54,3 +67,5 @@
         filter: blur(0);
     }
 }
+
+
