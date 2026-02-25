@@ -1,0 +1,56 @@
+.cv-nav{
+    position:fixed;
+    top: 30vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.cv-nav a{
+    color: rgb(255, 63, 15);
+    font-family: "Playfair Display", sans-serif;
+    text-decoration: none;
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+}
+
+.cv-section.nav-enter-active .cv-nav a.nav-enter {
+    animation-name: cvNavEnter;
+    animation-duration: 1760ms;
+    animation-timing-function: cubic-bezier(0.2, 0.75, 0.2, 1);
+    animation-fill-mode: both;
+    animation-delay: var(--nav-enter-delay, 0ms);
+}
+
+.cv-section.nav-enter-active .cv-nav a.nav-enter.from-left {
+    --nav-enter-x: -42px;
+    --nav-enter-y: 0;
+}
+
+.cv-section.nav-enter-active .cv-nav a.nav-enter.from-right {
+    --nav-enter-x: 42px;
+    --nav-enter-y: 0;
+}
+
+.cv-section.nav-enter-active .cv-nav a.nav-enter.from-top {
+    --nav-enter-x: 0;
+    --nav-enter-y: -34px;
+}
+
+.cv-section.nav-enter-active .cv-nav a.nav-enter.from-bottom {
+    --nav-enter-x: 0;
+    --nav-enter-y: 34px;
+}
+
+@keyframes cvNavEnter {
+    from {
+        opacity: 0;
+        transform: translate3d(var(--nav-enter-x, 0), var(--nav-enter-y, 0), 0) rotate(-0.001deg);
+        filter: blur(2px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0) rotate(0);
+        filter: blur(0);
+    }
+}

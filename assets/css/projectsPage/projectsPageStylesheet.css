@@ -2,6 +2,11 @@
     background: var(--backgroundColour);
     min-height: 100vh;
     width: 100%;
+    --loading-blur: 0px;
+    --tile-gap-min: 10px;
+    --tile-gap-max: 120px;
+    --tile-size-min: 48px;
+    --tile-size-max: 124px;
 
 }
 
@@ -36,8 +41,12 @@
   text-decoration: none;
 }
 
+.project-card-title-overlay.page-loading{
+    display: none;
+}
+
 .project-card-title-overlay {
-    position: fixed;
+   position: fixed;
     left: 24px;
     bottom: 24px;
     z-index: 3;
@@ -50,6 +59,7 @@
     transition: opacity 180ms ease, transform 180ms ease;
 }
 
+
 .project-card-flexbox:hover .project-card-title-overlay {
     opacity: 1;
     transform: translateY(0);
@@ -59,26 +69,65 @@
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    gap: 12px;
     justify-content: flex-start;
+    align-items: stretch;
+    gap: var(--tile-gap, 16px);
+    width: 100%;
     flex: 1;
     position: relative;
     z-index: 1;
 }
 
-.project-card-images-flexbox img {
-    height: clamp(3rem, 10vw, 7rem);
-    width: auto;
-    object-fit: cover;
+.project-card-images-flexbox a {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    width: var(--tile-size, clamp(1rem, 2vw, 5rem));
+    aspect-ratio: 1 / 1;
+    flex: 0 0 auto;
 }
+
+.project-card-images-flexbox img {
+    display: block;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    backface-visibility: hidden;
+    transform: translateZ(0);
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 180ms ease;
+}
+
+.project-page-section.page-loading .projects-page-flexbox {
+    filter: blur(var(--loading-blur));
+}
+
+.project-card-images-flexbox img:not(.is-loaded) {
+    opacity: 0;
+    visibility: hidden;
+}
+.counter.page-loading{
+   display: block;
+   position: fixed;
+   left: 24px;
+   bottom: 24px;
+   z-index: 3;
+   font-size: clamp(2.5rem, 8vw, 10rem);
+   font-weight: 700;
+   font-family: "Oswald", sans-serif;
+   color: var(--fontColour);
+
+}
+
+.counter{
+  display: none;
+}
+
 
 @media (max-width: 600px) {
     .project-card-title-overlay {
         visibility: hidden;
-    }
-
-    .project-card-images-flexbox img{
-        height: 20vw;
     }
 
     .project-card-description{

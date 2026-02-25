@@ -9,6 +9,7 @@ stylesheets:
   - /assets/css/projectsPage/projectsPageStylesheet.css
   
 scripts:
+  - /assets/js/projectsPage/projectsPage.js
 
 description: "A list of every project"
 
