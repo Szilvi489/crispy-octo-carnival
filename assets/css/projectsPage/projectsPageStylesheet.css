@@ -1,27 +1,52 @@
 .project-page-section {
-    background: var(--backgroundColour);
+    background: rgb(26, 16, 16);
     min-height: 100vh;
     width: 100%;
+    position: relative;
+    isolation: isolate;
     --loading-blur: 0px;
     --tile-gap-min: 10px;
     --tile-gap-max: 120px;
     --tile-size-min: 48px;
     --tile-size-max: 124px;
+    --hover-bg-image: none;
 
 }
 
+.project-page-section::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image: var(--hover-bg-image);
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    filter: blur(10px);
+    transform: scale(1.03);
+    transition: opacity 280ms ease;
+}
+
+.project-page-section.has-hover-background::before {
+    opacity: 0.8;
+}
+
 .project-content{
-    background: var(--backgroundColour);
+    background: transparent;
     min-height: 100vh;
     width: 100%;
 }
 
 .projects-page-flexbox {
+    background: transparent;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
     justify-content: center;
     padding: 110px;
+    position: relative;
+    z-index: 1;
 }
 
 .project-card-flexbox {
@@ -87,6 +112,12 @@
     flex: 0 0 auto;
 }
 
+.project-card-title-overlay a,
+.project-card-flexbox p {
+  color: rgb(27, 238, 7);
+}
+
+
 .project-card-images-flexbox img {
     display: block;
     height: 100%;
@@ -116,7 +147,7 @@
    font-size: clamp(2.5rem, 8vw, 10rem);
    font-weight: 700;
    font-family: "Oswald", sans-serif;
-   color: var(--fontColour);
+   color: rgb(27, 238, 7);
 
 }
 

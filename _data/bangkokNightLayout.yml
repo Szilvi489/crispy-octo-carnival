@@ -18,11 +18,6 @@
   y: 160
   size: large
 
-- path: /assets/images/projects/bangkokNight/gallery_images/DSCF0313.jpg
-  x: 1680
-  y: 200
-  size: medium
-
 - path: /assets/images/projects/bangkokNight/gallery_images/DSCF0314.jpg
   x: 1900
   y: 100
@@ -30,7 +25,7 @@
 
 - path: /assets/images/projects/bangkokNight/gallery_images/DSCF0319.jpg
   x: 2520
-  y: 190
+  y: 70
   size: large
 
 - path: /assets/images/projects/bangkokNight/gallery_images/DSCF0330.jpg
@@ -60,22 +55,22 @@
 
 - path: /assets/images/projects/bangkokNight/gallery_images/DSCF0757.jpg
   x: 5450
-  y: 185
+  y: 80
   size: large
 
 - path: /assets/images/projects/bangkokNight/gallery_images/DSCF0762.jpg
   x: 6000
-  y: 145
+  y: 115
   size: medium
 
 - path: /assets/images/projects/bangkokNight/gallery_images/DSCF0776.jpg
-  x: 6300
-  y: 225
+  x: 6500
+  y: 275
   size: small
 
 - path: /assets/images/projects/bangkokNight/gallery_images/DSCF0778.jpg
-  x: 10530
-  y: 165
+  x: 10630
+  y: 70
   size: large
 
 - path: /assets/images/projects/bangkokNight/gallery_images/DSCF0797.jpg
@@ -99,7 +94,7 @@
   size: medium
 
 - path: /assets/images/projects/bangkokNight/gallery_images/DSCF0817.jpg
-  x: 8400
+  x: 8700
   y: 10
   size: small
 
@@ -109,9 +104,9 @@
   size: large
 
 - path: /assets/images/projects/bangkokNight/gallery_images/DSCF0826.jpg
-  x: 9599
-  y: 70
-  size: medium
+  x: 10000
+  y: 30
+  size: large
 
 - path: /assets/images/projects/bangkokNight/gallery_images/DSCF0827.jpg
   x: 9660
@@ -119,41 +114,41 @@
   size: small
 
 - path: /assets/images/projects/bangkokNight/gallery_images/DSCF0829.jpg
-  x: 9100
+  x: 9300
   y: 190
   size: large
 
 - path: /assets/images/projects/bangkokNight/gallery_images/DSCF0929.jpg
-  x: 10550
+  x: 10850
   y: 150
   size: large
 
 - path: /assets/images/projects/bangkokNight/gallery_images/DSCF0932.jpg
-  x: 10920
+  x: 11300
   y: 220
   size: small
 
 - path: /assets/images/projects/bangkokNight/gallery_images/DSCF0988.jpg
-  x: 11900
+  x: 12300
   y: 20
   size: large
 
 - path: /assets/images/projects/bangkokNight/gallery_images/DSCF0998.jpg
-  x: 11260
-  y: 200
+  x: 13260
+  y: 110
   size: medium
 
 - path: /assets/images/projects/bangkokNight/gallery_images/DSCF1026.jpg
-  x: 12180
+  x: 13180
   y: 25
   size: large
 
 - path: /assets/images/projects/bangkokNight/gallery_images/DSCF1049.jpg
-  x: 15700
-  y: 185
-  size: large
+  x: 16900
+  y: 80
+  size: medium
 
 - path: /assets/images/projects/bangkokNight/gallery_images/DSCF1179-Edit.jpg
-  x: 13520
+  x: 14500
   y: 0
   size: large

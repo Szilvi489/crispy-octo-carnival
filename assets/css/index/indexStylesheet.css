@@ -1,3 +1,19 @@
+.index-signature {
+    position: fixed;
+    left: 20px;
+    bottom: 12px;
+    z-index: 35;
+    margin: 0;
+    font-family: "Rubik Mono One", sans-serif;
+    font-size: clamp(2.8rem, 11vw, 12rem);
+    line-height: 0.9;
+    letter-spacing: 0.02em;
+    color: #cf0101;
+    pointer-events: none;
+    text-transform: uppercase;
+    text-shadow: 0 2px 14px rgba(0, 0, 0, 0.35);
+}
+
 .index-gallery_grid {
     display: grid;
     grid-template-columns: repeat(12, minmax(0, 1fr));
@@ -61,6 +77,11 @@ body.cursor-hidden {
 }
 
 @media (max-width: 900px) {
+    .index-signature {
+        left: 12px;
+        bottom: 8px;
+    }
+
     .index-gallery_item img{
         cursor: pointer;
     }

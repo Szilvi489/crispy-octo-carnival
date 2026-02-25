@@ -2,6 +2,7 @@
     var titleLinks = document.querySelectorAll(".project-card-title-overlay");
     var counter = document.querySelector(".counter");
     var pageSection = document.querySelector(".project-page-section");
+    var projectCards = document.querySelectorAll(".project-card-flexbox");
     var imageRows = document.querySelectorAll(".project-card-images-flexbox");
     var images = document.querySelectorAll(".project-card-images-flexbox img");
     var minLoadingMs = 500;
@@ -11,6 +12,39 @@
     var loadingFinished = false;
     var counterTimerId = null;
     var resizeRafId = null;
+
+    function setHoverBackground(imageUrl) {
+        if (!pageSection) {
+            return;
+        }
+
+        if (!imageUrl) {
+            pageSection.classList.remove("has-hover-background");
+            pageSection.style.removeProperty("--hover-bg-image");
+            return;
+        }
+
+        pageSection.style.setProperty("--hover-bg-image", 'url("' + imageUrl + '")');
+        pageSection.classList.add("has-hover-background");
+    }
+
+    function bindHoverBackground() {
+        var i;
+
+        for (i = 0; i < images.length; i++) {
+            images[i].addEventListener("mouseenter", function (event) {
+                var hoveredImage = event.currentTarget;
+                var imageUrl = hoveredImage.currentSrc || hoveredImage.src;
+                setHoverBackground(imageUrl);
+            });
+        }
+
+        for (i = 0; i < projectCards.length; i++) {
+            projectCards[i].addEventListener("mouseleave", function () {
+                setHoverBackground(null);
+            });
+        }
+    }
 
     function setLoadingClasses(isLoading) {
         var i;
@@ -222,6 +256,7 @@
 
     setLoadingClasses(true);
     watchImagesLoaded();
+    bindHoverBackground();
     layoutImageRows();
     renderCounter();
     tryFinishLoading();

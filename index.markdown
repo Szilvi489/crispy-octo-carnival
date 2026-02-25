@@ -10,8 +10,9 @@ scripts:
 description : "Home Description"
 
 title : "index"
+homeSignature: "SZILVIA VARGA"
 
-navSquareColour: "#0012b6"
+navSquareColour: "#cf0101"
 
 navFontColour: "#ffffff"
 
