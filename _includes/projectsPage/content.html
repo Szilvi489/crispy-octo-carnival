@@ -8,25 +8,13 @@
             <div class="project-card-images-flexbox">
                 {% assign thumbnails_folder = project.thumbnails | first %}
                 {% assign thumbnails_files = site.static_files | where_exp: "file", "file.path contains thumbnails_folder" %}
-                {% assign has_thumbnail_images = false %}
                 {% for file in thumbnails_files %}
-                  {% if file.extname == ".png" or file.extname == ".jpg" or file.extname == ".jpeg" or file.extname == ".webp" %}
-                    {% assign has_thumbnail_images = true %}
-                    <a href="{{ project.permalink }}">
-                        <img src="{{ file.path }}" alt="Gallery image for {{ project.title }}" loading="lazy" decoding="async">
-                    </a>
+                {% if file.extname == ".png" or file.extname == ".jpg" or file.extname == ".jpeg" or file.extname == ".webp" %}
+                 <a href="{{ project.permalink }}">
+                    <img src="{{ file.path }}" alt="Gallery image for {{ project.title }}" loading="lazy" decoding="async">
+                </a>
                   {% endif %}
                 {% endfor %}
-
-                {% unless has_thumbnail_images %}
-                  {% if project.indexImage %}
-                    {% for image in project.indexImage limit: 6 %}
-                      <a href="{{ project.permalink }}">
-                        <img src="{{ image }}" alt="Gallery image for {{ project.title }}" loading="lazy" decoding="async">
-                      </a>
-                    {% endfor %}
-                  {% endif %}
-                {% endunless %}
             </div>
         </div>
         {% endfor %}

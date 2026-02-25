@@ -1,0 +1,15 @@
+<section class="image-wave-carousel-section">
+    <div class="image-wave-carousel-images">
+        {%- assign gallery_path = "/assets/images/projects/cambodiaStreet/gallery_images/image_wave_carousel_images/" -%}
+        {%- assign gallery_files = site.static_files | where_exp: "f", "f.path contains gallery_path" -%}
+        {%- assign gallery_list = gallery_files | map: "path" | sort -%}
+        <img class="images first-image-wave-carousel-image" src="" alt="">
+    </div>
+
+      <script class="cambodia-street-gallery-data" type="application/json">
+            {
+              "all": {{ layout_paths | jsonify }},
+              "layout": {{ layout | jsonify }}
+            }
+            </script>
+</section>

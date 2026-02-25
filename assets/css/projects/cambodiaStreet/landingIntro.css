@@ -1,0 +1,80 @@
+.landing-intro {
+    position: fixed;
+    inset: 0;
+    z-index: 1200;
+}
+
+.landing-intro-background {
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.landing-intro-content{
+    width: 20vw;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+}
+
+.landing-intro-counter {
+    align-self: flex-end;
+    font-family: "IBM Plex Mono", "Courier New", monospace;
+    font-size: clamp(1rem, 1.2vw, 1.4rem);
+    line-height: 1;
+    color: #111111;
+    letter-spacing: 0.08em;
+}
+
+.landing-intro-content img{
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    clip-path: inset(0 0 0 0);
+}
+
+.landing-intro-content img.reveal-up{
+  animation: reveal-up 760ms cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+}
+.landing-intro-content img.reveal-down{
+  animation: reveal-down 760ms cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+}
+
+@keyframes reveal-up {
+  0% {
+    clip-path: inset(100% 0 0 0);
+  }
+  100% {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes reveal-down {
+  0% { 
+    clip-path: inset(0 0 0 0); 
+}
+  100% { 
+    clip-path: inset(100% 0 0 0); 
+}
+}
+
+
+
+
+
+
+@keyframes landing-intro-background-dissolve{
+    0% {
+        opacity: 0.3;
+    }
+    100% {
+        opacity: 0;
+    }
+}
