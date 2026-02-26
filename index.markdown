@@ -1,6 +1,8 @@
 ---
 layout: index
 
+enable_crosshair: true
+
 stylesheets:
   - /assets/css/index/indexStylesheet.css
   

@@ -4,14 +4,13 @@
     bottom: 12px;
     z-index: 35;
     margin: 0;
-    font-family: "Rubik Mono One", sans-serif;
+    font-family: var(--font-aldrich);
     font-size: clamp(2.8rem, 11vw, 12rem);
     line-height: 0.9;
     letter-spacing: 0.02em;
     color: #cf0101;
     pointer-events: none;
     text-transform: uppercase;
-    text-shadow: 0 2px 14px rgba(0, 0, 0, 0.35);
 }
 
 .index-gallery_grid {
@@ -113,4 +112,8 @@ body.cursor-hidden {
     .index-gallery_item.size-l {
         grid-column: span 4;
     }
+}
+
+.cv-crosshair-overlay {
+    z-index: 10010;
 }

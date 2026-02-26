@@ -1,0 +1,18 @@
+:root {
+  /* Global Google fonts from _config.yml -> nav_fonts -> _layouts/base.html */
+  --font-playfair-display: "Playfair Display", serif;
+  --font-rubik-mono-one: "Rubik Mono One", sans-serif;
+  --font-aldrich: "Aldrich", sans-serif;
+  --font-bungee: "Bungee", sans-serif;
+  --font-plaster: "Plaster", system-ui;
+  --font-protest-guerrilla: "Protest Guerrilla", sans-serif;
+  --font-stalinist-one: "Stalinist One", sans-serif;
+  --font-tulpen-one: "Tulpen One", sans-serif;
+
+  /* Base stack aliases used across the project */
+  --font-ibm-plex-sans: "IBM Plex Sans", "Segoe UI", sans-serif;
+  --font-ibm-plex-mono: "IBM Plex Mono", "Consolas", "Courier New", monospace;
+
+  /* Page-level font examples (only loaded where page front matter adds them) */
+  --font-oswald: "Oswald", sans-serif;
+}
