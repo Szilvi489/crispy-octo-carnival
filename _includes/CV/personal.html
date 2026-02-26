@@ -1,4 +1,44 @@
 <section id="cv-personal" class="cv-personal-section">
+    <div class="cv-personal-prelude" aria-hidden="true">
+        <div class="cv-personal-prelude-grid">
+            {% for repeat in (1..24) %}
+                {% for project in site.projects %}
+                    {% assign thumbnails_folder = project.thumbnails | first %}
+                    {% if thumbnails_folder %}
+                        {% assign thumbnails_files = site.static_files | where_exp: "file", "file.path contains thumbnails_folder" %}
+                        {% for file in thumbnails_files %}
+                            {% if file.extname == ".png" or file.extname == ".jpg" or file.extname == ".jpeg" or file.extname == ".webp" %}
+                                <figure class="cv-personal-bg-tile">
+                                    <img src="{{ file.path }}" alt="" loading="lazy" decoding="async">
+                                </figure>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+        </div>
+        <img class="cv-personal-prelude-cloud cloud-layer-1" src="/assets/images/CV/removedBackgroundImages/white-cloud.png" alt="">
+        <img class="cv-personal-prelude-cloud cloud-layer-2" src="/assets/images/CV/removedBackgroundImages/white-cloud2.png" alt="">
+        <img class="cv-personal-prelude-cloud cloud-layer-3" src="/assets/images/CV/removedBackgroundImages/white-cloud3.png" alt="">
+        <img class="cv-personal-prelude-cloud cloud-layer-4" src="/assets/images/CV/removedBackgroundImages/white-cloud4.png" alt="">
+    </div>
+    <div class="cv-personal-bg-grid" aria-hidden="true">
+        {% for repeat in (1..24) %}
+            {% for project in site.projects %}
+                {% assign thumbnails_folder = project.thumbnails | first %}
+                {% if thumbnails_folder %}
+                    {% assign thumbnails_files = site.static_files | where_exp: "file", "file.path contains thumbnails_folder" %}
+                    {% for file in thumbnails_files %}
+                        {% if file.extname == ".png" or file.extname == ".jpg" or file.extname == ".jpeg" or file.extname == ".webp" %}
+                            <figure class="cv-personal-bg-tile">
+                                <img src="{{ file.path }}" alt="" loading="lazy" decoding="async">
+                            </figure>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+    </div>
     <div class="cv-personal-content">
         <div class="cv-orbit-scene" aria-hidden="true">
             <div class="cv-orbit-ring cv-orbit-ring-a">
@@ -32,5 +72,4 @@
             <img class="cv-personal-subject" src="/assets/images/CV/removedBackgroundImages/DSCF1703.png" alt="Portrait subject">
         </div>
     </div>
-    <h2>Personal</h2>
 </section>
