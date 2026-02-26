@@ -1,0 +1,15 @@
+.cv-skills-section {
+    position: relative;
+    z-index: 5;
+    min-height: 80vh;
+    padding: 14vh 6vw 8vh;
+    color: #f5f3ef;
+}
+
+.cv-skills-section h2 {
+    margin: 0;
+    font-family: var(--font-rubik-mono-one, "Rubik Mono One", sans-serif);
+    font-size: clamp(2rem, 6vw, 5rem);
+    line-height: 0.95;
+    text-transform: uppercase;
+}

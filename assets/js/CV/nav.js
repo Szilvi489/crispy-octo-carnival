@@ -27,4 +27,29 @@
     resetNavEntrance();
     document.addEventListener("cv-loader-start", resetNavEntrance);
     document.addEventListener("cv-loader-exit-start", startNavEntrance);
+
+    function scrollToTarget(hash) {
+        if (!hash || hash.charAt(0) !== "#") return;
+        var target = document.querySelector(hash);
+        if (!target) return;
+
+        var navSection = document.querySelector(".nav-section");
+        var navHeight = navSection ? navSection.getBoundingClientRect().height : 0;
+        var topPadding = 24;
+        var targetY = window.pageYOffset + target.getBoundingClientRect().top - navHeight - topPadding;
+
+        window.scrollTo({
+            top: Math.max(0, targetY),
+            behavior: "smooth"
+        });
+    }
+
+    navItems.forEach(function (item) {
+        item.addEventListener("click", function (event) {
+            var hash = item.getAttribute("href");
+            if (!hash || hash.charAt(0) !== "#") return;
+            event.preventDefault();
+            scrollToTarget(hash);
+        });
+    });
 })();
