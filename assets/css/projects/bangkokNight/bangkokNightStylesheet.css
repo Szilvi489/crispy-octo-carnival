@@ -27,6 +27,7 @@
     inset: 0;
     pointer-events: none;
     z-index: 4;
+    overflow: hidden;
 }
 .bangkok-night-section .floating-letter {
     font-family:"Oswald", sans-serif;

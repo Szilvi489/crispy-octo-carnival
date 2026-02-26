@@ -144,11 +144,16 @@
   size: large
 
 - path: /assets/images/projects/bangkokNight/gallery_images/DSCF1049.jpg
-  x: 16900
+  x: 13900
   y: 80
   size: medium
 
 - path: /assets/images/projects/bangkokNight/gallery_images/DSCF1179-Edit.jpg
   x: 14500
-  y: 0
+  y: 60
   size: large
+
+- path: /assets/images/projects/bangkokNight/gallery_images/DSCF1218.jpg
+  x: 14220
+  y: 35
+  size: medium

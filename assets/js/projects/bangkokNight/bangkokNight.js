@@ -145,7 +145,9 @@
         const textExtent = Math.max(0, maxExtent);
         const trackWidth = Math.max(0, textExtent);
         const startX = 120;
-        const endX = Math.max(startX + 600, trackWidth - 200);
+        const estimatedLetterWidth = Math.min(280, Math.max(120, carousel.clientWidth * 0.16));
+        const textTailPadding = estimatedLetterWidth + 60;
+        const endX = Math.max(startX + 600, trackWidth - textTailPadding);
         const span = endX - startX;
         const step = span / Math.max(1, letters.length - 1);
 
