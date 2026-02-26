@@ -16,7 +16,7 @@
     position: relative;
     width: min(70vw, 520px);
     aspect-ratio: 1 / 1;
-    perspective: 1100px;
+    perspective: 900px;
     transform-style: preserve-3d;
     display: grid;
     place-items: center;
