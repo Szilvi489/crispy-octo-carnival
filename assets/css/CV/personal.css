@@ -1,0 +1,87 @@
+.cv-personal-section {
+    min-height: 90vh;
+    display: grid;
+    place-items: center;
+    padding: 40px 20px 100px;
+    position: relative;
+}
+
+.cv-personal-content {
+    width: min(88vw, 820px);
+    display: grid;
+    place-items: center;
+}
+
+.cv-orbit-scene {
+    position: relative;
+    width: min(70vw, 520px);
+    aspect-ratio: 1 / 1;
+    perspective: 1100px;
+    transform-style: preserve-3d;
+    display: grid;
+    place-items: center;
+}
+
+.cv-personal-subject {
+    position: relative;
+    z-index: 2;
+    width: min(50vw, 320px);
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 10px 24px rgba(0, 0, 0, 0.35));
+}
+
+.cv-orbit-ring {
+    --letters: 12;
+    --radius: clamp(140px, 24vw, 210px);
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    transform-style: preserve-3d;
+}
+
+.cv-orbit-ring span {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform-style: preserve-3d;
+    font-family: "Bungee", sans-serif;
+    font-size: clamp(1rem, 2.1vw, 1.5rem);
+    color: rgb(57, 255, 20);
+    text-shadow: 0 0 12px rgba(57, 255, 20, 0.4);
+    transform:
+        translate(-50%, -50%)
+        rotateY(calc((360deg / var(--letters)) * var(--i)))
+        translateZ(var(--radius));
+}
+
+.cv-orbit-ring-a {
+    animation: cvOrbitSpinA 18s linear infinite;
+}
+
+.cv-orbit-ring-b {
+    --radius: clamp(112px, 20vw, 178px);
+    transform: rotateX(72deg);
+    animation: cvOrbitSpinB 14s linear infinite reverse;
+}
+
+@keyframes cvOrbitSpinA {
+    from {
+        transform: rotateX(68deg) rotateY(0deg);
+    }
+
+    to {
+        transform: rotateX(68deg) rotateY(360deg);
+    }
+}
+
+@keyframes cvOrbitSpinB {
+    from {
+        transform: rotateX(108deg) rotateY(0deg);
+    }
+
+    to {
+        transform: rotateX(108deg) rotateY(360deg);
+    }
+}
