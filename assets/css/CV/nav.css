@@ -4,6 +4,8 @@
     left: 2vw;
     right: 15vw;
     z-index: 30;
+    transform: translate3d(0, calc(-1 * var(--cv-nav-scroll-shift, 0px)), 0);
+    will-change: transform;
 }
 
 .cv-nav{

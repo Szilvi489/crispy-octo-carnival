@@ -1,13 +1,39 @@
 .cv-intro-section {
+    --color-lovely-baby-blue: rgba(94, 204, 244, 1);
     min-height: 100vh;
+    position: relative;
     display: grid;
     align-items: center;
     padding: 8vh 5vw;
+    overflow: hidden;
+    isolation: isolate;
 }
+
+.cv-intro-section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 40%;
+    background: var(--color-lovely-baby-blue);
+    z-index: 2;
+}
+.cv-circle-background {
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    transform: translate(-25%, 3.5%);
+    width: 200vw;
+    height: 200vw;
+    background-color:var(--color-bordeau-chocolate);
+    z-index: 3;
+    border-radius: 50%;
+}
+
 
 .cv-intro-content {
+    position: relative;
+    z-index: 3;
     width: min(86vw, 900px);
 }
-
-
-

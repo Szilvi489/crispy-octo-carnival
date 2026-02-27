@@ -7,11 +7,12 @@
 }
 
 .cv-skills-reveal {
+    --skills-reveal-y-offset: 70px;
     position: fixed;
     inset: 0;
     background: rgba(94, 204, 244, 1);
-    clip-path: circle(var(--skills-reveal-radius, 20px) at 50% calc(var(--skills-reveal-y, 20px) + 70px));
-    -webkit-clip-path: circle(var(--skills-reveal-radius, 20px) at 50% calc(var(--skills-reveal-y, 20px) + 70px));
+    clip-path: circle(var(--skills-reveal-radius, 20px) at 50% calc(var(--skills-reveal-y, 20px) + var(--skills-reveal-y-offset, 0px)));
+    -webkit-clip-path: circle(var(--skills-reveal-radius, 20px) at 50% calc(var(--skills-reveal-y, 20px) + var(--skills-reveal-y-offset, 0px)));
     opacity: var(--skills-reveal-opacity, 0);
     pointer-events: none;
     z-index: 4;
