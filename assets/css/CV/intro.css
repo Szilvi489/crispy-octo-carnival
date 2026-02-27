@@ -1,6 +1,5 @@
 .cv-intro-section {
-    --color-lovely-baby-blue: rgba(94, 204, 244, 1);
-    min-height: 100vh;
+    min-height: 170vh;
     position: relative;
     display: grid;
     align-items: center;
