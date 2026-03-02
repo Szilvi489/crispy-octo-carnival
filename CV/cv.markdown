@@ -23,7 +23,6 @@ scripts:
   - /assets/js/CV/intro.js
   - /assets/js/CV/education.js
   - /assets/js/CV/experience.js
-  - /assets/js/CV/skills.js
   - /assets/js/CV/programmingProjects.js
   - /assets/js/CV/personal.js
   - /assets/js/CV/dreamjob.js

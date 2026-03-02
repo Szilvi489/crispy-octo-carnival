@@ -124,14 +124,11 @@
     opacity: 0.9;
 }
 
-.cv-orbit-scene {
+
+.cv-personal-section h2 {
     position: relative;
-    width: min(70vw, 520px);
-    aspect-ratio: 1 / 1;
-    perspective: 900px;
-    transform-style: preserve-3d;
-    display: grid;
-    place-items: center;
+    z-index: 2;
+    margin: 0 0 40px;
 }
 
 .cv-personal-subject {
@@ -143,10 +140,14 @@
     filter: drop-shadow(0 10px 24px rgba(0, 0, 0, 0.35));
 }
 
-.cv-personal-section h2 {
+.cv-orbit-scene {
     position: relative;
-    z-index: 2;
-    margin: 0 0 40px;
+    width: min(70vw, 520px);
+    aspect-ratio: 1 / 1;
+    perspective: 900px;
+    transform-style: preserve-3d;
+    display: grid;
+    place-items: center;
 }
 
 .cv-orbit-ring {

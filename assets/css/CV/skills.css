@@ -1,22 +1,10 @@
 .cv-skills-section {
+    background:linear-gradient(0deg,rgba(94, 204, 244, 1) 8%, rgba(43, 27, 27, 1) 76%);;
     position: relative;
     z-index: 5;
     min-height: 120vh;
     padding: 14vh 6vw 8vh;
     color: #f5f3ef;
-}
-
-.cv-skills-reveal {
-    --skills-reveal-y-offset: 70px;
-    position: fixed;
-    inset: 0;
-    background: rgba(94, 204, 244, 1);
-    clip-path: circle(var(--skills-reveal-radius, 20px) at 50% calc(var(--skills-reveal-y, 20px) + var(--skills-reveal-y-offset, 0px)));
-    -webkit-clip-path: circle(var(--skills-reveal-radius, 20px) at 50% calc(var(--skills-reveal-y, 20px) + var(--skills-reveal-y-offset, 0px)));
-    opacity: var(--skills-reveal-opacity, 0);
-    pointer-events: none;
-    z-index: 4;
-    will-change: clip-path, opacity;
 }
 
 .cv-skills-section h2 {

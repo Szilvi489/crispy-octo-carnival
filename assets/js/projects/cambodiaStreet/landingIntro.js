@@ -32,10 +32,11 @@
         : 0;
 
       const timeline = gsapApi.timeline();
+   
       timeline.fromTo(
         imageEl,
         { clipPath: "inset(100% 0% 0% 0%)" },
-        { clipPath: "inset(0% 0% 0% 0%)", duration: 0.76, ease: "power3.out" }
+        { clipPath: "inset(0% 0% 0% 0%)", duration: 0.26, ease: "power3.out" }
       );
 
       for (let i = 1; i < images.length; i += 1) {
