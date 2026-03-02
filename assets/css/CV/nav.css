@@ -1,6 +1,6 @@
 .nav-section {
     position: fixed;
-    top: 5vh;
+    top: 1vh;
     left: 2vw;
     right: 15vw;
     z-index: 30;
@@ -19,7 +19,7 @@
 
 .cv-nav a{
     color: var(--color-deep-mandarin);
-    font-size: clamp(14px, 2.1vw, 4vh);
+    font-size: clamp(14px, 0.5vw, 4vh);
     text-decoration: none;
     opacity: 1;
     transform: translate3d(0, 0, 0);

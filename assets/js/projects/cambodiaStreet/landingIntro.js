@@ -2,20 +2,12 @@
   const sections = document.querySelectorAll(".landing-intro");
   if (!sections.length) return;
 
-  const wait = (ms) => new Promise((resolve) => window.setTimeout(resolve, ms));
-  const waitForAnimationEnd = (el, fallbackMs) => new Promise((resolve) => {
-    let done = false;
-    const finish = () => {
-      if (done) return;
-      done = true;
-      el.removeEventListener("animationend", finish);
-      resolve();
-    };
-    el.addEventListener("animationend", finish, { once: true });
-    window.setTimeout(finish, fallbackMs);
-  });
+  const gsapApi = window.gsap;
+  if (!gsapApi || typeof gsapApi.timeline !== "function") {
+    return;
+  }
 
-  sections.forEach(async (section) => {
+  sections.forEach((section) => {
     const dataEl = section.querySelector("#cambodia-street-gallery-thumbnail-data");
     if (!dataEl) return;
     const imageEl = section.querySelector(".landing-intro-content img");
@@ -31,10 +23,6 @@
 
       imageEl.alt = "Loading preview";
       imageEl.src = images[0];
-
-      imageEl.classList.add("reveal-up");
-      await waitForAnimationEnd(imageEl, 800);
-      imageEl.classList.remove("reveal-up");
       if (counterEl) counterEl.textContent = "0%";
 
       let delayMs = 2;
@@ -43,22 +31,36 @@
         ? (maxDelayMs - delayMs) / (images.length - 1)
         : 0;
 
+      const timeline = gsapApi.timeline();
+      timeline.fromTo(
+        imageEl,
+        { clipPath: "inset(100% 0% 0% 0%)" },
+        { clipPath: "inset(0% 0% 0% 0%)", duration: 0.76, ease: "power3.out" }
+      );
+
       for (let i = 1; i < images.length; i += 1) {
-        imageEl.src = images[i];
-        imageEl.setAttribute("data-location", "Cambodia");
-        if (counterEl) {
-          const progress = Math.round((i / (images.length - 1)) * 100);
-          counterEl.textContent = `${progress}%`;
-        }
-        await wait(Math.round(delayMs));
+        const progress = Math.round((i / (images.length - 1)) * 100);
+        timeline.call(() => {
+          imageEl.src = images[i];
+          imageEl.setAttribute("data-location", "Cambodia");
+          if (counterEl) {
+            counterEl.textContent = `${progress}%`;
+          }
+        });
+        timeline.to({}, { duration: Math.round(delayMs) / 1000 });
         delayMs = Math.min(maxDelayMs, delayMs + delayStep);
       }
-      if (counterEl) counterEl.textContent = "100%";
 
-      imageEl.classList.add("reveal-down");
-      await waitForAnimationEnd(imageEl, 800);
-      imageEl.classList.remove("reveal-down");
-      section.remove();
+      timeline.call(() => {
+        if (counterEl) counterEl.textContent = "100%";
+      });
+      timeline.to(
+        imageEl,
+        { clipPath: "inset(100% 0% 0% 0%)", duration: 0.76, ease: "power3.in" }
+      );
+      timeline.call(() => {
+        section.remove();
+      });
     } catch (error) {
       console.error("Landing intro: invalid JSON", error);
     }
