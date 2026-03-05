@@ -30,7 +30,9 @@
             return;
         }
 
-        isNavTarget = !!target.closest(".cv-nav a, .navSquareColour, .navMenu a, .navHeartButton, .navHomeButton, #navClose");
+        isNavTarget = !!target.closest(
+            ".cv-nav a, .navSquareColour, .navMenu a, .navHeartButton, .navHomeButton, #navClose, .contact-page-section .contact-input"
+        );
         crosshairOverlay.classList.toggle("is-nav-hover", isNavTarget);
     }
 

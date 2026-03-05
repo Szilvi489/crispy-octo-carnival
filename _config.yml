@@ -17,6 +17,7 @@ nav_fonts:
   - https://fonts.googleapis.com/css2?family=Protest+Guerrilla&display=swap
   - https://fonts.googleapis.com/css2?family=Stalinist+One&display=swap
   - https://fonts.googleapis.com/css2?family=Tulpen+One&display=swap
+  - https://fonts.googleapis.com/css2?family=Rock+Salt&display=swap
 
 enable_gsap: true
 

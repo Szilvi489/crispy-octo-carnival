@@ -1,7 +1,7 @@
 ---
 layout: cv
 enable_crosshair: true
-title: CV; Lebenslauf
+title: CV
 description: CV; Lebenslauf
 
 permalink: /CV/

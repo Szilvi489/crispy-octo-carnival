@@ -3,6 +3,13 @@
     var navSection = document.querySelector(".nav-section");
     var navItems = Array.prototype.slice.call(document.querySelectorAll(".cv-nav a"));
     var navScrollRafId = null;
+    var gsapApi = window.gsap;
+    var activeScrollTween = null;
+    var fallbackScrollRafId = null;
+    var reducedMotionQuery = window.matchMedia ? window.matchMedia("(prefers-reduced-motion: reduce)") : null;
+    var respectReducedMotion = false;
+    var scrollDurationSeconds = 1.35;
+    var scrollEase = "none";
 
     function clamp(value, min, max) {
         return Math.min(max, Math.max(min, value));
@@ -62,6 +69,52 @@
         navScrollRafId = requestAnimationFrame(updateNavScrollShift);
     }
 
+    function stopFallbackScrollTween() {
+        if (fallbackScrollRafId === null) {
+            return;
+        }
+        window.cancelAnimationFrame(fallbackScrollRafId);
+        fallbackScrollRafId = null;
+    }
+
+    function animateScrollFallback(fromY, toY, durationMs) {
+        var startTime = null;
+        var distance = toY - fromY;
+
+        stopFallbackScrollTween();
+
+        function step(timestamp) {
+            var elapsed;
+            var progress;
+            var y;
+
+            if (startTime === null) {
+                startTime = timestamp;
+            }
+
+            elapsed = timestamp - startTime;
+            progress = Math.min(1, elapsed / Math.max(1, durationMs));
+            y = fromY + (distance * progress);
+            window.scrollTo(0, y);
+
+            if (progress < 1) {
+                fallbackScrollRafId = window.requestAnimationFrame(step);
+                return;
+            }
+
+            fallbackScrollRafId = null;
+        }
+
+        fallbackScrollRafId = window.requestAnimationFrame(step);
+    }
+
+    function updateHash(hash) {
+        if (!hash) return;
+        if (window.history && typeof window.history.replaceState === "function") {
+            window.history.replaceState(null, "", hash);
+        }
+    }
+
     function scrollToTarget(hash) {
         if (!hash || hash.charAt(0) !== "#") return;
         var target = document.querySelector(hash);
@@ -70,10 +123,49 @@
         var navHeight = navSection ? navSection.getBoundingClientRect().height : 0;
         var topPadding = 24;
         var targetY = window.pageYOffset + target.getBoundingClientRect().top - navHeight - topPadding;
+        var nextY = Math.max(0, targetY);
+        var shouldReduceMotion = respectReducedMotion && reducedMotionQuery ? reducedMotionQuery.matches : false;
 
-        window.scrollTo({
-            top: Math.max(0, targetY),
-            behavior: "smooth"
+        if (shouldReduceMotion) {
+            window.scrollTo(0, nextY);
+            updateHash(hash);
+            return;
+        }
+
+        if (activeScrollTween && typeof activeScrollTween.kill === "function") {
+            activeScrollTween.kill();
+            activeScrollTween = null;
+        }
+        stopFallbackScrollTween();
+
+        if (!gsapApi || typeof gsapApi.to !== "function") {
+            animateScrollFallback(
+                window.pageYOffset || document.documentElement.scrollTop || 0,
+                nextY,
+                scrollDurationSeconds * 1000
+            );
+            window.setTimeout(function () {
+                updateHash(hash);
+            }, Math.max(0, Math.round(scrollDurationSeconds * 1000)));
+            return;
+        }
+
+        var scrollState = {
+            y: window.pageYOffset || document.documentElement.scrollTop || 0
+        };
+
+        activeScrollTween = gsapApi.to(scrollState, {
+            y: nextY,
+            duration: scrollDurationSeconds,
+            ease: scrollEase,
+            overwrite: true,
+            onUpdate: function () {
+                window.scrollTo(0, scrollState.y);
+            },
+            onComplete: function () {
+                activeScrollTween = null;
+                updateHash(hash);
+            }
         });
     }
 

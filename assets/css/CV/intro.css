@@ -2,7 +2,7 @@
     min-height: 170vh;
     position: relative;
     display: grid;
-    align-items: center;
+    align-items: start;
     padding: 8vh 5vw;
     overflow: visible;
     isolation: auto;
@@ -63,7 +63,7 @@ color: var(--color-alternative-orange);
     overflow: visible;
     display: flex;
     justify-content: flex-end;
-    align-items: center;
+    align-items: flex-start;
 }
 
 .cv-intro-meta {
@@ -109,7 +109,7 @@ color: var(--color-alternative-orange);
     position: absolute;
     left: auto;
     right: clamp(5vw, 26vw, 34vw);
-    top: clamp(-37vh, -40vh, -45vh);
+    top: clamp(14vh, 18vh, 24vh);
     width: clamp(440px, 46vw, 760px);
     display: block;
     min-height: clamp(430px, 65vh, 740px);
@@ -224,7 +224,7 @@ color: var(--color-alternative-orange);
 .cv-intro-orbit-scene {
     position: relative;
     width: min(28vw, 28vw);
-    top: -20vw;
+    top: 5vh;
     aspect-ratio: 1 / 1;
     perspective: 900px;
     transform-style: preserve-3d;
@@ -304,10 +304,12 @@ color: var(--color-alternative-orange);
 
     .cv-intro-hero {
         justify-content: center;
+        align-items: flex-start;
     }
 
     .cv-intro-orbit-scene {
         width: min(92vw, 360px);
+        top: 5vh;
     }
 
     .cv-intro-subject {

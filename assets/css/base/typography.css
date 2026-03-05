@@ -8,6 +8,7 @@
   --font-protest-guerrilla: "Protest Guerrilla", sans-serif;
   --font-stalinist-one: "Stalinist One", sans-serif;
   --font-tulpen-one: "Tulpen One", sans-serif;
+  --font-rock-salt: "Rock Salt", cursive;
 
   /* Base stack aliases used across the project */
   --font-ibm-plex-sans: "IBM Plex Sans", "Segoe UI", sans-serif;
@@ -15,4 +16,16 @@
 
   /* Page-level font examples (only loaded where page front matter adds them) */
   --font-oswald: "Oswald", sans-serif;
+
+  --font-body: "IBM Plex Sans", "Segoe UI", sans-serif;
+  --font-display: "IBM Plex Sans", "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", "Consolas", "Courier New", monospace;
+  --text-base: 1rem;
+  --text-sm: 0.875rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.5rem;
+  --text-2xl: 2rem;
+  --line-tight: 1.1;
+  --line-normal: 1.5;
+  --line-relaxed: 1.7;
 }
