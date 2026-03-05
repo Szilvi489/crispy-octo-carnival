@@ -108,6 +108,7 @@
     display: block;
     overflow: hidden;
     width: var(--tile-size, clamp(1rem, 2vw, 5rem));
+    height: var(--tile-size, clamp(1rem, 2vw, 5rem));
     aspect-ratio: 1 / 1;
     flex: 0 0 auto;
 }
@@ -123,8 +124,9 @@
     height: 100%;
     width: 100%;
     object-fit: cover;
-    backface-visibility: hidden;
-    transform: translateZ(0);
+    backface-visibility: visible;
+    -webkit-backface-visibility: visible;
+    transform: none;
     opacity: 1;
     visibility: visible;
     transition: opacity 180ms ease;
