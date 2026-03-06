@@ -3,11 +3,9 @@
         {%- assign gallery_path = "/assets/images/projects/forest/gallery_images/animated_tiles/" -%}
         {%- assign gallery_files = site.static_files | where_exp: "f", "f.path contains gallery_path" -%}
         {%- assign gallery_list = gallery_files | map: "path" | sort -%}
-        <img class="images" src="" alt="">
     </div>
     <div class="animated-tiles-overlay" aria-hidden="true">
         <button class="animated-tiles-close" type="button" aria-label="Close image">×</button>
-        <img class="animated-tiles-overlay-image" src="" alt="">
     </div>
 
       <script class="forest-gallery-data" type="application/json">

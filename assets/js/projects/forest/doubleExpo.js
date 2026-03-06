@@ -8,7 +8,7 @@
     const lerp = (start, end, t) => start + (end - start) * t;
 
     sections.forEach((section) => {
-        const dataEl = section.querySelector(".forest-gallery-data");x
+        const dataEl = section.querySelector(".forest-gallery-data");
         if (!dataEl) {
             return;
         }
@@ -22,9 +22,29 @@
 
         const track = section.querySelector(".image-track");
         const carousel = section.querySelector(".image-carousel");
+        const firstContainer = section.querySelector(".double-expo-first-container");
+        const secondContainer = section.querySelector(".double-expo-second-container");
+        let firstImageEl = section.querySelector(".double-expo-first-image");
+        let secondImageEl = section.querySelector(".double-expo-second-image");
+        if (!firstImageEl && firstContainer) {
+            firstImageEl = document.createElement("img");
+            firstImageEl.className = "image double-expo-first-image";
+            firstImageEl.alt = "";
+            firstImageEl.loading = "lazy";
+            firstImageEl.decoding = "async";
+            firstContainer.appendChild(firstImageEl);
+        }
+        if (!secondImageEl && secondContainer) {
+            secondImageEl = document.createElement("img");
+            secondImageEl.className = "image double-expo-second-image";
+            secondImageEl.alt = "";
+            secondImageEl.loading = "lazy";
+            secondImageEl.decoding = "async";
+            secondContainer.appendChild(secondImageEl);
+        }
         const doubleExpoImages = {
-            first: section.querySelector(".double-expo-first-image"),
-            second: section.querySelector(".double-expo-second-image")
+            first: firstImageEl,
+            second: secondImageEl
         };
 
         if (!track || !carousel || !doubleExpoImages.first || !doubleExpoImages.second) {

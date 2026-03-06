@@ -22,7 +22,7 @@
     const articleContainerCEl = section.querySelector(".slide-show-article-container-c");
     const articleContentBox3El = section.querySelector(".slide-show-article-content-box3");
     const articleMapImageWrapEl = section.querySelector(".slide-show-article-container-a");
-    const articleMapImageEl = section.querySelector(".slide-show-article-map-image");
+    let articleMapImageEl = section.querySelector(".slide-show-article-map-image");
     const articleCloseBtn = section.querySelector(".slide-show-article-close");
     const timeValueEl = section.querySelector('[data-meta="time"]');
     const weatherValueEl = section.querySelector('[data-meta="field2"]');
@@ -32,6 +32,15 @@
     const articleMap = data.articles && typeof data.articles === "object"
       ? data.articles
       : {};
+
+    if (!articleMapImageEl && articleMapImageWrapEl) {
+      articleMapImageEl = document.createElement("img");
+      articleMapImageEl.className = "slide-show-article-map-image";
+      articleMapImageEl.alt = "";
+      articleMapImageEl.loading = "lazy";
+      articleMapImageEl.decoding = "async";
+      articleMapImageWrapEl.appendChild(articleMapImageEl);
+    }
 
     if (!galleryFrame || !articlePanel || !largeImage || !desktopMq) {
       return null;

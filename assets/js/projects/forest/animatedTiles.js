@@ -22,10 +22,18 @@
 
     const imagesWrap = section.querySelector(".animated-tiles-images");
     const overlay = section.querySelector(".animated-tiles-overlay");
-    const overlayImage = section.querySelector(".animated-tiles-overlay-image");
+    let overlayImage = section.querySelector(".animated-tiles-overlay-image");
     const closeButton = section.querySelector(".animated-tiles-close");
     if (!imagesWrap || !Array.isArray(data.all)) {
       return;
+    }
+    if (overlay && !overlayImage) {
+      overlayImage = document.createElement("img");
+      overlayImage.className = "animated-tiles-overlay-image";
+      overlayImage.alt = "";
+      overlayImage.loading = "lazy";
+      overlayImage.decoding = "async";
+      overlay.appendChild(overlayImage);
     }
 
     imagesWrap.innerHTML = "";

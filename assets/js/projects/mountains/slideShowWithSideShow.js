@@ -27,12 +27,20 @@
       return null;
     }
 
-    const largeImage = section.querySelector(".large-image");
+    let largeImage = section.querySelector(".large-image");
     const descriptionEl = section.querySelector(".large-image-description");
     const mobileTitleEl = section.querySelector(".large-image-mobile-title");
     const largeImageContainer = section.querySelector(".large-image-container");
     const thumbsWrap = section.querySelector(".slide-images-container");
     const galleryFrame = section.querySelector(".slide-show-with-side-show-images");
+    if (!largeImage && largeImageContainer) {
+      largeImage = document.createElement("img");
+      largeImage.className = "images large-image";
+      largeImage.alt = "";
+      largeImage.loading = "lazy";
+      largeImage.decoding = "async";
+      largeImageContainer.appendChild(largeImage);
+    }
     if (!largeImage || !largeImageContainer || !thumbsWrap || !Array.isArray(data.all)) {
       return null;
     }
