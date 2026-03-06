@@ -80,25 +80,17 @@
 
 .navMenu a {
     color: var(--navFontColour);
-    font-size: 28px;
+    font-size: 58px;
     text-decoration: none;
+    font-family: "Bebas Neue", sans-serif;
+    font-weight: 900;
+    -webkit-text-stroke: 0.7px currentColor;
+    text-shadow:
+        0.6px 0 currentColor,
+        -0.6px 0 currentColor;
 }
 
-.projects-page-menuitem{
-    font-family: "Aldrich", sans-serif;
-}
 
-.about-page-menuitem{
-    font-family: "Bungee", sans-serif;
-}
-
-.contact-page-menuitem{
-    font-family: "Plaster", sans-serif;
-}
-
-.cv-page-menuitem{
-    font-family: "Protest Guerrilla", sans-serif;
-}
 
 .navMenu a:hover,
 .navMenu a:focus-visible {
@@ -118,7 +110,7 @@
     justify-content: center;
     margin-top: 12px;
     padding: 0;
-    width: 32px;
+    width: 42px;
 }
 
 .navHeartButton:hover {

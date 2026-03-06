@@ -2,7 +2,8 @@
     var circle = document.querySelector(".contact-gradient-circle");
     var stage = document.querySelector(".contact-circle-stage");
     var section = document.querySelector(".contact-page-section");
-    var titleBlocks = section ? section.querySelectorAll(".text1, .text2") : [];
+    var titleContact = section ? section.querySelector(".titleP1") : null;
+    var titleMe = section ? section.querySelector(".titleP2") : null;
     var formLines = section ? section.querySelectorAll(".contact-form > div") : [];
     var gsapApi = window.gsap;
 
@@ -20,33 +21,62 @@
     });
 
     timeline.to(colorTarget, {
-        "--sun-c1": "#f16510",
-        "--sun-c2": "#fea51d",
-        "--sun-c3": "#ffc59c",
+        "--sun-c1": "#f12808",
+        "--sun-c2": "#d65708",
+        "--sun-c3": "#1bee07",
         duration: sunSpeed,
         ease: "sine.inOut"
     });
     timeline.to(colorTarget, {
-        "--sun-c1": "#fcb785",
-        "--sun-c2": "#ffd4b3",
-        "--sun-c3": "#ffe8d2",
+        "--sun-c1": "#d83b07",
+        "--sun-c2": "#1dbb14",
+        "--sun-c3": "#0f7b0b",
         duration: sunSpeed,
         ease: "sine.inOut"
     });
     timeline.to(colorTarget, {
-        "--sun-c1": "#ffd58a",
-        "--sun-c2": "#ffc46d",
-        "--sun-c3": "#ffae5a",
+        "--sun-c1": "#c84f07",
+        "--sun-c2": "#1bee07",
+        "--sun-c3": "#18a006",
         duration: sunSpeed,
         ease: "sine.inOut"
     });
     timeline.to(colorTarget, {
-        "--sun-c1": "#f3e2bf",
-        "--sun-c2": "#f3e2bf",
-        "--sun-c3": "#f3e2bf",
+        "--sun-c1": "#f12808",
+        "--sun-c2": "#cf5d09",
+        "--sun-c3": "#1bee07",
         duration: sunSpeed,
         ease: "sine.inOut"
     });
+
+    var backgroundTimeline = gsapApi.timeline({
+        repeat: -1,
+        yoyo: true,
+        defaults: { duration: 18, ease: "sine.inOut" }
+    });
+
+    backgroundTimeline
+        .to(section, {
+            "--bg-c1": "#f12808",
+            "--bg-c2": "#1f4cbc",
+            "--bg-c3": "#043494",
+            "--bg-x": "18%",
+            "--bg-y": "30%"
+        })
+        .to(section, {
+            "--bg-c1": "#cc330a",
+            "--bg-c2": "#043494",
+            "--bg-c3": "#1bee07",
+            "--bg-x": "84%",
+            "--bg-y": "68%"
+        })
+        .to(section, {
+            "--bg-c1": "#f12808",
+            "--bg-c2": "#c63a0a",
+            "--bg-c3": "#043494",
+            "--bg-x": "50%",
+            "--bg-y": "50%"
+        });
 
     gsapApi.to(stage, {
         yPercent: sinkRangePercent,
@@ -56,14 +86,24 @@
         repeat: -1
     });
 
-    if (titleBlocks.length) {
-        gsapApi.from(titleBlocks, {
+    if (titleContact) {
+        gsapApi.from(titleContact, {
             duration: 1.05,
-            y: function () { return window.innerHeight * 0.95; },
+            y: function () { return -(window.innerHeight * 0.55); },
             opacity: 0,
-            stagger: 0.12,
             ease: "expo.out",
             delay: 0.18,
+            clearProps: "transform,opacity"
+        });
+    }
+
+    if (titleMe) {
+        gsapApi.from(titleMe, {
+            duration: 1.05,
+            y: function () { return window.innerHeight * 0.55; },
+            opacity: 0,
+            ease: "expo.out",
+            delay: 0.24,
             clearProps: "transform,opacity"
         });
     }

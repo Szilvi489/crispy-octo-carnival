@@ -18,6 +18,8 @@ nav_fonts:
   - https://fonts.googleapis.com/css2?family=Stalinist+One&display=swap
   - https://fonts.googleapis.com/css2?family=Tulpen+One&display=swap
   - https://fonts.googleapis.com/css2?family=Rock+Salt&display=swap
+  - https://fonts.googleapis.com/css2?family=Knewave&display=swap
+  - https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet
 
 enable_gsap: true
 

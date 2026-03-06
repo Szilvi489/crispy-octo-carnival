@@ -1,7 +1,15 @@
 <section class="cambodia-street-section">
-    <div class="cambodia-street-content">
-    {% include projects/cambodiaStreet/landingIntro.html%}
-    {% include projects/cambodiaStreet/imageWaveCarouselSection.html%}
+    <div class="cambodia-street-images">
+        {%- assign gallery_path = "/assets/images/projects/cambodiaStreet/gallery_images/" -%}
+        {%- assign gallery_files = site.static_files | where_exp: "f", "f.path contains gallery_path" -%}
+        {%- assign gallery_list = gallery_files | map: "path" | sort -%}
+        {%- assign layout_data = site.data.cambodiaLayout | default: empty -%}
     </div>
 
+      <script class="cambodia-street-gallery-data" type="application/json">
+            {
+              "all": {{ gallery_list | jsonify }},
+              "layout": {{ layout_data | jsonify }}
+            }
+            </script>
 </section>
