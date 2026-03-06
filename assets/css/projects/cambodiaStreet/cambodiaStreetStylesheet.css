@@ -1,6 +1,6 @@
 .cambodia-street-section {
     position: relative;
-    min-height: 100vh;
+    min-height: 500vh;
     width: 100%;
     background: #778967;
     overflow: hidden;
@@ -16,12 +16,12 @@
 
 .cambodia-street-image-1 {
     position: absolute;
-    left: 70%;
+    left: 72%;
     top: 50%;
     width: min(94vw, 1260px);
     max-height: 80vh;
     object-fit: contain;
-    transform: translate(-50%, -50%) scale(1);
+    transform: translate(-50%, -50%) scale(1.5);
     opacity: 1;
     will-change: transform, opacity;
     pointer-events: none;
@@ -30,7 +30,7 @@
 .cambodia-street-textbox-1 {
     position: absolute;
     left: 24%;
-    top: 50%;
+    top: 20%;
     width: min(42vw, 520px);
     padding: 0.9rem 1.1rem;
     background: rgba(255, 255, 255, 0.84);
@@ -41,4 +41,11 @@
     line-height: 1.2;
     opacity: 0;
     will-change: transform, opacity;
+}
+
+#container3D{
+    position :fixed;
+    inset: 0;
+    z-index: 100;
+    pointer-events: none;
 }
