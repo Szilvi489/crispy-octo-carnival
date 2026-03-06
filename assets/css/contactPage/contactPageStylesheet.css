@@ -48,6 +48,8 @@
     font-size: clamp(1rem, 3vw, 1.8rem);
     font-family: var(--font-aldrich, "Aldrich", sans-serif);
     text-transform: uppercase;
+    border: 2px solid rgba(17, 17, 17, 0.95);
+    padding: 0.9rem 1rem 1rem;
 }
 
 .contact-form .contact-text,
@@ -153,6 +155,34 @@
     gap: 0.25rem;
 }
 
+.contact-submit-row {
+    justify-content: flex-end;
+    margin-top: 0.65rem;
+}
+
+.contact-submit-button {
+    min-width: clamp(150px, 18vw, 240px);
+    padding: 0.45rem 0.9rem;
+    border: 2px solid rgba(17, 17, 17, 0.95);
+    background: rgba(255, 255, 255, 0.1);
+    color: #111111;
+    font-family: var(--font-aldrich, "Aldrich", sans-serif);
+    font-size: clamp(0.85rem, 1.2vw, 1.15rem);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.contact-submit-button:hover {
+    background: rgba(255, 255, 255, 0.28);
+    transform: translateY(-1px);
+}
+
+.contact-submit-button:active {
+    transform: translateY(0);
+}
+
 .contact-circle-stage {
     width: min(230vw, 2400px);
     aspect-ratio: 1 / 1;
@@ -230,6 +260,10 @@
     height: clamp(120px, 20vh, 200px);
    
     padding: 8px 2px;
+}
+
+.contact-submit-row {
+    justify-content: flex-end;
 }
 
 

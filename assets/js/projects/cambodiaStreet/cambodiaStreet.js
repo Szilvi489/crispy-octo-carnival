@@ -22,6 +22,13 @@
     return match ? match.path : null;
   };
 
+  const getTextboxTextById = (textboxId) => {
+    const match = layout.find(
+      (entry) => entry && Number(entry.textbox) === textboxId && typeof entry.text === 'string'
+    );
+    return match ? match.text : '';
+  };
+
   const firstImagePath = getImageByPosition(1) || (layout[0] && layout[0].path) || all[0];
   if (firstImagePath) {
     const img1 = new Image();
@@ -48,25 +55,33 @@
     }, { once: true });
   }
 
-  const textBox1 = document.createElement('h2');
-  textBox1.className = 'cambodia-street-textbox-1';
-  textBox1.textContent = 'Angkor Wat Statues';
-  imagesWrap.appendChild(textBox1);
+  const mountTextbox = (id, tagName, fallbackText, delay) => {
+    const text = getTextboxTextById(id) || fallbackText;
+    if (!text) return;
 
-  if (window.gsap && typeof window.gsap.to === 'function' && typeof window.gsap.set === 'function') {
-    window.gsap.set(textBox1, { xPercent: -50, yPercent: -190, opacity: 0 });
-    window.gsap.to(textBox1, {
-      duration: 1.1,
-      xPercent: -50,
-      yPercent: -50,
-      opacity: 1,
-      ease: 'power3.out',
-      delay: 0.55,
-    });
-  } else {
-    textBox1.style.opacity = '1';
-    textBox1.style.transform = 'translate(-50%, -50%)';
-  }
+    const node = document.createElement(tagName);
+    node.className = `cambodia-street-textbox-${id}`;
+    node.textContent = text;
+    imagesWrap.appendChild(node);
+
+    if (window.gsap && typeof window.gsap.to === 'function' && typeof window.gsap.set === 'function') {
+      window.gsap.set(node, { xPercent: -50, yPercent: -190, opacity: 0 });
+      window.gsap.to(node, {
+        duration: 1.1,
+        xPercent: -50,
+        yPercent: -50,
+        opacity: 1,
+        ease: 'power3.out',
+        delay,
+      });
+    } else {
+      node.style.opacity = '1';
+      node.style.transform = 'translate(-50%, -50%)';
+    }
+  };
+
+  mountTextbox(1, 'h2', 'Siem Reap, Cambodia', 0.55);
+  mountTextbox(2, 'p', '', 0.75);
 
   // 3D setup
   if (!modelHost) return;
@@ -88,7 +103,7 @@
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(20, window.innerWidth / window.innerHeight, 0.1, 1000);
   camera.position.z = 15;
-  camera.lookAt(0, 0, 0);
+  camera.lookAt(0, -0.60, 0);
 
   const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
@@ -112,7 +127,12 @@
 
   let modelCambodiaLion = null;
 
-  const setupScrollLinkedModelMotion = () => {
+  const movementProgress = 0.25;
+  const shrinkProgress = 1;
+  const movementEnd = () => `+=${section.offsetHeight * movementProgress}`;
+  const shrinkEnd = () => `+=${section.offsetHeight * shrinkProgress}`;
+
+  const setupScrollLionMovement = () => {
     const gsapApi = window.gsap;
     const scrollTriggerApi = window.ScrollTrigger;
 
@@ -129,9 +149,6 @@
       gsapApi.registerPlugin(scrollTriggerApi);
     }
 
-    const speedOfTravel = 0.25;//sopeed of travel compared to scroll
-    const stopScrollDistance = () => `+=${section.offsetHeight * speedOfTravel}`;
-
     gsapApi.to(modelCambodiaLion.rotation, {
       y: modelCambodiaLion.rotation.y + Math.PI * 1.8,
       x: 0,
@@ -139,24 +156,56 @@
       scrollTrigger: {
         trigger: section,
         start: 'top top',
-        end: stopScrollDistance,
+        end: movementEnd,
         scrub: true,
         invalidateOnRefresh: true,
       },
     });
 
     gsapApi.to(modelCambodiaLion.position, {
-      y: -0.9,
+      y: -1,
       x: 2,
       ease: 'none',
       scrollTrigger: {
         trigger: section,
         start: 'top top',
-        end: stopScrollDistance,
+        end: movementEnd,
         scrub: true,
         invalidateOnRefresh: true,
       },
     });
+  };
+
+  const setupScrollLionGetsSmller = () => {
+    const gsapApi = window.gsap;
+    const scrollTriggerApi = window.ScrollTrigger;
+
+    if (
+      !modelCambodiaLion ||
+      !gsapApi ||
+      !scrollTriggerApi ||
+      typeof gsapApi.to !== 'function'
+    ) {
+      return;
+    }
+
+    if (typeof gsapApi.registerPlugin === 'function') {
+      gsapApi.registerPlugin(scrollTriggerApi);
+    }
+    gsapApi.to(modelCambodiaLion.scale, {
+      x: 0.1,
+      y: 0.1,
+      z: 0.1,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: section,
+        start: movementEnd,
+        end: shrinkEnd,
+        scrub: true,
+        invalidateOnRefresh: true,
+      },
+    });   
+   
   };
 
   const loader = new GLTFLoader();
@@ -168,7 +217,8 @@
       modelCambodiaLion.rotation.y = 0.600;
       modelCambodiaLion.scale.setScalar(0.3);
       scene.add(modelCambodiaLion);
-      setupScrollLinkedModelMotion();
+      setupScrollLionMovement();
+      setupScrollLionGetsSmller();
     },
     undefined,
     (error) => {
@@ -184,6 +234,7 @@
 
   window.addEventListener('resize', () => {
     camera.aspect = window.innerWidth / window.innerHeight;
+    camera.position.z = 15;
     camera.updateProjectionMatrix();
     camera.lookAt(0, -0.60, 0);
     renderer.setSize(window.innerWidth, window.innerHeight);

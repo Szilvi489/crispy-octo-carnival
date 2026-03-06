@@ -5,6 +5,7 @@
     var titleContact = section ? section.querySelector(".titleP1") : null;
     var titleMe = section ? section.querySelector(".titleP2") : null;
     var formLines = section ? section.querySelectorAll(".contact-form > div") : [];
+    var submitButton = section ? section.querySelector(".contact-submit-button") : null;
     var gsapApi = window.gsap;
 
     if (!circle || !stage || !section || !gsapApi || typeof gsapApi.timeline !== "function") {
@@ -112,6 +113,10 @@
         var typingTimeline = gsapApi.timeline({ delay: 0.55 });
         var secondsPerChar = 0.018;
 
+        if (submitButton) {
+            gsapApi.set(submitButton, { autoAlpha: 0, y: 10 });
+        }
+
         formLines.forEach(function (line) {
             var lineTexts = line.querySelectorAll(".contact-text");
             var lineControls = line.querySelectorAll(".contact-input");
@@ -150,6 +155,16 @@
                 });
             }
         });
+
+        if (submitButton) {
+            typingTimeline.to(submitButton, {
+                autoAlpha: 1,
+                y: 0,
+                duration: 0.24,
+                ease: "power2.out",
+                clearProps: "transform,opacity,visibility"
+            });
+        }
     }
 
     if (!formLines.length) {

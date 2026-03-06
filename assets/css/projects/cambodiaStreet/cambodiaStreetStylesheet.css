@@ -16,8 +16,8 @@
 
 .cambodia-street-image-1 {
     position: absolute;
-    left: 72%;
-    top: 50%;
+    left: 77%;
+    top: 60%;
     width: min(94vw, 1260px);
     max-height: 80vh;
     object-fit: contain;
@@ -25,27 +25,81 @@
     opacity: 1;
     will-change: transform, opacity;
     pointer-events: none;
+    z-index: 2;
 }
 
 .cambodia-street-textbox-1 {
     position: absolute;
-    left: 24%;
-    top: 20%;
+    left: clamp(-20%, -2vw, 5%);
+    top: clamp(73%, 73%, 120%);
     width: min(42vw, 520px);
+    color: var(--color-alternative-orange);
     padding: 0.9rem 1.1rem;
-    background: rgba(255, 255, 255, 0.84);
     transform: translate(-50%, -50%);
     text-align: left;
     font-family: "Bebas Neue", sans-serif;
-    font-size: clamp(1.4rem, 3.5vw, 2.7rem);
+    font-size: clamp(0.1rem, 7.5vw, 23.7rem);
     line-height: 1.2;
+    white-space: nowrap;
     opacity: 0;
     will-change: transform, opacity;
+    z-index: 3;
+    rotate: 90deg;
+}
+
+.cambodia-street-textbox-2 {
+    position: absolute;
+    left: 40%;
+    top: 40%;
+    width: min(28vw, 420px);
+    max-width: 90vw;
+    color: #1b1b1b;
+    background: rgba(255, 255, 255, 0.423);
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 6px;
+    padding: 0.75rem 0.9rem;
+    transform: translate(-50%, -50%);
+    text-align: left;
+    font-family: "Oswald", sans-serif;
+    font-size: clamp(0.75rem, 1.05vw, 1.05rem);
+    line-height: 1.45;
+    white-space: normal;
+    overflow-wrap: break-word;
+    opacity: 0;
+    will-change: transform, opacity;
+    z-index: 3;
 }
 
 #container3D{
     position :fixed;
     inset: 0;
-    z-index: 100;
+    z-index: 10;
     pointer-events: none;
+}
+
+@media (max-width: 768px) {
+    .cambodia-street-image-1 {
+        top: 65%;
+        left: 60%;
+        width: min(93vw, 560px);
+        max-height: 56vh;
+        transform: translate(-50%, -50%) scale(1);
+    }
+
+    .cambodia-street-textbox-1 {
+        left: 0%;
+        top: 58%;
+        width: auto;
+        padding: 0.55rem 0.75rem;
+        font-size: clamp(0.9rem, 15.2vw, 2rem);
+        line-height: 1.1;
+    }
+
+    .cambodia-street-textbox-2 {
+        left: 48%;
+        top: 76%;
+        width: min(74vw, 520px);
+        font-size: clamp(0.78rem, 3.2vw, 0.98rem);
+        padding: 0.7rem 0.8rem;
+    }
 }
