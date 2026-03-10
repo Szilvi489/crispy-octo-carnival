@@ -77,7 +77,7 @@
 
 .cv-content {
     position: relative;
-    background-color: var(--color-bordeau-chocolate);
+
     overflow-x: clip;
 }
 
@@ -88,16 +88,22 @@
     overflow: hidden;
 }
 
-.cv-horizontal-track {
-    display: flex;
-    width: 200vw;
-    height: 100%;
+.cv-horizontal-intro-layer {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
 }
 
-.cv-horizontal-track > section {
-    flex: 0 0 100vw;
-    width: 100vw;
-    height: 100vh;
+.cv-horizontal-intro-layer > .cv-intro-section {
+    height: 100%;
+    min-height: 100%;
+}
+
+.cv-horizontal-education-track {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    overflow: hidden;
 }
 
 .page-loader-anim::after,

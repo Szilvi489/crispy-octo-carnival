@@ -1,32 +1,60 @@
 .cv-education-section {
+    --edu-content-shift: 0px;
     position: relative;
     z-index: 20;
-    min-height: 100vh;
     height: 100vh;
-    width: 100%;
-    padding: 10vh 6vw;
-    display: grid;
-    align-content: start;
-    gap: 1.1rem;
+    width: 200vw;
+    flex: 0 0 200vw;
     overflow: hidden;
     color: #f5f3ef;
-    background: linear-gradient(180deg, rgba(43, 27, 27, 0.96) 0%, rgba(27, 18, 18, 1) 100%);
+    background: transparent;
+}
+
+.cv-education-panels {
+    display: flex;
+    width: 200vw;
+    height: 100%;
+}
+
+.cv-education-panel {
+    flex: 0 0 100vw;
+    width: 100vw;
+    height: 100vh;
+}
+
+.cv-education-panel-intro {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    background: transparent;
+    padding: 3vh 0 0 2vw;
 }
 
 .cv-education-title {
     margin: 0;
-    font-family: "Bebas Neue", var(--font-Bebas-Neue, sans-serif);
-    font-size: min(22vw, 34vh);
-    line-height: 0.9;
+    width: max-content;
+    text-align: left;
     text-transform: uppercase;
+    line-height: 0.82;
     white-space: nowrap;
     color: rgba(245, 243, 239, 0.96);
+    font-family: "Bebas Neue", var(--font-Bebas-Neue, sans-serif);
+    font-size: min(82vw, 96vh);
+    letter-spacing: -0.09em;
+    padding: 0;
+}
+
+.cv-education-panel-content {
+    background: linear-gradient(180deg, rgba(43, 27, 27, 0.96) 0%, rgba(27, 18, 18, 1) 100%);
+    padding: 12vh 8vw 10vh;
+    transform: translateX(calc(-1 * var(--edu-content-shift)));
 }
 
 .cv-education-content {
     display: grid;
     align-content: start;
     gap: 0.9rem;
+    will-change: transform, opacity;
 }
 
 .cv-education-content h3 {
@@ -47,11 +75,11 @@
 }
 
 @media (max-width: 768px) {
-    .cv-education-section {
-        padding: 10vh 8vw 10vh;
-    }
-
     .cv-education-title {
         font-size: min(28vw, 22vh);
+    }
+
+    .cv-education-panel-content {
+        padding: 10vh 8vw 10vh;
     }
 }
