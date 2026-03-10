@@ -28,29 +28,31 @@
     z-index: 2;
 }
 
-.cambodia-street-textbox-1 {
+.cambodia-street-textbox {
     position: absolute;
+    transform: translate(-50%, -50%);
+    text-align: left;
+    opacity: 0;
+    will-change: transform, opacity;
+    z-index: 3;
+}
+
+.cambodia-street-textbox-1 {
     left: clamp(-20%, -2vw, 5%);
     top: clamp(73%, 73%, 120%);
     width: min(42vw, 520px);
     color: var(--color-alternative-orange);
     padding: 0.9rem 1.1rem;
-    transform: translate(-50%, -50%);
-    text-align: left;
     font-family: "Bebas Neue", sans-serif;
     font-size: clamp(0.1rem, 7.5vw, 23.7rem);
     line-height: 1.2;
     white-space: nowrap;
-    opacity: 0;
-    will-change: transform, opacity;
-    z-index: 3;
     rotate: 90deg;
 }
 
-.cambodia-street-textbox-2 {
-    position: absolute;
-    left: 40%;
-    top: 40%;
+.cambodia-street-textbox-2,
+.cambodia-street-textbox-3,
+.cambodia-street-textbox-4 {
     width: min(28vw, 420px);
     max-width: 90vw;
     color: #1b1b1b;
@@ -58,16 +60,26 @@
     border: 1px solid rgba(0, 0, 0, 0.12);
     border-radius: 6px;
     padding: 0.75rem 0.9rem;
-    transform: translate(-50%, -50%);
-    text-align: left;
     font-family: "Oswald", sans-serif;
     font-size: clamp(0.75rem, 1.05vw, 1.05rem);
     line-height: 1.45;
     white-space: normal;
     overflow-wrap: break-word;
-    opacity: 0;
-    will-change: transform, opacity;
-    z-index: 3;
+}
+
+.cambodia-street-textbox-2 {
+    left: 40%;
+    top: 40%;
+}
+
+.cambodia-street-textbox-3 {
+    left: 40%;
+    top: 60%;
+}
+
+.cambodia-street-textbox-4 {
+    left: 40%;
+    top: 95%;
 }
 
 #container3D{

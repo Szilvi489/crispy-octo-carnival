@@ -4,3 +4,7 @@ _site
 .jekyll-metadata
 vendor
 Gemfile.lock
+
+# Keep only the currently used Cambodia model in git; ignore other large local model files.
+assets/images/projects/cambodiaStreet/3DImages/*.glb
+!assets/images/projects/cambodiaStreet/3DImages/guardian_lion_from_cambodia.glb

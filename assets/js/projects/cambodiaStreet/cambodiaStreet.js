@@ -1,5 +1,5 @@
 (async () => {
-  const DEBUG_3D_HELPERS = false;
+  const DEBUG_3D_HELPERS = true;
   const section = document.querySelector('.cambodia-street-section');
   if (!section) return;
 
@@ -60,7 +60,7 @@
     if (!text) return;
 
     const node = document.createElement(tagName);
-    node.className = `cambodia-street-textbox-${id}`;
+    node.className = `cambodia-street-textbox cambodia-street-textbox-${id}`;
     node.textContent = text;
     imagesWrap.appendChild(node);
 
@@ -82,6 +82,43 @@
 
   mountTextbox(1, 'h2', 'Siem Reap, Cambodia', 0.55);
   mountTextbox(2, 'p', '', 0.75);
+  mountTextbox(3, 'p', '', 0.75);
+  mountTextbox(4, 'p', '', 0.75);
+
+  const setupScrollTextboxesMovingOut = () => {
+    const gsapApi = window.gsap;
+    const scrollTriggerApi = window.ScrollTrigger;
+
+    if (
+      !gsapApi ||
+      !scrollTriggerApi ||
+      typeof gsapApi.to !== 'function'
+    ) {
+      return;
+    }
+
+    if (typeof gsapApi.registerPlugin === 'function') {
+      gsapApi.registerPlugin(scrollTriggerApi);
+    }
+    
+    const textboxes = section.querySelectorAll('.cambodia-street-textbox');     
+    textboxes.forEach((textbox) => {
+      gsapApi.to(textbox, {
+        y: () => -window.innerHeight * 0.42,
+        ease: 'none',
+        immediateRender: false,
+        scrollTrigger: {
+          trigger: section,
+          start: 'top+=15% top',
+          end: () => `+=${section.offsetHeight * 0.45}`,
+          scrub: true,
+          invalidateOnRefresh: true,
+        },
+      });
+    });
+  };
+
+  setupScrollTextboxesMovingOut();
 
   // 3D setup
   if (!modelHost) return;
@@ -130,6 +167,7 @@
   const movementProgress = 0.25;
   const shrinkProgress = 1;
   const movementEnd = () => `+=${section.offsetHeight * movementProgress}`;
+  const movementAtHalfTime = () => `+=${section.offsetHeight * movementProgress * 0.5}`;
   const shrinkEnd = () => `+=${section.offsetHeight * shrinkProgress}`;
 
   const setupScrollLionMovement = () => {
