@@ -6,6 +6,7 @@
     padding: 8vh 5vw;
     overflow: clip;
     isolation: isolate;
+    background: linear-gradient(358deg, rgba(94, 204, 244, 1) 0%, rgba(43, 27, 27, 1) 96%);
 }
 
 .cv-intro-section::before {
@@ -15,7 +16,7 @@
     left: 0;
     width: 100%;
     height: 40%;
-    background: linear-gradient(358deg, rgba(94, 204, 244, 1) 0%, rgba(43, 27, 27, 1) 96%);
+
     z-index: 2;
 }
 .title {
@@ -42,7 +43,7 @@ color: var(--color-alternative-orange);
     transform: translate(-31.5%, 2%);
     width: 250vw;
     height: 200vw;
-    background-color: var(--color-bordeau-chocolate);
+   
     z-index: 3;
     border-radius: 50%;
     pointer-events: none;
@@ -108,22 +109,22 @@ color: var(--color-alternative-orange);
 
 .cv-intro-meta.is-floating {
     position: absolute;
-    left: auto;
-    right: clamp(5vw, 26vw, 34vw);
-    top: clamp(14vh, 18vh, 24vh);
-    width: clamp(440px, 46vw, 760px);
+    left: -8vw;
+    right: auto;
+    top: clamp(12vh, 16vh, 22vh);
+    width: clamp(560px, 58vw, 980px);
     display: block;
-    min-height: clamp(430px, 65vh, 740px);
+    min-height: clamp(560px, 76vh, 940px);
     margin-top: 0;
     z-index: 5;
 }
 
 .cv-intro-meta.is-floating .cv-intro-meta-card {
     position: absolute;
-    width: clamp(88px, 9.6vw, 142px);
+    width: clamp(116px, 12.4vw, 188px);
     min-height: 0;
     margin: 0;
-    border-radius: 50%;
+    border-radius: 14px;
     padding: 10px;
     display: flex;
     flex-direction: column;
@@ -201,11 +202,11 @@ color: var(--color-alternative-orange);
 }
 
 .cv-intro-meta.is-floating .cv-intro-meta-card h3 {
-    font-size: clamp(0.62rem, 0.7vw, 0.82rem);
+    font-size: clamp(0.92rem, 1.2vw, 1.34rem);
 }
 
 .cv-intro-meta.is-floating .cv-intro-meta-card p {
-    font-size: clamp(0.58rem, 0.62vw, 0.74rem);
+    font-size: clamp(0.82rem, 1vw, 1.12rem);
     line-height: 1.3;
 }
 
@@ -224,7 +225,7 @@ color: var(--color-alternative-orange);
 
 .cv-intro-orbit-scene {
     position: relative;
-    width: min(28vw, 28vw);
+    width: min(38vw, 620px);
     top: 5vh;
     aspect-ratio: 1 / 1;
     perspective: 900px;
@@ -238,7 +239,7 @@ color: var(--color-alternative-orange);
 
 .cv-intro-orbit-ring {
     --letters: 12;
-    --radius: clamp(140px, 12vw, 70vw);
+    --radius: clamp(190px, 16vw, 400px);
     position: absolute;
     inset: 0;
     display: grid;
@@ -252,7 +253,7 @@ color: var(--color-alternative-orange);
     top: 50%;
     transform-style: preserve-3d;
     font-family: "Bungee", sans-serif;
-    font-size: clamp(0.72rem, 6.65vw, 18vw);
+    font-size: clamp(0.92rem, 8.2vw, 20vw);
     color: var(--color-deep-mandarin);
     text-shadow: 0 0 32px var(--color-lovely-baby-blue);
     -webkit-font-smoothing: antialiased;
@@ -269,7 +270,7 @@ color: var(--color-alternative-orange);
 }
 
 .cv-intro-orbit-ring-b {
-    --radius: clamp(176px, 278vw, 238px);
+    --radius: clamp(230px, 28vw, 340px);
     transform: rotateX(50deg);
     animation: cvIntroOrbitSpinB 14s linear infinite reverse;
 }
@@ -309,7 +310,7 @@ color: var(--color-alternative-orange);
     }
 
     .cv-intro-orbit-scene {
-        width: min(92vw, 360px);
+        width: min(98vw, 460px);
         top: 5vh;
     }
 
@@ -332,12 +333,12 @@ color: var(--color-alternative-orange);
         left: auto;
         right: auto;
         top: auto;
-        min-height: clamp(360px, 52vh, 520px);
+        min-height: clamp(460px, 64vh, 700px);
         margin-top: 8px;
     }
 
     .cv-intro-meta.is-floating .cv-intro-meta-card {
-        width: clamp(94px, 29vw, 132px);
+        width: clamp(114px, 36vw, 164px);
         padding: 10px;
         gap: 6px;
     }
@@ -351,18 +352,18 @@ color: var(--color-alternative-orange);
     .cv-intro-meta.is-floating:not(.is-physics) .cv-intro-meta-card:nth-child(7) { top: 71%; left: 30%; }
 
     .cv-intro-meta.is-floating .cv-intro-meta-card h3 {
-        font-size: clamp(0.6rem, 2.4vw, 0.76rem);
+        font-size: clamp(0.84rem, 3.8vw, 1.14rem);
     }
 
     .cv-intro-meta.is-floating .cv-intro-meta-card p {
-        font-size: clamp(0.56rem, 2vw, 0.7rem);
+        font-size: clamp(0.76rem, 3.2vw, 1.02rem);
     }
 
     .cv-intro-orbit-ring span {
-        font-size: clamp(0.62rem, 10.8vw, 15vw);
+        font-size: clamp(0.8rem, 13.2vw, 17vw);
     }
 
     .cv-intro-orbit-ring-b {
-        --radius: clamp(162px, 42vw, 250px);
+        --radius: clamp(204px, 56vw, 320px);
     }
 }

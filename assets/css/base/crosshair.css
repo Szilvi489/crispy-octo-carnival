@@ -19,8 +19,7 @@ body.cv-crosshair-active * {
 .cv-crosshair-line {
     position: absolute;
     background: rgba(255, 255, 255, 0.78);
-    filter: blur(1.2px);
-    transition: filter 160ms ease, background 160ms ease;
+    transition: background 160ms ease;
 }
 
 .cv-crosshair-line-v {
@@ -28,7 +27,7 @@ body.cv-crosshair-active * {
     bottom: 0;
     left: var(--crosshair-x);
     width: 1px;
-    transform: translateX(-0.5px);
+    transform: translateX(0);
 }
 
 .cv-crosshair-line-h {
@@ -36,7 +35,7 @@ body.cv-crosshair-active * {
     right: 0;
     top: var(--crosshair-y);
     height: 1px;
-    transform: translateY(-0.5px);
+    transform: translateY(0);
 }
 
 .cv-crosshair-center {
@@ -56,8 +55,7 @@ body.cv-crosshair-active * {
     top: 50%;
     background: rgba(255, 255, 255, 0.98);
     transform: translate(-50%, -50%);
-    filter: blur(1.2px);
-    transition: filter 160ms ease, background 160ms ease;
+    transition: background 160ms ease;
 }
 
 .cv-crosshair-center::before {
@@ -73,11 +71,10 @@ body.cv-crosshair-active * {
 .cv-crosshair-overlay.is-nav-hover .cv-crosshair-center::before,
 .cv-crosshair-overlay.is-nav-hover .cv-crosshair-center::after {
     background: #39ff14;
-    filter: blur(0);
 }
 
 .cv-crosshair-overlay.is-nav-hover .cv-crosshair-line {
-    filter: blur(0);
+    background: #39ff14;
 }
 
 @media (max-width: 768px) {

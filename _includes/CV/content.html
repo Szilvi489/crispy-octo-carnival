@@ -6,8 +6,12 @@
     </div>
     <div class="cv-content">
     {%- include CV/nav.html -%}
-    {%- include CV/intro.html -%}
-    {%- include CV/education.html -%}
+    <div class="cv-horizontal-intro-education">
+        <div class="cv-horizontal-track">
+            {%- include CV/intro.html -%}
+            {%- include CV/education.html -%}
+        </div>
+    </div>
     {%- include CV/experience.html -%}
     {%- include CV/skills.html -%}
     {%- include CV/programmingProjects.html -%}
@@ -15,4 +19,3 @@
     {%- include CV/dreamjob.html -%}
     </div>
 </section>
-

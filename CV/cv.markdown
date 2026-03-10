@@ -37,6 +37,7 @@ fonts:
   - https://fonts.googleapis.com/css2?family=Protest+Guerrilla&display=swap
   - https://fonts.googleapis.com/css2?family=Stalinist+One&display=swap
   - https://fonts.googleapis.com/css2?family=Tulpen+One&display=swap
+  - https://fonts.googleapis.com/css2?family=Oi&display=swap
 
 
 navSquareColour: "rgb(255, 63, 15)"

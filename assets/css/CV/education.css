@@ -1,16 +1,57 @@
-.cv-education-section{
+.cv-education-section {
     position: relative;
-    z-index: 5;
+    z-index: 20;
     min-height: 100vh;
-    padding: 14vh 6vw 8vh;
+    height: 100vh;
+    width: 100%;
+    padding: 10vh 6vw;
+    display: grid;
+    align-content: start;
+    gap: 1.1rem;
+    overflow: hidden;
     color: #f5f3ef;
-    background: linear-gradient(180deg, rgba(43, 27, 27, 1) 0%, rgba(27, 18, 18, 1) 100%);
+    background: linear-gradient(180deg, rgba(43, 27, 27, 0.96) 0%, rgba(27, 18, 18, 1) 100%);
 }
 
-.cv-education-section h2 {
+.cv-education-title {
     margin: 0;
-    font-family: var(--font-rubik-mono-one, "Rubik Mono One", sans-serif);
-    font-size: clamp(2rem, 6vw, 5rem);
-    line-height: 0.95;
+    font-family: "Bebas Neue", var(--font-Bebas-Neue, sans-serif);
+    font-size: min(22vw, 34vh);
+    line-height: 0.9;
     text-transform: uppercase;
+    white-space: nowrap;
+    color: rgba(245, 243, 239, 0.96);
+}
+
+.cv-education-content {
+    display: grid;
+    align-content: start;
+    gap: 0.9rem;
+}
+
+.cv-education-content h3 {
+    margin: 0;
+    font-family: "Bebas Neue", var(--font-Bebas-Neue, sans-serif);
+    font-size: clamp(1.8rem, 6vw, 5rem);
+    line-height: 0.92;
+    text-transform: uppercase;
+}
+
+.cv-education-content p {
+    margin: 0;
+    max-width: 70ch;
+    font-family: var(--font-aldrich, "Aldrich", sans-serif);
+    font-size: clamp(0.95rem, 1.3vw, 1.2rem);
+    line-height: 1.5;
+    color: rgba(245, 243, 239, 0.9);
+}
+
+@media (max-width: 768px) {
+    .cv-education-section {
+        padding: 10vh 8vw 10vh;
+    }
+
+    .cv-education-title {
+        font-size: min(28vw, 22vh);
+    }
 }

@@ -19,7 +19,8 @@ nav_fonts:
   - https://fonts.googleapis.com/css2?family=Tulpen+One&display=swap
   - https://fonts.googleapis.com/css2?family=Rock+Salt&display=swap
   - https://fonts.googleapis.com/css2?family=Knewave&display=swap
-  - https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet
+  - https://fonts.googleapis.com/css2?family=Oi&display=swap
+  - https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap
 
 enable_gsap: true
 
