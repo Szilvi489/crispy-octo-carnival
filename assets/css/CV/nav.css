@@ -19,7 +19,7 @@
 
 .cv-nav a{
     color: var(--color-deep-mandarin);
-    font-size: clamp(14px, 0.5vw, 4vh);
+    font-size: clamp(14px, 1.5vw, 5vh);
     text-decoration: none;
     opacity: 1;
     transform: translate3d(0, 0, 0);

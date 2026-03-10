@@ -3,14 +3,21 @@
         <div class="cv-personal-prelude-grid">
             {% for repeat in (1..24) %}
                 {% for project in site.projects %}
-                    {% assign thumbnails_folder = project.thumbnails | first %}
-                    {% if thumbnails_folder %}
-                        {% assign thumbnails_files = site.static_files | where_exp: "file", "file.path contains thumbnails_folder" %}
-                        {% for file in thumbnails_files %}
-                            {% if file.extname == ".png" or file.extname == ".jpg" or file.extname == ".jpeg" or file.extname == ".webp" %}
+                    {% if project.thumbnails %}
+                        {% for thumbnail_source in project.thumbnails %}
+                            {% if thumbnail_source contains ".png" or thumbnail_source contains ".jpg" or thumbnail_source contains ".jpeg" or thumbnail_source contains ".webp" %}
                                 <figure class="cv-personal-bg-tile">
-                                    <img src="{{ file.path }}" alt="" loading="lazy" decoding="async">
+                                    <img src="{{ thumbnail_source }}" alt="" loading="lazy" decoding="async">
                                 </figure>
+                            {% else %}
+                                {% assign thumbnails_files = site.static_files | where_exp: "file", "file.path contains thumbnail_source" %}
+                                {% for file in thumbnails_files %}
+                                    {% if file.extname == ".png" or file.extname == ".jpg" or file.extname == ".jpeg" or file.extname == ".webp" %}
+                                        <figure class="cv-personal-bg-tile">
+                                            <img src="{{ file.path }}" alt="" loading="lazy" decoding="async">
+                                        </figure>
+                                    {% endif %}
+                                {% endfor %}
                             {% endif %}
                         {% endfor %}
                     {% endif %}
@@ -25,14 +32,21 @@
     <div class="cv-personal-bg-grid" aria-hidden="true">
         {% for repeat in (1..24) %}
             {% for project in site.projects %}
-                {% assign thumbnails_folder = project.thumbnails | first %}
-                {% if thumbnails_folder %}
-                    {% assign thumbnails_files = site.static_files | where_exp: "file", "file.path contains thumbnails_folder" %}
-                    {% for file in thumbnails_files %}
-                        {% if file.extname == ".png" or file.extname == ".jpg" or file.extname == ".jpeg" or file.extname == ".webp" %}
+                {% if project.thumbnails %}
+                    {% for thumbnail_source in project.thumbnails %}
+                        {% if thumbnail_source contains ".png" or thumbnail_source contains ".jpg" or thumbnail_source contains ".jpeg" or thumbnail_source contains ".webp" %}
                             <figure class="cv-personal-bg-tile">
-                                <img src="{{ file.path }}" alt="" loading="lazy" decoding="async">
+                                <img src="{{ thumbnail_source }}" alt="" loading="lazy" decoding="async">
                             </figure>
+                        {% else %}
+                            {% assign thumbnails_files = site.static_files | where_exp: "file", "file.path contains thumbnail_source" %}
+                            {% for file in thumbnails_files %}
+                                {% if file.extname == ".png" or file.extname == ".jpg" or file.extname == ".jpeg" or file.extname == ".webp" %}
+                                    <figure class="cv-personal-bg-tile">
+                                        <img src="{{ file.path }}" alt="" loading="lazy" decoding="async">
+                                    </figure>
+                                {% endif %}
+                            {% endfor %}
                         {% endif %}
                     {% endfor %}
                 {% endif %}

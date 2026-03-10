@@ -5,8 +5,7 @@
     position: relative;
     isolation: isolate;
     --loading-blur: 0px;
-    --tile-gap-min: 10px;
-    --tile-gap-max: 120px;
+    --tile-gap: clamp(10px, 1.6vw, 20px);
     --tile-size-min: 48px;
     --tile-size-max: 124px;
     --hover-bg-image: none;
@@ -42,8 +41,8 @@
     background: transparent;
     display: flex;
     flex-direction: column;
-    flex-wrap: wrap;
     justify-content: center;
+    gap: var(--tile-gap);
     padding: 110px;
     position: relative;
     z-index: 1;
@@ -53,8 +52,6 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 16px;
-    padding: 5px;
     width: 100%;
     position: relative;
 }
@@ -94,9 +91,9 @@
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: stretch;
-    gap: var(--tile-gap, 16px);
+    gap: var(--tile-gap);
     width: 100%;
     flex: 1;
     position: relative;

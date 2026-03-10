@@ -14,4 +14,7 @@ permalink: /aboutPage/
 
 stylesheets:
   - /assets/css/aboutPage/aboutPageStylesheet.css
+
+scripts:
+  - /assets/js/aboutPage/aboutPage.js
 ---

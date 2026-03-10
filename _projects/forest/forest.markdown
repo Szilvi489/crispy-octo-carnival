@@ -1,22 +1,14 @@
 ---
 layout: projects/forest
+enable_crosshair: true
 
 description: Nature is pretty cool!
 
 stylesheets:
   - /assets/css/projects/forest/forestStylesheet.css
-  - /assets/css/projects/forest/doubleExpo.css
-  - /assets/css/projects/forest/animatedImageRow.css
-  - /assets/css/projects/forest/animatedCircleSection.css
-  - /assets/css/projects/forest/animatedTiles.css
 
 scripts:
   - /assets/js/projects/forest/forest.js
-  - /assets/js/projects/forest/doubleExpo.js
-  - /assets/js/projects/forest/animatedImageRow.js
-  - /assets/js/projects/forest/animatedCircleSection.js
-  - /assets/js/projects/forest/animatedTiles.js
-
 
 navSquareColour: "#ee0707"
 
@@ -25,9 +17,11 @@ navFontColour: "#06073b"
 permalink: /projects/forest/
 
 thumbnails:
-- /assets/images/projects/forest/thumbnails/
-
-indexImage:
-  - /assets/images/projects/forest/gallery_images/animated_image_row_images/01pic.png
-  - /assets/images/projects/forest/gallery_images/animated_image_row_images/04pic.png
+  - /assets/images/projects/forest/thumbnails/DSCF2168.jpg
+  - /assets/images/projects/forest/thumbnails/DSCF2374.jpg
+  - /assets/images/projects/forest/thumbnails/DSCF2510.jpg
+  - /assets/images/projects/forest/thumbnails/DSCF2805.jpg
+  - /assets/images/projects/forest/thumbnails/DSCF2818.jpg
+  - /assets/images/projects/forest/thumbnails/DSCF3137.jpg
+  - /assets/images/projects/forest/thumbnails/DSCF3214.jpg
 ---

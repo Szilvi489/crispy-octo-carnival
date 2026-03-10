@@ -97,8 +97,7 @@
     }
 
     function layoutImageRows() {
-        var minGap;
-        var maxGap;
+        var fixedGap;
         var minTile;
         var maxTile;
         var i;
@@ -107,8 +106,7 @@
             return;
         }
 
-        minGap = parseFloat(getComputedStyle(pageSection).getPropertyValue("--tile-gap-min")) || 10;
-        maxGap = parseFloat(getComputedStyle(pageSection).getPropertyValue("--tile-gap-max")) || 120;
+        fixedGap = parseFloat(getComputedStyle(pageSection).getPropertyValue("--tile-gap")) || 16;
         minTile = parseFloat(getComputedStyle(pageSection).getPropertyValue("--tile-size-min")) || 48;
         maxTile = parseFloat(getComputedStyle(pageSection).getPropertyValue("--tile-size-max")) || 124;
 
@@ -117,9 +115,8 @@
             var links = row.querySelectorAll("a");
             var count = links.length;
             var rowWidth = row.clientWidth;
-            var baseTile;
-            var gap;
             var tileSize;
+            var totalGapWidth;
 
             if (count < 1 || rowWidth <= 0) {
                 continue;
@@ -132,17 +129,12 @@
                 continue;
             }
 
-            baseTile = clamp(rowWidth / (count + 2), minTile, maxTile);
-            gap = (rowWidth - (count * baseTile)) / (count - 1);
-            gap = clamp(gap, minGap, maxGap);
-
-            tileSize = (rowWidth - ((count - 1) * gap)) / count;
+            totalGapWidth = (count - 1) * fixedGap;
+            tileSize = (rowWidth - totalGapWidth) / count;
             tileSize = clamp(tileSize, minTile, maxTile);
-            gap = (rowWidth - (count * tileSize)) / (count - 1);
-            gap = Math.max(0, gap);
 
             row.style.setProperty("--tile-size", tileSize.toFixed(2) + "px");
-            row.style.setProperty("--tile-gap", gap.toFixed(2) + "px");
+            row.style.setProperty("--tile-gap", fixedGap.toFixed(2) + "px");
         }
     }
 

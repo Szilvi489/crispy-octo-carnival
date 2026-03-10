@@ -33,9 +33,14 @@ function assignIndexGallerySizes(items) {
 
   items.forEach((item) => {
     item.classList.remove("size-s", "size-m", "size-l");
+    item.classList.remove("over-signature");
     const size =
       sizeClasses[Math.floor(Math.random() * sizeClasses.length)];
     item.classList.add(size);
+
+    if (Math.random() < 0.38) {
+      item.classList.add("over-signature");
+    }
   });
 }
 

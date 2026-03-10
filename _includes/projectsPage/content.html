@@ -7,15 +7,24 @@
                 <a href="{{ project.permalink }}">{{ project.title }}</a>
             </div>
             <div class="project-card-images-flexbox">
-                {% assign thumbnails_folder = project.thumbnails | first %}
-                {% assign thumbnails_files = site.static_files | where_exp: "file", "file.path contains thumbnails_folder" %}
-                {% for file in thumbnails_files %}
-                {% if file.extname == ".png" or file.extname == ".jpg" or file.extname == ".jpeg" or file.extname == ".webp" %}
-                 <a href="{{ project.permalink }}">
-                    <img src="{{ file.path }}" alt="Gallery image for {{ project.title }}" loading="lazy" decoding="async">
-                </a>
-                  {% endif %}
-                {% endfor %}
+                {% if project.thumbnails %}
+                    {% for thumbnail_source in project.thumbnails %}
+                        {% if thumbnail_source contains ".png" or thumbnail_source contains ".jpg" or thumbnail_source contains ".jpeg" or thumbnail_source contains ".webp" %}
+                         <a href="{{ project.permalink }}">
+                            <img src="{{ thumbnail_source }}" alt="Gallery image for {{ project.title }}" loading="lazy" decoding="async">
+                        </a>
+                        {% else %}
+                            {% assign thumbnails_files = site.static_files | where_exp: "file", "file.path contains thumbnail_source" %}
+                            {% for file in thumbnails_files %}
+                            {% if file.extname == ".png" or file.extname == ".jpg" or file.extname == ".jpeg" or file.extname == ".webp" %}
+                             <a href="{{ project.permalink }}">
+                                <img src="{{ file.path }}" alt="Gallery image for {{ project.title }}" loading="lazy" decoding="async">
+                            </a>
+                              {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
             </div>
         </div>
         {% endfor %}

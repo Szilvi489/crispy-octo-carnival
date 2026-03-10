@@ -10,6 +10,7 @@
     var respectReducedMotion = false;
     var scrollDurationSeconds = 1.35;
     var scrollEase = "none";
+    var shuffleAlphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
     function clamp(value, min, max) {
         return Math.min(max, Math.max(min, value));
@@ -115,6 +116,57 @@
         }
     }
 
+    function shuffleTextOnce(item) {
+        var originalText;
+        var revealedCount;
+        var tickCount;
+        var intervalId;
+
+        if (!item) {
+            return;
+        }
+
+        if (!item.dataset.originalText) {
+            item.dataset.originalText = item.textContent;
+        }
+
+        if (item.dataset.shuffleActive === "true") {
+            return;
+        }
+
+        originalText = item.dataset.originalText;
+        revealedCount = 0;
+        tickCount = 0;
+        item.dataset.shuffleActive = "true";
+
+        intervalId = window.setInterval(function () {
+            var nextText = originalText
+                .split("")
+                .map(function (character, index) {
+                    if (character === " " || character === "-" || character === ".") {
+                        return character;
+                    }
+
+                    if (index < revealedCount) {
+                        return originalText.charAt(index);
+                    }
+
+                    return shuffleAlphabet.charAt(Math.floor(Math.random() * shuffleAlphabet.length));
+                })
+                .join("");
+
+            item.textContent = nextText;
+            tickCount += 1;
+            revealedCount += 1;
+
+            if (tickCount >= originalText.length + 2) {
+                window.clearInterval(intervalId);
+                item.textContent = originalText;
+                item.dataset.shuffleActive = "false";
+            }
+        }, 38);
+    }
+
     function scrollToTarget(hash) {
         if (!hash || hash.charAt(0) !== "#") return;
         var target = document.querySelector(hash);
@@ -170,11 +222,23 @@
     }
 
     navItems.forEach(function (item) {
+        if (!item.dataset.originalText) {
+            item.dataset.originalText = item.textContent;
+        }
+
         item.addEventListener("click", function (event) {
             var hash = item.getAttribute("href");
             if (!hash || hash.charAt(0) !== "#") return;
             event.preventDefault();
             scrollToTarget(hash);
+        });
+
+        item.addEventListener("mouseenter", function () {
+            shuffleTextOnce(item);
+        });
+
+        item.addEventListener("focus", function () {
+            shuffleTextOnce(item);
         });
     });
 

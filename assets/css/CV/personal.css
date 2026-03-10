@@ -142,7 +142,7 @@
 
 .cv-orbit-scene {
     position: relative;
-    width: min(70vw, 520px);
+    width: min(76vw, 600px);
     aspect-ratio: 1 / 1;
     perspective: 900px;
     transform-style: preserve-3d;
@@ -152,7 +152,7 @@
 
 .cv-orbit-ring {
     --letters: 12;
-    --radius: clamp(140px, 24vw, 210px);
+    --radius: clamp(160px, 27vw, 248px);
     position: absolute;
     inset: 0;
     display: grid;
@@ -166,7 +166,7 @@
     top: 50%;
     transform-style: preserve-3d;
     font-family: "Bungee", sans-serif;
-    font-size: clamp(1rem, 6.1vw, 13.5rem);
+    font-size: clamp(1.2rem, 6.9vw, 15rem);
     color: rgb(57, 255, 20);
     text-shadow: 0 0 12px rgba(57, 255, 20, 0.4);
     transform:
@@ -180,7 +180,7 @@
 }
 
 .cv-orbit-ring-b {
-    --radius: clamp(112px, 20vw, 178px);
+    --radius: clamp(130px, 22vw, 210px);
     transform: rotateX(50deg);
     animation: cvOrbitSpinB 14s linear infinite reverse;
 }
