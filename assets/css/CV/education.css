@@ -1,10 +1,12 @@
 .cv-education-section {
     --edu-content-shift: 0px;
+    --edu-base-content-width: 200vw;
+    --edu-total-width: calc(100vw + var(--edu-base-content-width) + var(--edu-content-shift));
     position: relative;
     z-index: 20;
     height: 100vh;
-    width: 200vw;
-    flex: 0 0 200vw;
+    width: var(--edu-total-width);
+    flex: 0 0 var(--edu-total-width);
     overflow: hidden;
     color: #f5f3ef;
     background: transparent;
@@ -12,7 +14,7 @@
 
 .cv-education-panels {
     display: flex;
-    width: 200vw;
+    width: var(--edu-total-width);
     height: 100%;
 }
 
@@ -32,29 +34,140 @@
 
 .cv-education-title {
     margin: 0;
-    width: max-content;
-    text-align: left;
+    font-family: "Roboto Flex", sans-serif;
+    font-weight: 1000;
+    font-size: 100vh;
+    line-height: 0.8;
     text-transform: uppercase;
-    line-height: 0.82;
     white-space: nowrap;
-    color: rgba(245, 243, 239, 0.96);
-    font-family: "Bebas Neue", var(--font-Bebas-Neue, sans-serif);
-    font-size: min(82vw, 96vh);
-    letter-spacing: -0.09em;
-    padding: 0;
+    transform: scaleY(1.7);
+    transform-origin: center;
+    letter-spacing:-0.2em;
+    font-stretch: 100%;
+
 }
 
+
+
 .cv-education-panel-content {
-    background: linear-gradient(180deg, rgba(43, 27, 27, 0.96) 0%, rgba(27, 18, 18, 1) 100%);
-    padding: 12vh 8vw 10vh;
-    transform: translateX(calc(-1 * var(--edu-content-shift)));
+    flex: 0 0 var(--edu-base-content-width);
+    width: var(--edu-base-content-width);
+    display: flex;
+    align-items: flex-end;
+    background: linear-gradient(94deg,rgba(245, 243, 239, 1) 22%, rgba(94, 204, 244, 1) 100%);
+    padding: 0 8vw;
+    transform: translateX(var(--edu-content-shift));
 }
 
 .cv-education-content {
-    display: grid;
-    align-content: start;
-    gap: 0.9rem;
+    display: flex;
+    height: 100%;
+    align-items: flex-end;
+    flex-wrap: nowrap;
     will-change: transform, opacity;
+}
+
+.cv-school-item {
+    --school-offset-x: 0vw;
+    --school-offset-y: 0vh;
+    --school-height: 40vh;
+    --school-z: 1;
+    --school-lift: 0px;
+    --school-lift-distance: 0px;
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    height: 100%;
+    flex: 0 0 auto;
+    z-index: var(--school-z);
+    transform: translateX(var(--school-offset-x)) translateY(var(--school-offset-y));
+    will-change: transform;
+}
+
+.cv-school-info {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: var(--school-height);
+    box-sizing: border-box;
+    padding: 1rem 1.1rem;
+    border: 1px solid rgba(43, 27, 27, 0.15);
+    background: rgba(245, 243, 239, 0.88);
+    box-shadow: 0 16px 32px rgba(43, 27, 27, 0.14);
+    color: rgb(43, 27, 27);
+    transform: translateY(0);
+    opacity: 0;
+    transition: opacity 220ms ease, transform 220ms ease;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.cv-school-info h3 {
+    margin: 0 0 0.35rem;
+    font-family: "Roboto Flex", sans-serif;
+    font-weight: 800;
+    font-size: clamp(0.95rem, 1.3vw, 1.35rem);
+    line-height: 0.95;
+    text-transform: uppercase;
+}
+
+.cv-school-info-content {
+    margin: 0;
+    font-family: "Aldrich", sans-serif;
+    font-size: clamp(0.68rem, 0.9vw, 0.9rem);
+    line-height: 1.35;
+}
+
+.cv-school-image {
+    width: auto;
+    max-width: none;
+    object-fit: contain;
+    object-position: bottom;
+    flex: 0 0 auto;
+    position: relative;
+    height: var(--school-height);
+    z-index: 2;
+    transform: translateY(var(--school-lift));
+    transition: transform 240ms ease, filter 240ms ease;
+    cursor: pointer;
+}
+
+.cv-school-item.is-open .cv-school-image {
+    --school-lift: calc(-1 * var(--school-lift-distance));
+    filter: drop-shadow(0 16px 24px rgba(43, 27, 27, 0.18));
+}
+
+.cv-school-item.is-open .cv-school-info {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.cv-school-item:nth-child(1) {
+    --school-offset-x: -18vw;
+    --school-height: 70vh;
+    --school-z: 40;
+}
+
+.cv-school-item:nth-child(2) {
+    --school-offset-x: -34vw;
+    --school-height: 54vh;
+    --school-z: 60;
+}
+
+.cv-school-item:nth-child(3) {
+    --school-offset-x: -44vw;
+    --school-offset-y: 3.6vh;
+    --school-height: 84vh;
+    --school-z: 50;
+}
+
+.cv-school-item:nth-child(4) {
+    --school-offset-x: -58vw;
+    --school-offset-y: 6.6vh;
+    --school-height: 86vh;
+    --school-z: 70;
 }
 
 .cv-education-content h3 {
@@ -71,7 +184,7 @@
     font-family: var(--font-aldrich, "Aldrich", sans-serif);
     font-size: clamp(0.95rem, 1.3vw, 1.2rem);
     line-height: 1.5;
-    color: rgba(245, 243, 239, 0.9);
+    color: rgb(245, 243, 239);
 }
 
 @media (max-width: 768px) {
@@ -80,6 +193,38 @@
     }
 
     .cv-education-panel-content {
-        padding: 10vh 8vw 10vh;
+        padding: 0 8vw;
+    }
+
+    .cv-education-content {
+        gap: 1rem;
+    }
+
+    .cv-school-item:nth-child(1) {
+        --school-offset-x: 0vw;
+        --school-offset-y: 0vh;
+        --school-height: 30vh;
+    }
+
+    .cv-school-item:nth-child(2) {
+        --school-offset-x: 0vw;
+        --school-offset-y: 0vh;
+        --school-height: 34vh;
+    }
+
+    .cv-school-item:nth-child(3) {
+        --school-offset-x: 0vw;
+        --school-offset-y: 1.2vh;
+        --school-height: 28vh;
+    }
+
+    .cv-school-item:nth-child(4) {
+        --school-offset-x: 0vw;
+        --school-offset-y: 2.1vh;
+        --school-height: 32vh;
+    }
+
+    .cv-school-info {
+        padding: 0.7rem 0.8rem;
     }
 }

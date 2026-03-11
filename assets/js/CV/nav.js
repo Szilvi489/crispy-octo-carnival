@@ -11,6 +11,18 @@
     var scrollDurationSeconds = 1.35;
     var scrollEase = "none";
     var shuffleAlphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    var educationWrapper = document.querySelector(".cv-horizontal-intro-education");
+    var educationSection = document.getElementById("cv-education");
+    var educationContentPanel = educationSection ? educationSection.querySelector(".cv-education-panel-content") : null;
+    var firstSchoolItem = educationSection ? educationSection.querySelector(".cv-school-item") : null;
+
+    function setEducationHidden(isHidden) {
+        if (!navSection) {
+            return;
+        }
+
+        navSection.classList.toggle("is-education-hidden", !!isHidden);
+    }
 
     function clamp(value, min, max) {
         return Math.min(max, Math.max(min, value));
@@ -116,6 +128,59 @@
         }
     }
 
+    function parseLengthValue(value, viewportSize) {
+        var numericValue;
+
+        if (!value) {
+            return 0;
+        }
+
+        numericValue = parseFloat(value);
+        if (!isFinite(numericValue)) {
+            return 0;
+        }
+
+        if (value.indexOf("vw") > -1 || value.indexOf("vh") > -1) {
+            return (numericValue / 100) * viewportSize;
+        }
+
+        return numericValue;
+    }
+
+    function getEducationBuildingsTargetY(navHeight, topPadding) {
+        var wrapperTop;
+        var sectionStyle;
+        var contentStyle;
+        var viewportWidth;
+        var shift;
+        var trackDistance;
+        var leadIn;
+        var itemOffsetX;
+        var panelPaddingLeft;
+        var targetOffsetWithinTrack;
+
+        if (!educationWrapper || !educationSection || !educationContentPanel) {
+            return null;
+        }
+
+        viewportWidth = window.innerWidth || document.documentElement.clientWidth || 0;
+        wrapperTop = window.pageYOffset + educationWrapper.getBoundingClientRect().top;
+        sectionStyle = window.getComputedStyle(educationSection);
+        contentStyle = window.getComputedStyle(educationContentPanel);
+        shift = parseLengthValue(sectionStyle.getPropertyValue("--edu-content-shift"), viewportWidth);
+        trackDistance = Math.max(0, educationSection.offsetWidth - viewportWidth);
+        panelPaddingLeft = parseFloat(contentStyle.paddingLeft) || 0;
+        itemOffsetX = firstSchoolItem
+            ? parseLengthValue(window.getComputedStyle(firstSchoolItem).getPropertyValue("--school-offset-x"), viewportWidth)
+            : 0;
+        leadIn = Math.max(0, -(panelPaddingLeft + itemOffsetX));
+        targetOffsetWithinTrack = trackDistance > 0
+            ? (trackDistance * ((2 * viewportWidth) + shift - leadIn)) / (trackDistance + viewportWidth)
+            : 0;
+
+        return Math.max(0, wrapperTop + targetOffsetWithinTrack - navHeight - topPadding);
+    }
+
     function shuffleTextOnce(item) {
         var originalText;
         var revealedCount;
@@ -174,7 +239,14 @@
 
         var navHeight = navSection ? navSection.getBoundingClientRect().height : 0;
         var topPadding = 24;
-        var targetY = window.pageYOffset + target.getBoundingClientRect().top - navHeight - topPadding;
+        var targetY = hash === "#cv-education"
+            ? getEducationBuildingsTargetY(navHeight, topPadding)
+            : null;
+
+        if (targetY === null) {
+            targetY = window.pageYOffset + target.getBoundingClientRect().top - navHeight - topPadding;
+        }
+
         var nextY = Math.max(0, targetY);
         var shouldReduceMotion = respectReducedMotion && reducedMotionQuery ? reducedMotionQuery.matches : false;
 
@@ -240,6 +312,11 @@
         item.addEventListener("focus", function () {
             shuffleTextOnce(item);
         });
+    });
+
+    document.addEventListener("cv-education-visibility", function (event) {
+        var detail = event && event.detail ? event.detail : {};
+        setEducationHidden(!!detail.isVisible);
     });
 
     window.addEventListener("scroll", queueNavScrollShift, { passive: true });

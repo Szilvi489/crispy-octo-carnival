@@ -68,7 +68,7 @@
 .page-loader-content h1 {
     margin: 0;
     font-family: "Rubik Mono One", sans-serif;
-    color: #ffffff;
+    color: rgba(245, 243, 239, 1);
 }
 
 .page-loader-text .loader-letter {

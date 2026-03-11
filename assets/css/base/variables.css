@@ -1,13 +1,14 @@
 :root {
   /* Color */
-  --color-bg: #ffffff;
+  --color-soft-white: rgba(245, 243, 239, 1);
+  --color-bg: var(--color-soft-white);
   --color-surface: #f5f5f5;
   --color-text: #111111;
   --color-muted: #6b6b6b;
   --color-border: #dddddd;
   --color-accent: #1c4a8c;
   --color-background-gray: #9b9b9b;
-  --color-accent-contrast: #ffffff;
+  --color-accent-contrast: var(--color-soft-white);
   --color-deep-mandarin : rgb(255, 63, 15);
   --color-deep-blood-orange:rgb(246, 29, 23);
   --color-alternative-orange:  rgb(175, 49, 10);

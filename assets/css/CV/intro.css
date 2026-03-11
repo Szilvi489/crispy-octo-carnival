@@ -8,17 +8,6 @@
     isolation: isolate;
     background: linear-gradient(358deg, rgba(94, 204, 244, 1) 0%, rgba(43, 27, 27, 1) 96%);
 }
-
-.cv-intro-section::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 40%;
-
-    z-index: 2;
-}
 .title {
 color: var(--color-alternative-orange);
   position: absolute;
@@ -29,24 +18,8 @@ color: var(--color-alternative-orange);
   left: 1%;
 
 }
-
 .title-nowrap {
     white-space: nowrap;
-}
-
-
-
-.cv-circle-background {
-    position: absolute;
-    top: 0%;
-    left: 0%;
-    transform: translate(-31.5%, 2%);
-    width: 250vw;
-    height: 200vw;
-   
-    z-index: 3;
-    border-radius: 50%;
-    pointer-events: none;
 }
 
 .cv-intro-content {
@@ -66,148 +39,6 @@ color: var(--color-alternative-orange);
     display: flex;
     justify-content: flex-end;
     align-items: flex-start;
-}
-
-.cv-intro-meta {
-    position: relative;
-    z-index: 4;
-    width: min(94vw, 1200px);
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 14px;
-}
-
-.cv-intro-meta-card {
-    aspect-ratio: 1 / 1;
-    min-height: 250px;
-    border-radius: 24px;
-    border: 1px solid rgba(255, 255, 255, 0.28);
-    background: rgba(31, 23, 23, 0.62);
-    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.24);
-    padding: 14px;
-    display: grid;
-    align-content: space-between;
-    backdrop-filter: blur(5px);
-}
-
-.cv-intro-meta-card h3 {
-    margin: 0;
-    font-family: "Bungee", sans-serif;
-    font-size: clamp(0.74rem, 1.8vw, 2.02rem);
-    line-height: 1.25;
-    color: var(--color-alternative-orange);
-}
-
-.cv-intro-meta-card p {
-    margin: 0;
-    font-family: "Aldrich", sans-serif;
-    font-size: clamp(0.74rem, 1.2vw, 0.95rem);
-    line-height: 1.45;
-    color: #f4eeee;
-}
-
-.cv-intro-meta.is-floating {
-    position: absolute;
-    left: -8vw;
-    right: auto;
-    top: clamp(12vh, 16vh, 22vh);
-    width: clamp(560px, 58vw, 980px);
-    display: block;
-    min-height: clamp(560px, 76vh, 940px);
-    margin-top: 0;
-    z-index: 5;
-}
-
-.cv-intro-meta.is-floating .cv-intro-meta-card {
-    position: absolute;
-    width: clamp(116px, 12.4vw, 188px);
-    min-height: 0;
-    margin: 0;
-    border-radius: 14px;
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    gap: 8px;
-    transform: translate3d(0, 0, 0);
-    will-change: transform;
-    box-shadow:
-        0 14px 32px rgba(0, 0, 0, 0.3),
-        inset 0 0 0 1px rgba(255, 255, 255, 0.12);
-}
-
-.cv-intro-meta.is-floating:not(.is-physics) .cv-intro-meta-card:nth-child(1) {
-    top: 10%;
-    left: 5%;
-    animation: cvBubbleDriftA 7s ease-in-out infinite;
-}
-
-.cv-intro-meta.is-floating:not(.is-physics) .cv-intro-meta-card:nth-child(2) {
-    top: 6%;
-    left: 36%;
-    animation: cvBubbleDriftB 8s ease-in-out infinite;
-}
-
-.cv-intro-meta.is-floating:not(.is-physics) .cv-intro-meta-card:nth-child(3) {
-    top: 15%;
-    left: 68%;
-    animation: cvBubbleDriftC 7.2s ease-in-out infinite;
-}
-
-.cv-intro-meta.is-floating:not(.is-physics) .cv-intro-meta-card:nth-child(4) {
-    top: 42%;
-    left: 13%;
-    animation: cvBubbleDriftB 7.5s ease-in-out infinite reverse;
-}
-
-.cv-intro-meta.is-floating:not(.is-physics) .cv-intro-meta-card:nth-child(5) {
-    top: 48%;
-    left: 46%;
-    animation: cvBubbleDriftA 6.5s ease-in-out infinite reverse;
-}
-
-.cv-intro-meta.is-floating:not(.is-physics) .cv-intro-meta-card:nth-child(6) {
-    top: 37%;
-    left: 75%;
-    animation: cvBubbleDriftC 8.4s ease-in-out infinite;
-}
-
-.cv-intro-meta.is-floating:not(.is-physics) .cv-intro-meta-card:nth-child(7) {
-    top: 68%;
-    left: 30%;
-    animation: cvBubbleDriftB 7.8s ease-in-out infinite;
-}
-
-@keyframes cvBubbleDriftA {
-    0%, 100% { transform: translate3d(0, 0, 0); }
-    25% { transform: translate3d(16px, -12px, 0); }
-    50% { transform: translate3d(-10px, 8px, 0); }
-    75% { transform: translate3d(12px, 14px, 0); }
-}
-
-@keyframes cvBubbleDriftB {
-    0%, 100% { transform: translate3d(0, 0, 0); }
-    30% { transform: translate3d(-14px, -10px, 0); }
-    60% { transform: translate3d(12px, 11px, 0); }
-}
-
-@keyframes cvBubbleDriftC {
-    0%, 100% { transform: translate3d(0, 0, 0); }
-    20% { transform: translate3d(10px, 12px, 0); }
-    55% { transform: translate3d(-13px, -14px, 0); }
-    80% { transform: translate3d(8px, -6px, 0); }
-}
-
-.cv-intro-meta.is-floating .cv-intro-meta-card h3 {
-    font-size: clamp(0.92rem, 1.2vw, 1.34rem);
-}
-
-.cv-intro-meta.is-floating .cv-intro-meta-card p {
-    font-size: clamp(0.82rem, 1vw, 1.12rem);
-    line-height: 1.3;
 }
 
 .cv-intro-subject {
@@ -234,7 +65,14 @@ color: var(--color-alternative-orange);
     display: grid;
     place-items: center;
     pointer-events: none;
+    opacity: 1;
     will-change: transform;
+    transition: transform 320ms ease, opacity 320ms ease;
+}
+
+.cv-intro-orbit-scene.is-education-hidden {
+    opacity: 0;
+    transform: translate3d(0, 24vh, 0);
 }
 
 .cv-intro-orbit-ring {
@@ -316,47 +154,6 @@ color: var(--color-alternative-orange);
 
     .cv-intro-subject {
         width: min(82vw, 340px);
-    }
-
-    .cv-intro-meta {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 10px;
-    }
-
-    .cv-intro-meta-card {
-        min-height: 140px;
-        padding: 12px;
-    }
-
-    .cv-intro-meta.is-floating {
-        position: relative;
-        left: auto;
-        right: auto;
-        top: auto;
-        min-height: clamp(460px, 64vh, 700px);
-        margin-top: 8px;
-    }
-
-    .cv-intro-meta.is-floating .cv-intro-meta-card {
-        width: clamp(114px, 36vw, 164px);
-        padding: 10px;
-        gap: 6px;
-    }
-
-    .cv-intro-meta.is-floating:not(.is-physics) .cv-intro-meta-card:nth-child(1) { top: 9%; left: 4%; }
-    .cv-intro-meta.is-floating:not(.is-physics) .cv-intro-meta-card:nth-child(2) { top: 7%; left: 42%; }
-    .cv-intro-meta.is-floating:not(.is-physics) .cv-intro-meta-card:nth-child(3) { top: 9%; left: 71%; }
-    .cv-intro-meta.is-floating:not(.is-physics) .cv-intro-meta-card:nth-child(4) { top: 38%; left: 7%; }
-    .cv-intro-meta.is-floating:not(.is-physics) .cv-intro-meta-card:nth-child(5) { top: 42%; left: 38%; }
-    .cv-intro-meta.is-floating:not(.is-physics) .cv-intro-meta-card:nth-child(6) { top: 41%; left: 66%; }
-    .cv-intro-meta.is-floating:not(.is-physics) .cv-intro-meta-card:nth-child(7) { top: 71%; left: 30%; }
-
-    .cv-intro-meta.is-floating .cv-intro-meta-card h3 {
-        font-size: clamp(0.84rem, 3.8vw, 1.14rem);
-    }
-
-    .cv-intro-meta.is-floating .cv-intro-meta-card p {
-        font-size: clamp(0.76rem, 3.2vw, 1.02rem);
     }
 
     .cv-intro-orbit-ring span {

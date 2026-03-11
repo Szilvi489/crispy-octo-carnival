@@ -21,6 +21,7 @@ nav_fonts:
   - https://fonts.googleapis.com/css2?family=Knewave&display=swap
   - https://fonts.googleapis.com/css2?family=Oi&display=swap
   - https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap
+  - https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght,XOPQ,XTRA,YOPQ,YTDE,YTFI,YTLC,YTUC@8..144,100..1000,96,468,79,-203,738,514,712&display=swap" rel="stylesheet
 
 enable_gsap: true
 

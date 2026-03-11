@@ -1,11 +1,21 @@
 .nav-section {
+    --cv-nav-education-shift: 0px;
     position: fixed;
     top: 1vh;
     left: 2vw;
     right: 15vw;
     z-index: 30;
-    transform: translate3d(0, calc(-1 * var(--cv-nav-scroll-shift, 0px)), 0);
+    opacity: 1;
+    pointer-events: auto;
+    transform: translate3d(0, calc(-1 * (var(--cv-nav-scroll-shift, 0px) + var(--cv-nav-education-shift, 0px))), 0);
+    transition: opacity 220ms ease, transform 220ms ease;
     will-change: transform;
+}
+
+.nav-section.is-education-hidden {
+    --cv-nav-education-shift: 68px;
+    opacity: 0;
+    pointer-events: none;
 }
 
 .cv-nav{
@@ -13,13 +23,13 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    width: 100%;
+    width: 80%;
     gap: max(3px, 0.45vw);
 }
 
 .cv-nav a{
     color: var(--color-deep-mandarin);
-    font-size: clamp(14px, 1.5vw, 5vh);
+    font-size: clamp(14px, 1.2vw, 5vh);
     text-decoration: none;
     opacity: 1;
     transform: translate3d(0, 0, 0);

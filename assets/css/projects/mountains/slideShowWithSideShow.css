@@ -116,7 +116,7 @@ overflow: hidden;
     padding: 3px 5px;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    color: #fff;
+    color: rgba(245, 243, 239, 1);
     background: rgba(0, 0, 0, 0.7);
 }
 

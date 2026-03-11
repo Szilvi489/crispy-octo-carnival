@@ -239,7 +239,7 @@
 .slide-show-article-meta-value{
     font-family: "Bungee", sans-serif;
     font-size: 1.50rem;
-    color: #fff;
+    color: rgba(245, 243, 239, 1);
     line-height: 1.2;
     font-variant-numeric: tabular-nums;
 }

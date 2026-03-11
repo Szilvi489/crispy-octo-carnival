@@ -65,7 +65,7 @@
 }
 
 .imageOfTheDayClose:focus-visible {
-    outline: 3px solid #ffffff;
+    outline: 3px solid rgba(245, 243, 239, 1);
     outline-offset: 4px;
 }
 
