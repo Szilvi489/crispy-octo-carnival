@@ -9,7 +9,6 @@ permalink: /CV/
 stylesheets:
   - /assets/css/CV/cv.css
   - /assets/css/CV/nav.css
-  - /assets/css/CV/facts.css
   - /assets/css/CV/intro.css
   - /assets/css/CV/education.css
   - /assets/css/CV/experience.css
@@ -21,10 +20,10 @@ stylesheets:
 scripts:
   - /assets/js/CV/cv.js
   - /assets/js/CV/nav.js
-  - /assets/js/CV/facts.js
   - /assets/js/CV/intro.js
   - /assets/js/CV/education.js
   - /assets/js/CV/experience.js
+  - /assets/js/CV/skills.js
   - /assets/js/CV/programmingProjects.js
   - /assets/js/CV/personal.js
   - /assets/js/CV/dreamjob.js

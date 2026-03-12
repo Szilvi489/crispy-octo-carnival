@@ -1,4 +1,22 @@
+@font-face {
+  font-family: "Rostex";
+  src: url("/assets/fonts/rostex/Rostex-Regular.otf") format("opentype"),
+       url("/assets/fonts/rostex/Rostex-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Steelfish";
+  src: url("/assets/fonts/steelfish/Steelfish%20Rg.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
+
   /* Global Google fonts from _config.yml -> nav_fonts -> _layouts/base.html */
   --font-playfair-display: "Playfair Display", serif;
   --font-rubik-mono-one: "Rubik Mono One", sans-serif;
@@ -13,6 +31,8 @@
   --font-Bebas-Neue: "Bebas Neue", cursive;
   --font-Oi: "Oi", cursive;
   --font-Roboto-Flex: "Roboto Flex", sans-serif;
+  --font-rostex: "Rostex", sans-serif;
+  --font-steelfish: "Steelfish", sans-serif;
 
   /* Base stack aliases used across the project */
   --font-ibm-plex-sans: "IBM Plex Sans", "Segoe UI", sans-serif;

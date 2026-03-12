@@ -47,10 +47,22 @@
     );
 }
 
+.cv-personal-transition-clouds {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -18vh;
+    height: 52vh;
+    z-index: 5;
+    overflow: visible;
+    pointer-events: none;
+    will-change: transform;
+}
+
 .cv-personal-prelude-cloud {
     position: absolute;
     left: 50%;
-    top: -38vh;
+    bottom: 0;
     width: min(170vw, 2300px);
     max-width: none;
     height: auto;
@@ -61,28 +73,28 @@
 }
 
 .cv-personal-prelude-cloud.cloud-layer-1 {
-    top: -50vh;
+    bottom: 8vh;
     left: 50%;
     transform: translateX(-50%) scale(1.02);
     opacity: 0.94;
 }
 
 .cv-personal-prelude-cloud.cloud-layer-2 {
-    top: -58vh;
+    bottom: 2vh;
     left: 43%;
     transform: translateX(-50%) scale(0.98);
     opacity: 0.72;
 }
 
 .cv-personal-prelude-cloud.cloud-layer-3 {
-    top: -40vh;
+    bottom: -1vh;
     left: 59%;
     transform: translateX(-50%) scale(1.05);
     opacity: 0.64;
 }
 
 .cv-personal-prelude-cloud.cloud-layer-4 {
-    top: -36vh;
+    bottom: -6vh;
     left: 48%;
     transform: translateX(-50%) scale(0.93);
     opacity: 0.56;
@@ -206,23 +218,28 @@
 }
 
 @media (max-width: 768px) {
+    .cv-personal-transition-clouds {
+        bottom: -12vh;
+        height: 38vh;
+    }
+
     .cv-personal-prelude-cloud {
         width: min(190vw, 1700px);
     }
 
     .cv-personal-prelude-cloud.cloud-layer-1 {
-        top: -24vh;
+        bottom: 6vh;
     }
 
     .cv-personal-prelude-cloud.cloud-layer-2 {
-        top: -27vh;
+        bottom: 2vh;
     }
 
     .cv-personal-prelude-cloud.cloud-layer-3 {
-        top: -22vh;
+        bottom: -1vh;
     }
 
     .cv-personal-prelude-cloud.cloud-layer-4 {
-        top: -19vh;
+        bottom: -4vh;
     }
 }

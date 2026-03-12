@@ -17,28 +17,3 @@
     box-sizing: border-box;
     overflow-x: clip;
 }
-
-.cv-programming-projects-heading {
-    margin: 0;
-    font-family: var(--font-rubik-mono-one, "Rubik Mono One", sans-serif);
-    font-size: clamp(1.8rem, 5.2vw, 4.6rem);
-    line-height: 0.95;
-    text-transform: uppercase;
-    max-width: 12ch;
-    position: fixed;
-    top: clamp(72px, 14vh, 180px);
-    left: 6vw;
-    z-index: 8;
-    pointer-events: none;
-    opacity: 0;
-    transform: translate3d(0, -12px, 0);
-    filter: blur(1px);
-    transition: transform 420ms cubic-bezier(0.2, 0.75, 0.2, 1), opacity 360ms ease, filter 360ms ease;
-    will-change: transform, opacity, filter;
-}
-
-.cv-programming-projects-section.is-title-revealed .cv-programming-projects-heading {
-    opacity: 1;
-    transform: translate3d(0, 0, 0);
-    filter: blur(0);
-}

@@ -1,11 +1,20 @@
 (function () {
     var wrapper = document.querySelector(".cv-horizontal-intro-education");
+    var educationTrack = document.querySelector(".cv-horizontal-education-track");
     var educationSection = document.getElementById("cv-education");
     var educationContent = document.querySelector(".cv-education-content");
     var title = educationSection ? educationSection.querySelector(".cv-education-title") : null;
     var introPanel = educationSection ? educationSection.querySelector(".cv-education-panel-intro") : null;
     var contentPanel = educationSection ? educationSection.querySelector(".cv-education-panel-content") : null;
+    var clickHint = educationSection ? educationSection.querySelector(".cv-education-click-hint") : null;
     var schoolItems = educationSection ? Array.prototype.slice.call(educationSection.querySelectorAll(".cv-school-item")) : [];
+    var schoolImages = educationSection ? Array.prototype.slice.call(educationSection.querySelectorAll(".cv-school-image")) : [];
+    var skyDecorItems = educationSection
+        ? Array.prototype.slice.call(educationSection.querySelectorAll(".cv-education-sky-deco"))
+        : [];
+    var skyDecorImages = educationSection
+        ? Array.prototype.slice.call(educationSection.querySelectorAll(".cv-education-sky-image"))
+        : [];
     var gsapApi = window.gsap;
     var scrollTriggerApi = window.ScrollTrigger;
 
@@ -25,17 +34,29 @@
 
     function updateEducationVisibility() {
         var titleRect;
+        var contentPanelRect;
         var viewportWidth;
         var isVisible;
+        var isInteractive;
 
         if (!title) {
+            if (educationTrack) {
+                educationTrack.classList.remove("is-interactive");
+            }
             return;
         }
 
         titleRect = title.getBoundingClientRect();
+        contentPanelRect = contentPanel ? contentPanel.getBoundingClientRect() : null;
         viewportWidth = window.innerWidth || document.documentElement.clientWidth || 0;
         isVisible = titleRect.right > 0 && titleRect.left < viewportWidth;
+        isInteractive = contentPanelRect
+            ? (contentPanelRect.right > 0 && contentPanelRect.left < viewportWidth)
+            : false;
         announceEducationVisibility(isVisible);
+        if (educationTrack) {
+            educationTrack.classList.toggle("is-interactive", isInteractive);
+        }
     }
 
     function updateContentPanelOffset() {
@@ -72,11 +93,20 @@
     }
 
     function setOpenSchool(nextOpenItem) {
+        var firstItemIsOpen;
+
         schoolItems.forEach(function (item) {
             var isOpen = item === nextOpenItem;
 
             item.classList.toggle("is-open", isOpen);
         });
+
+        if (!clickHint || !schoolItems.length) {
+            return;
+        }
+
+        firstItemIsOpen = schoolItems[0] === nextOpenItem;
+        clickHint.textContent = firstItemIsOpen ? "Click to close" : "Click to reveal details";
     }
 
     function updateContentPanelWidth() {
@@ -96,12 +126,15 @@
         panelRect = contentPanel.getBoundingClientRect();
         panelStyle = window.getComputedStyle(contentPanel);
         paddingRight = parseFloat(panelStyle.paddingRight) || 0;
-        trailingEdge = 24;
+        trailingEdge = 8;
         furthestRight = items.reduce(function (maxRight, item) {
             var itemRect = item.getBoundingClientRect();
             return Math.max(maxRight, itemRect.right);
         }, panelRect.left);
-        contentWidth = Math.max(window.innerWidth, Math.ceil(furthestRight - panelRect.left + paddingRight + trailingEdge));
+        contentWidth = Math.max(
+            window.innerWidth,
+            Math.ceil(furthestRight - panelRect.left + paddingRight + trailingEdge)
+        );
 
         educationSection.style.setProperty("--edu-base-content-width", contentWidth.toFixed(2) + "px");
     }
@@ -148,6 +181,26 @@
         }
     });
 
+    setOpenSchool(null);
+
+    schoolImages.forEach(function (image) {
+        if (!image) {
+            return;
+        }
+
+        if (image.complete) {
+            return;
+        }
+
+        image.addEventListener("load", function () {
+            updateContentPanelWidth();
+            updateSchoolLiftDistances();
+            if (scrollTriggerApi && typeof scrollTriggerApi.refresh === "function") {
+                scrollTriggerApi.refresh();
+            }
+        }, { once: true });
+    });
+
     gsapApi.set(educationSection, {
         x: function () {
             return window.innerWidth;
@@ -179,13 +232,57 @@
         }
     });
 
+    if (skyDecorItems.length && typeof gsapApi.fromTo === "function") {
+        gsapApi.fromTo(
+            skyDecorItems,
+            {
+                autoAlpha: 0,
+                yPercent: 16,
+                xPercent: function (index) {
+                    return index === 0 ? -8 : 8;
+                },
+                scale: 0.9
+            },
+            {
+                autoAlpha: 1,
+                yPercent: 0,
+                xPercent: 0,
+                scale: 1,
+                ease: "power2.out",
+                stagger: 0.08,
+                scrollTrigger: {
+                    trigger: ".cv-education-panel-content",
+                    containerAnimation: horizontalTween,
+                    start: "left right",
+                    end: "left 72%",
+                    scrub: true,
+                    invalidateOnRefresh: true
+                }
+            }
+        );
+    }
+
+    if (skyDecorImages.length) {
+        skyDecorImages.forEach(function (image, index) {
+            gsapApi.to(image, {
+                y: index === 0 ? -18 : -14,
+                scale: index === 0 ? 1.08 : 1.06,
+                rotation: index === 0 ? -1.8 : 1.6,
+                duration: index === 0 ? 7.4 : 8.2,
+                ease: "sine.inOut",
+                yoyo: true,
+                repeat: -1
+            });
+        });
+    }
+
     if (!educationContent || typeof gsapApi.fromTo !== "function") {
         return;
     }
 
     gsapApi.fromTo(
         educationContent,
-        { xPercent: 0, autoAlpha: 0.25 },
+        { xPercent: 0, autoAlpha: 1 },
         {
             xPercent: 0,
             autoAlpha: 1,
