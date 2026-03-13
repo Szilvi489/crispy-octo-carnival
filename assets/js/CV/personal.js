@@ -1,9 +1,9 @@
 (function () {
     var cloudSources = [
-        "/assets/images/CV/removedBackgroundImages/white-cloud.png",
-        "/assets/images/CV/removedBackgroundImages/white-cloud2.png",
-        "/assets/images/CV/removedBackgroundImages/white-cloud3.png",
-        "/assets/images/CV/removedBackgroundImages/white-cloud4.png"
+        "/assets/images/CV/removedBackgroundImages/white-cloud-small.png",
+        "/assets/images/CV/removedBackgroundImages/white-cloud2-small.png",
+        "/assets/images/CV/removedBackgroundImages/white-cloud3-small.png",
+        "/assets/images/CV/removedBackgroundImages/white-cloud4-small.png"
     ];
     var head = document.head || document.getElementsByTagName("head")[0];
 

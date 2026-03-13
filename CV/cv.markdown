@@ -30,6 +30,7 @@ scripts:
 
 
 fonts:
+  - https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap
   - https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap
   - https://fonts.googleapis.com/css2?family=Rubik+Mono+One&display=swap
   - https://fonts.googleapis.com/css2?family=Aldrich&display=swap
@@ -39,6 +40,12 @@ fonts:
   - https://fonts.googleapis.com/css2?family=Stalinist+One&display=swap
   - https://fonts.googleapis.com/css2?family=Tulpen+One&display=swap
   - https://fonts.googleapis.com/css2?family=Oi&display=swap
+
+preload_images:
+  - /assets/images/CV/removedBackgroundImages/white-cloud-small.png
+  - /assets/images/CV/removedBackgroundImages/white-cloud2-small.png
+  - /assets/images/CV/removedBackgroundImages/white-cloud3-small.png
+  - /assets/images/CV/removedBackgroundImages/white-cloud4-small.png
 
 
 navSquareColour: "rgb(255, 63, 15)"

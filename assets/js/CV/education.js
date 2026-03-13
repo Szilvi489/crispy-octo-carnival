@@ -7,6 +7,12 @@
     var introPanel = educationSection ? educationSection.querySelector(".cv-education-panel-intro") : null;
     var contentPanel = educationSection ? educationSection.querySelector(".cv-education-panel-content") : null;
     var clickHint = educationSection ? educationSection.querySelector(".cv-education-click-hint") : null;
+    var clickHintClosedText = clickHint && clickHint.textContent
+        ? clickHint.textContent.trim()
+        : "Click to reveal details";
+    var clickHintOpenText = clickHint && clickHint.getAttribute("data-hint-open")
+        ? clickHint.getAttribute("data-hint-open").trim()
+        : "Click to close";
     var schoolItems = educationSection ? Array.prototype.slice.call(educationSection.querySelectorAll(".cv-school-item")) : [];
     var schoolImages = educationSection ? Array.prototype.slice.call(educationSection.querySelectorAll(".cv-school-image")) : [];
     var skyDecorItems = educationSection
@@ -73,7 +79,7 @@
         introRect = introPanel.getBoundingClientRect();
         titleRect = title.getBoundingClientRect();
         titleEndX = titleRect.right - introRect.left;
-        gapAfterTitle = 80;
+        gapAfterTitle = 0;
         overlap = Math.max(0, titleEndX - introRect.width + gapAfterTitle);
         educationSection.style.setProperty("--edu-content-shift", overlap.toFixed(2) + "px");
     }
@@ -106,7 +112,7 @@
         }
 
         firstItemIsOpen = schoolItems[0] === nextOpenItem;
-        clickHint.textContent = firstItemIsOpen ? "Click to close" : "Click to reveal details";
+        clickHint.textContent = firstItemIsOpen ? clickHintOpenText : clickHintClosedText;
     }
 
     function updateContentPanelWidth() {
@@ -160,6 +166,15 @@
         updateSchoolLiftDistances();
         updateContentPanelWidth();
         updateEducationVisibility();
+    });
+    window.addEventListener("load", function () {
+        updateContentPanelOffset();
+        updateSchoolLiftDistances();
+        updateContentPanelWidth();
+        updateEducationVisibility();
+        if (scrollTriggerApi && typeof scrollTriggerApi.refresh === "function") {
+            scrollTriggerApi.refresh();
+        }
     });
 
     schoolItems.forEach(function (item) {
@@ -239,7 +254,10 @@
                 autoAlpha: 0,
                 yPercent: 16,
                 xPercent: function (index) {
-                    return index === 0 ? -8 : 8;
+                    if (index % 2 === 0) {
+                        return -8;
+                    }
+                    return 8;
                 },
                 scale: 0.9
             },
@@ -263,12 +281,20 @@
     }
 
     if (skyDecorImages.length) {
+        var skyFloatProfiles = [
+            { y: -18, scale: 1.08, rotation: -1.8, duration: 7.4 },
+            { y: -14, scale: 1.06, rotation: 1.6, duration: 8.2 },
+            { y: -10, scale: 1.03, rotation: -1.1, duration: 6.8 },
+            { y: -16, scale: 1.12, rotation: 1.2, duration: 9.2 }
+        ];
+
         skyDecorImages.forEach(function (image, index) {
+            var profile = skyFloatProfiles[index % skyFloatProfiles.length];
             gsapApi.to(image, {
-                y: index === 0 ? -18 : -14,
-                scale: index === 0 ? 1.08 : 1.06,
-                rotation: index === 0 ? -1.8 : 1.6,
-                duration: index === 0 ? 7.4 : 8.2,
+                y: profile.y,
+                scale: profile.scale,
+                rotation: profile.rotation,
+                duration: profile.duration,
                 ease: "sine.inOut",
                 yoyo: true,
                 repeat: -1

@@ -51,6 +51,12 @@
     {%- endfor -%}
     {%- endif -%}
 
+    {%- if page.preload_images -%}
+    {%- for src in page.preload_images -%}
+    <link rel="preload" as="image" href="{{ src }}" fetchpriority="high">
+    {%- endfor -%}
+    {%- endif -%}
+
 </head>
 <body>
 <div class="page-container">

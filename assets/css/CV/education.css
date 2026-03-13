@@ -34,8 +34,9 @@
 
 .cv-education-title {
     margin: 0;
-    font-family: "Roboto Flex", sans-serif;
+    font-family: "Roboto Flex", "Bebas Neue", sans-serif;
     font-weight: 1000;
+    font-variation-settings: "opsz" 144, "wght" 1000;
     font-size: 100vh;
     line-height: 0.8;
     text-transform: uppercase;
@@ -54,7 +55,7 @@
     width: var(--edu-base-content-width);
     display: flex;
     align-items: flex-end;
-    background: linear-gradient(94deg,rgba(245, 243, 239, 1) 22%, rgba(94, 204, 244, 1) 100%);
+    background: linear-gradient(94deg,rgba(245, 243, 239, 1) 22%, rgba(94, 204, 244, 1) 90%);
     padding: 0 8vw;
     transform: translateX(var(--edu-content-shift));
 }
@@ -77,18 +78,32 @@
 }
 
 .cv-education-sky-deco-1 {
-    left: 11vw;
-    top: 8vh;
+    width: clamp(90px, 170vw, 1220px);
+    left: -30vw;
+    top: -8vh;
 }
 
 .cv-education-sky-deco-2 {
-    left: 44vw;
-    top: 18vh;
+    width: clamp(150px, 69vw, 1360px);
+    left: 84vw;
+    top: 6vh;
+}
+
+.cv-education-sky-deco-3 {
+    width: clamp(150px, 80vw, 1560px);
+    left: 130vw;
+    top: -16vh;
+}
+
+.cv-education-sky-deco-4 {
+    width: clamp(70px, 109vw, 1180px);
+    left: 26vw;
+    top: 12vh;
 }
 
 .cv-education-sky-image {
     display: block;
-    width: clamp(110px, 14vw, 300px);
+    width: 100%;
     height: auto;
     object-fit: contain;
     transform-origin: center center;
@@ -148,6 +163,7 @@
 }
 
 .cv-school-image {
+    display: block;
     width: auto;
     max-width: none;
     object-fit: contain;
@@ -266,17 +282,27 @@
     }
 
     .cv-education-sky-deco-1 {
+        width: clamp(70px, 18vw, 120px);
         left: 10vw;
         top: 9vh;
     }
 
     .cv-education-sky-deco-2 {
+        width: clamp(102px, 28vw, 190px);
         left: 53vw;
         top: 15vh;
     }
 
-    .cv-education-sky-image {
-        width: clamp(84px, 22vw, 180px);
+    .cv-education-sky-deco-3 {
+        width: clamp(84px, 20vw, 150px);
+        left: 70vw;
+        top: 12vh;
+    }
+
+    .cv-education-sky-deco-4 {
+        width: clamp(60px, 15vw, 110px);
+        left: 80vw;
+        top: 21vh;
     }
 
     .cv-school-item:nth-of-type(1) {
