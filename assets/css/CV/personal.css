@@ -7,7 +7,56 @@
     padding: 0;
     position: relative;
     overflow: visible;
-    z-index: 6;
+    z-index: 8;
+}
+
+.cv-personal-bean-field {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -10vh;
+    height: 76vh;
+    z-index: 4;
+    overflow: visible;
+    pointer-events: none;
+    opacity: 0;
+}
+
+.cv-personal-bean {
+    position: absolute;
+    left: var(--bean-x, 50%);
+    top: var(--bean-y, 50%);
+    width: clamp(16px, var(--bean-size, 5vw), 180px);
+    height: auto;
+    transform: translate(-50%, -50%) rotate(var(--bean-rotation, 0deg));
+    transform-origin: center;
+    pointer-events: none;
+    will-change: transform;
+}
+
+.cv-personal-bean--layer-1 {
+    z-index: 4;
+    opacity: 0.48;
+}
+
+.cv-personal-bean--layer-2 {
+    z-index: 3;
+    opacity: 0.42;
+}
+
+.cv-personal-bean--layer-3 {
+    z-index: 2;
+    opacity: 0.35;
+}
+
+.cv-personal-bean--layer-4 {
+    z-index: 1;
+    opacity: 0.3;
+}
+
+.cv-personal-bean--layer-5 {
+    z-index: 0;
+    opacity: 0.24;
 }
 
 .cv-personal-prelude {
@@ -19,33 +68,12 @@
     pointer-events: none;
 }
 
-.cv-personal-prelude-grid {
-    position: absolute;
-    inset: 0;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(86px, 1fr));
-    gap: 0;
-    align-content: start;
-    z-index: 1;
-    overflow: hidden;
-    clip-path: inset(0);
+.cv-personal-prelude-title,
+.cv-personal-prelude-description {
+    position: relative;
+    z-index: 7;
 }
 
-.cv-personal-prelude::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: 2;
-    background: linear-gradient(
-        to bottom,
-        rgba(255, 255, 255, 0.98) 0%,
-        rgba(255, 255, 255, 0.86) 16%,
-        rgba(255, 255, 255, 0.62) 36%,
-        rgba(255, 255, 255, 0.34) 58%,
-        rgba(255, 255, 255, 0.12) 76%,
-        rgba(255, 255, 255, 0) 100%
-    );
-}
 
 .cv-personal-transition-clouds {
     position: absolute;
@@ -53,7 +81,7 @@
     right: 0;
     bottom: -18vh;
     height: 52vh;
-    z-index: 5;
+    z-index: 16;
     overflow: visible;
     pointer-events: none;
     will-change: transform;
@@ -107,19 +135,6 @@
     padding: 40px 20px 100px;
     position: relative;
     z-index: 2;
-}
-
-.cv-personal-bg-grid {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(86px, 1fr));
-    gap: 0;
-    align-content: start;
-    pointer-events: none;
-    overflow: hidden;
-    clip-path: inset(0);
 }
 
 .cv-personal-bg-tile {

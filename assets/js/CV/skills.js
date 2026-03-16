@@ -1,5 +1,6 @@
 (function () {
     var section = document.getElementById("cv-skills");
+    var programmingProjectsSection = document.getElementById("cv-programming-projects");
     var title = section ? section.querySelector(".cv-skills-title") : null;
     var grid = section ? section.querySelector(".cv-skills-grid") : null;
     var hoverCard = section ? section.querySelector(".cv-skills-hover-card") : null;
@@ -413,6 +414,10 @@
         tile.style.setProperty("--tile-fg", foreground);
         tile.style.setProperty("--tile-border", border);
         tile.setAttribute("aria-label", skill.name + " skill");
+        tile.dataset.breakSpread = String(Math.random());
+        tile.dataset.breakLift = String(Math.random());
+        tile.dataset.breakSpin = String(Math.random());
+        tile.dataset.breakFade = String(Math.random());
 
         if (skill.logo && skill.logo.trim()) {
             logoImage = document.createElement("img");
@@ -475,6 +480,56 @@
         layoutTiles();
     }
 
+    function getBreakupProgress(viewportHeight) {
+        var projectsRect;
+        var fadeStart;
+        var fadeEnd;
+        var raw;
+
+        if (!programmingProjectsSection) {
+            return 0;
+        }
+
+        projectsRect = programmingProjectsSection.getBoundingClientRect();
+        fadeStart = viewportHeight * 0.9; /* projects entered ~10% */
+        fadeEnd = viewportHeight * 0.22;
+        raw = (fadeStart - projectsRect.top) / Math.max(1, fadeStart - fadeEnd);
+        return clamp(raw, 0, 1);
+    }
+
+    function resetTileBreakup() {
+        Array.prototype.forEach.call(grid.children, function (tile) {
+            tile.style.removeProperty("transform");
+            tile.style.removeProperty("opacity");
+            tile.style.removeProperty("pointer-events");
+        });
+    }
+
+    function applyTileBreakup(progress) {
+        var gridRect = grid.getBoundingClientRect();
+        var gridMidX = gridRect.left + (gridRect.width / 2);
+        var eased = Math.pow(progress, 1.16);
+
+        Array.prototype.forEach.call(grid.children, function (tile) {
+            var rect = tile.getBoundingClientRect();
+            var centerX = rect.left + (rect.width / 2);
+            var direction = centerX < gridMidX ? -1 : 1;
+            var spread = Number(tile.dataset.breakSpread || 0.5);
+            var lift = Number(tile.dataset.breakLift || 0.5);
+            var spin = Number(tile.dataset.breakSpin || 0.5);
+            var fade = Number(tile.dataset.breakFade || 0.5);
+            var x = direction * (96 + (spread * 260)) * eased;
+            var y = -(54 + (lift * 220)) * eased;
+            var rotate = direction * (8 + (spin * 26)) * eased;
+            var scale = 1 - ((0.06 + (fade * 0.12)) * eased);
+            var opacity = clamp(1 - ((0.68 + (fade * 0.28)) * eased), 0, 1);
+
+            tile.style.transform = "translate3d(" + x.toFixed(2) + "px, " + y.toFixed(2) + "px, 0) rotate(" + rotate.toFixed(2) + "deg) scale(" + scale.toFixed(3) + ")";
+            tile.style.opacity = opacity.toFixed(3);
+            tile.style.pointerEvents = progress > 0.06 ? "none" : "";
+        });
+    }
+
     function updateSkillsState() {
         var rect = section.getBoundingClientRect();
         var viewportHeight = window.innerHeight || document.documentElement.clientHeight || 1;
@@ -485,10 +540,19 @@
         var exitProgress = clamp(exitRaw, 0, 1);
         var exitX = -(exitProgress * 120);
         var showTiles = rect.top <= (viewportHeight * 0.5);
+        var breakupProgress = getBreakupProgress(viewportHeight);
 
         title.style.setProperty("--skills-fill-progress", (progress * 100).toFixed(2) + "%");
         title.style.setProperty("--skills-exit-x", exitX.toFixed(2) + "vw");
         section.classList.toggle("skills-tiles-visible", showTiles);
+        section.classList.toggle("skills-breakup-active", breakupProgress > 0);
+
+        if (breakupProgress > 0 && showTiles) {
+            hideHoverCard();
+            applyTileBreakup(breakupProgress);
+        } else {
+            resetTileBreakup();
+        }
 
         if (activeSkill && !hoverCard.hidden) {
             positionHoverCard(activePointer.x, activePointer.y);

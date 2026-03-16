@@ -91,6 +91,11 @@
     opacity: 1;
 }
 
+.cv-skills-section.skills-breakup-active .cv-skill-tile {
+    transition-duration: 140ms, 140ms, 220ms, 220ms;
+    transition-delay: 0ms;
+}
+
 .cv-skill-tile:hover,
 .cv-skill-tile:focus-visible {
     border-color: #000;

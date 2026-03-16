@@ -46,6 +46,7 @@ preload_images:
   - /assets/images/CV/removedBackgroundImages/white-cloud2-small.png
   - /assets/images/CV/removedBackgroundImages/white-cloud3-small.png
   - /assets/images/CV/removedBackgroundImages/white-cloud4-small.png
+  - /assets/images/CV/removedBackgroundImages/magicbeanPink.png
 
 
 navSquareColour: "rgb(255, 63, 15)"
