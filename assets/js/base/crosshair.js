@@ -33,7 +33,7 @@
         }
 
         isNavTarget = !!target.closest(
-            ".cv-nav a, .cv-facts-toggle, .cv-school-image, .navSquareColour, .navMenu a, .navHeartButton, .navHomeButton, #navClose, .contact-page-section .contact-input"
+            ".cv-nav a, .cv-school-image, .navSquareColour, .navMenu a, .navHeartButton, .navHomeButton, #navClose, .contact-page-section .contact-input"
         );
         isSkillTileTarget = !!target.closest(".cv-skill-tile");
         crosshairOverlay.classList.toggle("is-nav-hover", isNavTarget);
