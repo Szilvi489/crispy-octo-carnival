@@ -55,7 +55,7 @@ body.cv-crosshair-active * {
     top: 50%;
     background: rgba(255, 255, 255, 0.98);
     transform: translate(-50%, -50%);
-    transition: background 160ms ease;
+    transition: background 160ms ease, box-shadow 160ms ease;
 }
 
 .cv-crosshair-center::before {
@@ -75,6 +75,16 @@ body.cv-crosshair-active * {
 
 .cv-crosshair-overlay.is-nav-hover .cv-crosshair-line {
     background: #39ff14;
+}
+
+.cv-crosshair-overlay.is-skills-hover .cv-crosshair-center::before,
+.cv-crosshair-overlay.is-skills-hover .cv-crosshair-center::after {
+    background: #fff9c4;
+    box-shadow: 0 0 10px rgba(255, 249, 196, 0.92);
+}
+
+.cv-crosshair-overlay.is-skills-hover .cv-crosshair-line {
+    background: #fff9c4;
 }
 
 @media (max-width: 768px) {

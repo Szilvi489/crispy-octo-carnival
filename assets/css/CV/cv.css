@@ -104,6 +104,11 @@
     inset: 0;
     z-index: 2;
     overflow: hidden;
+    pointer-events: none;
+}
+
+.cv-horizontal-education-track.is-interactive {
+    pointer-events: auto;
 }
 
 .page-loader-anim::after,

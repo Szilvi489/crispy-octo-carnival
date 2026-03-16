@@ -1,11 +1,26 @@
 (function () {
     var wrapper = document.querySelector(".cv-horizontal-intro-education");
+    var educationTrack = document.querySelector(".cv-horizontal-education-track");
     var educationSection = document.getElementById("cv-education");
     var educationContent = document.querySelector(".cv-education-content");
     var title = educationSection ? educationSection.querySelector(".cv-education-title") : null;
     var introPanel = educationSection ? educationSection.querySelector(".cv-education-panel-intro") : null;
     var contentPanel = educationSection ? educationSection.querySelector(".cv-education-panel-content") : null;
+    var clickHint = educationSection ? educationSection.querySelector(".cv-education-click-hint") : null;
+    var clickHintClosedText = clickHint && clickHint.textContent
+        ? clickHint.textContent.trim()
+        : "Click to reveal details";
+    var clickHintOpenText = clickHint && clickHint.getAttribute("data-hint-open")
+        ? clickHint.getAttribute("data-hint-open").trim()
+        : "Click to close";
     var schoolItems = educationSection ? Array.prototype.slice.call(educationSection.querySelectorAll(".cv-school-item")) : [];
+    var schoolImages = educationSection ? Array.prototype.slice.call(educationSection.querySelectorAll(".cv-school-image")) : [];
+    var skyDecorItems = educationSection
+        ? Array.prototype.slice.call(educationSection.querySelectorAll(".cv-education-sky-deco"))
+        : [];
+    var skyDecorImages = educationSection
+        ? Array.prototype.slice.call(educationSection.querySelectorAll(".cv-education-sky-image"))
+        : [];
     var gsapApi = window.gsap;
     var scrollTriggerApi = window.ScrollTrigger;
 
@@ -25,17 +40,29 @@
 
     function updateEducationVisibility() {
         var titleRect;
+        var contentPanelRect;
         var viewportWidth;
         var isVisible;
+        var isInteractive;
 
         if (!title) {
+            if (educationTrack) {
+                educationTrack.classList.remove("is-interactive");
+            }
             return;
         }
 
         titleRect = title.getBoundingClientRect();
+        contentPanelRect = contentPanel ? contentPanel.getBoundingClientRect() : null;
         viewportWidth = window.innerWidth || document.documentElement.clientWidth || 0;
         isVisible = titleRect.right > 0 && titleRect.left < viewportWidth;
+        isInteractive = contentPanelRect
+            ? (contentPanelRect.right > 0 && contentPanelRect.left < viewportWidth)
+            : false;
         announceEducationVisibility(isVisible);
+        if (educationTrack) {
+            educationTrack.classList.toggle("is-interactive", isInteractive);
+        }
     }
 
     function updateContentPanelOffset() {
@@ -52,7 +79,7 @@
         introRect = introPanel.getBoundingClientRect();
         titleRect = title.getBoundingClientRect();
         titleEndX = titleRect.right - introRect.left;
-        gapAfterTitle = 80;
+        gapAfterTitle = 0;
         overlap = Math.max(0, titleEndX - introRect.width + gapAfterTitle);
         educationSection.style.setProperty("--edu-content-shift", overlap.toFixed(2) + "px");
     }
@@ -72,11 +99,20 @@
     }
 
     function setOpenSchool(nextOpenItem) {
+        var firstItemIsOpen;
+
         schoolItems.forEach(function (item) {
             var isOpen = item === nextOpenItem;
 
             item.classList.toggle("is-open", isOpen);
         });
+
+        if (!clickHint || !schoolItems.length) {
+            return;
+        }
+
+        firstItemIsOpen = schoolItems[0] === nextOpenItem;
+        clickHint.textContent = firstItemIsOpen ? clickHintOpenText : clickHintClosedText;
     }
 
     function updateContentPanelWidth() {
@@ -96,12 +132,15 @@
         panelRect = contentPanel.getBoundingClientRect();
         panelStyle = window.getComputedStyle(contentPanel);
         paddingRight = parseFloat(panelStyle.paddingRight) || 0;
-        trailingEdge = 24;
+        trailingEdge = 8;
         furthestRight = items.reduce(function (maxRight, item) {
             var itemRect = item.getBoundingClientRect();
             return Math.max(maxRight, itemRect.right);
         }, panelRect.left);
-        contentWidth = Math.max(window.innerWidth, Math.ceil(furthestRight - panelRect.left + paddingRight + trailingEdge));
+        contentWidth = Math.max(
+            window.innerWidth,
+            Math.ceil(furthestRight - panelRect.left + paddingRight + trailingEdge)
+        );
 
         educationSection.style.setProperty("--edu-base-content-width", contentWidth.toFixed(2) + "px");
     }
@@ -128,6 +167,15 @@
         updateContentPanelWidth();
         updateEducationVisibility();
     });
+    window.addEventListener("load", function () {
+        updateContentPanelOffset();
+        updateSchoolLiftDistances();
+        updateContentPanelWidth();
+        updateEducationVisibility();
+        if (scrollTriggerApi && typeof scrollTriggerApi.refresh === "function") {
+            scrollTriggerApi.refresh();
+        }
+    });
 
     schoolItems.forEach(function (item) {
         var image = item.querySelector(".cv-school-image");
@@ -146,6 +194,26 @@
         if (info) {
             info.addEventListener("click", openOrToggle);
         }
+    });
+
+    setOpenSchool(null);
+
+    schoolImages.forEach(function (image) {
+        if (!image) {
+            return;
+        }
+
+        if (image.complete) {
+            return;
+        }
+
+        image.addEventListener("load", function () {
+            updateContentPanelWidth();
+            updateSchoolLiftDistances();
+            if (scrollTriggerApi && typeof scrollTriggerApi.refresh === "function") {
+                scrollTriggerApi.refresh();
+            }
+        }, { once: true });
     });
 
     gsapApi.set(educationSection, {
@@ -179,13 +247,68 @@
         }
     });
 
+    if (skyDecorItems.length && typeof gsapApi.fromTo === "function") {
+        gsapApi.fromTo(
+            skyDecorItems,
+            {
+                autoAlpha: 0,
+                yPercent: 16,
+                xPercent: function (index) {
+                    if (index % 2 === 0) {
+                        return -8;
+                    }
+                    return 8;
+                },
+                scale: 0.9
+            },
+            {
+                autoAlpha: 1,
+                yPercent: 0,
+                xPercent: 0,
+                scale: 1,
+                ease: "power2.out",
+                stagger: 0.08,
+                scrollTrigger: {
+                    trigger: ".cv-education-panel-content",
+                    containerAnimation: horizontalTween,
+                    start: "left right",
+                    end: "left 72%",
+                    scrub: true,
+                    invalidateOnRefresh: true
+                }
+            }
+        );
+    }
+
+    if (skyDecorImages.length) {
+        var skyFloatProfiles = [
+            { y: -18, scale: 1.08, rotation: -1.8, duration: 7.4 },
+            { y: -14, scale: 1.06, rotation: 1.6, duration: 8.2 },
+            { y: -10, scale: 1.03, rotation: -1.1, duration: 6.8 },
+            { y: -16, scale: 1.12, rotation: 1.2, duration: 9.2 }
+        ];
+
+        skyDecorImages.forEach(function (image, index) {
+            var profile = skyFloatProfiles[index % skyFloatProfiles.length];
+            gsapApi.to(image, {
+                y: profile.y,
+                scale: profile.scale,
+                rotation: profile.rotation,
+                duration: profile.duration,
+                ease: "sine.inOut",
+                yoyo: true,
+                repeat: -1
+            });
+        });
+    }
+
     if (!educationContent || typeof gsapApi.fromTo !== "function") {
         return;
     }
 
     gsapApi.fromTo(
         educationContent,
-        { xPercent: 0, autoAlpha: 0.25 },
+        { xPercent: 0, autoAlpha: 1 },
         {
             xPercent: 0,
             autoAlpha: 1,
