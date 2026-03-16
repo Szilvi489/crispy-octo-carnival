@@ -4,29 +4,29 @@ enable_crosshair: true
 title: CV
 description: CV; Lebenslauf
 
-permalink: /CV/
+permalink: /CV/content/
 
 stylesheets:
-  - /assets/css/CV/cv.css
-  - /assets/css/CV/nav.css
-  - /assets/css/CV/intro.css
-  - /assets/css/CV/education.css
-  - /assets/css/CV/experience.css
-  - /assets/css/CV/skills.css
-  - /assets/css/CV/programmingProjects.css
-  - /assets/css/CV/personal.css
-  - /assets/css/CV/dreamjob.css
+  - /CV/assets/css/CV/cv.css
+  - /CV/assets/css/CV/nav.css
+  - /CV/assets/css/CV/intro.css
+  - /CV/assets/css/CV/education.css
+  - /CV/assets/css/CV/experience.css
+  - /CV/assets/css/CV/skills.css
+  - /CV/assets/css/CV/programmingProjects.css
+  - /CV/assets/css/CV/personal.css
+  - /CV/assets/css/CV/dreamjob.css
 
 scripts:
-  - /assets/js/CV/cv.js
-  - /assets/js/CV/nav.js
-  - /assets/js/CV/intro.js
-  - /assets/js/CV/education.js
-  - /assets/js/CV/experience.js
-  - /assets/js/CV/skills.js
-  - /assets/js/CV/programmingProjects.js
-  - /assets/js/CV/personal.js
-  - /assets/js/CV/dreamjob.js
+  - /CV/assets/js/CV/cv.js
+  - /CV/assets/js/CV/nav.js
+  - /CV/assets/js/CV/intro.js
+  - /CV/assets/js/CV/education.js
+  - /CV/assets/js/CV/experience.js
+  - /CV/assets/js/CV/skills.js
+  - /CV/assets/js/CV/programmingProjects.js
+  - /CV/assets/js/CV/personal.js
+  - /CV/assets/js/CV/dreamjob.js
 
 
 fonts:
@@ -42,11 +42,11 @@ fonts:
   - https://fonts.googleapis.com/css2?family=Oi&display=swap
 
 preload_images:
-  - /assets/images/CV/removedBackgroundImages/white-cloud-small.png
-  - /assets/images/CV/removedBackgroundImages/white-cloud2-small.png
-  - /assets/images/CV/removedBackgroundImages/white-cloud3-small.png
-  - /assets/images/CV/removedBackgroundImages/white-cloud4-small.png
-  - /assets/images/CV/removedBackgroundImages/magicbeanPink.png
+  - /CV/assets/images/CV/removedBackgroundImages/white-cloud-small.png
+  - /CV/assets/images/CV/removedBackgroundImages/white-cloud2-small.png
+  - /CV/assets/images/CV/removedBackgroundImages/white-cloud3-small.png
+  - /CV/assets/images/CV/removedBackgroundImages/white-cloud4-small.png
+  - /CV/assets/images/CV/removedBackgroundImages/magicbeanPink.png
 
 
 navSquareColour: "rgb(255, 63, 15)"

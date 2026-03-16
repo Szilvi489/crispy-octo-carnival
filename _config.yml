@@ -25,6 +25,14 @@ nav_fonts:
 
 enable_gsap: true
 
+include:
+  - CV/.htaccess
+
+exclude:
+  - assets/css/CV
+  - assets/js/CV
+  - assets/images/CV
+
 # Build settings
 theme: null
 plugins:
