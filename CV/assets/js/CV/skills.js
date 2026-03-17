@@ -348,7 +348,7 @@
     function renderHoverCard(skill) {
         var note = skill.note && skill.note.trim()
             ? skill.note.trim()
-            : "Add your note in assets/js/CV/skills.js -> skills[].note";
+            : "Add your note in CV/assets/js/CV/skills.js -> skills[].note";
 
         hoverCard.innerHTML = [
             "<h3 class=\"cv-skills-hover-title\">", skill.name, "</h3>",

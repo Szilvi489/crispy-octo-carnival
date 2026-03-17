@@ -88,6 +88,10 @@
             transformOrigin: "50% 50%"
         });
 
+        gsapApi.set(section, {
+            "--cv-programming-projects-origami-opacity": 0.14
+        });
+
         headingTimeline = gsapApi.timeline({
             scrollTrigger: {
                 trigger: section,
@@ -97,6 +101,12 @@
                 invalidateOnRefresh: true
             }
         });
+
+        headingTimeline.to(section, {
+                "--cv-programming-projects-origami-opacity": 1,
+                duration: 2.17,
+                ease: "none"
+            }, 0);
 
         headingTimeline
             .to(heading, {

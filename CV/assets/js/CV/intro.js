@@ -9,6 +9,7 @@
 
     const title = section.querySelector(".title");
     const orbitScene = section.querySelector(".cv-intro-orbit-scene");
+    const orbitStage = section.querySelector(".cv-intro-orbit-stage");
     const orbitSceneBackground = section.querySelector(".cv-intro-orbit-scene-background");
     const scrollHint = section.querySelector(".cv-intro-scroll-hint");
     const introTextWrapper = section.querySelector(".cv-intro-title-wrapper");
@@ -24,6 +25,45 @@
     let delayedHideTimerId = null;
     let introEnterCleanupTimerId = null;
     let typingCursorTween = null;
+    let orbitBackgroundFrameId = null;
+
+    const syncOrbitBackgroundPosition = () => {
+        let rect;
+        let width;
+        let height;
+        let left;
+        let top;
+
+        orbitBackgroundFrameId = null;
+
+        if (!orbitStage || !orbitSceneBackground || orbitSceneBackground.classList.contains("is-education-active")) {
+            return;
+        }
+
+        rect = orbitStage.getBoundingClientRect();
+
+        if (!rect.width || !rect.height) {
+            return;
+        }
+
+        width = rect.width * 0.58;
+        height = rect.height * 0.9;
+        left = rect.left + rect.width * 0.7;
+        top = rect.top + rect.height * 0.52;
+
+        orbitSceneBackground.style.setProperty("--cv-intro-orbit-bg-left", left + "px");
+        orbitSceneBackground.style.setProperty("--cv-intro-orbit-bg-top", top + "px");
+        orbitSceneBackground.style.setProperty("--cv-intro-orbit-bg-width", width + "px");
+        orbitSceneBackground.style.setProperty("--cv-intro-orbit-bg-height", height + "px");
+    };
+
+    const queueOrbitBackgroundSync = () => {
+        if (orbitBackgroundFrameId !== null) {
+            return;
+        }
+
+        orbitBackgroundFrameId = window.requestAnimationFrame(syncOrbitBackgroundPosition);
+    };
 
     const setEducationHiddenState = (hidden) => {
         if (orbitScene) {
@@ -37,6 +77,10 @@
         }
         if (orbitSceneBackground) {
             orbitSceneBackground.classList.toggle("is-education-active", hidden);
+        }
+
+        if (!hidden) {
+            queueOrbitBackgroundSync();
         }
     };
 
@@ -247,10 +291,15 @@
     if (document.readyState === "complete") {
         queueTitleArrival();
         setupScrollHintShuffle();
+        queueOrbitBackgroundSync();
     } else {
         window.addEventListener("load", queueTitleArrival, { once: true });
         window.addEventListener("load", setupScrollHintShuffle, { once: true });
+        window.addEventListener("load", queueOrbitBackgroundSync, { once: true });
     }
+
+    window.addEventListener("resize", queueOrbitBackgroundSync);
+    window.addEventListener("scroll", queueOrbitBackgroundSync, { passive: true });
 
     resetIntroEntrance();
     resetIntroTyping();
@@ -268,6 +317,8 @@
             startIntroEntrance();
             startIntroTyping();
         }
+
+        queueOrbitBackgroundSync();
     });
 
     document.addEventListener("cv-education-visibility", (event) => {

@@ -23,6 +23,9 @@
         : [];
     var gsapApi = window.gsap;
     var scrollTriggerApi = window.ScrollTrigger;
+    var lastEducationVisible = null;
+    var lastEducationInteractive = null;
+    var resizeRafId = null;
 
     if (!wrapper || !educationSection || !gsapApi || !scrollTriggerApi || typeof gsapApi.to !== "function") {
         return;
@@ -39,7 +42,7 @@
     }
 
     function updateEducationVisibility() {
-        var titleRect;
+        var sectionRect;
         var contentPanelRect;
         var viewportWidth;
         var isVisible;
@@ -52,16 +55,22 @@
             return;
         }
 
-        titleRect = title.getBoundingClientRect();
+        sectionRect = educationSection.getBoundingClientRect();
         contentPanelRect = contentPanel ? contentPanel.getBoundingClientRect() : null;
         viewportWidth = window.innerWidth || document.documentElement.clientWidth || 0;
-        isVisible = titleRect.right > 0 && titleRect.left < viewportWidth;
+        isVisible = sectionRect.left < viewportWidth * 0.7 && sectionRect.right > viewportWidth * 0.18;
         isInteractive = contentPanelRect
             ? (contentPanelRect.right > 0 && contentPanelRect.left < viewportWidth)
             : false;
-        announceEducationVisibility(isVisible);
-        if (educationTrack) {
+
+        if (lastEducationVisible !== isVisible) {
+            announceEducationVisibility(isVisible);
+            lastEducationVisible = isVisible;
+        }
+
+        if (educationTrack && lastEducationInteractive !== isInteractive) {
             educationTrack.classList.toggle("is-interactive", isInteractive);
+            lastEducationInteractive = isInteractive;
         }
     }
 
@@ -149,29 +158,37 @@
         return Math.max(0, educationSection.offsetWidth - window.innerWidth);
     }
 
-    updateContentPanelOffset();
-    updateSchoolLiftDistances();
-    updateContentPanelWidth();
-    updateEducationVisibility();
+    function refreshEducationLayout() {
+        resizeRafId = null;
+        updateContentPanelOffset();
+        updateSchoolLiftDistances();
+        updateContentPanelWidth();
+        updateEducationVisibility();
+    }
+
+    function queueEducationLayoutRefresh() {
+        if (resizeRafId !== null) {
+            return;
+        }
+
+        resizeRafId = window.requestAnimationFrame(refreshEducationLayout);
+    }
+
+    gsapApi.set(educationSection, {
+        x: function () {
+            return window.innerWidth;
+        }
+    });
+
+    refreshEducationLayout();
     if (document.fonts && typeof document.fonts.ready === "object") {
         document.fonts.ready.then(function () {
-            updateContentPanelOffset();
-            updateSchoolLiftDistances();
-            updateContentPanelWidth();
-            updateEducationVisibility();
+            queueEducationLayoutRefresh();
         });
     }
-    window.addEventListener("resize", function () {
-        updateContentPanelOffset();
-        updateSchoolLiftDistances();
-        updateContentPanelWidth();
-        updateEducationVisibility();
-    });
+    window.addEventListener("resize", queueEducationLayoutRefresh);
     window.addEventListener("load", function () {
-        updateContentPanelOffset();
-        updateSchoolLiftDistances();
-        updateContentPanelWidth();
-        updateEducationVisibility();
+        queueEducationLayoutRefresh();
         if (scrollTriggerApi && typeof scrollTriggerApi.refresh === "function") {
             scrollTriggerApi.refresh();
         }
@@ -208,18 +225,11 @@
         }
 
         image.addEventListener("load", function () {
-            updateContentPanelWidth();
-            updateSchoolLiftDistances();
+            queueEducationLayoutRefresh();
             if (scrollTriggerApi && typeof scrollTriggerApi.refresh === "function") {
                 scrollTriggerApi.refresh();
             }
         }, { once: true });
-    });
-
-    gsapApi.set(educationSection, {
-        x: function () {
-            return window.innerWidth;
-        }
     });
 
     var horizontalTween = gsapApi.to(educationSection, {
@@ -238,10 +248,7 @@
             anticipatePin: 1,
             invalidateOnRefresh: true,
             onRefresh: function () {
-                updateContentPanelOffset();
-                updateSchoolLiftDistances();
-                updateContentPanelWidth();
-                updateEducationVisibility();
+                refreshEducationLayout();
             },
             onUpdate: updateEducationVisibility
         }

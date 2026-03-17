@@ -11,6 +11,8 @@
     var gsapApi = window.gsap;
     var head = document.head || document.getElementsByTagName("head")[0];
     var visibilityRafId = null;
+    var beanTweens = [];
+    var beanAnimationsActive = false;
     var beanLayerConfigs = [
         { className: "cv-personal-bean--layer-1", sizes: [11, 9, 8], count: 3, driftMin: 4.8, driftMax: 7.2, pulseMin: 3.4, pulseMax: 5.5 },
         { className: "cv-personal-bean--layer-2", sizes: [8.5, 7, 6], count: 3, driftMin: 5.2, driftMax: 7.8, pulseMin: 3.8, pulseMax: 6.2 },
@@ -112,6 +114,7 @@
         }
 
         beans = Array.prototype.slice.call(beanField.querySelectorAll(".cv-personal-bean"));
+        beanTweens = [];
 
         beans.forEach(function (bean) {
             var baseRotation = Number(bean.dataset.rotation || 0);
@@ -135,7 +138,7 @@
                 transformOrigin: "50% 50%"
             });
 
-            gsapApi.to(bean, {
+            beanTweens.push(gsapApi.to(bean, {
                 x: driftX * (window.innerWidth / 100),
                 y: driftY * (window.innerHeight / 100),
                 rotation: baseRotation + rotationDrift,
@@ -144,17 +147,34 @@
                 yoyo: true,
                 repeat: -1,
                 delay: delay
-            });
+            }));
 
-            gsapApi.to(bean, {
+            beanTweens.push(gsapApi.to(bean, {
                 scale: scaleMax,
                 duration: pulseDuration,
                 ease: "sine.inOut",
                 yoyo: true,
                 repeat: -1,
                 delay: pulseDelay
-            });
+            }));
         });
+
+        beanAnimationsActive = true;
+    }
+
+    function setBeanAnimationState(shouldRun) {
+        if (!beanTweens.length || beanAnimationsActive === shouldRun) {
+            return;
+        }
+
+        beanTweens.forEach(function (tween) {
+            if (!tween || typeof tween.paused !== "function") {
+                return;
+            }
+            tween.paused(!shouldRun);
+        });
+
+        beanAnimationsActive = shouldRun;
     }
 
     function updateBeanVisibility() {
@@ -209,4 +229,15 @@
     updateBeanVisibility();
     window.addEventListener("scroll", queueVisibilityUpdate, { passive: true });
     window.addEventListener("resize", queueVisibilityUpdate);
+
+    if ("IntersectionObserver" in window && beanField) {
+        var observer = new IntersectionObserver(function (entries) {
+            var entry = entries[0];
+            setBeanAnimationState(!!entry && entry.isIntersecting);
+        }, {
+            threshold: 0.05
+        });
+
+        observer.observe(beanField);
+    }
 })();

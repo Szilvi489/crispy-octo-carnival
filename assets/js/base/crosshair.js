@@ -1,6 +1,8 @@
 (function () {
     var crosshairOverlay = null;
     var isCoarsePointer = window.matchMedia && window.matchMedia("(pointer: coarse)").matches;
+    var pointerRafId = null;
+    var pendingPointer = null;
 
     if (isCoarsePointer) {
         return;
@@ -21,8 +23,7 @@
         crosshairOverlay.style.setProperty("--crosshair-y", clientY + "px");
     }
 
-    function updateCrosshairHoverState(clientX, clientY) {
-        var target = document.elementFromPoint(clientX, clientY);
+    function updateCrosshairHoverState(target) {
         var isNavTarget = false;
         var isSkillTileTarget = false;
 
@@ -40,10 +41,30 @@
         crosshairOverlay.classList.toggle("is-skills-hover", isSkillTileTarget);
     }
 
-    window.addEventListener("mousemove", function (event) {
-        setCrosshairPosition(event.clientX, event.clientY);
-        updateCrosshairHoverState(event.clientX, event.clientY);
+    function flushPointerFrame() {
+        pointerRafId = null;
+
+        if (!pendingPointer) {
+            return;
+        }
+
+        setCrosshairPosition(pendingPointer.x, pendingPointer.y);
+        updateCrosshairHoverState(pendingPointer.target);
         crosshairOverlay.classList.remove("is-hidden");
+    }
+
+    window.addEventListener("mousemove", function (event) {
+        pendingPointer = {
+            x: event.clientX,
+            y: event.clientY,
+            target: event.target
+        };
+
+        if (pointerRafId !== null) {
+            return;
+        }
+
+        pointerRafId = window.requestAnimationFrame(flushPointerFrame);
     });
 
     window.addEventListener("mouseout", function (event) {
