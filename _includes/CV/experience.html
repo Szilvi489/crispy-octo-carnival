@@ -1,54 +1,51 @@
 <section id="cv-experience" class="cv-experience-section">
+    {%- assign experience_columns = cv_i18n.experience.columns -%}
     <img class="background-texture" src="/CV/assets/images/CV/backgroundImages/texture3.png" alt="">
     <div class="cv-experience-masthead">
-        <p class="cv-experience-kicker">Archive No. 01</p>
-        <h2>Experience</h2>
-        <p class="cv-experience-dek">A four-column reading room for work history, notes, images, lists, and longer editorial fragments.</p>
+        <p class="cv-experience-kicker">{{ cv_i18n.experience.kicker }}</p>
+        <h2>{{ cv_i18n.experience.title }}</h2>
+        <p class="cv-experience-dek">{{ cv_i18n.experience.dek }}</p>
     </div>
     <div class="cv-experience-grid">
         <article class="cv-experience-panel">
-            <p class="cv-experience-label">Column A</p>
-            <h3>Lead Story</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sed eros a sapien sodales posuere. Sed luctus, erat ut fermentum viverra, massa turpis varius ligula, vitae aliquet dui urna in nunc.</p>
-            <p>Curabitur interdum, nisl sed feugiat dapibus, nibh nisl vulputate magna, non aliquet risus risus sed lorem. Suspendisse potenti. Donec et viverra turpis. Duis tempor purus non nibh placerat, in mattis velit convallis.</p>
-            <p>Phasellus luctus lacus in diam eleifend, et pellentesque augue facilisis. Integer consectetur ligula a neque vehicula, vel vehicula odio aliquet. Morbi nec nisi vitae lectus eleifend pretium.</p>
+            <p class="cv-experience-label">{{ experience_columns[0].label }}</p>
+            <h3>{{ experience_columns[0].title }}</h3>
+            {%- for paragraph in experience_columns[0].paragraphs limit:3 -%}
+            <p>{{ paragraph }}</p>
+            {%- endfor -%}
             <blockquote>
-                <p>Morbi at sapien ut lectus sodales viverra. Sed ac urna sit amet justo tempor posuere.</p>
+                <p>{{ experience_columns[0].quote }}</p>
             </blockquote>
-            <p>Maecenas egestas ligula at nisl condimentum, in feugiat eros tristique. Praesent facilisis lorem at lectus gravida, et viverra lorem faucibus.</p>
+            <p>{{ experience_columns[0].paragraphs[3] }}</p>
         </article>
 
         <article class="cv-experience-panel">
-            <p class="cv-experience-label">Column B</p>
-            <h3>Notes and Margins</h3>
-            <p>Vivamus sodales felis vel lacus porttitor, sed cursus justo vulputate. Aliquam erat volutpat. In euismod posuere lectus, non scelerisque massa pulvinar non.</p>
+            <p class="cv-experience-label">{{ experience_columns[1].label }}</p>
+            <h3>{{ experience_columns[1].title }}</h3>
+            <p>{{ experience_columns[1].paragraphs[0] }}</p>
             <ul>
-                <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
-                <li>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</li>
-                <li>Ut enim ad minim veniam, quis nostrud exercitation ullamco.</li>
-                <li>Duis aute irure dolor in reprehenderit in voluptate velit esse.</li>
+                {%- for item in experience_columns[1].list_items -%}
+                <li>{{ item }}</li>
+                {%- endfor -%}
             </ul>
-            <p>Etiam cursus, nibh sed interdum consequat, risus justo cursus libero, quis posuere magna mauris sed mauris. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae.</p>
-            <p>Donec dapibus enim sed ex ullamcorper, quis malesuada augue sollicitudin. In viverra urna eu justo facilisis, non vulputate metus feugiat.</p>
+            <p>{{ experience_columns[1].paragraphs[1] }}</p>
+            <p>{{ experience_columns[1].paragraphs[2] }}</p>
         </article>
 
         <article class="cv-experience-panel">
-            <p class="cv-experience-label">Column C</p>
-            <h3>Feature Desk</h3>
-            <p>Nullam non odio lectus. Aenean iaculis suscipit erat, eu aliquet velit tristique at. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
-            <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
-            <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
-            <p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit. Integer vitae lectus nec sapien feugiat volutpat quis id nibh.</p>
+            <p class="cv-experience-label">{{ experience_columns[2].label }}</p>
+            <h3>{{ experience_columns[2].title }}</h3>
+            {%- for paragraph in experience_columns[2].paragraphs -%}
+            <p>{{ paragraph }}</p>
+            {%- endfor -%}
         </article>
 
         <article class="cv-experience-panel">
-            <p class="cv-experience-label">Column D</p>
-            <h3>Late Edition</h3>
-            <p>Quisque mollis, sapien at molestie luctus, lectus mauris luctus est, quis lacinia justo erat at magna. Nam condimentum bibendum ex, nec aliquam arcu bibendum nec.</p>
-            <p>Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur. Vestibulum volutpat nisl in quam volutpat, sed tincidunt nibh tincidunt.</p>
-            <p>Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur.</p>
-            <p>Suspendisse ut luctus erat. Morbi gravida, neque non ultrices pulvinar, magna arcu cursus ligula, vitae egestas massa enim ut lectus.</p>
-            <p>Integer ut purus sed felis aliquet porttitor. Pellentesque et lorem vel arcu tempus aliquet et eu nisl.</p>
+            <p class="cv-experience-label">{{ experience_columns[3].label }}</p>
+            <h3>{{ experience_columns[3].title }}</h3>
+            {%- for paragraph in experience_columns[3].paragraphs -%}
+            <p>{{ paragraph }}</p>
+            {%- endfor -%}
         </article>
     </div>
 </section>

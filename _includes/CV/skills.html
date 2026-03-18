@@ -1,5 +1,12 @@
 <section id="cv-skills" class="cv-skills-section">
-    <h2 class="cv-skills-title">Skills</h2>
-    <div class="cv-skills-grid" aria-label="Skill tiles"></div>
+    <h2 class="cv-skills-title">{{ cv_i18n.skills.title }}</h2>
+    <div class="cv-skills-grid" aria-label="{{ cv_i18n.skills.grid_aria_label }}"></div>
     <aside class="cv-skills-hover-card" aria-live="polite" hidden></aside>
+    <script
+        id="cv-skills-data"
+        type="application/json"
+        data-knowledge-label="{{ cv_i18n.skills.hover.knowledge_label | escape }}"
+        data-note-fallback="{{ cv_i18n.skills.hover.note_fallback | escape }}"
+        data-aria-label-suffix="{{ cv_i18n.skills.hover.aria_label_suffix | escape }}"
+    >{{ cv_i18n.skills.items | jsonify }}</script>
 </section>

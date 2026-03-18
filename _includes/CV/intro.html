@@ -1,23 +1,16 @@
 <section id="cv-intro" class="cv-intro-section">
+    {%- assign orbit_text = cv_i18n.intro.orbit_text -%}
     <div class="cv-intro-content">
         <div class="cv-intro-hero">
             <div class="cv-intro-orbit-stage">
                 <img class="cv-intro-orbit-scene-background intro-enter-target" src="/CV/assets/images/CV/backgroundImages/261_vector_image.jpg" alt="">
                 <div class="cv-intro-orbit-scene intro-enter-target" aria-hidden="true">
                     <div class="cv-intro-orbit-ring cv-intro-orbit-ring-a">
-                        <span style="--i: 1;">H</span>
-                        <span style="--i: 2;">I</span>
-                        <span style="--i: 3;">!</span>
-                        <span style="--i: 4;">I</span>
-                        <span style="--i: 5;">M</span>
-                        <span style="--i: 6;">S</span>
-                        <span style="--i: 7;">Z</span>
-                        <span style="--i: 8;">I</span>
-                        <span style="--i: 9;">L</span>
-                        <span style="--i: 10;">V</span>
-                        <span style="--i: 11;">I</span>
+                        {%- for character in orbit_text -%}
+                        <span style="--i: {{ forloop.index }};">{{ character }}</span>
+                        {%- endfor -%}
                     </div>
-                    <img class="cv-intro-subject" src="/CV/assets/images/CV/removedBackgroundImages/fullBodyMe.png" alt="Full body portrait of Szilvi">
+                    <img class="cv-intro-subject" src="/CV/assets/images/CV/removedBackgroundImages/fullBodyMe.png" alt="{{ cv_i18n.intro.portrait_alt }}">
                 </div>
             </div>
         </div>
@@ -26,7 +19,7 @@
         <img class="cv-intro-dust-image" src="/CV/assets/images/CV/backgroundImages/dustparticles.png" alt="">
     </div>
     <div class="cv-intro-title-wrapper intro-enter-target">
-    <p class="cv-intro-text">Full Stack Software Developer Based in Vienna, Austria</p>
+    <p class="cv-intro-text">{{ cv_i18n.intro.title }}</p>
     </div>
-    <p class="cv-intro-scroll-hint intro-enter-target">Scroll to begin</p>
+    <p class="cv-intro-scroll-hint intro-enter-target">{{ cv_i18n.intro.scroll_hint }}</p>
 </section>

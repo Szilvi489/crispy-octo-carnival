@@ -1,4 +1,6 @@
 ---
 layout: base
 ---
+{%- assign cv_lang = page.cv_lang | default: "en" -%}
+{%- assign cv_i18n = site.data.i18n.cv[cv_lang] | default: site.data.i18n.cv.en -%}
 {%- include CV/content.html -%}

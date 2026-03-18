@@ -1,87 +1,28 @@
 <section id="cv-facts-marquee" class="cv-facts-marquee-section" aria-labelledby="cv-facts-marquee-label">
+    {%- assign facts_items = cv_i18n.facts_marquee.items -%}
     <div class="cv-facts-marquee-shell">
         <div class="cv-facts-marquee-header">
-            <span class="cv-facts-marquee-channel">P100</span>
-            <span id="cv-facts-marquee-label" class="cv-facts-marquee-title">FACTS</span>
-            <span class="cv-facts-marquee-status">LIVE DATA STREAM</span>
+            <span class="cv-facts-marquee-channel">{{ cv_i18n.facts_marquee.channel }}</span>
+            <span id="cv-facts-marquee-label" class="cv-facts-marquee-title">{{ cv_i18n.facts_marquee.title }}</span>
+            <span class="cv-facts-marquee-status">{{ cv_i18n.facts_marquee.status }}</span>
         </div>
         <div class="cv-facts-marquee-viewport">
             <div class="cv-facts-marquee-track" data-marquee-track>
                 <div class="cv-facts-marquee-set" data-marquee-set>
+                    {%- for fact in facts_items -%}
                     <article class="cv-facts-marquee-item">
-                        <span class="cv-facts-marquee-item-label">DRIVER'S LICENSE</span>
-                        <span class="cv-facts-marquee-item-value">B / CONFIDENT DRIVER</span>
+                        <span class="cv-facts-marquee-item-label">{{ fact.label }}</span>
+                        <span class="cv-facts-marquee-item-value">{{ fact.value }}</span>
                     </article>
-                    <article class="cv-facts-marquee-item">
-                        <span class="cv-facts-marquee-item-label">LANGUAGES</span>
-                        <span class="cv-facts-marquee-item-value">HUNGARIAN C2 / ENGLISH C1 / GERMAN B2</span>
-                    </article>
-                    <article class="cv-facts-marquee-item">
-                        <span class="cv-facts-marquee-item-label">NATIONALITY</span>
-                        <span class="cv-facts-marquee-item-value">HUNGARIAN</span>
-                    </article>
-                    <article class="cv-facts-marquee-item">
-                        <span class="cv-facts-marquee-item-label">LOCATION</span>
-                        <span class="cv-facts-marquee-item-value">VIENNA, AUSTRIA</span>
-                    </article>
-                    <article class="cv-facts-marquee-item">
-                        <span class="cv-facts-marquee-item-label">PREFERRED WORK MODE</span>
-                        <span class="cv-facts-marquee-item-value">REMOTE / HYBRID</span>
-                    </article>
-                    <article class="cv-facts-marquee-item">
-                        <span class="cv-facts-marquee-item-label">RELOCATION</span>
-                        <span class="cv-facts-marquee-item-value">OPEN</span>
-                    </article>
-                    <article class="cv-facts-marquee-item">
-                        <span class="cv-facts-marquee-item-label">PREFERRED ROLE</span>
-                        <span class="cv-facts-marquee-item-value">FULL STACK WEB DEVELOPER</span>
-                    </article>
-                    <article class="cv-facts-marquee-item">
-                        <span class="cv-facts-marquee-item-label">MOBILITY</span>
-                        <span class="cv-facts-marquee-item-value">OWN CAR AVAILABLE</span>
-                    </article>
-                    <article class="cv-facts-marquee-item">
-                        <span class="cv-facts-marquee-item-label">16 PERSONALITIES</span>
-                        <span class="cv-facts-marquee-item-value">INFJ-T / DIPLOMAT / CONSTANT IMPROVEMENT</span>
-                    </article>
+                    {%- endfor -%}
                 </div>
                 <div class="cv-facts-marquee-set" aria-hidden="true">
+                    {%- for fact in facts_items -%}
                     <article class="cv-facts-marquee-item">
-                        <span class="cv-facts-marquee-item-label">DRIVER'S LICENSE</span>
-                        <span class="cv-facts-marquee-item-value">B / CONFIDENT DRIVER</span>
+                        <span class="cv-facts-marquee-item-label">{{ fact.label }}</span>
+                        <span class="cv-facts-marquee-item-value">{{ fact.value }}</span>
                     </article>
-                    <article class="cv-facts-marquee-item">
-                        <span class="cv-facts-marquee-item-label">LANGUAGES</span>
-                        <span class="cv-facts-marquee-item-value">HUNGARIAN C2 / ENGLISH C1 / GERMAN B2</span>
-                    </article>
-                    <article class="cv-facts-marquee-item">
-                        <span class="cv-facts-marquee-item-label">NATIONALITY</span>
-                        <span class="cv-facts-marquee-item-value">HUNGARIAN</span>
-                    </article>
-                    <article class="cv-facts-marquee-item">
-                        <span class="cv-facts-marquee-item-label">LOCATION</span>
-                        <span class="cv-facts-marquee-item-value">VIENNA, AUSTRIA</span>
-                    </article>
-                    <article class="cv-facts-marquee-item">
-                        <span class="cv-facts-marquee-item-label">PREFERRED WORK MODE</span>
-                        <span class="cv-facts-marquee-item-value">REMOTE / HYBRID</span>
-                    </article>
-                    <article class="cv-facts-marquee-item">
-                        <span class="cv-facts-marquee-item-label">RELOCATION</span>
-                        <span class="cv-facts-marquee-item-value">OPEN</span>
-                    </article>
-                    <article class="cv-facts-marquee-item">
-                        <span class="cv-facts-marquee-item-label">PREFERRED ROLE</span>
-                        <span class="cv-facts-marquee-item-value">FULL STACK WEB DEVELOPER</span>
-                    </article>
-                    <article class="cv-facts-marquee-item">
-                        <span class="cv-facts-marquee-item-label">MOBILITY</span>
-                        <span class="cv-facts-marquee-item-value">OWN CAR AVAILABLE</span>
-                    </article>
-                    <article class="cv-facts-marquee-item">
-                        <span class="cv-facts-marquee-item-label">16 PERSONALITIES</span>
-                        <span class="cv-facts-marquee-item-value">INFJ-T / DIPLOMAT / CONSTANT IMPROVEMENT</span>
-                    </article>
+                    {%- endfor -%}
                 </div>
             </div>
         </div>
