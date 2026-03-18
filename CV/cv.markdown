@@ -16,6 +16,7 @@ stylesheets:
   - /CV/assets/css/CV/programmingProjects.css
   - /CV/assets/css/CV/personal.css
   - /CV/assets/css/CV/dreamjob.css
+  - /CV/assets/css/CV/factsMarguee.css
 
 scripts:
   - /CV/assets/js/CV/cv.js
@@ -27,6 +28,7 @@ scripts:
   - /CV/assets/js/CV/programmingProjects.js
   - /CV/assets/js/CV/personal.js
   - /CV/assets/js/CV/dreamjob.js
+  - /CV/assets/js/CV/factsMarguee.js
 
 
 fonts:
