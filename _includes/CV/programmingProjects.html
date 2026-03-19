@@ -1,3 +1,11 @@
+{%- assign programming_projects_base = site.data.programmingProjects -%}
+{%- assign programming_projects_i18n = cv_i18n.programming_projects -%}
 <section id="cv-programming-projects" class="cv-programming-projects-section">
-    <h2 class="cv-programming-projects-heading">Programming Projects</h2>
+    <h2 class="cv-programming-projects-heading">{{ programming_projects_i18n.title }}</h2>
+    <script class="cv-programming-projects-data" type="application/json">
+        {
+            "base": {{ programming_projects_base | jsonify }},
+            "i18n": {{ programming_projects_i18n | jsonify }}
+        }
+    </script>
 </section>

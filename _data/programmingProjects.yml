@@ -2,169 +2,91 @@ icon_base_path: /CV/assets/images/CV/logos
 
 technology_catalog:
   adobe_lightroom:
-    label: Adobe Lightroom
-    description: Photo editing and image post-processing software.
     icon: /CV/assets/images/CV/logos/adobeLightroom.png
   apache_cxf:
-    label: Apache CXF
-    description: Java framework for building SOAP and REST services.
     icon: /CV/assets/images/CV/logos/apacheCXF.jpg
   batch_processing:
-    label: Batch Processing
-    description: Running data or jobs in scheduled bulk workflows.
     icon: /CV/assets/images/CV/logos/batchProcesssing.png
   camunda:
-    label: Camunda
-    description: Workflow and business process automation platform.
     icon: /CV/assets/images/CV/logos/camunda.png
   css:
-    label: CSS
-    description: Stylesheet language for designing web interfaces.
     icon: /CV/assets/images/CV/logos/css.png
   cypress:
-    label: Cypress
-    description: End-to-end testing framework for web applications.
     icon: /CV/assets/images/CV/logos/Cypress.png
   dbeaver:
-    label: DBeaver
-    description: Database client and SQL management tool.
     icon: /CV/assets/images/CV/logos/dbeaver.png
   docker:
-    label: Docker
-    description: Container platform for packaging and running applications.
     icon: /CV/assets/images/CV/logos/docker.png
   firefox:
-    label: Firefox
-    description: Web browser used for browsing and debugging websites.
     icon: /CV/assets/images/CV/logos/firefox.png
   firefox_dev_edition:
-    label: Firefox Developer Edition
-    description: Firefox build with tools focused on web development.
     icon: /CV/assets/images/CV/logos/firefoxDevEdition.png
   git:
-    label: Git
-    description: Distributed version control system for source code.
     icon: /CV/assets/images/CV/logos/git.png
   h2:
-    label: H2
-    description: Lightweight Java SQL database engine.
     icon: /CV/assets/images/CV/logos/H2.jpg
   html5:
-    label: HTML5
-    description: Markup language for structuring web pages.
     icon: /CV/assets/images/CV/logos/html5.png
   github:
-    label: GitHub
-    description: Hosting platform for Git repositories and collaboration.
     icon: /CV/assets/images/CV/logos/icons8-github-100.png
   intellij:
-    label: IntelliJ IDEA
-    description: IDE for Java and other software development.
     icon: /CV/assets/images/CV/logos/IntelliJ.jpg
   jasmine:
-    label: Jasmine
-    description: JavaScript testing framework for unit testing.
     icon: /CV/assets/images/CV/logos/JasmineFramework.png
   java:
-    label: Java
-    description: General-purpose programming language for backend systems.
     icon: /CV/assets/images/CV/logos/java.png
   java_ee:
-    label: Java EE
-    description: Enterprise Java platform for large web applications.
     icon: /CV/assets/images/CV/logos/JavaEE.png
   javascript:
-    label: JavaScript
-    description: Programming language for interactive web applications.
     icon: /CV/assets/images/CV/logos/javascript.png
   jekyll:
-    label: Jekyll
-    description: Static site generator commonly used with GitHub Pages.
     icon: /CV/assets/images/CV/logos/jekyll.png
   maven:
-    label: Maven
-    description: Build and dependency management tool for Java projects.
     icon: /CV/assets/images/CV/logos/maven.png
   microsoft_word:
-    label: Microsoft Word
-    description: Word processing software for documents and reports.
     icon: /CV/assets/images/CV/logos/microsoft word.png
   mongodb:
-    label: MongoDB
-    description: NoSQL document database for flexible data models.
     icon: /CV/assets/images/CV/logos/mongoDB.png
   mysql:
-    label: MySQL
-    description: Relational database management system using SQL.
     icon: /CV/assets/images/CV/logos/mysql.png
   openai_codex:
-    label: OpenAI Codex
-    description: AI coding assistant for generating and editing code.
     icon: /CV/assets/images/CV/logos/openAICodex.png
   openapi:
-    label: OpenAPI
-    description: Specification format for describing REST APIs.
     icon: /CV/assets/images/CV/logos/OpenAPI.png
   podman:
-    label: Podman
-    description: Container engine for building and running OCI containers.
     icon: /CV/assets/images/CV/logos/Podman.png
   postman:
-    label: Postman
-    description: API client for testing and documenting endpoints.
     icon: /CV/assets/images/CV/logos/postman.png
   rest_api:
-    label: REST API
-    description: Web API style based on HTTP resources and verbs.
     icon: /CV/assets/images/CV/logos/restAPI.png
   ruby:
-    label: Ruby
-    description: Dynamic programming language focused on developer productivity.
     icon: /CV/assets/images/CV/logos/Ruby.png
   selenium:
-    label: Selenium
-    description: Browser automation framework for UI testing.
     icon: /CV/assets/images/CV/logos/Selenium.png
   soap_api:
-    label: SOAP API
-    description: XML-based web service interface using SOAP messages.
     icon: /CV/assets/images/CV/logos/soapAPI.png
   soapui:
-    label: SoapUI
-    description: Tool for testing SOAP and REST web services.
     icon: /CV/assets/images/CV/logos/SoapUI.png
   spring:
-    label: Spring
-    description: Java framework for building backend applications and APIs.
     icon: /CV/assets/images/CV/logos/spring.png
   sql:
-    label: SQL
-    description: Query language for relational databases.
     icon: /CV/assets/images/CV/logos/SQL.png
   testng:
-    label: TestNG
-    description: Testing framework for Java unit and integration tests.
     icon: /CV/assets/images/CV/logos/TestNg.png
   vaadin:
-    label: Vaadin
-    description: Java framework for building web UIs on the server side.
     icon: /CV/assets/images/CV/logos/vaadin.png
   visual_studio_code:
-    label: Visual Studio Code
-    description: Lightweight code editor with extensible developer tooling.
     icon: /CV/assets/images/CV/logos/visualstudiocode.png
 
 projects:
   - slug: example_project
-    title: Example Project
-    description: Replace this placeholder with your real project summary.
     github_link: https://github.com/username/repository
     tech_groups:
-      - category: Frontend
+      - category_key: frontend
         items: [html5, css, javascript]
-      - category: Backend
+      - category_key: backend
         items: [java, spring]
-      - category: Database
+      - category_key: database
         items: [mysql]
-      - category: Tools
+      - category_key: tools
         items: [git, github, docker]

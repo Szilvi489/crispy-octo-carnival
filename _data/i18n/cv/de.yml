@@ -7,7 +7,7 @@ nav:
   education: "Education"
   experience: "Experience"
   skills: "Skills"
-  programming_projects: "Programming Projects"
+  programming_projects: "Programmierprojekte"
   personal: "Personal"
   dream_job: "Dream Job"
 
@@ -241,11 +241,11 @@ skills:
       note: ""
 
 programming_projects:
-  title: "Programming Projects"
+  title: "Programmierprojekte"
   categories:
     frontend: "Frontend"
     backend: "Backend"
-    database: "Database"
+    database: "Datenbanken"
     tools: "Tools"
   technologies:
     adobe_lightroom:
