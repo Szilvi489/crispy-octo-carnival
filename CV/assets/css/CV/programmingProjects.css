@@ -1,13 +1,20 @@
 .cv-programming-projects-section {
     --cv-programming-projects-reveal-progress: 0;
     --cv-programming-projects-reveal-radius: calc((var(--cv-programming-projects-reveal-progress) * 120vmax) + 0.35vmax);
+    --cv-programming-projects-stage-alpha: 0;
+    --cv-programming-projects-title-x: 50;
+    --cv-programming-projects-title-y: 50;
+    --cv-programming-projects-title-scale: 0.35;
+    --cv-programming-projects-title-opacity: 0;
+    --cv-programming-projects-title-scroll-offset: 0px;
     position: relative;
     z-index: 6;
-    min-height: 200vh;
+    min-height: 100vh;
     width: 100%;
-    padding: 14vh 6vw 8vh;
+    padding: 0;
     box-sizing: border-box;
-    overflow: clip;
+    overflow-x: clip;
+    overflow-y: visible;
     background-image:
         url("/CV/assets/images/CV/backgroundImages/texture7.png"),
         linear-gradient(
@@ -23,16 +30,287 @@
 
 .cv-programming-projects-section::before {
     content: "";
-    position: absolute;
-    inset: 0;
-    z-index: 0;
+    position: sticky;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 100%;
+    height: 100vh;
+    z-index: 2;
     pointer-events: none;
     background: var(--color-soft-white);
-    clip-path: circle(var(--cv-programming-projects-reveal-radius) at 50% 50%);
+    clip-path: circle(var(--cv-programming-projects-reveal-radius) at 50% 56%);
     will-change: clip-path;
 }
 
-.cv-programming-projects-section > * {
+.cv-programming-projects-heading {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 5;
+    margin: 0;
+    padding: 0;
+    width: max-content;
+    font-family: "Bebas Neue", sans-serif;
+    font-size: clamp(2.2rem, 9vw, 7.5rem);
+    line-height: 0.9;
+    letter-spacing: 0.03em;
+    color: var(--color-bordeau-chocolate);
+    opacity: var(--cv-programming-projects-title-opacity);
+    transform:
+        translate3d(
+            calc(var(--cv-programming-projects-title-x) * 1vw),
+            calc((var(--cv-programming-projects-title-y) * 1vh) + var(--cv-programming-projects-title-scroll-offset)),
+            0
+        )
+        translate(-50%, -50%)
+        scale(var(--cv-programming-projects-title-scale));
+    pointer-events: none;
+    will-change: transform, opacity;
+}
+
+.cv-programming-projects-stage {
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 4;
+    display: grid;
+    grid-template-columns: minmax(220px, 34%) minmax(0, 66%);
+    gap: clamp(0.8rem, 2vw, 2rem);
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+    padding: 20vh 6vw 8vh;
+    box-sizing: border-box;
+    opacity: var(--cv-programming-projects-stage-alpha);
+    pointer-events: none;
+}
+
+.cv-programming-projects-stage.is-visible {
+    pointer-events: auto;
+}
+
+.cv-programming-projects-group-panel {
+    align-self: center;
+    max-width: min(34vw, 420px);
+    perspective: 1400px;
+    perspective-origin: 50% 50%;
+}
+
+.cv-programming-projects-group-kicker {
+    margin: 0;
+    font-family: var(--font-Roboto-Flex, "Roboto Flex", sans-serif);
+    font-size: clamp(0.72rem, 1vw, 1rem);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(43, 27, 27, 0.68);
+}
+
+.cv-programming-projects-group-track {
     position: relative;
-    z-index: 2;
+    margin-top: 0.65rem;
+    width: 100%;
+    min-height: clamp(4rem, 12vh, 8rem);
+    transform-style: preserve-3d;
+}
+
+.cv-programming-projects-group-card {
+    position: absolute;
+    inset: 0;
+    margin: 0;
+    font-family: "Bebas Neue", sans-serif;
+    font-size: clamp(2rem, 5vw, 4.6rem);
+    line-height: 0.92;
+    color: var(--color-bordeau-chocolate);
+    will-change: transform, opacity, filter;
+    transform-origin: 50% 50%;
+    backface-visibility: hidden;
+    pointer-events: none;
+}
+
+.cv-programming-projects-cards-panel {
+    position: relative;
+    width: 100%;
+    height: min(62vh, 560px);
+    overflow: hidden;
+    perspective: 1800px;
+    perspective-origin: 50% 50%;
+}
+
+.cv-programming-projects-card-track {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+}
+
+.cv-programming-projects-card {
+    position: absolute;
+    inset: clamp(0.6rem, 1.4vw, 1.15rem) clamp(0.8rem, 1.9vw, 1.45rem);
+    display: flex;
+    flex-direction: column;
+    gap: clamp(0.6rem, 1.2vw, 1rem);
+    padding: clamp(1rem, 2vw, 1.8rem);
+    border: 2px solid rgba(43, 27, 27, 0.36);
+    border-radius: 18px;
+    background: rgba(245, 243, 239, 0.94);
+    box-shadow: 0 14px 34px rgba(43, 27, 27, 0.16);
+    will-change: transform, opacity, filter;
+    pointer-events: auto;
+    transform-origin: 50% 50%;
+    backface-visibility: hidden;
+    overflow: hidden;
+}
+
+.cv-programming-projects-card-head {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.8rem;
+    align-items: flex-start;
+}
+
+.cv-programming-projects-card-title {
+    margin: 0;
+    font-family: "Bebas Neue", sans-serif;
+    font-size: clamp(1.6rem, 2.8vw, 3rem);
+    line-height: 0.95;
+    color: var(--color-bordeau-chocolate);
+    max-width: min(100%, 82%);
+}
+
+.cv-programming-projects-card-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.35rem;
+    flex: 0 0 auto;
+}
+
+.cv-programming-projects-card-counter {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.12rem 0.42rem;
+    border: 1px solid rgba(43, 27, 27, 0.34);
+    border-radius: 999px;
+    font-family: var(--font-Roboto-Flex, "Roboto Flex", sans-serif);
+    font-size: clamp(0.62rem, 0.86vw, 0.8rem);
+    line-height: 1;
+    color: rgba(43, 27, 27, 0.8);
+    background: rgba(255, 255, 255, 0.55);
+}
+
+.cv-programming-projects-github-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: clamp(44px, 3.8vw, 62px);
+    height: clamp(44px, 3.8vw, 62px);
+    border: 0;
+    background: transparent;
+}
+
+.cv-programming-projects-github-link img {
+    width: 92%;
+    height: 92%;
+    object-fit: contain;
+    filter: none;
+    mix-blend-mode: normal;
+}
+
+.cv-programming-projects-card-description {
+    margin: 0;
+    font-family: var(--font-Roboto-Flex, "Roboto Flex", sans-serif);
+    font-size: clamp(0.88rem, 1.15vw, 1.12rem);
+    line-height: 1.45;
+    color: rgba(43, 27, 27, 0.86);
+}
+
+.cv-programming-projects-tech-groups {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.7rem 1rem;
+}
+
+.cv-programming-projects-tech-group {
+    min-width: 0;
+}
+
+.cv-programming-projects-tech-category {
+    margin: 0 0 0.32rem;
+    font-family: "Bebas Neue", sans-serif;
+    font-size: clamp(0.94rem, 1.1vw, 1.2rem);
+    letter-spacing: 0.03em;
+    color: rgba(43, 27, 27, 0.86);
+}
+
+.cv-programming-projects-tech-items {
+    margin: 0;
+    font-family: var(--font-Roboto-Flex, "Roboto Flex", sans-serif);
+    font-size: clamp(0.78rem, 1vw, 0.96rem);
+    line-height: 1.35;
+    color: rgba(43, 27, 27, 0.72);
+}
+
+.cv-programming-projects-tech-icons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: clamp(0.36rem, 1vw, 0.68rem);
+    align-items: center;
+}
+
+.cv-programming-projects-tech-icon {
+    width: clamp(44px, 3.5vw, 60px);
+    height: auto;
+    flex: 0 0 auto;
+    display: block;
+    object-fit: contain;
+    background: transparent;
+    filter: none;
+    mix-blend-mode: normal;
+}
+
+.cv-programming-projects-tech-icon-fallback {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.1rem 0.38rem;
+    border: 1px solid rgba(43, 27, 27, 0.28);
+    border-radius: 0.42rem;
+    margin: 0;
+    font-family: var(--font-Roboto-Flex, "Roboto Flex", sans-serif);
+    font-size: clamp(0.66rem, 0.86vw, 0.8rem);
+    line-height: 1.2;
+    color: rgba(0, 0, 0, 0.86);
+    background: rgba(255, 255, 255, 0.7);
+}
+
+.cv-programming-projects-section > :not(.cv-programming-projects-heading):not(.cv-programming-projects-stage) {
+    position: relative;
+    z-index: 4;
+}
+
+.cv-programming-projects-section > .cv-programming-projects-stage {
+    z-index: 4;
+}
+
+@media (max-width: 900px) {
+    .cv-programming-projects-stage {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto minmax(0, 1fr);
+        align-content: center;
+        padding-top: 22vh;
+    }
+
+    .cv-programming-projects-group-panel {
+        max-width: none;
+    }
+
+    .cv-programming-projects-cards-panel {
+        height: min(54vh, 500px);
+    }
+
+    .cv-programming-projects-tech-groups {
+        grid-template-columns: 1fr;
+    }
 }

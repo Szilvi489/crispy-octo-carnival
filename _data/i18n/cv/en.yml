@@ -88,160 +88,129 @@ skills:
     aria_label_suffix: "skill"
   items:
     - name: "Jakarta EE"
-      score: 25
       logo: ""
       note: ""
     - name: "Postman API"
-      score: 50
       logo: ""
       note: ""
     - name: "Camunda BPM"
-      score: 50
       logo: ""
       note: ""
     - name: "Vaadin"
-      score: 50
       logo: ""
       note: ""
     - name: "Git"
-      score: 20
       logo: ""
       note: ""
     - name: "Maven"
-      score: 30
       logo: ""
       note: ""
     - name: "JUnit"
-      score: 50
       logo: ""
       note: ""
     - name: "SoapUI"
-      score: 50
       logo: ""
       note: ""
     - name: "SOAP"
-      score: 70
       logo: ""
       note: ""
     - name: "OpenAPI"
-      score: 80
       logo: ""
       note: ""
     - name: "Cypress"
-      score: 50
       logo: ""
       note: ""
     - name: "Jasmine Framework"
-      score: 50
       logo: ""
       note: ""
     - name: "REST APIs"
-      score: 50
       logo: ""
       note: ""
     - name: "Unit Testing"
-      score: 50
       logo: ""
       note: ""
     - name: "End-to-end Testing"
-      score: 50
       logo: ""
       note: ""
     - name: "Selenium"
-      score: 50
       logo: ""
       note: ""
     - name: "TestNG"
-      score: 50
       logo: ""
       note: ""
     - name: "Batch Processing"
-      score: 50
       logo: ""
       note: ""
     - name: "Podman"
-      score: 25
       logo: ""
       note: ""
     - name: "Velocity"
-      score: 50
       logo: ""
       note: ""
     - name: "Content Management Systems (CMS)"
-      score: 50
       logo: ""
       note: ""
     - name: "Requirements Engineering"
-      score: 50
       logo: ""
       note: ""
     - name: "Software Engineering Practices"
-      score: 50
       logo: ""
       note: ""
     - name: "ISTQB"
-      score: 50
       logo: ""
       note: ""
     - name: "Quality Assurance"
-      score: 50
       logo: ""
       note: ""
     - name: "IREB"
-      score: 50
       logo: ""
       note: ""
     - name: "Testing Strategies"
-      score: 50
       logo: ""
       note: ""
     - name: "Quality Management"
-      score: 50
       logo: ""
       note: ""
     - name: "Scrum"
-      score: 89
       logo: ""
       note: ""
     - name: "SQL"
-      score: 50
       logo: ""
       note: ""
     - name: "Java"
-      score: 50
       logo: ""
       note: ""
     - name: "Relational Databases"
-      score: 50
       logo: ""
       note: ""
     - name: "Project Management"
-      score: 50
       logo: ""
       note: ""
     - name: "CCNA"
-      score: 50
       logo: ""
       note: ""
     - name: "HTML"
-      score: 25
       logo: ""
       note: ""
     - name: "Data Modeling"
-      score: 30
       logo: ""
       note: ""
     - name: "CSS"
-      score: 25
       logo: ""
       note: ""
     - name: "JavaScript"
-      score: 50
       logo: ""
       note: ""
 
 programming_projects:
   title: "Programming Projects"
+  project_group_label: "Project Group"
+  github_link_label: "Open GitHub repository"
+  project_groups:
+    full_stack: "Fully Functioning Full Stack Projects"
+    frontend_focus: "Projects with Frontend Focus"
+    backend_focus: "Projects with Backend Focus"
+    database_focus: "Projects with Database Design Focus"
   categories:
     frontend: "Frontend"
     backend: "Backend"
@@ -363,9 +332,24 @@ programming_projects:
       label: "Visual Studio Code"
       description: "Lightweight code editor with extensible developer tooling."
   projects:
-    example_project:
-      title: "Example Project"
-      description: "Replace this placeholder with your real project summary."
+    vienna_market_explorer:
+      title: "Vienna Market Explorer"
+      description: "Full stack platform for browsing market vendors, filtering by category, and managing admin updates."
+    content_automation_studio:
+      title: "Content Automation Studio"
+      description: "Editorial workflow app with authoring, approval flow, and publish automation for reusable content blocks."
+    angkor_street_archive:
+      title: "Angkor Street Archive"
+      description: "Frontend-heavy storytelling site for visual archives with immersive transitions and responsive gallery behavior."
+    workflow_orchestrator_api:
+      title: "Workflow Orchestrator API"
+      description: "Backend service for BPM workflows, task assignment, and event-driven state transitions across systems."
+    testing_observatory:
+      title: "Testing Observatory"
+      description: "Quality-focused backend project with API contract checks, UI automation hooks, and structured test reporting."
+    city_insights_warehouse:
+      title: "City Insights Warehouse"
+      description: "Database-centered analytics stack modeling city data, ETL batches, and reporting-ready relational views."
 
 facts_marquee:
   channel: "P100"

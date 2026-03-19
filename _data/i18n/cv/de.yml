@@ -2,19 +2,19 @@ meta:
   page_loader_text: "SZILVIA VARGA"
 
 nav:
-  aria_label: "CV section navigation"
+  aria_label: "CV-Bereichsnavigation"
   intro: "Intro"
-  education: "Education"
-  experience: "Experience"
-  skills: "Skills"
+  education: "Ausbildung"
+  experience: "Erfahrung"
+  skills: "Kompetenzen"
   programming_projects: "Programmierprojekte"
-  personal: "Personal"
-  dream_job: "Dream Job"
+  personal: "Persoenlich"
+  dream_job: "Traumjob"
 
 intro:
-  title: "Full Stack Software Developer Based in Vienna, Austria"
-  scroll_hint: "Scroll to begin"
-  portrait_alt: "Full body portrait of Szilvi"
+  title: "Full-Stack-Softwareentwicklerin mit Sitz in Wien, Oesterreich"
+  scroll_hint: "Zum Starten scrollen"
+  portrait_alt: "Ganzkoerperportraet von Szilvi"
   orbit_text:
     - "H"
     - "I"
@@ -29,10 +29,10 @@ intro:
     - "I"
 
 education:
-  title: "Education"
-  click_hint: "Click the buildings to reveal details"
-  click_hint_closed: "Click to reveal details"
-  click_hint_open: "Click to close"
+  title: "Ausbildung"
+  click_hint: "Klicke auf die Gebaeude, um Details zu sehen"
+  click_hint_closed: "Klicken, um Details zu zeigen"
+  click_hint_open: "Klicken, um zu schliessen"
   schools:
     - info: "\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\""
     - info: "\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\""
@@ -40,20 +40,20 @@ education:
     - info: "\"But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely painful. Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious physical exercise, except to obtain some advantage from it? But who has any right to find fault with a man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure?\""
 
 experience:
-  kicker: "Archive No. 01"
-  title: "Experience"
-  dek: "A four-column reading room for work history, notes, images, lists, and longer editorial fragments."
+  kicker: "Archiv Nr. 01"
+  title: "Erfahrung"
+  dek: "Ein vier-spaltiger Bereich fuer Berufserfahrung, Notizen, Bilder, Listen und laengere redaktionelle Fragmente."
   columns:
-    - label: "Column A"
-      title: "Lead Story"
+    - label: "Spalte A"
+      title: "Leitartikel"
       paragraphs:
         - "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sed eros a sapien sodales posuere. Sed luctus, erat ut fermentum viverra, massa turpis varius ligula, vitae aliquet dui urna in nunc."
         - "Curabitur interdum, nisl sed feugiat dapibus, nibh nisl vulputate magna, non aliquet risus risus sed lorem. Suspendisse potenti. Donec et viverra turpis. Duis tempor purus non nibh placerat, in mattis velit convallis."
         - "Phasellus luctus lacus in diam eleifend, et pellentesque augue facilisis. Integer consectetur ligula a neque vehicula, vel vehicula odio aliquet. Morbi nec nisi vitae lectus eleifend pretium."
         - "Maecenas egestas ligula at nisl condimentum, in feugiat eros tristique. Praesent facilisis lorem at lectus gravida, et viverra lorem faucibus."
       quote: "Morbi at sapien ut lectus sodales viverra. Sed ac urna sit amet justo tempor posuere."
-    - label: "Column B"
-      title: "Notes and Margins"
+    - label: "Spalte B"
+      title: "Notizen und Randbemerkungen"
       paragraphs:
         - "Vivamus sodales felis vel lacus porttitor, sed cursus justo vulputate. Aliquam erat volutpat. In euismod posuere lectus, non scelerisque massa pulvinar non."
         - "Etiam cursus, nibh sed interdum consequat, risus justo cursus libero, quis posuere magna mauris sed mauris. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae."
@@ -63,15 +63,15 @@ experience:
         - "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
         - "Ut enim ad minim veniam, quis nostrud exercitation ullamco."
         - "Duis aute irure dolor in reprehenderit in voluptate velit esse."
-    - label: "Column C"
-      title: "Feature Desk"
+    - label: "Spalte C"
+      title: "Feature-Desk"
       paragraphs:
         - "Nullam non odio lectus. Aenean iaculis suscipit erat, eu aliquet velit tristique at. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas."
         - "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo."
         - "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt."
         - "Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit. Integer vitae lectus nec sapien feugiat volutpat quis id nibh."
-    - label: "Column D"
-      title: "Late Edition"
+    - label: "Spalte D"
+      title: "Spaetausgabe"
       paragraphs:
         - "Quisque mollis, sapien at molestie luctus, lectus mauris luctus est, quis lacinia justo erat at magna. Nam condimentum bibendum ex, nec aliquam arcu bibendum nec."
         - "Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur. Vestibulum volutpat nisl in quam volutpat, sed tincidunt nibh tincidunt."
@@ -80,320 +80,304 @@ experience:
         - "Integer ut purus sed felis aliquet porttitor. Pellentesque et lorem vel arcu tempus aliquet et eu nisl."
 
 skills:
-  title: "Skills"
-  grid_aria_label: "Skill tiles"
+  title: "Kompetenzen"
+  grid_aria_label: "Kompetenz-Kacheln"
   hover:
-    knowledge_label: "Knowledge"
-    note_fallback: "Add your note in the CV language data file."
-    aria_label_suffix: "skill"
+    knowledge_label: "Kenntnisstand"
+    note_fallback: "Fuege deine Notiz in der CV-Sprachdatei hinzu."
+    aria_label_suffix: "kompetenz"
   items:
     - name: "Jakarta EE"
-      score: 25
       logo: ""
       note: ""
     - name: "Postman API"
-      score: 50
       logo: ""
       note: ""
     - name: "Camunda BPM"
-      score: 50
       logo: ""
       note: ""
     - name: "Vaadin"
-      score: 50
       logo: ""
       note: ""
     - name: "Git"
-      score: 20
       logo: ""
       note: ""
     - name: "Maven"
-      score: 30
       logo: ""
       note: ""
     - name: "JUnit"
-      score: 50
       logo: ""
       note: ""
     - name: "SoapUI"
-      score: 50
       logo: ""
       note: ""
     - name: "SOAP"
-      score: 70
       logo: ""
       note: ""
     - name: "OpenAPI"
-      score: 80
       logo: ""
       note: ""
     - name: "Cypress"
-      score: 50
       logo: ""
       note: ""
     - name: "Jasmine Framework"
-      score: 50
       logo: ""
       note: ""
     - name: "REST APIs"
-      score: 50
       logo: ""
       note: ""
     - name: "Unit Testing"
-      score: 50
       logo: ""
       note: ""
     - name: "End-to-end Testing"
-      score: 50
       logo: ""
       note: ""
     - name: "Selenium"
-      score: 50
       logo: ""
       note: ""
     - name: "TestNG"
-      score: 50
       logo: ""
       note: ""
     - name: "Batch Processing"
-      score: 50
       logo: ""
       note: ""
     - name: "Podman"
-      score: 25
       logo: ""
       note: ""
     - name: "Velocity"
-      score: 50
       logo: ""
       note: ""
     - name: "Content Management Systems (CMS)"
-      score: 50
       logo: ""
       note: ""
     - name: "Requirements Engineering"
-      score: 50
       logo: ""
       note: ""
     - name: "Software Engineering Practices"
-      score: 50
       logo: ""
       note: ""
     - name: "ISTQB"
-      score: 50
       logo: ""
       note: ""
     - name: "Quality Assurance"
-      score: 50
       logo: ""
       note: ""
     - name: "IREB"
-      score: 50
       logo: ""
       note: ""
     - name: "Testing Strategies"
-      score: 50
       logo: ""
       note: ""
     - name: "Quality Management"
-      score: 50
       logo: ""
       note: ""
     - name: "Scrum"
-      score: 89
       logo: ""
       note: ""
     - name: "SQL"
-      score: 50
       logo: ""
       note: ""
     - name: "Java"
-      score: 50
       logo: ""
       note: ""
     - name: "Relational Databases"
-      score: 50
       logo: ""
       note: ""
     - name: "Project Management"
-      score: 50
       logo: ""
       note: ""
     - name: "CCNA"
-      score: 50
       logo: ""
       note: ""
     - name: "HTML"
-      score: 25
       logo: ""
       note: ""
     - name: "Data Modeling"
-      score: 30
       logo: ""
       note: ""
     - name: "CSS"
-      score: 25
       logo: ""
       note: ""
     - name: "JavaScript"
-      score: 50
       logo: ""
       note: ""
 
 programming_projects:
   title: "Programmierprojekte"
+  project_group_label: "Projektgruppe"
+  github_link_label: "GitHub-Repository oeffnen"
+  project_groups:
+    full_stack: "Vollstaendig funktionsfaehige Full-Stack-Projekte"
+    frontend_focus: "Projekte mit Frontend-Fokus"
+    backend_focus: "Projekte mit Backend-Fokus"
+    database_focus: "Projekte mit Datenbankdesign-Fokus"
   categories:
     frontend: "Frontend"
     backend: "Backend"
     database: "Datenbanken"
-    tools: "Tools"
+    tools: "Werkzeuge"
   technologies:
     adobe_lightroom:
       label: "Adobe Lightroom"
-      description: "Photo editing and image post-processing software."
+      description: "Software fuer Fotobearbeitung und Bildnachbearbeitung."
     apache_cxf:
       label: "Apache CXF"
-      description: "Java framework for building SOAP and REST services."
+      description: "Java-Framework zum Erstellen von SOAP- und REST-Services."
     batch_processing:
       label: "Batch Processing"
-      description: "Running data or jobs in scheduled bulk workflows."
+      description: "Ausfuehren von Daten- oder Joblaeufen in geplanten Stapelprozessen."
     camunda:
       label: "Camunda"
-      description: "Workflow and business process automation platform."
+      description: "Plattform fuer Workflow- und Geschaeftsprozessautomatisierung."
     css:
       label: "CSS"
-      description: "Stylesheet language for designing web interfaces."
+      description: "Stylesheet-Sprache fuer die Gestaltung von Weboberflaechen."
     cypress:
       label: "Cypress"
-      description: "End-to-end testing framework for web applications."
+      description: "End-to-End-Testframework fuer Webanwendungen."
     dbeaver:
       label: "DBeaver"
-      description: "Database client and SQL management tool."
+      description: "Datenbank-Client und SQL-Verwaltungstool."
     docker:
       label: "Docker"
-      description: "Container platform for packaging and running applications."
+      description: "Container-Plattform zum Paketieren und Ausfuehren von Anwendungen."
     firefox:
       label: "Firefox"
-      description: "Web browser used for browsing and debugging websites."
+      description: "Webbrowser zum Surfen und Debuggen von Websites."
     firefox_dev_edition:
       label: "Firefox Developer Edition"
-      description: "Firefox build with tools focused on web development."
+      description: "Firefox-Version mit Werkzeugen fuer die Webentwicklung."
     git:
       label: "Git"
-      description: "Distributed version control system for source code."
+      description: "Verteiltes Versionskontrollsystem fuer Quellcode."
     h2:
       label: "H2"
-      description: "Lightweight Java SQL database engine."
+      description: "Leichtgewichtige Java-SQL-Datenbank-Engine."
     html5:
       label: "HTML5"
-      description: "Markup language for structuring web pages."
+      description: "Markup-Sprache zur Strukturierung von Webseiten."
     github:
       label: "GitHub"
-      description: "Hosting platform for Git repositories and collaboration."
+      description: "Hosting-Plattform fuer Git-Repositories und Zusammenarbeit."
     intellij:
       label: "IntelliJ IDEA"
-      description: "IDE for Java and other software development."
+      description: "IDE fuer Java und andere Softwareentwicklung."
     jasmine:
       label: "Jasmine"
-      description: "JavaScript testing framework for unit testing."
+      description: "JavaScript-Testframework fuer Unit-Tests."
     java:
       label: "Java"
-      description: "General-purpose programming language for backend systems."
+      description: "Allgemeine Programmiersprache fuer Backend-Systeme."
     java_ee:
       label: "Java EE"
-      description: "Enterprise Java platform for large web applications."
+      description: "Enterprise-Java-Plattform fuer grosse Webanwendungen."
     javascript:
       label: "JavaScript"
-      description: "Programming language for interactive web applications."
+      description: "Programmiersprache fuer interaktive Webanwendungen."
     jekyll:
       label: "Jekyll"
-      description: "Static site generator commonly used with GitHub Pages."
+      description: "Static-Site-Generator, haeufig mit GitHub Pages genutzt."
     maven:
       label: "Maven"
-      description: "Build and dependency management tool for Java projects."
+      description: "Build- und Abhaengigkeitsverwaltung fuer Java-Projekte."
     microsoft_word:
       label: "Microsoft Word"
-      description: "Word processing software for documents and reports."
+      description: "Textverarbeitung fuer Dokumente und Berichte."
     mongodb:
       label: "MongoDB"
-      description: "NoSQL document database for flexible data models."
+      description: "NoSQL-Dokumentendatenbank fuer flexible Datenmodelle."
     mysql:
       label: "MySQL"
-      description: "Relational database management system using SQL."
+      description: "Relationales Datenbankmanagementsystem auf SQL-Basis."
     openai_codex:
       label: "OpenAI Codex"
-      description: "AI coding assistant for generating and editing code."
+      description: "KI-Coding-Assistent zum Generieren und Bearbeiten von Code."
     openapi:
       label: "OpenAPI"
-      description: "Specification format for describing REST APIs."
+      description: "Spezifikationsformat zur Beschreibung von REST-APIs."
     podman:
       label: "Podman"
-      description: "Container engine for building and running OCI containers."
+      description: "Container-Engine zum Bauen und Ausfuehren von OCI-Containern."
     postman:
       label: "Postman"
-      description: "API client for testing and documenting endpoints."
+      description: "API-Client zum Testen und Dokumentieren von Endpunkten."
     rest_api:
       label: "REST API"
-      description: "Web API style based on HTTP resources and verbs."
+      description: "Web-API-Stil auf Basis von HTTP-Ressourcen und Verben."
     ruby:
       label: "Ruby"
-      description: "Dynamic programming language focused on developer productivity."
+      description: "Dynamische Programmiersprache mit Fokus auf Produktivitaet."
     selenium:
       label: "Selenium"
-      description: "Browser automation framework for UI testing."
+      description: "Browser-Automatisierungsframework fuer UI-Tests."
     soap_api:
       label: "SOAP API"
-      description: "XML-based web service interface using SOAP messages."
+      description: "XML-basierte Webservice-Schnittstelle mit SOAP-Nachrichten."
     soapui:
       label: "SoapUI"
-      description: "Tool for testing SOAP and REST web services."
+      description: "Tool zum Testen von SOAP- und REST-Webservices."
     spring:
       label: "Spring"
-      description: "Java framework for building backend applications and APIs."
+      description: "Java-Framework fuer Backend-Anwendungen und APIs."
     sql:
       label: "SQL"
-      description: "Query language for relational databases."
+      description: "Abfragesprache fuer relationale Datenbanken."
     testng:
       label: "TestNG"
-      description: "Testing framework for Java unit and integration tests."
+      description: "Testframework fuer Java-Unit- und Integrationstests."
     vaadin:
       label: "Vaadin"
-      description: "Java framework for building web UIs on the server side."
+      description: "Java-Framework fuer serverseitige Web-UI-Entwicklung."
     visual_studio_code:
       label: "Visual Studio Code"
-      description: "Lightweight code editor with extensible developer tooling."
+      description: "Leichtgewichtiger Code-Editor mit erweiterbaren Dev-Tools."
   projects:
-    example_project:
-      title: "Example Project"
-      description: "Replace this placeholder with your real project summary."
+    vienna_market_explorer:
+      title: "Vienna Market Explorer"
+      description: "Full-Stack-Plattform zum Durchsuchen von Marktstaenden, Filtern nach Kategorien und Verwalten von Admin-Aenderungen."
+    content_automation_studio:
+      title: "Content Automation Studio"
+      description: "Redaktionelle Workflow-App mit Authoring, Freigabeprozess und automatisierter Veroeffentlichung wiederverwendbarer Inhalte."
+    angkor_street_archive:
+      title: "Angkor Street Archive"
+      description: "Frontend-orientiertes Storytelling-Projekt fuer visuelle Archive mit immersiven Uebergaengen und responsivem Galerieverhalten."
+    workflow_orchestrator_api:
+      title: "Workflow Orchestrator API"
+      description: "Backend-Service fuer BPM-Workflows, Aufgabensteuerung und ereignisgesteuerte Statuswechsel zwischen Systemen."
+    testing_observatory:
+      title: "Testing Observatory"
+      description: "Qualitaetsfokussiertes Backend-Projekt mit API-Vertragspruefungen, UI-Automatisierung und strukturiertem Test-Reporting."
+    city_insights_warehouse:
+      title: "City Insights Warehouse"
+      description: "Datenbankzentrierter Analytics-Stack mit Stadt-Datenmodellierung, ETL-Batches und auswertungsbereiten relationalen Sichten."
 
 facts_marquee:
   channel: "P100"
-  title: "FACTS"
-  status: "LIVE DATA STREAM"
+  title: "FAKTEN"
+  status: "LIVE-DATENSTROM"
   items:
-    - label: "DRIVER'S LICENSE"
-      value: "B / CONFIDENT DRIVER"
-    - label: "LANGUAGES"
-      value: "HUNGARIAN C2 / ENGLISH C1 / GERMAN B2"
-    - label: "NATIONALITY"
-      value: "HUNGARIAN"
-    - label: "LOCATION"
-      value: "VIENNA, AUSTRIA"
-    - label: "PREFERRED WORK MODE"
+    - label: "FUeHRERSCHEIN"
+      value: "B / SICHERE FAHRERIN"
+    - label: "SPRACHEN"
+      value: "UNGARISCH C2 / ENGLISCH C1 / DEUTSCH B2"
+    - label: "STAATSANGEHOeRIGKEIT"
+      value: "UNGARISCH"
+    - label: "STANDORT"
+      value: "WIEN, OeSTERREICH"
+    - label: "BEVORZUGTES ARBEITSMODELL"
       value: "REMOTE / HYBRID"
-    - label: "RELOCATION"
-      value: "OPEN"
-    - label: "PREFERRED ROLE"
-      value: "FULL STACK WEB DEVELOPER"
-    - label: "MOBILITY"
-      value: "OWN CAR AVAILABLE"
+    - label: "UMZUG"
+      value: "OFFEN"
+    - label: "BEVORZUGTE ROLLE"
+      value: "FULL-STACK-WEBENTWICKLERIN"
+    - label: "MOBILITAeT"
+      value: "EIGENES AUTO VERFUEGBAR"
     - label: "16 PERSONALITIES"
-      value: "INFJ-T / DIPLOMAT / CONSTANT IMPROVEMENT"
+      value: "INFJ-T / DIPLOMAT / STETIGE VERBESSERUNG"
 
 personal:
-  title: "Personal"
-  description: "A little bit about me, my interests and hobbies."
+  title: "Persoenlich"
+  description: "Ein wenig ueber mich, meine Interessen und Hobbys."
 
 dream_job:
-  title: "Dream Job"
+  title: "Traumjob"

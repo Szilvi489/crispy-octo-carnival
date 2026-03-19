@@ -78,9 +78,16 @@ technology_catalog:
   visual_studio_code:
     icon: /CV/assets/images/CV/logos/visualstudiocode.png
 
+project_group_order:
+  - full_stack
+  - frontend_focus
+  - backend_focus
+  - database_focus
+
 projects:
-  - slug: example_project
-    github_link: https://github.com/username/repository
+  - slug: vienna_market_explorer
+    project_group_key: full_stack
+    github_link: https://github.com/username/vienna-market-explorer
     tech_groups:
       - category_key: frontend
         items: [html5, css, javascript]
@@ -89,4 +96,59 @@ projects:
       - category_key: database
         items: [mysql]
       - category_key: tools
+        items: [git, github, docker, postman]
+
+  - slug: content_automation_studio
+    project_group_key: full_stack
+    github_link: https://github.com/username/content-automation-studio
+    tech_groups:
+      - category_key: frontend
+        items: [html5, css, javascript]
+      - category_key: backend
+        items: [java, spring, openapi]
+      - category_key: database
+        items: [mongodb]
+      - category_key: tools
         items: [git, github, docker]
+
+  - slug: angkor_street_archive
+    project_group_key: frontend_focus
+    github_link: https://github.com/username/angkor-street-archive
+    tech_groups:
+      - category_key: frontend
+        items: [html5, css, javascript]
+      - category_key: backend
+        items: [jekyll]
+      - category_key: tools
+        items: [git, github, visual_studio_code]
+
+  - slug: workflow_orchestrator_api
+    project_group_key: backend_focus
+    github_link: https://github.com/username/workflow-orchestrator-api
+    tech_groups:
+      - category_key: backend
+        items: [java, java_ee, camunda, spring, rest_api, openapi]
+      - category_key: database
+        items: [mysql]
+      - category_key: tools
+        items: [maven, postman, git, github]
+
+  - slug: testing_observatory
+    project_group_key: backend_focus
+    github_link: https://github.com/username/testing-observatory
+    tech_groups:
+      - category_key: backend
+        items: [java, spring]
+      - category_key: tools
+        items: [testng, cypress, selenium, soapui, git, maven]
+
+  - slug: city_insights_warehouse
+    project_group_key: database_focus
+    github_link: https://github.com/username/city-insights-warehouse
+    tech_groups:
+      - category_key: database
+        items: [sql, mysql, mongodb, h2]
+      - category_key: backend
+        items: [batch_processing, java]
+      - category_key: tools
+        items: [dbeaver, maven, git]

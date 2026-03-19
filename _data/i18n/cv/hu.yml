@@ -2,19 +2,19 @@ meta:
   page_loader_text: "SZILVIA VARGA"
 
 nav:
-  aria_label: "CV section navigation"
+  aria_label: "CV szakasz navigacio"
   intro: "Intro"
-  education: "Education"
-  experience: "Experience"
-  skills: "Skills"
+  education: "Tanulmanyok"
+  experience: "Tapasztalat"
+  skills: "Keszsegek"
   programming_projects: "Programozasi Projektek"
-  personal: "Personal"
-  dream_job: "Dream Job"
+  personal: "Szemelyes"
+  dream_job: "Alommunka"
 
 intro:
-  title: "Full Stack Software Developer Based in Vienna, Austria"
-  scroll_hint: "Scroll to begin"
-  portrait_alt: "Full body portrait of Szilvi"
+  title: "Becsben elo full stack szoftverfejleszto"
+  scroll_hint: "Gorgess a kezdeshez"
+  portrait_alt: "Szilvi egesz alakos portreja"
   orbit_text:
     - "H"
     - "I"
@@ -29,10 +29,10 @@ intro:
     - "I"
 
 education:
-  title: "Education"
-  click_hint: "Click the buildings to reveal details"
-  click_hint_closed: "Click to reveal details"
-  click_hint_open: "Click to close"
+  title: "Tanulmanyok"
+  click_hint: "Kattints az epuletekre a reszletekert"
+  click_hint_closed: "Kattints a reszletek megjelenitesehez"
+  click_hint_open: "Kattints a bezarashoz"
   schools:
     - info: "\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\""
     - info: "\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\""
@@ -40,20 +40,20 @@ education:
     - info: "\"But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely painful. Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious physical exercise, except to obtain some advantage from it? But who has any right to find fault with a man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure?\""
 
 experience:
-  kicker: "Archive No. 01"
-  title: "Experience"
-  dek: "A four-column reading room for work history, notes, images, lists, and longer editorial fragments."
+  kicker: "Archivum 01"
+  title: "Tapasztalat"
+  dek: "Negyoszlopos felulet szakmai mult, jegyzetek, kepek, listak es hosszabb szerkesztett tartalom szamara."
   columns:
-    - label: "Column A"
-      title: "Lead Story"
+    - label: "A oszlop"
+      title: "Vezeto tortenet"
       paragraphs:
         - "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sed eros a sapien sodales posuere. Sed luctus, erat ut fermentum viverra, massa turpis varius ligula, vitae aliquet dui urna in nunc."
         - "Curabitur interdum, nisl sed feugiat dapibus, nibh nisl vulputate magna, non aliquet risus risus sed lorem. Suspendisse potenti. Donec et viverra turpis. Duis tempor purus non nibh placerat, in mattis velit convallis."
         - "Phasellus luctus lacus in diam eleifend, et pellentesque augue facilisis. Integer consectetur ligula a neque vehicula, vel vehicula odio aliquet. Morbi nec nisi vitae lectus eleifend pretium."
         - "Maecenas egestas ligula at nisl condimentum, in feugiat eros tristique. Praesent facilisis lorem at lectus gravida, et viverra lorem faucibus."
       quote: "Morbi at sapien ut lectus sodales viverra. Sed ac urna sit amet justo tempor posuere."
-    - label: "Column B"
-      title: "Notes and Margins"
+    - label: "B oszlop"
+      title: "Jegyzetek es margok"
       paragraphs:
         - "Vivamus sodales felis vel lacus porttitor, sed cursus justo vulputate. Aliquam erat volutpat. In euismod posuere lectus, non scelerisque massa pulvinar non."
         - "Etiam cursus, nibh sed interdum consequat, risus justo cursus libero, quis posuere magna mauris sed mauris. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae."
@@ -63,15 +63,15 @@ experience:
         - "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
         - "Ut enim ad minim veniam, quis nostrud exercitation ullamco."
         - "Duis aute irure dolor in reprehenderit in voluptate velit esse."
-    - label: "Column C"
-      title: "Feature Desk"
+    - label: "C oszlop"
+      title: "Kiemelt rovat"
       paragraphs:
         - "Nullam non odio lectus. Aenean iaculis suscipit erat, eu aliquet velit tristique at. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas."
         - "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo."
         - "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt."
         - "Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit. Integer vitae lectus nec sapien feugiat volutpat quis id nibh."
-    - label: "Column D"
-      title: "Late Edition"
+    - label: "D oszlop"
+      title: "Kesoi kiadas"
       paragraphs:
         - "Quisque mollis, sapien at molestie luctus, lectus mauris luctus est, quis lacinia justo erat at magna. Nam condimentum bibendum ex, nec aliquam arcu bibendum nec."
         - "Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur. Vestibulum volutpat nisl in quam volutpat, sed tincidunt nibh tincidunt."
@@ -80,168 +80,137 @@ experience:
         - "Integer ut purus sed felis aliquet porttitor. Pellentesque et lorem vel arcu tempus aliquet et eu nisl."
 
 skills:
-  title: "Skills"
-  grid_aria_label: "Skill tiles"
+  title: "Keszsegek"
+  grid_aria_label: "Keszseg csempek"
   hover:
-    knowledge_label: "Knowledge"
-    note_fallback: "Add your note in the CV language data file."
-    aria_label_suffix: "skill"
+    knowledge_label: "Tudasszint"
+    note_fallback: "Add meg a megjegyzest a CV nyelvi adatfajljaban."
+    aria_label_suffix: "keszseg"
   items:
     - name: "Jakarta EE"
-      score: 25
       logo: ""
       note: ""
     - name: "Postman API"
-      score: 50
       logo: ""
       note: ""
     - name: "Camunda BPM"
-      score: 50
       logo: ""
       note: ""
     - name: "Vaadin"
-      score: 50
       logo: ""
       note: ""
     - name: "Git"
-      score: 20
       logo: ""
       note: ""
     - name: "Maven"
-      score: 30
       logo: ""
       note: ""
     - name: "JUnit"
-      score: 50
       logo: ""
       note: ""
     - name: "SoapUI"
-      score: 50
       logo: ""
       note: ""
     - name: "SOAP"
-      score: 70
       logo: ""
       note: ""
     - name: "OpenAPI"
-      score: 80
       logo: ""
       note: ""
     - name: "Cypress"
-      score: 50
       logo: ""
       note: ""
     - name: "Jasmine Framework"
-      score: 50
       logo: ""
       note: ""
     - name: "REST APIs"
-      score: 50
       logo: ""
       note: ""
     - name: "Unit Testing"
-      score: 50
       logo: ""
       note: ""
     - name: "End-to-end Testing"
-      score: 50
       logo: ""
       note: ""
     - name: "Selenium"
-      score: 50
       logo: ""
       note: ""
     - name: "TestNG"
-      score: 50
       logo: ""
       note: ""
     - name: "Batch Processing"
-      score: 50
       logo: ""
       note: ""
     - name: "Podman"
-      score: 25
       logo: ""
       note: ""
     - name: "Velocity"
-      score: 50
       logo: ""
       note: ""
     - name: "Content Management Systems (CMS)"
-      score: 50
       logo: ""
       note: ""
     - name: "Requirements Engineering"
-      score: 50
       logo: ""
       note: ""
     - name: "Software Engineering Practices"
-      score: 50
       logo: ""
       note: ""
     - name: "ISTQB"
-      score: 50
       logo: ""
       note: ""
     - name: "Quality Assurance"
-      score: 50
       logo: ""
       note: ""
     - name: "IREB"
-      score: 50
       logo: ""
       note: ""
     - name: "Testing Strategies"
-      score: 50
       logo: ""
       note: ""
     - name: "Quality Management"
-      score: 50
       logo: ""
       note: ""
     - name: "Scrum"
-      score: 89
       logo: ""
       note: ""
     - name: "SQL"
-      score: 50
       logo: ""
       note: ""
     - name: "Java"
-      score: 50
       logo: ""
       note: ""
     - name: "Relational Databases"
-      score: 50
       logo: ""
       note: ""
     - name: "Project Management"
-      score: 50
       logo: ""
       note: ""
     - name: "CCNA"
-      score: 50
       logo: ""
       note: ""
     - name: "HTML"
-      score: 25
       logo: ""
       note: ""
     - name: "Data Modeling"
-      score: 30
       logo: ""
       note: ""
     - name: "CSS"
-      score: 25
       logo: ""
       note: ""
     - name: "JavaScript"
-      score: 50
       logo: ""
       note: ""
 
 programming_projects:
   title: "Programozasi Projektek"
+  project_group_label: "Projektcsoport"
+  github_link_label: "GitHub tarolo megnyitasa"
+  project_groups:
+    full_stack: "Teljesen mukodo Full Stack projektek"
+    frontend_focus: "Frontend-fokuszu projektek"
+    backend_focus: "Backend-fokuszu projektek"
+    database_focus: "Adatbazis-tervezes kozpontu projektek"
   categories:
     frontend: "Frontend"
     backend: "Backend"
@@ -250,150 +219,165 @@ programming_projects:
   technologies:
     adobe_lightroom:
       label: "Adobe Lightroom"
-      description: "Photo editing and image post-processing software."
+      description: "Foto szerkeszto es utomunka szoftver."
     apache_cxf:
       label: "Apache CXF"
-      description: "Java framework for building SOAP and REST services."
+      description: "Java keretrendszer SOAP es REST szolgaltatasok keszitesehez."
     batch_processing:
       label: "Batch Processing"
-      description: "Running data or jobs in scheduled bulk workflows."
+      description: "Adat- vagy feladatfuttatas idozitett, kotegelt folyamatokban."
     camunda:
       label: "Camunda"
-      description: "Workflow and business process automation platform."
+      description: "Workflow es uzleti folyamat automatizalasi platform."
     css:
       label: "CSS"
-      description: "Stylesheet language for designing web interfaces."
+      description: "Stiluslap nyelv webes feluletek megjelenitesehez."
     cypress:
       label: "Cypress"
-      description: "End-to-end testing framework for web applications."
+      description: "End-to-end teszt keretrendszer webalkalmazasokhoz."
     dbeaver:
       label: "DBeaver"
-      description: "Database client and SQL management tool."
+      description: "Adatbazis kliens es SQL kezelo eszkoz."
     docker:
       label: "Docker"
-      description: "Container platform for packaging and running applications."
+      description: "Kontener platform alkalmazasok csomagolasahoz es futtatasahoz."
     firefox:
       label: "Firefox"
-      description: "Web browser used for browsing and debugging websites."
+      description: "Webbongeszo weboldalak bongeszesere es hibakeresesere."
     firefox_dev_edition:
       label: "Firefox Developer Edition"
-      description: "Firefox build with tools focused on web development."
+      description: "Firefox valtozat, webfejlesztoi eszkozokkel."
     git:
       label: "Git"
-      description: "Distributed version control system for source code."
+      description: "Elosztott verziokezelo rendszer forraskodhoz."
     h2:
       label: "H2"
-      description: "Lightweight Java SQL database engine."
+      description: "Konnyu Java SQL adatbazis motor."
     html5:
       label: "HTML5"
-      description: "Markup language for structuring web pages."
+      description: "Jelolo nyelv weboldalak strukturajahoz."
     github:
       label: "GitHub"
-      description: "Hosting platform for Git repositories and collaboration."
+      description: "Git tarhely es egyuttmukodesi platform."
     intellij:
       label: "IntelliJ IDEA"
-      description: "IDE for Java and other software development."
+      description: "IDE Javahoz es mas fejlesztesi feladatokhoz."
     jasmine:
       label: "Jasmine"
-      description: "JavaScript testing framework for unit testing."
+      description: "JavaScript teszt keretrendszer unit tesztekhez."
     java:
       label: "Java"
-      description: "General-purpose programming language for backend systems."
+      description: "Altalanos celu programozasi nyelv backend rendszerekhez."
     java_ee:
       label: "Java EE"
-      description: "Enterprise Java platform for large web applications."
+      description: "Vallalati Java platform nagy webalkalmazasokhoz."
     javascript:
       label: "JavaScript"
-      description: "Programming language for interactive web applications."
+      description: "Programozasi nyelv interaktiv webalkalmazasokhoz."
     jekyll:
       label: "Jekyll"
-      description: "Static site generator commonly used with GitHub Pages."
+      description: "Statikus oldal generator, gyakran GitHub Pages-szel."
     maven:
       label: "Maven"
-      description: "Build and dependency management tool for Java projects."
+      description: "Build es fuggesegkezelo eszkoz Java projektekhez."
     microsoft_word:
       label: "Microsoft Word"
-      description: "Word processing software for documents and reports."
+      description: "Szovegszerkeszto dokumentumokhoz es riportokhoz."
     mongodb:
       label: "MongoDB"
-      description: "NoSQL document database for flexible data models."
+      description: "NoSQL dokumentum adatbazis rugalmas adatmodellekhez."
     mysql:
       label: "MySQL"
-      description: "Relational database management system using SQL."
+      description: "SQL alapu relacios adatbazis kezelo rendszer."
     openai_codex:
       label: "OpenAI Codex"
-      description: "AI coding assistant for generating and editing code."
+      description: "MI kod asszisztens kod generalasahoz es szerkesztesehez."
     openapi:
       label: "OpenAPI"
-      description: "Specification format for describing REST APIs."
+      description: "REST API-k leirasara szolgalo specifikacios formatum."
     podman:
       label: "Podman"
-      description: "Container engine for building and running OCI containers."
+      description: "Kontener motor OCI kontenerek epitesere es futtatasara."
     postman:
       label: "Postman"
-      description: "API client for testing and documenting endpoints."
+      description: "API kliens vegpontok tesztelesehez es dokumentalasahoz."
     rest_api:
       label: "REST API"
-      description: "Web API style based on HTTP resources and verbs."
+      description: "Web API stilus HTTP eroforrasokkal es muveletekkel."
     ruby:
       label: "Ruby"
-      description: "Dynamic programming language focused on developer productivity."
+      description: "Dinamikus programozasi nyelv fejlesztoi hatekonysagra."
     selenium:
       label: "Selenium"
-      description: "Browser automation framework for UI testing."
+      description: "Bongeszo automatizalasi keretrendszer UI tesztekhez."
     soap_api:
       label: "SOAP API"
-      description: "XML-based web service interface using SOAP messages."
+      description: "XML alapu webszolgaltatasi felulet SOAP uzenetekkel."
     soapui:
       label: "SoapUI"
-      description: "Tool for testing SOAP and REST web services."
+      description: "Eszkoz SOAP es REST webszolgaltatasok tesztelesehez."
     spring:
       label: "Spring"
-      description: "Java framework for building backend applications and APIs."
+      description: "Java keretrendszer backend alkalmazasokhoz es API-khoz."
     sql:
       label: "SQL"
-      description: "Query language for relational databases."
+      description: "Lekerdezo nyelv relacios adatbazisokhoz."
     testng:
       label: "TestNG"
-      description: "Testing framework for Java unit and integration tests."
+      description: "Teszt keretrendszer Java unit es integracios tesztekhez."
     vaadin:
       label: "Vaadin"
-      description: "Java framework for building web UIs on the server side."
+      description: "Java keretrendszer szerveroldali webes feluletekhez."
     visual_studio_code:
       label: "Visual Studio Code"
-      description: "Lightweight code editor with extensible developer tooling."
+      description: "Konnyu kodszerkeszto bovitheto fejlesztoi eszkozokkel."
   projects:
-    example_project:
-      title: "Example Project"
-      description: "Replace this placeholder with your real project summary."
+    vienna_market_explorer:
+      title: "Vienna Market Explorer"
+      description: "Full stack platform piacok es arusok bongeszesehez, kategoriak szerinti szuresehez es admin frissitesek kezeleshez."
+    content_automation_studio:
+      title: "Content Automation Studio"
+      description: "Szerkesztosegi workflow alkalmazas tartalomkeszitessel, jovahagyasi folyamattal es automatikus publikacioval."
+    angkor_street_archive:
+      title: "Angkor Street Archive"
+      description: "Frontend kozpontu vizualis archivum oldal immersziv atmenetekkel es reszponziv galerias viselkedessel."
+    workflow_orchestrator_api:
+      title: "Workflow Orchestrator API"
+      description: "Backend szolgaltatas BPM workflowkhoz, feladatkiosztashoz es esemenyvezerelet allapotvaltashoz rendszerek kozott."
+    testing_observatory:
+      title: "Testing Observatory"
+      description: "Minosegkozpontu backend projekt API szerzodes ellenorzesekkel, UI automatizalasi pontokkal es strukturalt riportokkal."
+    city_insights_warehouse:
+      title: "City Insights Warehouse"
+      description: "Adatbazis-kozpontu elemzesi stack varosi adatok modellezesevel, ETL batch folyamatokkal es riportkesz relacios nezetekkel."
 
 facts_marquee:
   channel: "P100"
-  title: "FACTS"
-  status: "LIVE DATA STREAM"
+  title: "TENYEK"
+  status: "ELO ADATFOLYAM"
   items:
-    - label: "DRIVER'S LICENSE"
-      value: "B / CONFIDENT DRIVER"
-    - label: "LANGUAGES"
-      value: "HUNGARIAN C2 / ENGLISH C1 / GERMAN B2"
-    - label: "NATIONALITY"
-      value: "HUNGARIAN"
-    - label: "LOCATION"
-      value: "VIENNA, AUSTRIA"
-    - label: "PREFERRED WORK MODE"
+    - label: "JOGOSITVANY"
+      value: "B / MAGABIZTOS VEZETO"
+    - label: "NYELVEK"
+      value: "MAGYAR C2 / ANGOL C1 / NEMET B2"
+    - label: "ALLAMPOLGARSAG"
+      value: "MAGYAR"
+    - label: "HELYSZIN"
+      value: "BECS, AUSZTRIA"
+    - label: "PREFERALT MUNKAMOD"
       value: "REMOTE / HYBRID"
-    - label: "RELOCATION"
-      value: "OPEN"
-    - label: "PREFERRED ROLE"
-      value: "FULL STACK WEB DEVELOPER"
-    - label: "MOBILITY"
-      value: "OWN CAR AVAILABLE"
+    - label: "ATKOLTOZES"
+      value: "NYITOTT"
+    - label: "PREFERALT SZEREPKOR"
+      value: "FULL STACK WEBFEJLESZTO"
+    - label: "MOBILITAS"
+      value: "SAJAT AUTO RENDELKEZESRE ALL"
     - label: "16 PERSONALITIES"
-      value: "INFJ-T / DIPLOMAT / CONSTANT IMPROVEMENT"
+      value: "INFJ-T / DIPLOMATA / FOLYAMATOS FEJLODES"
 
 personal:
-  title: "Personal"
-  description: "A little bit about me, my interests and hobbies."
+  title: "Szemelyes"
+  description: "Egy kicsit rolam, az erdeklodesi koreimrol es a hobbijaimrol."
 
 dream_job:
-  title: "Dream Job"
+  title: "Alommunka"

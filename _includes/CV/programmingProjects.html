@@ -2,6 +2,15 @@
 {%- assign programming_projects_i18n = cv_i18n.programming_projects -%}
 <section id="cv-programming-projects" class="cv-programming-projects-section">
     <h2 class="cv-programming-projects-heading">{{ programming_projects_i18n.title }}</h2>
+    <div class="cv-programming-projects-stage" aria-live="polite">
+        <aside class="cv-programming-projects-group-panel">
+            <p class="cv-programming-projects-group-kicker">{{ programming_projects_i18n.project_group_label | default: "Project Group" }}</p>
+            <div class="cv-programming-projects-group-track"></div>
+        </aside>
+        <div class="cv-programming-projects-cards-panel">
+            <div class="cv-programming-projects-card-track"></div>
+        </div>
+    </div>
     <script class="cv-programming-projects-data" type="application/json">
         {
             "base": {{ programming_projects_base | jsonify }},
