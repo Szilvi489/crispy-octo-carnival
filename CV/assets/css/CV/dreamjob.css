@@ -15,6 +15,19 @@
     );
 }
 
+.cv-dreamjob-content {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: min(100%, 960px);
+    min-height: calc(120vh - 18vh);
+    gap: clamp(1.5rem, 4vh, 3rem);
+    text-align: center;
+}
+
 .cv-dreamjob-bean-field {
     position: absolute;
     inset: 0;
@@ -59,11 +72,51 @@
 }
 
 .cv-dreamjob-section h2 {
-    position: relative;
-    z-index: 3;
     margin: 0;
-    font-family: "Tulpen One", sans-serif;
+    font-family: "Tulpen One", cursive;
     font-size: clamp(3.4rem, 12vw, 10rem);
     line-height: 0.9;
     color: var(--color-bordeau-chocolate);
+}
+
+.cv-dreamjob-content p {
+    width: 80%;
+    margin: 0;
+    font-family: "Times New Roman", serif;
+    font-size: clamp(1rem, 2vw, 1.5rem);
+    line-height: 1.4;
+    color: rgba(63, 63, 63, 0.9);
+    font-weight: 600;
+    will-change: color;
+}
+
+.cv-dreamjob-content p.cv-dreamjob-text-split {
+    animation: none;
+}
+
+.cv-dreamjob-char {
+    display: inline-block;
+    will-change: color;
+}
+
+.cv-dreamjob-char-space {
+    display: inline-block;
+    width: 0.35em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .cv-dreamjob-content p {
+        color: rgba(28, 28, 28, 0.94);
+    }
+}
+
+@media (max-width: 768px) {
+    .cv-dreamjob-section {
+        min-height: auto;
+        padding: 14vh 7vw 10vh;
+    }
+
+    .cv-dreamjob-content {
+        min-height: auto;
+    }
 }

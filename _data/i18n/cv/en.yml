@@ -381,3 +381,8 @@ personal:
 
 dream_job:
   title: "Dream Job"
+  text: "I’m looking for a work environment where I can grow with both structure and trust. I do my best work in teams with clear onboarding, transparent expectations, and a supportive culture where questions are welcome. While I work independently, take initiative, and enjoy solving problems creatively, I also value collaboration and having guidance when needed. My ideal role combines technical work with human connection — in an international, social team, with a hybrid setup in Vienna, room for creative thinking, and, as a bonus, occasional travel or the flexibility to work remotely from abroad for a limited time."
+
+footer_download:
+  download_label: "Download CV as PDF"
+  download_filename: "szilvia-varga-cv.pdf"

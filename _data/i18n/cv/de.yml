@@ -381,3 +381,7 @@ personal:
 
 dream_job:
   title: "Traumjob"
+
+footer_download:
+  download_label: "CV als PDF herunterladen"
+  download_filename: "szilvia-varga-cv.pdf"

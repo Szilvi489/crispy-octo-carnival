@@ -16,6 +16,7 @@ stylesheets:
   - /CV/assets/css/CV/programmingProjects.css
   - /CV/assets/css/CV/personal.css
   - /CV/assets/css/CV/dreamjob.css
+  - /CV/assets/css/CV/footerWithPdfDownload.css
   - /CV/assets/css/CV/factsMarguee.css
 
 scripts:

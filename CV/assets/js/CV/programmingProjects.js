@@ -5,7 +5,10 @@
     var groupTrack = section ? section.querySelector(".cv-programming-projects-group-track") : null;
     var cardTrack = section ? section.querySelector(".cv-programming-projects-card-track") : null;
     var dataNode = section ? section.querySelector(".cv-programming-projects-data") : null;
+    var gsapApi = window.gsap;
+    var scrollTriggerApi = window.ScrollTrigger;
     var rafId = null;
+    var scrollDriver = null;
     var cards = [];
     var groupCards = [];
     var projects = [];
@@ -54,6 +57,16 @@
             .replace(/\b\w/g, function (char) {
                 return char.toUpperCase();
             });
+    }
+
+    function setCssVar(name, value) {
+        var cssVar = {};
+        if (gsapApi && typeof gsapApi.set === "function") {
+            cssVar[name] = value;
+            gsapApi.set(section, cssVar);
+            return;
+        }
+        section.style.setProperty(name, value);
     }
 
     function parseData() {
@@ -320,11 +333,22 @@
             var blur = Math.max(0, distance - 0.45) * 2.2;
             var scale = 1 - clamp(distance * 0.06, 0, 0.2);
 
-            groupCard.style.transform =
-                "translate3d(0, " + yPercent.toFixed(2) + "%, " + zPx.toFixed(2) + "px) " +
-                "rotateX(" + rotateX.toFixed(2) + "deg) scale(" + scale.toFixed(3) + ")";
-            groupCard.style.opacity = opacity.toFixed(3);
-            groupCard.style.filter = "blur(" + blur.toFixed(2) + "px)";
+            if (gsapApi && typeof gsapApi.set === "function") {
+                gsapApi.set(groupCard, {
+                    yPercent: yPercent,
+                    z: zPx,
+                    rotateX: rotateX,
+                    scale: scale,
+                    autoAlpha: opacity,
+                    filter: "blur(" + blur.toFixed(2) + "px)"
+                });
+            } else {
+                groupCard.style.transform =
+                    "translate3d(0, " + yPercent.toFixed(2) + "%, " + zPx.toFixed(2) + "px) " +
+                    "rotateX(" + rotateX.toFixed(2) + "deg) scale(" + scale.toFixed(3) + ")";
+                groupCard.style.opacity = opacity.toFixed(3);
+                groupCard.style.filter = "blur(" + blur.toFixed(2) + "px)";
+            }
             groupCard.style.zIndex = String(900 - Math.round(distance * 100));
         });
     }
@@ -371,21 +395,29 @@
             var scale = 1 - clamp(distance * 0.06, 0, 0.22);
             var blur = Math.max(0, distance - 0.42) * 2.3;
 
-            card.style.transform =
-                "translate3d(0, " + yPercent.toFixed(2) + "%, " + zPx.toFixed(2) + "px) " +
-                "rotateX(" + rotateX.toFixed(2) + "deg) scale(" + scale.toFixed(3) + ")";
-            card.style.opacity = opacity.toFixed(3);
-            card.style.filter = "blur(" + blur.toFixed(2) + "px)";
+            if (gsapApi && typeof gsapApi.set === "function") {
+                gsapApi.set(card, {
+                    yPercent: yPercent,
+                    z: zPx,
+                    rotateX: rotateX,
+                    scale: scale,
+                    autoAlpha: opacity,
+                    filter: "blur(" + blur.toFixed(2) + "px)"
+                });
+            } else {
+                card.style.transform =
+                    "translate3d(0, " + yPercent.toFixed(2) + "%, " + zPx.toFixed(2) + "px) " +
+                    "rotateX(" + rotateX.toFixed(2) + "deg) scale(" + scale.toFixed(3) + ")";
+                card.style.opacity = opacity.toFixed(3);
+                card.style.filter = "blur(" + blur.toFixed(2) + "px)";
+            }
             card.style.zIndex = String(1000 - Math.round(distance * 100));
             card.setAttribute("aria-hidden", distance > 0.92 ? "true" : "false");
             card.style.pointerEvents = distance < 0.5 ? "auto" : "none";
         });
     }
 
-    function updateTimeline() {
-        var rect = section.getBoundingClientRect();
-        var viewportHeight = window.innerHeight || document.documentElement.clientHeight || 1;
-        var rawSectionScroll;
+    function renderTimeline(rawSectionScroll, viewportHeight, inViewport) {
         var sectionScroll;
         var revealScroll;
         var revealNormalized;
@@ -397,7 +429,6 @@
         var cardPhase;
         var activeFloat;
         var activeGroupFloat;
-        var inViewport;
         var titlePhaseIn;
         var titleGrowPhase;
         var titleMovePhase;
@@ -414,7 +445,6 @@
 
         updateMetrics(viewportHeight);
 
-        rawSectionScroll = -rect.top;
         sectionScroll = clamp(rawSectionScroll, 0, totalScrollDistance);
         postSectionScroll = Math.max(0, rawSectionScroll - totalScrollDistance);
         titleScrollOffsetPx = -postSectionScroll;
@@ -425,7 +455,6 @@
         revealLinear = clamp(rawReveal, 0, 1);
         revealProgress = Math.pow(revealLinear, 1.95);
         revealComplete = revealProgress >= 0.995;
-        inViewport = rect.bottom > 0 && rect.top < viewportHeight;
 
         /* Title appears in the center, grows, then moves upward to final top position. */
         titlePhaseIn = clamp((revealProgress - 0.2) / 0.12, 0, 1);
@@ -449,13 +478,13 @@
         stageHold = sectionScroll >= cardsStartScroll ? 1 : stageEnterAlpha;
         stageAlpha = clamp(stageHold, 0, 1);
 
-        section.style.setProperty("--cv-programming-projects-reveal-progress", revealProgress.toFixed(4));
-        section.style.setProperty("--cv-programming-projects-stage-alpha", stageAlpha.toFixed(3));
-        section.style.setProperty("--cv-programming-projects-title-x", titleX.toFixed(3));
-        section.style.setProperty("--cv-programming-projects-title-y", titleY.toFixed(3));
-        section.style.setProperty("--cv-programming-projects-title-scale", titleScale.toFixed(3));
-        section.style.setProperty("--cv-programming-projects-title-opacity", titleOpacity.toFixed(3));
-        section.style.setProperty("--cv-programming-projects-title-scroll-offset", titleScrollOffsetPx.toFixed(2) + "px");
+        setCssVar("--cv-programming-projects-reveal-progress", revealProgress.toFixed(4));
+        setCssVar("--cv-programming-projects-stage-alpha", stageAlpha.toFixed(3));
+        setCssVar("--cv-programming-projects-title-x", titleX.toFixed(3));
+        setCssVar("--cv-programming-projects-title-y", titleY.toFixed(3));
+        setCssVar("--cv-programming-projects-title-scale", titleScale.toFixed(3));
+        setCssVar("--cv-programming-projects-title-opacity", titleOpacity.toFixed(3));
+        setCssVar("--cv-programming-projects-title-scroll-offset", titleScrollOffsetPx.toFixed(2) + "px");
         section.classList.toggle("is-reveal-complete", revealComplete);
 
         activeFloat = cardPhase * Math.max(0, projects.length - 1);
@@ -471,6 +500,15 @@
             stageShown = false;
             stage.classList.remove("is-visible");
         }
+    }
+
+    function updateTimelineFromDom() {
+        var rect = section.getBoundingClientRect();
+        var viewportHeight = window.innerHeight || document.documentElement.clientHeight || 1;
+        var rawSectionScroll = -rect.top;
+        var inViewport = rect.bottom > 0 && rect.top < viewportHeight;
+
+        renderTimeline(rawSectionScroll, viewportHeight, inViewport);
 
         rafId = null;
     }
@@ -480,7 +518,48 @@
             return;
         }
 
-        rafId = window.requestAnimationFrame(updateTimeline);
+        rafId = window.requestAnimationFrame(updateTimelineFromDom);
+    }
+
+    function setupGsapScrollDriver() {
+        if (
+            !gsapApi ||
+            !scrollTriggerApi ||
+            typeof gsapApi.set !== "function" ||
+            typeof scrollTriggerApi.create !== "function"
+        ) {
+            return false;
+        }
+
+        if (typeof gsapApi.registerPlugin === "function") {
+            gsapApi.registerPlugin(scrollTriggerApi);
+        }
+
+        if (scrollDriver && typeof scrollDriver.kill === "function") {
+            scrollDriver.kill();
+            scrollDriver = null;
+        }
+
+        scrollDriver = scrollTriggerApi.create({
+            trigger: section,
+            start: "top top",
+            end: "bottom top",
+            scrub: true,
+            invalidateOnRefresh: true,
+            onRefresh: function (self) {
+                var viewportHeight = window.innerHeight || document.documentElement.clientHeight || 1;
+                var rawSectionScroll = Math.max(0, self.scroll() - self.start);
+                cachedViewportHeight = 0;
+                renderTimeline(rawSectionScroll, viewportHeight, true);
+            },
+            onUpdate: function (self) {
+                var viewportHeight = window.innerHeight || document.documentElement.clientHeight || 1;
+                var rawSectionScroll = Math.max(0, self.scroll() - self.start);
+                renderTimeline(rawSectionScroll, viewportHeight, true);
+            }
+        });
+
+        return true;
     }
 
     (function bootstrap() {
@@ -489,25 +568,43 @@
             ? toPlainObject(data.base.technology_catalog).github.icon || ""
             : "";
         var githubAriaLabel = data.i18n.github_link_label || "Open GitHub repository";
+        var usingGsap;
 
         projects = resolveProjects(data);
         if (!projects.length) {
-            section.style.setProperty("--cv-programming-projects-stage-alpha", "0");
+            setCssVar("--cv-programming-projects-stage-alpha", "0");
             heading.style.opacity = "0";
-            section.style.setProperty("--cv-programming-projects-title-scroll-offset", "0px");
+            setCssVar("--cv-programming-projects-title-scroll-offset", "0px");
             return;
         }
 
         groups = buildGroups(projects);
         renderCards(projects, githubIconPath, githubAriaLabel);
         renderGroupCards(groups);
-        updateTimeline();
-    })();
+        usingGsap = setupGsapScrollDriver();
 
-    window.addEventListener("scroll", queueRevealUpdate, { passive: true });
-    window.addEventListener("resize", function () {
-        cachedViewportHeight = 0;
-        queueRevealUpdate();
-    });
-    window.addEventListener("load", queueRevealUpdate);
+        if (usingGsap && scrollTriggerApi && typeof scrollTriggerApi.refresh === "function") {
+            scrollTriggerApi.refresh();
+        } else {
+            updateTimelineFromDom();
+            window.addEventListener("scroll", queueRevealUpdate, { passive: true });
+        }
+
+        window.addEventListener("resize", function () {
+            cachedViewportHeight = 0;
+            if (scrollDriver && scrollTriggerApi && typeof scrollTriggerApi.refresh === "function") {
+                scrollTriggerApi.refresh();
+                return;
+            }
+            queueRevealUpdate();
+        });
+
+        window.addEventListener("load", function () {
+            if (scrollDriver && scrollTriggerApi && typeof scrollTriggerApi.refresh === "function") {
+                scrollTriggerApi.refresh();
+                return;
+            }
+            queueRevealUpdate();
+        });
+    })();
 })();

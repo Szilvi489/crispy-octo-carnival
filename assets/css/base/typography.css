@@ -52,6 +52,7 @@
   --font-steelfish: "Steelfish", sans-serif;
   --font-european-teletext: "European Teletext", monospace;
   --font-european-teletext-nuevo: "European Teletext Nuevo", monospace;
+  --font-google-sans: "Google Sans", "Segoe UI", sans-serif;
 
   /* Base stack aliases used across the project */
   --font-ibm-plex-sans: "IBM Plex Sans", "Segoe UI", sans-serif;

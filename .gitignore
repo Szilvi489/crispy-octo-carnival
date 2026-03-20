@@ -5,8 +5,10 @@ _site_protected*
 .jekyll-cache
 .jekyll-metadata
 vendor
+node_modules
 Gemfile.lock
 CV/auth/password.local.php
+CV/assets/pdf/*.pdf
 
 # Keep only the currently used Cambodia model in git; ignore other large local model files.
 assets/images/projects/cambodiaStreet/3DImages/*.glb

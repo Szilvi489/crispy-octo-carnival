@@ -381,3 +381,7 @@ personal:
 
 dream_job:
   title: "Alommunka"
+
+footer_download:
+  download_label: "CV letoltese PDF-kent"
+  download_filename: "szilvia-varga-cv.pdf"
