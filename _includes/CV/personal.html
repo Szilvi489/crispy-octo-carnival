@@ -1,9 +1,46 @@
+{%- assign personal_images = site.data.personalImages.items -%}
 <section id="cv-personal" class="cv-personal-section">
     <div class="cv-personal-bean-field" aria-hidden="true"></div>
+
     <div class="cv-personal-prelude" aria-hidden="true">
 
         <h2 class="cv-personal-prelude-title">{{ cv_i18n.personal.title }}</h2>
         <p class="cv-personal-prelude-description">{{ cv_i18n.personal.description }}</p>
+
+
+    </div>
+    <div class="cv-personal-image-layer" aria-hidden="true">
+        {%- for item in personal_images -%}
+            <img
+                class="cv-personal-item"
+                src="{{ item.src }}"
+                alt=""
+                loading="lazy"
+                decoding="async"
+                data-item-id="{{ item.id }}"
+                data-base-opacity="{{ item.base.opacity | default: 1 }}"
+                data-motion-start="{{ item.motion.start | default: 0 }}"
+                data-motion-end="{{ item.motion.end | default: 1 }}"
+                data-motion-ease="{{ item.motion.ease | default: 'none' }}"
+                data-motion-from-x="{{ item.motion.from.x | default: 0 }}"
+                data-motion-from-y="{{ item.motion.from.y | default: 0 }}"
+                data-motion-to-x="{{ item.motion.to.x | default: 0 }}"
+                data-motion-to-y="{{ item.motion.to.y | default: 0 }}"
+                data-motion-from-rotation="{{ item.motion.from.rotation | default: 0 }}"
+                data-motion-to-rotation="{{ item.motion.to.rotation | default: 0 }}"
+                data-motion-from-scale="{{ item.motion.from.scale | default: 1 }}"
+                data-motion-to-scale="{{ item.motion.to.scale | default: 1 }}"
+                data-motion-from-opacity="{{ item.motion.from.opacity | default: 1 }}"
+                data-motion-to-opacity="{{ item.motion.to.opacity | default: 1 }}"
+                style="
+                    left: {{ item.base.x }}%;
+                    top: {{ item.base.y }}%;
+                    --cv-personal-item-width: {{ item.base.width }}vw;
+                    --cv-personal-item-base-opacity: {{ item.base.opacity | default: 1 }};
+                    z-index: {{ item.base.z | default: 1 }};
+                "
+            >
+        {%- endfor -%}
     </div>
     <div class="cv-personal-transition-clouds" aria-hidden="true">
         <img class="cv-personal-prelude-cloud cloud-layer-1" src="/CV/assets/images/CV/removedBackgroundImages/white-cloud-small.png" alt="" loading="eager" decoding="sync" fetchpriority="high">
