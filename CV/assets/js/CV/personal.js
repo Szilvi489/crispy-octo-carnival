@@ -16,10 +16,17 @@
     var scrollTriggerApi = window.ScrollTrigger;
     var head = document.head || document.getElementsByTagName("head")[0];
     var visibilityRafId = null;
+    var mouseReactiveRafId = null;
     var beanTweens = [];
     var beanAnimationsActive = false;
     var personalItemConfigs = [];
     var personalScrollDriver = null;
+    var pointerClientX = 0;
+    var pointerClientY = 0;
+    var pointerIsActive = false;
+    var canUsePointerReactiveMotion = !!(window.matchMedia && window.matchMedia("(hover: hover) and (pointer: fine)").matches);
+    var personalScrollTriggerStart = "top bottom";
+    var personalScrollTriggerEnd = "bottom top";
     var beanLayerConfigs = [
         { className: "cv-personal-bean--layer-1", sizes: [11, 9, 8], count: 3, driftMin: 4.8, driftMax: 7.2, pulseMin: 3.4, pulseMax: 5.5 },
         { className: "cv-personal-bean--layer-2", sizes: [8.5, 7, 6], count: 3, driftMin: 5.2, driftMax: 7.8, pulseMin: 3.8, pulseMax: 6.2 },
@@ -45,6 +52,21 @@
         }
 
         return parsedValue;
+    }
+
+    function getItemCenter(element) {
+        var rect;
+
+        if (!element) {
+            return { x: 0, y: 0 };
+        }
+
+        rect = element.getBoundingClientRect();
+
+        return {
+            x: rect.left + (rect.width / 2),
+            y: rect.top + (rect.height / 2)
+        };
     }
 
     function randomBetween(min, max) {
@@ -136,9 +158,107 @@
                 fromScale: parseNumber(item.dataset.motionFromScale, 1),
                 toScale: parseNumber(item.dataset.motionToScale, 1),
                 fromOpacity: clamp(parseNumber(item.dataset.motionFromOpacity, 1), 0, 1),
-                toOpacity: clamp(parseNumber(item.dataset.motionToOpacity, 1), 0, 1)
+                toOpacity: clamp(parseNumber(item.dataset.motionToOpacity, 1), 0, 1),
+                pointerRadius: 260,
+                pointerMaxOffset: 14,
+                scrollX: 0,
+                scrollY: 0,
+                rotation: 0,
+                scale: 1,
+                opacity: 0,
+                currentPointerX: 0,
+                currentPointerY: 0,
+                targetPointerX: 0,
+                targetPointerY: 0
             };
         });
+    }
+
+    function applyPersonalItemState(config) {
+        if (!config || !config.element || !gsapApi || typeof gsapApi.set !== "function") {
+            return;
+        }
+
+        gsapApi.set(config.element, {
+            xPercent: -50,
+            yPercent: -50,
+            x: config.scrollX + config.currentPointerX,
+            y: config.scrollY + config.currentPointerY,
+            rotation: config.rotation,
+            scale: config.scale,
+            autoAlpha: config.opacity,
+            transformOrigin: "50% 50%"
+        });
+    }
+
+    function updatePointerReactiveTargets() {
+        personalItemConfigs.forEach(function (config) {
+            var itemCenter;
+            var dx;
+            var dy;
+            var distance;
+            var influence;
+
+            if (!pointerIsActive || !canUsePointerReactiveMotion || config.opacity <= 0.001) {
+                config.targetPointerX = 0;
+                config.targetPointerY = 0;
+                return;
+            }
+
+            itemCenter = getItemCenter(config.element);
+            dx = pointerClientX - itemCenter.x;
+            dy = pointerClientY - itemCenter.y;
+            distance = Math.sqrt((dx * dx) + (dy * dy));
+
+            if (distance >= config.pointerRadius) {
+                config.targetPointerX = 0;
+                config.targetPointerY = 0;
+                return;
+            }
+
+            influence = 1 - (distance / config.pointerRadius);
+            influence = influence * influence;
+            config.targetPointerX = clamp(dx / config.pointerRadius, -1, 1) * config.pointerMaxOffset * influence;
+            config.targetPointerY = clamp(dy / config.pointerRadius, -1, 1) * config.pointerMaxOffset * influence;
+        });
+    }
+
+    function stepPointerReactiveMotion() {
+        var shouldContinue = false;
+
+        mouseReactiveRafId = null;
+
+        personalItemConfigs.forEach(function (config) {
+            config.currentPointerX = lerp(config.currentPointerX, config.targetPointerX, 0.14);
+            config.currentPointerY = lerp(config.currentPointerY, config.targetPointerY, 0.14);
+
+            if (
+                Math.abs(config.targetPointerX - config.currentPointerX) > 0.08 ||
+                Math.abs(config.targetPointerY - config.currentPointerY) > 0.08
+            ) {
+                shouldContinue = true;
+            }
+
+            if (
+                Math.abs(config.currentPointerX) > 0.04 ||
+                Math.abs(config.currentPointerY) > 0.04 ||
+                config.opacity > 0.001
+            ) {
+                applyPersonalItemState(config);
+            }
+        });
+
+        if (shouldContinue) {
+            mouseReactiveRafId = window.requestAnimationFrame(stepPointerReactiveMotion);
+        }
+    }
+
+    function queuePointerReactiveMotion() {
+        if (mouseReactiveRafId !== null) {
+            return;
+        }
+
+        mouseReactiveRafId = window.requestAnimationFrame(stepPointerReactiveMotion);
     }
 
     function renderPersonalItems(sectionProgress) {
@@ -169,20 +289,21 @@
                 1
             );
 
-            gsapApi.set(config.element, {
-                xPercent: -50,
-                yPercent: -50,
-                x: x,
-                y: y,
-                rotation: rotation,
-                scale: scale,
-                autoAlpha: opacity,
-                transformOrigin: "50% 50%"
-            });
+            config.scrollX = x;
+            config.scrollY = y;
+            config.rotation = rotation;
+            config.scale = scale;
+            config.opacity = opacity;
+            applyPersonalItemState(config);
         });
 
         personalSection.style.setProperty("--cv-personal-section-progress", sectionProgress.toFixed(3));
         personalSection.style.setProperty("--cv-personal-section-visibility", visibilityRatio.toFixed(3));
+
+        if (pointerIsActive && canUsePointerReactiveMotion) {
+            updatePointerReactiveTargets();
+            queuePointerReactiveMotion();
+        }
     }
 
     function setupPersonalScrollMotion() {
@@ -210,8 +331,8 @@
 
         personalScrollDriver = scrollTriggerApi.create({
             trigger: personalSection,
-            start: "top bottom",
-            end: "bottom top",
+            start: personalScrollTriggerStart,
+            end: personalScrollTriggerEnd,
             scrub: true,
             invalidateOnRefresh: true,
             onUpdate: function (self) {
@@ -224,6 +345,26 @@
         });
 
         renderPersonalItems(personalScrollDriver.progress || 0);
+    }
+
+    function setupPersonalPointerMotion() {
+        if (!personalSection || !personalItemConfigs.length || !canUsePointerReactiveMotion) {
+            return;
+        }
+
+        personalSection.addEventListener("pointermove", function (event) {
+            pointerClientX = event.clientX;
+            pointerClientY = event.clientY;
+            pointerIsActive = true;
+            updatePointerReactiveTargets();
+            queuePointerReactiveMotion();
+        });
+
+        personalSection.addEventListener("pointerleave", function () {
+            pointerIsActive = false;
+            updatePointerReactiveTargets();
+            queuePointerReactiveMotion();
+        });
     }
 
     function createBeanElements() {
@@ -404,6 +545,7 @@
     animateBeans();
     updateBeanVisibility();
     setupPersonalScrollMotion();
+    setupPersonalPointerMotion();
     window.addEventListener("scroll", queueVisibilityUpdate, { passive: true });
     window.addEventListener("resize", queueVisibilityUpdate);
     window.addEventListener("load", function () {
@@ -412,12 +554,22 @@
         } else {
             renderPersonalItems(0);
         }
+
+        if (pointerIsActive && canUsePointerReactiveMotion) {
+            updatePointerReactiveTargets();
+            queuePointerReactiveMotion();
+        }
     });
     window.addEventListener("resize", function () {
         if (scrollTriggerApi && typeof scrollTriggerApi.refresh === "function") {
             scrollTriggerApi.refresh();
         } else {
             renderPersonalItems(0);
+        }
+
+        if (pointerIsActive && canUsePointerReactiveMotion) {
+            updatePointerReactiveTargets();
+            queuePointerReactiveMotion();
         }
     });
 
