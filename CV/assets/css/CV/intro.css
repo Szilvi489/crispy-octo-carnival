@@ -160,6 +160,7 @@ color: var(--color-alternative-orange);
 
 .cv-intro-orbit-scene-background {
     --intro-enter-final-transform: translate(-50%, -50%);
+    --cv-intro-viewport-opacity: 1;
     position: fixed;
     left: var(--cv-intro-orbit-bg-left, 73vw);
     top: var(--cv-intro-orbit-bg-top, 46vh);
@@ -171,7 +172,7 @@ color: var(--color-alternative-orange);
     transform: translate(-50%, -50%);
     z-index: 3;
     pointer-events: none;
-    opacity: 0.78;
+    opacity: calc(0.78 * var(--cv-intro-viewport-opacity));
     transition:
         left 980ms cubic-bezier(0.16, 0.84, 0.24, 1),
         top 980ms cubic-bezier(0.16, 0.84, 0.24, 1),
@@ -188,7 +189,7 @@ color: var(--color-alternative-orange);
     width: 100vw;
     height: 100vh;
     border-radius: 0;
-    opacity: 1;
+    opacity: calc(1 * var(--cv-intro-viewport-opacity));
     animation: none;
 }
 
@@ -207,6 +208,7 @@ color: var(--color-alternative-orange);
 
 .cv-intro-orbit-scene {
     --intro-enter-final-transform: translateZ(0);
+    --cv-intro-viewport-opacity: 1;
     position: relative;
     width: 100%;
     top: -3vh;
@@ -218,7 +220,7 @@ color: var(--color-alternative-orange);
     place-items: center;
     overflow: visible;
     pointer-events: none;
-    opacity: 1;
+    opacity: var(--cv-intro-viewport-opacity);
     z-index: 4;
     will-change: transform;
     transition: transform 320ms ease, opacity 320ms ease;

@@ -26,6 +26,65 @@
     let introEnterCleanupTimerId = null;
     let typingCursorTween = null;
     let orbitBackgroundFrameId = null;
+    let orbitViewportOpacityFrameId = null;
+
+    const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
+
+    const applyOrbitViewportOpacity = (nextOpacity) => {
+        const opacity = clamp(nextOpacity, 0, 1).toFixed(3);
+        const backgroundOpacity = orbitSceneBackground && orbitSceneBackground.classList.contains("is-education-active")
+            ? "1.000"
+            : opacity;
+
+        if (orbitScene) {
+            orbitScene.style.setProperty("--cv-intro-viewport-opacity", opacity);
+        }
+
+        if (orbitSceneBackground) {
+            orbitSceneBackground.style.setProperty("--cv-intro-viewport-opacity", backgroundOpacity);
+        }
+    };
+
+    const syncOrbitViewportOpacity = () => {
+        let rect;
+        let viewportWidth;
+        let viewportHeight;
+        let intersectWidth;
+        let intersectHeight;
+        let visibleAreaRatio;
+        let opacity;
+
+        orbitViewportOpacityFrameId = null;
+
+        if (!orbitStage) {
+            applyOrbitViewportOpacity(1);
+            return;
+        }
+
+        rect = orbitStage.getBoundingClientRect();
+        viewportWidth = window.innerWidth || document.documentElement.clientWidth || 0;
+        viewportHeight = window.innerHeight || document.documentElement.clientHeight || 0;
+
+        if (!rect.width || !rect.height || !viewportWidth || !viewportHeight) {
+            applyOrbitViewportOpacity(0);
+            return;
+        }
+
+        intersectWidth = Math.max(0, Math.min(rect.right, viewportWidth) - Math.max(rect.left, 0));
+        intersectHeight = Math.max(0, Math.min(rect.bottom, viewportHeight) - Math.max(rect.top, 0));
+        visibleAreaRatio = (intersectWidth * intersectHeight) / Math.max(1, rect.width * rect.height);
+
+        opacity = clamp((visibleAreaRatio - 0.16) / 0.38, 0, 1);
+        applyOrbitViewportOpacity(opacity);
+    };
+
+    const queueOrbitViewportOpacitySync = () => {
+        if (orbitViewportOpacityFrameId !== null) {
+            return;
+        }
+
+        orbitViewportOpacityFrameId = window.requestAnimationFrame(syncOrbitViewportOpacity);
+    };
 
     const syncOrbitBackgroundPosition = () => {
         let rect;
@@ -82,6 +141,8 @@
         if (!hidden) {
             queueOrbitBackgroundSync();
         }
+
+        queueOrbitViewportOpacitySync();
     };
 
     const playTitleArrival = () => {
@@ -292,14 +353,18 @@
         queueTitleArrival();
         setupScrollHintShuffle();
         queueOrbitBackgroundSync();
+        queueOrbitViewportOpacitySync();
     } else {
         window.addEventListener("load", queueTitleArrival, { once: true });
         window.addEventListener("load", setupScrollHintShuffle, { once: true });
         window.addEventListener("load", queueOrbitBackgroundSync, { once: true });
+        window.addEventListener("load", queueOrbitViewportOpacitySync, { once: true });
     }
 
     window.addEventListener("resize", queueOrbitBackgroundSync);
+    window.addEventListener("resize", queueOrbitViewportOpacitySync);
     window.addEventListener("scroll", queueOrbitBackgroundSync, { passive: true });
+    window.addEventListener("scroll", queueOrbitViewportOpacitySync, { passive: true });
 
     resetIntroEntrance();
     resetIntroTyping();
@@ -319,6 +384,7 @@
         }
 
         queueOrbitBackgroundSync();
+        queueOrbitViewportOpacitySync();
     });
 
     document.addEventListener("cv-education-visibility", (event) => {
