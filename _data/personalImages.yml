@@ -1,480 +1,378 @@
-# base.x/base.y place the image inside the personal section in percent.
-# base.width is in vw.
+# width is in vw.
+# opacity is the image's max opacity multiplier.
 # motion.start/motion.end are section scroll progress values from 0 to 1.
-# motion.from.x/to.x are viewport-width offsets in percent of the viewport width.
-# motion.from.y/to.y are viewport-height offsets in percent of the viewport height.
+# motion.from.x/y and motion.to.x/y are the actual visible positions in the personal section, in percent.
 items:
   - id: monstera
     src: /CV/assets/images/CV/personal/monstera.png
-    base:
-      x: 12
-      y: 18
-      width: 7
-      z: 2
-      opacity: 0.92
+    width: 7
+    z: 2
+    opacity: 0.92
     motion:
-      start: 0.00
-      end: 0.28
+      start: 0.0
+      end: 0.62
       ease: power2.out
       from:
-        x: -8
-        y: 14
+        x: 45.92
+        y: 44.04
         rotation: -16
-        scale: 0.78
+        scale: 0
         opacity: 0
       to:
-        x: 4
-        y: -3
+        x: 16.0
+        y: 15.0
         rotation: -4
-        scale: 1
+        scale: 2
         opacity: 1
 
   - id: mountain
     src: /CV/assets/images/CV/personal/mountain.png
-    base:
-      x: 82
-      y: 16
-      width: 5
-      z: 1
-      opacity: 0.88
+    width: 5
+    z: 1
+    opacity: 0.88
     motion:
-      start: 0.02
-      end: 0.34
+      start: 0.06
+      end: 0.70
       ease: power2.out
       from:
-        x: 10
-        y: 16
+        x: 53.12
+        y: 43.68
         rotation: 12
-        scale: 0.82
+        scale: 0
         opacity: 0
       to:
-        x: -6
-        y: -4
+        x: 76.0
+        y: 12.0
         rotation: 3
-        scale: 1
+        scale: 2
         opacity: 1
 
   - id: airplane
     src: /CV/assets/images/CV/personal/airplane.png
-    base:
-      x: 67
-      y: 24
-      width: 9
-      z: 4
-      opacity: 0.96
+    width: 9
+    z: 4
+    opacity: 0.96
     motion:
-      start: 0.06
-      end: 0.40
-      ease: sine.inOut
+      start: 0.02
+      end: 0.68
+      ease: power2.out
       from:
-        x: 18
-        y: -5
+        x: 50.6
+        y: 46.08
         rotation: 22
-        scale: 0.74
+        scale: 0
         opacity: 0
       to:
-        x: -12
-        y: 8
+        x: 55.0
+        y: 32.0
         rotation: -8
-        scale: 1
+        scale: 2
         opacity: 1
 
   - id: headphone
     src: /CV/assets/images/CV/personal/headphone.png
-    base:
-      x: 23
-      y: 28
-      width: 6
-      z: 3
-      opacity: 0.94
+    width: 6
+    z: 3
+    opacity: 0.94
     motion:
       start: 0.08
-      end: 0.36
-      ease: power1.out
+      end: 0.74
+      ease: power2.out
       from:
-        x: -12
-        y: 10
+        x: 47.36
+        y: 44.76
         rotation: -20
-        scale: 0.72
+        scale: 0
         opacity: 0
       to:
-        x: 5
-        y: -7
+        x: 28.0
+        y: 21.0
         rotation: 6
-        scale: 1
+        scale: 2
         opacity: 1
 
   - id: coffee
     src: /CV/assets/images/CV/personal/coffee.png
-    base:
-      x: 15
-      y: 44
-      width: 6
-      z: 5
-      opacity: 0.92
+    width: 6
+    z: 5
+    opacity: 0.92
     motion:
-      start: 0.18
-      end: 0.52
+      start: 0.14
+      end: 0.80
       ease: power2.out
       from:
-        x: -10
-        y: 14
+        x: 46.76
+        y: 46.56
         rotation: -10
-        scale: 0.8
+        scale: 0
         opacity: 0
       to:
-        x: 8
-        y: -8
+        x: 23.0
+        y: 36.0
         rotation: 4
-        scale: 1
+        scale: 2
         opacity: 1
 
   - id: eyedrop
     src: /CV/assets/images/CV/personal/eyedrop.png
-    base:
-      x: 37
-      y: 40
-      width: 6
-      z: 3
-      opacity: 0.86
+    width: 6
+    z: 3
+    opacity: 0.86
     motion:
-      start: 0.16
-      end: 0.44
-      ease: power1.out
+      start: 0.12
+      end: 0.78
+      ease: power2.out
       from:
-        x: -4
-        y: 18
+        x: 48.8
+        y: 45.84
         rotation: 18
-        scale: 0.76
+        scale: 0
         opacity: 0
       to:
-        x: 3
-        y: -10
+        x: 40.0
+        y: 30.0
         rotation: -7
-        scale: 1
+        scale: 2
         opacity: 1
 
   - id: arte-logo
     src: /CV/assets/images/CV/personal/arte-logo.png
-    base:
-      x: 53
-      y: 34
-      width: 7
-      z: 6
-      opacity: 0.84
+    width: 7
+    z: 6
+    opacity: 0.84
     motion:
-      start: 0.12
-      end: 0.38
+      start: 0.10
+      end: 0.72
       ease: power2.out
       from:
-        x: 0
-        y: 12
+        x: 50.0
+        y: 45.72
         rotation: -6
-        scale: 0.7
+        scale: 0
         opacity: 0
       to:
-        x: -3
-        y: -5
+        x: 50.0
+        y: 29.0
         rotation: 3
-        scale: 1
+        scale: 2
         opacity: 1
 
   - id: nyt-logo
     src: /CV/assets/images/CV/personal/NYTLogo.png
-    base:
-      x: 95
-      y: 38
-      width: 5
-      z: 4
-      opacity: 0.82
+    width: 5
+    z: 4
+    opacity: 0.82
     motion:
-      start: 0.14
-      end: 0.42
+      start: 0.18
+      end: 0.86
       ease: power2.out
       from:
-        x: 8
-        y: 16
+        x: 54.56
+        y: 45.96
         rotation: 8
-        scale: 0.76
+        scale: 0
         opacity: 0
       to:
-        x: -7
-        y: -7
+        x: 88.0
+        y: 31.0
         rotation: -4
-        scale: 1
+        scale: 2
         opacity: 1
 
   - id: icecream
     src: /CV/assets/images/CV/personal/icecream.png
-    base:
-      x: 8
-      y: 55
-      width: 7
-      z: 6
-      opacity: 0.95
+    width: 7
+    z: 6
+    opacity: 0.95
     motion:
-      start: 0.26
-      end: 0.58
-      ease: back.out
+      start: 0.22
+      end: 0.90
+      ease: power2.out
       from:
-        x: -14
-        y: 20
+        x: 45.68
+        y: 47.76
         rotation: -14
-        scale: 0.68
+        scale: 0
         opacity: 0
       to:
-        x: 6
-        y: -9
+        x: 14.0
+        y: 46.0
         rotation: 4
-        scale: 1
+        scale: 2
         opacity: 1
 
   - id: ramen
     src: /CV/assets/images/CV/personal/ramen.png
-    base:
-      x: 46
-      y: 58
-      width: 6
-      z: 5
-      opacity: 0.94
+    width: 6
+    z: 5
+    opacity: 0.94
     motion:
-      start: 0.24
-      end: 0.62
+      start: 0.16
+      end: 0.84
       ease: power2.out
       from:
-        x: 0
-        y: 18
+        x: 49.52
+        y: 48.0
         rotation: -8
-        scale: 0.74
+        scale: 0
         opacity: 0
       to:
-        x: 0
-        y: -10
+        x: 46.0
+        y: 48.0
         rotation: 3
-        scale: 1
+        scale: 2
         opacity: 1
 
   - id: sushi
     src: /CV/assets/images/CV/personal/sushi.png
-    base:
-      x: 66
-      y: 54
-      width: 8
-      z: 5
-      opacity: 0.92
+    width: 8
+    z: 5
+    opacity: 0.92
     motion:
-      start: 0.28
-      end: 0.60
+      start: 0.20
+      end: 0.88
       ease: power2.out
       from:
-        x: 14
-        y: 14
+        x: 51.32
+        y: 47.88
         rotation: 10
-        scale: 0.72
+        scale: 0
         opacity: 0
       to:
-        x: -5
-        y: -7
+        x: 61.0
+        y: 47.0
         rotation: -4
-        scale: 1
-        opacity: 1
-
-  - id: sushi2
-    src: /CV/assets/images/CV/personal/sushi2.png
-    base:
-      x: 79
-      y: 57
-      width: 7
-      z: 4
-      opacity: 0.9
-    motion:
-      start: 0.30
-      end: 0.66
-      ease: sine.out
-      from:
-        x: 16
-        y: 12
-        rotation: 18
-        scale: 0.7
-        opacity: 0
-      to:
-        x: -8
-        y: -8
-        rotation: -8
-        scale: 1
-        opacity: 1
-
-  - id: sushi3
-    src: /CV/assets/images/CV/personal/sushi3.png
-    base:
-      x: 58
-      y: 67
-      width: 4
-      z: 6
-      opacity: 0.92
-    motion:
-      start: 0.34
-      end: 0.70
-      ease: power1.out
-      from:
-        x: 6
-        y: 22
-        rotation: -16
-        scale: 0.7
-        opacity: 0
-      to:
-        x: -4
-        y: -11
-        rotation: 5
-        scale: 1
+        scale: 2
         opacity: 1
 
   - id: redchilipaprika
     src: /CV/assets/images/CV/personal/redchilipaprika.png
-    base:
-      x: 20
-      y: 51
-      width: 5
-      z: 5
-      opacity: 0.9
+    width: 5
+    z: 5
+    opacity: 0.9
     motion:
-      start: 0.40
-      end: 0.76
+      start: 0.26
+      end: 0.94
       ease: power2.out
       from:
-        x: -8
-        y: 20
+        x: 47.0
+        y: 47.4
         rotation: -20
-        scale: 0.74
+        scale: 0
         opacity: 0
       to:
-        x: 5
-        y: -8
+        x: 25.0
+        y: 43.0
         rotation: 10
-        scale: 1
+        scale: 2
         opacity: 1
 
   - id: pickle
     src: /CV/assets/images/CV/personal/pickle.png
-    base:
-      x: 34
-      y: 36
-      width: 7
-      z: 4
-      opacity: 0.88
+    width: 7
+    z: 4
+    opacity: 0.88
     motion:
-      start: 0.44
-      end: 0.80
-      ease: sine.out
+      start: 0.24
+      end: 0.92
+      ease: power2.out
       from:
-        x: -6
-        y: 18
+        x: 48.56
+        y: 45.84
         rotation: -18
-        scale: 0.76
+        scale: 0
         opacity: 0
       to:
-        x: 4
-        y: -6
+        x: 38.0
+        y: 30.0
         rotation: 6
-        scale: 1
+        scale: 2
         opacity: 1
 
   - id: sewing-machine
     src: /CV/assets/images/CV/personal/sewingMachine.png
-    base:
-      x: 76
-      y: 54
-      width: 6
-      z: 3
-      opacity: 0.9
+    width: 6
+    z: 3
+    opacity: 0.9
     motion:
-      start: 0.46
-      end: 0.84
+      start: 0.28
+      end: 0.98
       ease: power2.out
       from:
-        x: 10
-        y: 22
+        x: 52.28
+        y: 47.52
         rotation: 14
-        scale: 0.72
+        scale: 0
         opacity: 0
       to:
-        x: -7
-        y: -10
+        x: 69.0
+        y: 44.0
         rotation: -5
-        scale: 1
+        scale: 2
         opacity: 1
 
   - id: rumicard
     src: /CV/assets/images/CV/personal/rumicard.png
-    base:
-      x: 51
-      y: 12
-      width: 4
-      z: 4
-      opacity: 0.9
+    width: 44
+    z: 4
+    opacity: 0.9
     motion:
-      start: 0.52
-      end: 0.90
-      ease: back.out
+      start: 0.04
+      end: 0.76
+      ease: power2.out
       from:
-        x: 0
-        y: 16
+        x: 50.36
+        y: 42.84
         rotation: -12
-        scale: 0.7
+        scale: 0
         opacity: 0
       to:
-        x: 2
-        y: -7
+        x: 53.0
+        y: 5.0
         rotation: 4
-        scale: 1
+        scale: 2
         opacity: 1
 
   - id: tree
     src: /CV/assets/images/CV/personal/tree.png
-    base:
-      x: 18
-      y: 32
-      width: 9
-      z: 1
-      opacity: 0.78
+    width: 9
+    z: 1
+    opacity: 0.78
     motion:
-      start: 0.56
-      end: 0.94
-      ease: power1.out
+      start: 0.30
+      end: 1.0
+      ease: power2.out
       from:
-        x: -10
-        y: 26
+        x: 46.64
+        y: 45.0
         rotation: -8
-        scale: 0.8
+        scale: 0
         opacity: 0
       to:
-        x: 4
-        y: -9
+        x: 22.0
+        y: 23.0
         rotation: -2
-        scale: 1
+        scale: 2
         opacity: 1
 
   - id: monstera-echo
     src: /CV/assets/images/CV/personal/monstera.png
-    base:
-      x: 89
-      y: 35
-      width: 5
-      z: 0
-      opacity: 0.72
+    width: 5
+    z: 0
+    opacity: 0.72
     motion:
-      start: 0.60
-      end: 0.98
-      ease: power1.out
+      start: 0.34
+      end: 1.0
+      ease: power2.out
       from:
-        x: 12
-        y: 24
+        x: 53.96
+        y: 45.24
         rotation: 9
-        scale: 0.82
+        scale: 0
         opacity: 0
       to:
-        x: -6
-        y: -10
+        x: 83.0
+        y: 25.0
         rotation: -3
-        scale: 1
+        scale: 2
         opacity: 1

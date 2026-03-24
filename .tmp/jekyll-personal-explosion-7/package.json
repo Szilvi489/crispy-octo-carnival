@@ -1,0 +1,12 @@
+{
+  "name": "crispy-octo-carnival",
+  "private": true,
+  "scripts": {
+    "build:cv-pdf": "node scripts/build-cv-pdf.mjs",
+    "build:site": "npm run build:cv-pdf && bundle exec jekyll build --destination _site_release"
+  },
+  "devDependencies": {
+    "marked": "^16.3.0",
+    "puppeteer": "^24.40.0"
+  }
+}

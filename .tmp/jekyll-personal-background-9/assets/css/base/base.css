@@ -1,0 +1,37 @@
+/* Baseline defaults shared across projects. */
+:root {
+  color-scheme: light;
+}
+
+body {
+  font-family: var(--font-body, "IBM Plex Sans", "Segoe UI", sans-serif);
+  background: var(--color-bg, rgba(245, 243, 239, 1));
+  color: var(--color-text, #111111);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+.page-container {
+  min-height: 100%;
+  width: 100%;
+}
+
+.site-content {
+  width: 100%;
+}
+
+.wrapper {
+  width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration-skip-ink: auto;
+}
+
+:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+
