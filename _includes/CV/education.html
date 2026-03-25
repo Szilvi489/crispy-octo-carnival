@@ -1,8 +1,33 @@
 <section id="cv-education" class="cv-education-section">
+    {%- assign education_default = site.data.i18n.cv.en.education -%}
     {%- assign schools = cv_i18n.education.schools -%}
     <div class="cv-education-panels">
         <div class="cv-education-panel cv-education-panel-intro">
-            <h2 class="cv-education-title">{{ cv_i18n.education.title }}</h2>
+            <div class="cv-education-title-wrap">
+                <h2 class="cv-education-title">{{ cv_i18n.education.title }}</h2>
+                <div
+                    class="cv-education-click-hint"
+                    data-hint-closed="{{ cv_i18n.education.click_hint_closed }}"
+                    data-hint-open="{{ cv_i18n.education.click_hint_open }}"
+                    aria-hidden="true"
+                >
+                    <svg class="cv-education-click-hint-svg" viewBox="0 0 120 120" role="presentation">
+                        <defs>
+                            <path
+                                id="cv-education-click-hint-path"
+                                d="M 60,60 m -43,0 a 43,43 0 1,1 86,0 a 43,43 0 1,1 -86,0"
+                            />
+                        </defs>
+                        <circle class="cv-education-click-hint-ring" cx="60" cy="60" r="47"></circle>
+                        <circle class="cv-education-click-hint-core" cx="60" cy="60" r="33"></circle>
+                        <text class="cv-education-click-hint-text">
+                            <textPath class="cv-education-click-hint-textpath" href="#cv-education-click-hint-path">
+                                {{ cv_i18n.education.click_hint }}
+                            </textPath>
+                        </text>
+                    </svg>
+                </div>
+            </div>
         </div>
         <div class="cv-education-panel cv-education-panel-content">
             <div class="cv-education-content">
@@ -18,35 +43,42 @@
                 <div class="cv-education-sky-deco cv-education-sky-deco-4" aria-hidden="true">
                     <img class="cv-education-sky-image" src="/CV/assets/images/CV/chunkyImagesWithoutBackground/3dflowerblue.png" alt="">
                 </div>
-                <span
-                    class="cv-school-click-hint cv-education-click-hint"
-                    data-hint-closed="{{ cv_i18n.education.click_hint_closed }}"
-                    data-hint-open="{{ cv_i18n.education.click_hint_open }}"
-                >{{ cv_i18n.education.click_hint }}</span>
-                <article class="cv-school-item">
-                    <div id="cv-school-info-1" class="cv-school-info">
-                        <div class="cv-school-info-content">{{ schools[0].info }}</div>
-                    </div>
-                    <img class="cv-school-image" src="/CV/assets/images/CV/mySchoolsRemovedBackgrounds/School1.png" alt="">
-                </article>
-                <article class="cv-school-item">
-                    <div id="cv-school-info-2" class="cv-school-info">
-                        <div class="cv-school-info-content">{{ schools[1].info }}</div>
-                    </div>
-                    <img class="cv-school-image" src="/CV/assets/images/CV/mySchoolsRemovedBackgrounds/School2.png" alt="">
-                </article>
-                <article class="cv-school-item">
-                    <div id="cv-school-info-3" class="cv-school-info">
-                        <div class="cv-school-info-content">{{ schools[2].info }}</div>
-                    </div>
-                    <img class="cv-school-image" src="/CV/assets/images/CV/mySchoolsRemovedBackgrounds/School3.png" alt="">
-                </article>
-                <article class="cv-school-item">
-                    <div id="cv-school-info-4" class="cv-school-info">
-                        <div class="cv-school-info-content">{{ schools[3].info }}</div>
-                    </div>
-                    <img class="cv-school-image" src="/CV/assets/images/CV/mySchoolsRemovedBackgrounds/School4.png" alt="">
-                </article>
+                {%- for default_school in education_default.schools -%}
+                    {%- assign school = schools[forloop.index0] -%}
+                    {%- assign years = school.years | default: default_school.years -%}
+                    {%- assign program = school.program | default: default_school.program -%}
+                    {%- assign institution = school.institution | default: default_school.institution -%}
+                    {%- assign location = school.location | default: default_school.location -%}
+                    {%- assign summary = school.summary | default: default_school.summary -%}
+                    {%- assign details = school.details | default: default_school.details -%}
+                    {%- assign image = school.image | default: default_school.image -%}
+                    <article class="cv-school-item">
+                        <div class="cv-school-year">{{ years }}</div>
+                        <div id="cv-school-info-{{ forloop.index }}" class="cv-school-info">
+                            <div class="cv-school-info-content">
+                                <div class="cv-school-info-meta">
+                                    <span class="cv-school-info-years">{{ years }}</span>
+                                    <span class="cv-school-info-location">{{ location }}</span>
+                                </div>
+                                <div class="cv-school-info-copy">
+                                    <h3>{{ program }}</h3>
+                                    <p class="cv-school-info-school">{{ institution }}</p>
+                                    {%- if summary != blank -%}
+                                        <p class="cv-school-info-summary">{{ summary }}</p>
+                                    {%- endif -%}
+                                    {%- if details != blank -%}
+                                        <ul class="cv-school-info-list">
+                                            {%- for detail in details -%}
+                                                <li>{{ detail }}</li>
+                                            {%- endfor -%}
+                                        </ul>
+                                    {%- endif -%}
+                                </div>
+                            </div>
+                        </div>
+                        <img class="cv-school-image" src="{{ image }}" alt="{{ program | escape }} building illustration">
+                    </article>
+                {%- endfor -%}
             </div>
         </div>
     </div>

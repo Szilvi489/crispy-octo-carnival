@@ -1,13 +1,23 @@
 (function () {
     var section = document.getElementById("cv-dreamjob");
     var beanField = section ? section.querySelector(".cv-dreamjob-bean-field") : null;
+    var titleNode = section ? section.querySelector(".cv-dreamjob-title") : null;
+    var dreamCopy = section ? section.querySelector(".cv-dreamjob-copy") : null;
     var gsapApi = window.gsap;
+    var scrollTriggerApi = window.ScrollTrigger;
     var head = document.head || document.getElementsByTagName("head")[0];
     var beanSource = "/CV/assets/images/CV/removedBackgroundImages/magicbeanPink.png";
     var beanTweens = [];
     var textColorTweens = [];
+    var textRevealTimeline = null;
     var beanAnimationsActive = false;
     var textAnimationsActive = false;
+    var textRevealCompleted = false;
+    var textInView = false;
+    var prefersReducedMotion = !!(
+        window.matchMedia &&
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    );
     var beanLayerConfigs = [
         { className: "cv-dreamjob-bean--layer-1", sizes: [15, 13, 12], count: 7, driftMin: 4.2, driftMax: 6.8, pulseMin: 3.2, pulseMax: 5.2 },
         { className: "cv-dreamjob-bean--layer-2", sizes: [11, 9, 8], count: 8, driftMin: 4.8, driftMax: 7.3, pulseMin: 3.5, pulseMax: 5.8 },
@@ -17,7 +27,7 @@
     ];
     var beanRotations = [-52, -26, -8, 18, 38];
 
-    if (!section || !beanField) {
+    if (!section || !beanField || !dreamCopy || !titleNode) {
         return;
     }
 
@@ -154,7 +164,130 @@
         beanAnimationsActive = true;
     }
 
-    function splitTextChars(node) {
+    function parseDecorations(node) {
+        var raw;
+        var parsed;
+
+        if (!node) {
+            return [];
+        }
+
+        raw = node.getAttribute("data-dreamjob-decorations");
+
+        if (!raw) {
+            return [];
+        }
+
+        try {
+            parsed = JSON.parse(raw);
+        } catch (error) {
+            parsed = [];
+        }
+
+        return Array.isArray(parsed)
+            ? parsed.filter(function (item) {
+                return item && typeof item.match === "string" && item.match;
+            }).sort(function (left, right) {
+                return right.match.length - left.match.length;
+            })
+            : [];
+    }
+
+    function findNextDecoration(text, startIndex, decorations) {
+        var bestMatch = null;
+
+        decorations.forEach(function (item) {
+            var index = text.indexOf(item.match, startIndex);
+
+            if (index === -1) {
+                return;
+            }
+
+            if (!bestMatch || index < bestMatch.index || (index === bestMatch.index && item.match.length > bestMatch.match.length)) {
+                bestMatch = {
+                    index: index,
+                    match: item.match,
+                    style: item.style || "script"
+                };
+            }
+        });
+
+        return bestMatch;
+    }
+
+    function buildDecoratedSegments(text, decorations) {
+        var cursor = 0;
+        var segments = [];
+        var match;
+
+        while (cursor < text.length) {
+            match = findNextDecoration(text, cursor, decorations);
+
+            if (!match) {
+                segments.push({
+                    style: "plain",
+                    text: text.slice(cursor)
+                });
+                break;
+            }
+
+            if (match.index > cursor) {
+                segments.push({
+                    style: "plain",
+                    text: text.slice(cursor, match.index)
+                });
+            }
+
+            segments.push({
+                style: match.style,
+                text: match.match
+            });
+
+            cursor = match.index + match.match.length;
+        }
+
+        return segments;
+    }
+
+    function appendCharacterSpans(container, text) {
+        text.split("").forEach(function (character) {
+            var span = document.createElement("span");
+
+            span.className = "cv-dreamjob-char";
+            span.setAttribute("aria-hidden", "true");
+            span.textContent = character;
+            container.appendChild(span);
+        });
+    }
+
+    function appendSegment(fragment, segment) {
+        segment.text.split(/(\s+)/).forEach(function (token) {
+            var wordSpan;
+
+            if (!token) {
+                return;
+            }
+
+            if (/^\s+$/.test(token)) {
+                token.split("").forEach(function () {
+                    var space = document.createElement("span");
+                    space.className = "cv-dreamjob-char cv-dreamjob-char-space";
+                    space.setAttribute("aria-hidden", "true");
+                    space.textContent = "\u00A0";
+                    fragment.appendChild(space);
+                });
+                return;
+            }
+
+            wordSpan = document.createElement("span");
+            wordSpan.className = "cv-dreamjob-word cv-dreamjob-word--" + segment.style;
+            wordSpan.setAttribute("aria-hidden", "true");
+            appendCharacterSpans(wordSpan, token);
+            fragment.appendChild(wordSpan);
+        });
+    }
+
+    function splitPlainTextNode(node) {
         var originalText;
         var fragment;
 
@@ -165,11 +298,13 @@
         originalText = node.textContent || "";
         node.textContent = "";
         node.classList.add("cv-dreamjob-text-split");
+        node.setAttribute("aria-label", originalText);
         fragment = document.createDocumentFragment();
 
         originalText.split("").forEach(function (character) {
             var span = document.createElement("span");
             span.className = "cv-dreamjob-char";
+            span.setAttribute("aria-hidden", "true");
 
             if (character === " ") {
                 span.className += " cv-dreamjob-char-space";
@@ -179,6 +314,32 @@
             }
 
             fragment.appendChild(span);
+        });
+
+        node.appendChild(fragment);
+        node.dataset.splitReady = "true";
+    }
+
+    function decorateTextNode(node) {
+        var originalText;
+        var fragment;
+        var decorations;
+        var segments;
+
+        if (!node || node.dataset.splitReady === "true") {
+            return;
+        }
+
+        originalText = node.textContent || "";
+        decorations = parseDecorations(node);
+        segments = buildDecoratedSegments(originalText, decorations);
+        node.textContent = "";
+        node.classList.add("cv-dreamjob-text-split");
+        node.setAttribute("aria-label", originalText);
+        fragment = document.createDocumentFragment();
+
+        segments.forEach(function (segment) {
+            appendSegment(fragment, segment);
         });
 
         node.appendChild(fragment);
@@ -252,48 +413,164 @@
         };
     }
 
+    function createColorTween(chars) {
+        if (!chars.length) {
+            return null;
+        }
+
+        gsapApi.set(chars, {
+            color: "rgba(10, 110, 55, 0.69)"
+        });
+
+        return gsapApi.to(chars, {
+            color: "rgba(195, 27, 27, 0.73)",
+            duration: 1.75,
+            ease: "sine.inOut",
+            stagger: distributeByPosition({
+                amount: 1.5,
+                from: "center"
+            }),
+            repeat: -1,
+            yoyo: true,
+            repeatDelay: 0.12,
+            paused: true
+        });
+    }
+
+    function finalizeTextState() {
+        textRevealCompleted = true;
+        setTextAnimationState(textInView);
+    }
+
     function animateTextChars() {
-        var textNodes;
+        var titleChars;
+        var copyChars;
+        var allChars;
+        var colorTween;
+
+        splitPlainTextNode(titleNode);
+        decorateTextNode(dreamCopy);
 
         if (!gsapApi || typeof gsapApi.to !== "function") {
             return;
         }
 
-        textNodes = Array.prototype.slice.call(
-            section.querySelectorAll(".cv-dreamjob-content h2, .cv-dreamjob-content p")
+        titleChars = Array.prototype.slice.call(
+            titleNode.querySelectorAll(".cv-dreamjob-char:not(.cv-dreamjob-char-space)")
         );
-        textColorTweens = [];
+        copyChars = Array.prototype.slice.call(
+            dreamCopy.querySelectorAll(".cv-dreamjob-char:not(.cv-dreamjob-char-space)")
+        );
+        allChars = titleChars.concat(copyChars);
 
-        textNodes.forEach(function (node) {
-            var chars;
-            var colorTween;
+        if (!allChars.length) {
+            finalizeTextState();
+            return;
+        }
 
-            splitTextChars(node);
-            chars = Array.prototype.slice.call(node.querySelectorAll(".cv-dreamjob-char"));
-
-            if (!chars.length) {
-                return;
-            }
-
-            gsapApi.set(chars, { color: "rgba(10, 110, 55, 0.69)" });
-
-            colorTween = gsapApi.to(chars, {
-                color: "rgba(195, 27, 27, 0.73)",
-                duration: 1.75,
-                ease: "sine.inOut",
-                stagger: distributeByPosition({
-                    amount: 1.5,
-                    from: "center"
-                }),
-                repeat: -1,
-                yoyo: true,
-                repeatDelay: 0.12
+        if (prefersReducedMotion) {
+            textColorTweens = [];
+            gsapApi.set(allChars, {
+                opacity: 1,
+                yPercent: 0,
+                rotate: 0,
+                filter: "blur(0px)"
             });
+            finalizeTextState();
+            return;
+        }
 
-            textColorTweens.push(colorTween);
+        colorTween = createColorTween(allChars);
+
+        if (colorTween) {
+            textColorTweens = [colorTween];
+        }
+
+        if (scrollTriggerApi && typeof gsapApi.registerPlugin === "function") {
+            gsapApi.registerPlugin(scrollTriggerApi);
+        }
+
+        gsapApi.set(titleChars, {
+            yPercent: function (index) {
+                return index % 2 === 0 ? -104 : 104;
+            },
+            opacity: 0,
+            rotate: function (index) {
+                return index % 2 === 0 ? -2.1 : 2.1;
+            },
+            filter: "blur(6px)",
+            transformOrigin: "50% 50%"
         });
 
-        textAnimationsActive = true;
+        gsapApi.set(copyChars, {
+            yPercent: function (index) {
+                return index % 2 === 0 ? -138 : 138;
+            },
+            opacity: 0,
+            rotate: function (index) {
+                return index % 2 === 0 ? -2.6 : 2.6;
+            },
+            filter: "blur(7px)",
+            transformOrigin: "50% 50%"
+        });
+
+        textRevealTimeline = gsapApi.timeline({
+            paused: true,
+            onComplete: finalizeTextState
+        });
+
+        textRevealTimeline.to(titleChars, {
+            yPercent: 0,
+            rotate: 0,
+            duration: 1.25,
+            ease: "power3.out",
+            stagger: 0.02
+        }, 0);
+
+        textRevealTimeline.to(titleChars, {
+            opacity: 1,
+            filter: "blur(0px)",
+            duration: 0.68,
+            ease: "sine.out",
+            stagger: 0.02
+        }, 0.56);
+
+        textRevealTimeline.to(copyChars, {
+            yPercent: 0,
+            rotate: 0,
+            duration: 1.65,
+            ease: "power3.out",
+            stagger: 0.018
+        }, 0.16);
+
+        textRevealTimeline.to(copyChars, {
+            opacity: 1,
+            filter: "blur(0px)",
+            duration: 0.78,
+            ease: "sine.out",
+            stagger: 0.018
+        }, 1);
+
+        if (scrollTriggerApi && typeof scrollTriggerApi.create === "function") {
+            scrollTriggerApi.create({
+                trigger: section,
+                start: "top 76%",
+                once: true,
+                onEnter: function () {
+                    if (textRevealTimeline) {
+                        textRevealTimeline.play(0);
+                    }
+                },
+                onEnterBack: function () {
+                    if (textRevealTimeline) {
+                        textRevealTimeline.play(0);
+                    }
+                }
+            });
+            return;
+        }
+
+        textRevealTimeline.play(0);
     }
 
     function setBeanAnimationState(shouldRun) {
@@ -312,7 +589,9 @@
     }
 
     function setTextAnimationState(shouldRun) {
-        if (!textColorTweens.length || textAnimationsActive === shouldRun) {
+        textInView = shouldRun;
+
+        if (!textRevealCompleted || !textColorTweens.length || textAnimationsActive === shouldRun) {
             return;
         }
 
@@ -334,12 +613,17 @@
     if ("IntersectionObserver" in window && beanField) {
         var observer = new IntersectionObserver(function (entries) {
             var entry = entries[0];
-            setBeanAnimationState(!!entry && entry.isIntersecting);
-            setTextAnimationState(!!entry && entry.isIntersecting);
+            var isIntersecting = !!entry && entry.isIntersecting;
+            setBeanAnimationState(isIntersecting);
+            setTextAnimationState(isIntersecting);
         }, {
             threshold: 0.05
         });
 
-        observer.observe(beanField);
+        observer.observe(section);
+        return;
     }
+
+    textInView = true;
+    setTextAnimationState(true);
 })();

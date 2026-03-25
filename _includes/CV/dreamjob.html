@@ -1,7 +1,15 @@
+{%- assign dream_job_default = site.data.i18n.cv.en.dream_job -%}
+{%- assign dream_job = cv_i18n.dream_job | default: dream_job_default -%}
+{%- assign dream_job_title = dream_job.title | default: dream_job_default.title -%}
+{%- assign dream_job_text = dream_job.text | default: dream_job_default.text -%}
+{%- assign dream_job_decorations = dream_job.decorations | default: dream_job_default.decorations -%}
 <section id="cv-dreamjob" class="cv-dreamjob-section">
     <div class="cv-dreamjob-bean-field" aria-hidden="true"></div>
     <div class="cv-dreamjob-content">
-        <h2>{{ cv_i18n.dream_job.title }}</h2>
-        <p>{{ cv_i18n.dream_job.text }}</p>
+        <h2 class="cv-dreamjob-title">{{ dream_job_title }}</h2>
+        <p
+            class="cv-dreamjob-copy"
+            data-dreamjob-decorations='{{ dream_job_decorations | jsonify | escape }}'
+        >{{ dream_job_text }}</p>
     </div>
 </section>

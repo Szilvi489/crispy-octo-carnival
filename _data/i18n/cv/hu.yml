@@ -31,8 +31,8 @@ intro:
 education:
   title: "Tanulmanyok"
   click_hint: "Kattints az epuletekre a reszletekert"
-  click_hint_closed: "Kattints a reszletek megjelenitesehez"
-  click_hint_open: "Kattints a bezarashoz"
+  click_hint_closed: "Kattints az epuletekre a reszletekert"
+  click_hint_open: "Kattints egy epuletre a bezarashoz"
   schools:
     - info: "\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\""
     - info: "\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\""
@@ -385,3 +385,4 @@ dream_job:
 footer_download:
   download_label: "CV letoltese PDF-kent"
   download_filename: "szilvia-varga-cv.pdf"
+  thank_you_badge_ring: "THANK YOU FOR READING MY CV!"

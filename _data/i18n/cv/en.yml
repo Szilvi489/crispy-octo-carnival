@@ -30,14 +30,57 @@ intro:
 
 education:
   title: "Education"
-  click_hint: "Click the buildings to reveal details"
-  click_hint_closed: "Click to reveal details"
-  click_hint_open: "Click to close"
+  click_hint: "Click on Buildings to reveal details"
+  click_hint_closed: "Click on Buildings to reveal details"
+  click_hint_open: "Click on building to close"
   schools:
-    - info: "\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\""
-    - info: "\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\""
-    - info: "\"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?\""
-    - info: "\"But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely painful. Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious physical exercise, except to obtain some advantage from it? But who has any right to find fault with a man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure?\""
+    - years: "2007 - 2010"
+      program: "Mode und Textil"
+      institution: "Berufsschule fuer Mode und Kunstgewerbe"
+      location: "Budapest"
+      summary: "Vocational fashion school with a practical foundation in textile work, garment construction, and design basics."
+      details:
+        - "Pattern making"
+        - "Sewing techniques"
+        - "Garment construction"
+        - "Textile materials and fabric handling"
+        - "Fashion illustration"
+      image: "/CV/assets/images/CV/mySchoolsRemovedBackgrounds/School2.png"
+    - years: "2014 - 2015"
+      program: "Matura"
+      institution: "Gymnasium"
+      location: "Budapest"
+      summary: "Graduated from gymnasium there and completed the Matura."
+      image: "/CV/assets/images/CV/mySchoolsRemovedBackgrounds/School1.png"
+    - years: "2020 - 2022"
+      program: "Kolleg Informatik"
+      institution: "HTBLVA Spengergasse"
+      location: "Wien"
+      summary: "Practice-oriented informatics program with a strong base in software development, data, and networking."
+      details:
+        - "SQL"
+        - "Java"
+        - "Relational Databases"
+        - "Project Management"
+        - "CCNA"
+        - "HTML"
+        - "Data Modeling"
+      image: "/CV/assets/images/CV/mySchoolsRemovedBackgrounds/School3.png"
+    - years: "2022 - 2023"
+      program: "FH Campus Wien"
+      institution: "Hochschule Campus Wien | University of Applied Sciences"
+      location: "Wien"
+      summary: "Attended for 1 year with a focus on quality assurance, testing, and requirements engineering."
+      details:
+        - "Requirements Engineering"
+        - "Software Engineering Practices"
+        - "ISTQB"
+        - "Quality Assurance"
+        - "IREB"
+        - "Testing Strategies"
+        - "Quality Management"
+        - "Scrum"
+      image: "/CV/assets/images/CV/mySchoolsRemovedBackgrounds/School4.png"
 
 experience:
   kicker: "Archive No. 01"
@@ -382,7 +425,43 @@ personal:
 dream_job:
   title: "Dream Job"
   text: "I’m looking for a work environment where I can grow with both structure and trust. I do my best work in teams with clear onboarding, transparent expectations, and a supportive culture where questions are welcome. While I work independently, take initiative, and enjoy solving problems creatively, I also value collaboration and having guidance when needed. My ideal role combines technical work with human connection — in an international, social team, with a hybrid setup in Vienna, room for creative thinking, and, as a bonus, occasional travel or the flexibility to work remotely from abroad for a limited time."
+  decorations:
+    - match: "grow"
+      style: script
+    - match: "structure and trust"
+      style: focus
+    - match: "clear onboarding"
+      style: focus
+    - match: "transparent expectations"
+      style: focus
+    - match: "supportive culture"
+      style: script
+    - match: "questions are welcome"
+      style: script
+    - match: "take initiative"
+      style: focus
+    - match: "solving problems creatively"
+      style: script
+    - match: "collaboration"
+      style: focus
+    - match: "guidance when needed"
+      style: script
+    - match: "technical work"
+      style: focus
+    - match: "human connection"
+      style: script
+    - match: "international, social team"
+      style: focus
+    - match: "hybrid setup in Vienna"
+      style: focus
+    - match: "creative thinking"
+      style: script
+    - match: "occasional travel"
+      style: focus
+    - match: "work remotely from abroad"
+      style: script
 
 footer_download:
   download_label: "Download CV as PDF"
   download_filename: "szilvia-varga-cv.pdf"
+  thank_you_badge_ring: "THANK YOU FOR READING MY CV!"

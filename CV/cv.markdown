@@ -35,6 +35,7 @@ scripts:
 fonts:
   - https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap
   - https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap
+  - https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500;1,600;1,700&family=Space+Grotesk:wght@400;500;700&display=swap
   - https://fonts.googleapis.com/css2?family=Rubik+Mono+One&display=swap
   - https://fonts.googleapis.com/css2?family=Aldrich&display=swap
   - https://fonts.googleapis.com/css2?family=Bungee&display=swap

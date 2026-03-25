@@ -30,9 +30,9 @@ intro:
 
 education:
   title: "Ausbildung"
-  click_hint: "Klicke auf die Gebaeude, um Details zu sehen"
-  click_hint_closed: "Klicken, um Details zu zeigen"
-  click_hint_open: "Klicken, um zu schliessen"
+  click_hint: "Klicke auf die Gebaeude fuer Details"
+  click_hint_closed: "Klicke auf die Gebaeude fuer Details"
+  click_hint_open: "Klicke auf ein Gebaeude zum Schliessen"
   schools:
     - info: "\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\""
     - info: "\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\""
@@ -385,3 +385,4 @@ dream_job:
 footer_download:
   download_label: "CV als PDF herunterladen"
   download_filename: "szilvia-varga-cv.pdf"
+  thank_you_badge_ring: "THANK YOU FOR READING MY CV!"

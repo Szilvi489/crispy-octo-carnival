@@ -7,6 +7,7 @@
     var introPanel = educationSection ? educationSection.querySelector(".cv-education-panel-intro") : null;
     var contentPanel = educationSection ? educationSection.querySelector(".cv-education-panel-content") : null;
     var clickHint = educationSection ? educationSection.querySelector(".cv-education-click-hint") : null;
+    var clickHintTextPath = clickHint ? clickHint.querySelector(".cv-education-click-hint-textpath") : null;
     var clickHintClosedText = clickHint && clickHint.getAttribute("data-hint-closed")
         ? clickHint.getAttribute("data-hint-closed").trim()
         : "";
@@ -96,19 +97,41 @@
     function updateSchoolLiftDistances() {
         schoolItems.forEach(function (item) {
             var info = item.querySelector(".cv-school-info");
+            var content = info ? info.querySelector(".cv-school-info-content") : null;
+            var infoStyles;
+            var paddingTop;
+            var paddingBottom;
+            var borderTop;
+            var borderBottom;
+            var measuredContentHeight;
+            var panelHeight;
+            var minPanelHeight;
             var liftDistance;
 
             if (!info) {
                 return;
             }
 
-            liftDistance = Math.ceil(info.offsetHeight + 12);
+            infoStyles = window.getComputedStyle(info);
+            paddingTop = parseFloat(infoStyles.paddingTop) || 0;
+            paddingBottom = parseFloat(infoStyles.paddingBottom) || 0;
+            borderTop = parseFloat(infoStyles.borderTopWidth) || 0;
+            borderBottom = parseFloat(infoStyles.borderBottomWidth) || 0;
+            measuredContentHeight = content ? content.scrollHeight : info.scrollHeight;
+            minPanelHeight = window.innerWidth <= 768 ? 96 : 132;
+            panelHeight = Math.max(
+                minPanelHeight,
+                Math.ceil(measuredContentHeight + paddingTop + paddingBottom + borderTop + borderBottom)
+            );
+            item.style.setProperty("--school-info-height", panelHeight + "px");
+
+            liftDistance = Math.ceil(panelHeight + 12);
             item.style.setProperty("--school-lift-distance", liftDistance + "px");
         });
     }
 
     function setOpenSchool(nextOpenItem) {
-        var firstItemIsOpen;
+        var hasOpenSchool;
 
         schoolItems.forEach(function (item) {
             var isOpen = item === nextOpenItem;
@@ -120,8 +143,14 @@
             return;
         }
 
-        firstItemIsOpen = schoolItems[0] === nextOpenItem;
-        clickHint.textContent = firstItemIsOpen ? clickHintOpenText : clickHintClosedText;
+        hasOpenSchool = !!nextOpenItem;
+
+        if (clickHintTextPath) {
+            clickHintTextPath.textContent = hasOpenSchool ? clickHintOpenText : clickHintClosedText;
+            return;
+        }
+
+        clickHint.textContent = hasOpenSchool ? clickHintOpenText : clickHintClosedText;
     }
 
     function updateContentPanelWidth() {

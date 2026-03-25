@@ -1,5 +1,20 @@
 <footer class="cv-footer-download">
     <div class="cv-footer-download-inner">
+        <div class="cv-footer-thankyou-badge" aria-hidden="true">
+            <svg class="cv-footer-thankyou-badge-svg" viewBox="0 0 120 120" role="presentation">
+                <defs>
+                    <path
+                        id="cv-footer-thankyou-circle-path"
+                        d="M 60,60 m -44,0 a 44,44 0 1,1 88,0 a 44,44 0 1,1 -88,0"
+                    />
+                </defs>
+                <text class="cv-footer-thankyou-badge-text">
+                    <textPath href="#cv-footer-thankyou-circle-path">
+                        {{ cv_i18n.footer_download.thank_you_badge_ring }}
+                    </textPath>
+                </text>
+            </svg>
+        </div>
         <a
             class="cv-footer-download-button"
             href="/CV/asset.php?path=pdf/szilvia-varga-cv.pdf"

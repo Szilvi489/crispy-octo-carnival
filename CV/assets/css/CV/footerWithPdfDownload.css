@@ -11,14 +11,54 @@
 }
 
 .cv-footer-download-inner {
+    position: relative;
     width: min(100%, 960px);
     margin: 0 auto;
-    padding-top: 1.8rem;
+    padding: 1.8rem 1.25rem 0;
     border-top: 1px solid rgba(43, 27, 27, 0.16);
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
+}
+
+.cv-footer-thankyou-badge {
+    position: absolute;
+    top: -2.35rem;
+    right: 0;
+    width: clamp(112px, 12vw, 148px);
+    aspect-ratio: 1;
+    display: grid;
+    place-items: center;
+    color: rgba(79, 48, 44, 0.78);
+    pointer-events: none;
+}
+
+.cv-footer-thankyou-badge-svg {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    animation: cvFooterBadgeSpin 18s linear infinite;
+    transform-origin: 50% 50%;
+}
+
+.cv-footer-thankyou-badge-text {
+    fill: currentColor;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 8.5px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+}
+
+@keyframes cvFooterBadgeSpin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 .cv-footer-download-button {
@@ -66,7 +106,25 @@
         padding: 0 7vw 9vh;
     }
 
+    .cv-footer-download-inner {
+        padding-top: 5rem;
+    }
+
+    .cv-footer-thankyou-badge {
+        top: -0.6rem;
+        right: auto;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 116px;
+    }
+
     .cv-footer-download-button {
         width: 100%;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .cv-footer-thankyou-badge-svg {
+        animation: none;
     }
 }
