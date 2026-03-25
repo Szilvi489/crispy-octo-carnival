@@ -1,0 +1,108 @@
+@page {
+  size: A4;
+  margin: 16mm;
+}
+
+:root {
+  color-scheme: light;
+  --pdf-ink: #2b1b1b;
+  --pdf-accent: #b84322;
+  --pdf-muted: #6a5754;
+  --pdf-rule: rgba(43, 27, 27, 0.14);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 11pt;
+}
+
+body {
+  margin: 0;
+  color: var(--pdf-ink);
+  background: #f5f3ef;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  line-height: 1.45;
+}
+
+.pdf-resume-shell {
+  width: 100%;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0 0 0.45rem;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--pdf-ink);
+}
+
+h1 {
+  font-size: 2rem;
+  letter-spacing: 0.02em;
+}
+
+h2 {
+  margin-top: 1.4rem;
+  padding-top: 0.7rem;
+  border-top: 1px solid var(--pdf-rule);
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--pdf-accent);
+}
+
+h3 {
+  margin-top: 0.95rem;
+  font-size: 0.98rem;
+}
+
+p,
+ul,
+ol {
+  margin: 0 0 0.7rem;
+}
+
+ul,
+ol {
+  padding-left: 1.15rem;
+}
+
+li + li {
+  margin-top: 0.2rem;
+}
+
+a {
+  color: var(--pdf-accent);
+  text-decoration: none;
+}
+
+strong {
+  font-weight: 700;
+}
+
+em {
+  color: var(--pdf-muted);
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid var(--pdf-rule);
+  margin: 1rem 0;
+}
+
+blockquote {
+  margin: 0 0 0.9rem;
+  padding-left: 0.85rem;
+  border-left: 3px solid var(--pdf-accent);
+  color: var(--pdf-muted);
+}
+
+code {
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 0.92em;
+}

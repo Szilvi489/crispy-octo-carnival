@@ -1,124 +1,102 @@
-(function () {
-    var frameSources = [
-        "/assets/images/aboutPage/ChattyGirl1.png",
-        "/assets/images/aboutPage/ChattyGIrl2.png",
-        "/assets/images/aboutPage/ChattyGirl3.png",
-        "/assets/images/aboutPage/ChattyGirl4.png",
-        "/assets/images/aboutPage/ChattyGirl5.png",
-        "/assets/images/aboutPage/ChattyGirl6.png",
-        "/assets/images/aboutPage/ChattyGirl7.png"
-    ];
-    var stopMotion = document.querySelector(".about-stop-motion-overlay");
-    var viennaTime = document.querySelector(".vienna-time");
-    var frames;
-    var activeIndex = 0;
-    var timerId = null;
-    var timeTimerId = null;
+(async function () {
+    var globeMount = document.getElementById("aboutPageGlobeMount");
+    var threeModule;
+    var globeFactory;
+    var globeInstance;
+    var controls;
+    var renderer;
+    var customMaterial;
 
-    if (!stopMotion) {
-        return;
-    }
+    function syncGlobeSize() {
+        var rect;
+        var width;
+        var height;
 
-    function buildFrames() {
-        var i;
-        var frame;
-        var builtFrames = [];
-
-        stopMotion.innerHTML = "";
-
-        for (i = 0; i < frameSources.length; i++) {
-            frame = document.createElement("img");
-            frame.className = "about-stop-motion-frame";
-            frame.src = frameSources[i];
-            frame.alt = "";
-            frame.loading = "eager";
-            frame.decoding = "async";
-
-            if (i === 0) {
-                frame.classList.add("is-active");
-            }
-
-            stopMotion.appendChild(frame);
-            builtFrames.push(frame);
-        }
-
-        return builtFrames;
-    }
-
-    frames = buildFrames();
-
-    if (!frames.length) {
-        return;
-    }
-
-    function showFrame(index) {
-        var i;
-
-        activeIndex = index;
-
-        for (i = 0; i < frames.length; i++) {
-            frames[i].classList.toggle("is-active", i === activeIndex);
-        }
-    }
-
-    function advanceFrame() {
-        var nextIndex = activeIndex + 1;
-
-        if (nextIndex >= frames.length) {
-            nextIndex = 0;
-        }
-
-        showFrame(nextIndex);
-    }
-
-    function startSequence() {
-        if (timerId !== null) {
+        if (!globeInstance || !globeMount) {
             return;
         }
 
-        stopMotion.classList.add("is-playing");
-        showFrame(0);
-        timerId = window.setInterval(advanceFrame, 400);
+        rect = globeMount.getBoundingClientRect();
+        width = Math.max(1, Math.round(rect.width));
+        height = Math.max(1, Math.round(rect.height));
+
+        globeInstance.width(width);
+        globeInstance.height(height);
     }
 
-    function stopSequence() {
-        if (timerId !== null) {
-            window.clearInterval(timerId);
-            timerId = null;
-        }
-
-        stopMotion.classList.remove("is-playing");
-        showFrame(0);
+    if (!globeMount) {
+        return;
     }
 
-    stopMotion.addEventListener("mouseenter", startSequence);
-    stopMotion.addEventListener("mouseleave", stopSequence);
-    stopMotion.addEventListener("focus", startSequence);
-    stopMotion.addEventListener("blur", stopSequence);
-
-    function updateViennaTime() {
-        if (!viennaTime) {
-            return;
-        }
-
-        viennaTime.textContent = new Intl.DateTimeFormat("en-GB", {
-            timeZone: "Europe/Vienna",
-            hour: "2-digit",
-            minute: "2-digit",
-            second: "2-digit",
-            hour12: false
-        }).format(new Date());
+    try {
+        threeModule = await import("https://esm.sh/three@0.150.1");
+        globeFactory = (await import("https://esm.sh/globe.gl@2.39.2?bundle")).default;
+    } catch (error) {
+        console.error("About page Globe.gl import failed:", error);
+        return;
     }
 
-    if (viennaTime) {
-        updateViennaTime();
-        timeTimerId = window.setInterval(updateViennaTime, 1000);
+    globeInstance = globeFactory()(globeMount)
+        .backgroundColor("rgba(2, 2, 2, 0.93)")
+        .showAtmosphere(true)
+        .atmosphereColor("#48e7ff")
+        .atmosphereAltitude(0.28)
+        .showGraticules(true)
+        .globeCurvatureResolution(58);
 
-        window.addEventListener("pagehide", function () {
-            if (timeTimerId !== null) {
-                window.clearInterval(timeTimerId);
-                timeTimerId = null;
-            }
-        }, { once: true });
+    customMaterial = new threeModule.MeshPhongMaterial({
+        map: currentMaterial.map,
+        bumpMap: currentMaterial.bumpMap,
+        bumpScale: 0.08,
+
+        color: new threeModule.Color("#07131d"),
+        emissive: new threeModule.Color("#0da8d6"),
+        emissiveIntensity: 0.72,
+        specular: new threeModule.Color("#b6fbff"),
+        shininess: 82,
+        transparent: true,
+        opacity: 0.98
+    });
+    globeInstance.onGlobeReady(function () {
+        globeInstance.globeMaterial(customMaterial);
+    });
+
+    syncGlobeSize();
+
+    controls = typeof globeInstance.controls === "function" ? globeInstance.controls() : null;
+    if (controls) {
+        controls.enablePan = false;
+        controls.enableZoom = false;
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.08;
+        controls.rotateSpeed = 0.78;
+        controls.autoRotate = true;
+        controls.autoRotateSpeed = 0.7;
     }
+
+    renderer = typeof globeInstance.renderer === "function" ? globeInstance.renderer() : null;
+    if (renderer && typeof renderer.setClearColor === "function") {
+        renderer.setPixelRatio(window.devicePixelRatio);
+
+    }
+
+    globeInstance.pointOfView({
+        lat: 25,
+        lng: 18,
+        altitude: 2.05
+    }, 0);
+
+    globeMount.addEventListener("pointerdown", function () {
+        globeMount.classList.add("is-dragging");
+    });
+
+    window.addEventListener("pointerup", function () {
+        globeMount.classList.remove("is-dragging");
+    });
+
+    globeMount.addEventListener("pointerleave", function () {
+        globeMount.classList.remove("is-dragging");
+    });
+
+    window.addEventListener("resize", syncGlobeSize);
 })();
