@@ -2,9 +2,9 @@
 layout: projectsPage
 enable_crosshair: true
 
-title: Projects Page
+title: Photo Galleries
 
-permalink: /projectsPage/
+permalink: /photoGalleries/
 
 stylesheets:
   - /assets/css/projectsPage/projectsPageStylesheet.css
@@ -12,7 +12,7 @@ stylesheets:
 scripts:
   - /assets/js/projectsPage/projectsPage.js
 
-description: "A list of every project"
+description: "A list of photography galleries"
 
 fonts:
   - https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap

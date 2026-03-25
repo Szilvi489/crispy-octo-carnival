@@ -1,0 +1,88 @@
+.imageOfTheDayOverlay {
+    align-items: center;
+    background: rgba(0, 0, 0, 0.75);
+    display: flex;
+    inset: 0;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    position: fixed;
+    transition: opacity 200ms ease;
+    z-index: 50;
+}
+
+.image-of-the-day-open .imageOfTheDayOverlay {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.image-of-the-day-open,
+.image-of-the-day-open body {
+    overflow: hidden;
+}
+
+.imageOfTheDayContent {
+    display: flex;
+    gap: 20px;
+    max-width: min(720px, 92vw);
+    position: relative;
+    text-align: left;
+}
+
+.imageOfTheDayTitle {
+    color: var(--navFontColour);
+    font-size: 14px;
+    margin: 0;
+    order: 2;
+    transform: rotate(90deg);
+    transform-origin: bottom left;
+    white-space: nowrap;
+}
+
+.imageOfTheDayImageWrapper {
+    display: flex;
+    justify-content: center;
+    order: 1;
+}
+
+.imageOfTheDayImage {
+    max-height: 60vh;
+    max-width: 100%;
+    object-fit: cover;
+}
+
+.imageOfTheDayClose {
+    border: 0;
+    color: var(--navFontColour);
+    cursor: pointer;
+    font-size: 50px;
+    height: 44px;
+    line-height: 1,5;
+    position: absolute;
+    right: 20px;
+    top: 28px;
+    width: 44px;
+}
+
+.imageOfTheDayClose:focus-visible {
+    outline: 3px solid rgba(245, 243, 239, 1);
+    outline-offset: 4px;
+}
+
+.imageOfTheDayFallback {
+    color: #444444;
+    margin: 0;
+}
+
+@media (max-width: 640px) {
+    .imageOfTheDayContent {
+        align-items: center;
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .imageOfTheDayTitle {
+        order: 0;
+        transform: none;
+    }
+}

@@ -1,0 +1,122 @@
+.cv-dreamjob-section {
+    position: relative;
+    min-height: 120vh;
+    padding: 14vh 6vw 8vh;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    z-index: 6;
+    background: linear-gradient(
+        180deg,
+        var(--color-soft-white) 0%,
+        rgba(245, 243, 239, 0.98) 36%,
+        rgba(245, 243, 239, 0.95) 100%
+    );
+}
+
+.cv-dreamjob-content {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: min(100%, 960px);
+    min-height: calc(120vh - 18vh);
+    gap: clamp(1.5rem, 4vh, 3rem);
+    text-align: center;
+}
+
+.cv-dreamjob-bean-field {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.cv-dreamjob-bean {
+    position: absolute;
+    width: clamp(26px, var(--dream-bean-size, 6vw), 260px);
+    height: auto;
+    transform: translate(-50%, -50%) rotate(var(--dream-bean-rotation, 0deg));
+    transform-origin: center;
+    pointer-events: none;
+    will-change: transform;
+}
+
+.cv-dreamjob-bean--layer-1 {
+    z-index: 4;
+    opacity: 0.9;
+}
+
+.cv-dreamjob-bean--layer-2 {
+    z-index: 3;
+    opacity: 0.78;
+}
+
+.cv-dreamjob-bean--layer-3 {
+    z-index: 2;
+    opacity: 0.68;
+}
+
+.cv-dreamjob-bean--layer-4 {
+    z-index: 1;
+    opacity: 0.58;
+}
+
+.cv-dreamjob-bean--layer-5 {
+    z-index: 0;
+    opacity: 0.48;
+}
+
+.cv-dreamjob-section h2 {
+    margin: 0;
+    font-family: "Tulpen One", cursive;
+    font-size: clamp(3.4rem, 12vw, 10rem);
+    line-height: 0.9;
+    color: var(--color-bordeau-chocolate);
+}
+
+.cv-dreamjob-content p {
+    width: 80%;
+    margin: 0;
+    font-family: "Times New Roman", serif;
+    font-size: clamp(1rem, 2vw, 1.5rem);
+    line-height: 1.4;
+    color: rgba(63, 63, 63, 0.9);
+    font-weight: 600;
+    will-change: color;
+}
+
+.cv-dreamjob-content p.cv-dreamjob-text-split {
+    animation: none;
+}
+
+.cv-dreamjob-char {
+    display: inline-block;
+    will-change: color;
+}
+
+.cv-dreamjob-char-space {
+    display: inline-block;
+    width: 0.35em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .cv-dreamjob-content p {
+        color: rgba(28, 28, 28, 0.94);
+    }
+}
+
+@media (max-width: 768px) {
+    .cv-dreamjob-section {
+        min-height: auto;
+        padding: 14vh 7vw 10vh;
+    }
+
+    .cv-dreamjob-content {
+        min-height: auto;
+    }
+}

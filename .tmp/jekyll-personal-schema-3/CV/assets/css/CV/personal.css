@@ -1,0 +1,284 @@
+.cv-personal-section {
+    --cv-personal-section-progress: 0;
+    --cv-personal-section-visibility: 0;
+    min-height: 160vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0;
+    position: relative;
+    overflow: visible;
+    z-index: 8;
+}
+
+.cv-personal-image-layer {
+    position: absolute;
+    inset: 0;
+    z-index: 6;
+    overflow: visible;
+    pointer-events: none;
+}
+
+.cv-personal-item {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: clamp(42px, var(--cv-personal-item-width, 8vw), 220px);
+    height: auto;
+    transform: translate(-50%, -50%);
+    transform-origin: center;
+    opacity: 0;
+    pointer-events: none;
+    will-change: transform, opacity;
+    filter: drop-shadow(0 18px 26px rgba(18, 15, 14, 0.22));
+}
+
+.cv-personal-bean-field {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -10vh;
+    height: 76vh;
+    z-index: 4;
+    overflow: visible;
+    pointer-events: none;
+    opacity: 0;
+}
+
+.cv-personal-bean {
+    position: absolute;
+    left: var(--bean-x, 50%);
+    top: var(--bean-y, 50%);
+    width: clamp(16px, var(--bean-size, 5vw), 180px);
+    height: auto;
+    transform: translate(-50%, -50%) rotate(var(--bean-rotation, 0deg));
+    transform-origin: center;
+    pointer-events: none;
+    will-change: transform;
+}
+
+.cv-personal-bean--layer-1 {
+    z-index: 4;
+    opacity: 0.48;
+}
+
+.cv-personal-bean--layer-2 {
+    z-index: 3;
+    opacity: 0.42;
+}
+
+.cv-personal-bean--layer-3 {
+    z-index: 2;
+    opacity: 0.35;
+}
+
+.cv-personal-bean--layer-4 {
+    z-index: 1;
+    opacity: 0.3;
+}
+
+.cv-personal-bean--layer-5 {
+    z-index: 0;
+    opacity: 0.24;
+}
+
+.cv-personal-prelude {
+    position: relative;
+    width: 100%;
+    height: 50vh;
+    z-index: 7;
+    overflow: visible;
+    pointer-events: none;
+}
+
+.cv-personal-prelude-title,
+.cv-personal-prelude-description {
+    position: relative;
+    z-index: 7;
+}
+
+
+.cv-personal-transition-clouds {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -18vh;
+    height: 52vh;
+    z-index: 16;
+    overflow: visible;
+    pointer-events: none;
+    will-change: transform;
+}
+
+.cv-personal-prelude-cloud {
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: min(170vw, 2300px);
+    max-width: none;
+    height: auto;
+    z-index: 3;
+    transform: translateX(-50%);
+    pointer-events: none;
+    opacity: 0.96;
+}
+
+.cv-personal-prelude-cloud.cloud-layer-1 {
+    bottom: 8vh;
+    left: 50%;
+    transform: translateX(-50%) scale(1.02);
+    opacity: 0.94;
+}
+
+.cv-personal-prelude-cloud.cloud-layer-2 {
+    bottom: 2vh;
+    left: 43%;
+    transform: translateX(-50%) scale(0.98);
+    opacity: 0.72;
+}
+
+.cv-personal-prelude-cloud.cloud-layer-3 {
+    bottom: -1vh;
+    left: 59%;
+    transform: translateX(-50%) scale(1.05);
+    opacity: 0.64;
+}
+
+.cv-personal-prelude-cloud.cloud-layer-4 {
+    bottom: -6vh;
+    left: 48%;
+    transform: translateX(-50%) scale(0.93);
+    opacity: 0.56;
+}
+
+.cv-personal-content {
+    width: min(88vw, 820px);
+    display: grid;
+    place-items: center;
+    padding: 40px 20px 100px;
+    position: relative;
+    z-index: 2;
+}
+
+.cv-personal-bg-tile {
+    margin: 0;
+    aspect-ratio: 1 / 1;
+}
+
+.cv-personal-bg-tile img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    filter: grayscale(1) contrast(0.70) brightness(0.50);
+    opacity: 0.9;
+}
+
+
+.cv-personal-section h2 {
+    position: relative;
+    z-index: 2;
+    margin: 0 0 40px;
+}
+
+.cv-personal-subject {
+    position: relative;
+    z-index: 2;
+    width: min(80vw, 520px);
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 10px 24px rgba(0, 0, 0, 0.35));
+}
+
+.cv-orbit-scene {
+    position: relative;
+    width: min(76vw, 600px);
+    aspect-ratio: 1 / 1;
+    perspective: 900px;
+    transform-style: preserve-3d;
+    display: grid;
+    place-items: center;
+}
+
+.cv-orbit-ring {
+    --letters: 12;
+    --radius: clamp(160px, 27vw, 248px);
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    transform-style: preserve-3d;
+}
+
+.cv-orbit-ring span {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform-style: preserve-3d;
+    font-family: "Bungee", sans-serif;
+    font-size: clamp(1.2rem, 6.9vw, 15rem);
+    color: rgb(57, 255, 20);
+    text-shadow: 0 0 12px rgba(57, 255, 20, 0.4);
+    transform:
+        translate(-50%, -50%)
+        rotateY(calc((360deg / var(--letters)) * var(--i)))
+        translateZ(var(--radius));
+}
+
+.cv-orbit-ring-a {
+    animation: cvOrbitSpinA 18s linear infinite;
+}
+
+.cv-orbit-ring-b {
+    --radius: clamp(130px, 22vw, 210px);
+    transform: rotateX(50deg);
+    animation: cvOrbitSpinB 14s linear infinite reverse;
+}
+
+@keyframes cvOrbitSpinA {
+    from {
+        transform: rotateX(34deg) rotateY(0deg);
+    }
+
+    to {
+        transform: rotateX(34deg) rotateY(360deg);
+    }
+}
+
+@keyframes cvOrbitSpinB {
+    from {
+        transform: rotateX(10deg) rotateY(0deg);
+    }
+
+    to {
+        transform: rotateX(10deg) rotateY(360deg);
+    }
+}
+
+@media (max-width: 768px) {
+    .cv-personal-transition-clouds {
+        bottom: -12vh;
+        height: 38vh;
+    }
+
+    .cv-personal-prelude-cloud {
+        width: min(190vw, 1700px);
+    }
+
+    .cv-personal-prelude-cloud.cloud-layer-1 {
+        bottom: 6vh;
+    }
+
+    .cv-personal-prelude-cloud.cloud-layer-2 {
+        bottom: 2vh;
+    }
+
+    .cv-personal-prelude-cloud.cloud-layer-3 {
+        bottom: -1vh;
+    }
+
+    .cv-personal-prelude-cloud.cloud-layer-4 {
+        bottom: -4vh;
+    }
+}

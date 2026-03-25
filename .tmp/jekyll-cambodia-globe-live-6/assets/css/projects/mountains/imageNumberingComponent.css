@@ -1,0 +1,73 @@
+.image-numbering-component{
+    position: absolute;
+    top: 50vh;
+    left: 2vw;
+    color: rgba(245, 243, 239, 1);
+    padding: 5px 10px;
+    font-family: "Bungee", sans-serif;
+    font-size: 3rem;
+    z-index: 10;
+}
+
+.image-numbering-component__number{
+    position: relative;
+    display: inline-block;
+    width: 5.8ch;
+    height: 1.05em;
+    line-height: 1;
+    transition: width 420ms ease, height 420ms ease, font-size 420ms ease;
+}
+
+.image-numbering-component__current,
+.image-numbering-component__slash,
+.image-numbering-component__total{
+    position: absolute;
+    top: 0;
+    transition: left 420ms ease, top 420ms ease, transform 420ms ease;
+    font-variant-numeric: tabular-nums;
+}
+
+.image-numbering-component__current{
+    left: 0;
+}
+
+.image-numbering-component__slash{
+    left: 2.00ch;
+}
+
+.image-numbering-component__total{
+    left: 3.25ch;
+}
+
+.slide-show-with-side-show-images.is-article-open .image-numbering-component__number {
+  width: 3.4ch;
+  height: 2.8em;
+  font-size: 1.5rem;
+}
+
+.slide-show-with-side-show-images.is-article-open .image-numbering-component__current {
+  left: 30%;
+  top: 0;
+  transform: translateX(-50%);
+}
+
+.slide-show-with-side-show-images.is-article-open .image-numbering-component__slash {
+  left: 30%;
+  top: 1.02em;
+  transform: translateX(-50%);
+}
+
+.slide-show-with-side-show-images.is-article-open .image-numbering-component__total {
+  left: 30%;
+  top: 1.92em;
+  transform: translateX(-50%);
+}
+
+@media (max-width: 600px) {
+    .image-numbering-component{
+        font-size: 4vh;
+        top: 3vh;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+}
