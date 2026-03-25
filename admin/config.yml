@@ -1,0 +1,153 @@
+# Decap CMS config for this Jekyll site.
+# Official install pattern:
+# https://decapcms.org/docs/install-decap-cms/
+#
+# Local learning mode:
+# - Decap's local backend docs recommend `local_backend: true`
+# - Start the proxy with `npm run cms:proxy`
+# - Start the Jekyll server with `npm run serve:site`
+# - Open http://127.0.0.1:4000/admin/
+#
+# Production note:
+# This repo currently deploys to alwaysdata, not Netlify.
+# The easiest production auth path is to connect the repo to Netlify Identity
+# and Git Gateway, then keep this same config. Local mode already works without that.
+
+backend:
+  name: git-gateway
+  branch: main
+
+local_backend: true
+
+media_folder: "assets/uploads"
+public_folder: "/assets/uploads"
+
+display_url: "/"
+show_preview_links: false
+
+editor:
+  preview: false
+
+collections:
+  - name: "photo_projects"
+    label: "Photo Projects"
+    label_singular: "Photo Project"
+    description: "Project front matter from the Jekyll `_projects` collection."
+    folder: "_projects"
+    create: true
+    delete: false
+    extension: "markdown"
+    format: "frontmatter"
+    path: "{{slug}}/{{slug}}"
+    slug: "{{slug}}"
+    summary: "{{title}} -> {{permalink}}"
+    fields:
+      - label: "Layout"
+        name: "layout"
+        widget: "select"
+        options:
+          - { label: "Bangkok Night", value: "projects/bangkokNight" }
+          - { label: "Cambodia Street", value: "projects/cambodiaStreet" }
+          - { label: "Mountains", value: "projects/mountains" }
+          - { label: "Forest", value: "projects/forest" }
+      - label: "Title"
+        name: "title"
+        widget: "string"
+      - label: "Description"
+        name: "description"
+        widget: "text"
+      - label: "Permalink"
+        name: "permalink"
+        widget: "string"
+        hint: "Example: /projects/new-project/"
+      - label: "Hero Image"
+        name: "hero_image"
+        widget: "image"
+        required: false
+      - label: "Navigation Square Color"
+        name: "navSquareColour"
+        widget: "string"
+        required: false
+      - label: "Navigation Font Color"
+        name: "navFontColour"
+        widget: "string"
+        required: false
+      - label: "Stylesheets"
+        name: "stylesheets"
+        widget: "list"
+        required: false
+        field:
+          label: "Stylesheet Path"
+          name: "stylesheet"
+          widget: "string"
+      - label: "Fonts"
+        name: "fonts"
+        widget: "list"
+        required: false
+        field:
+          label: "Font URL"
+          name: "font"
+          widget: "string"
+      - label: "Scripts"
+        name: "scripts"
+        widget: "list"
+        required: false
+        field:
+          label: "Script Path"
+          name: "script"
+          widget: "string"
+      - label: "Thumbnail Paths"
+        name: "thumbnails"
+        widget: "list"
+        required: false
+        field:
+          label: "Thumbnail Path"
+          name: "thumbnail"
+          widget: "string"
+      - label: "Homepage Index Images"
+        name: "indexImage"
+        widget: "list"
+        required: false
+        field:
+          label: "Image"
+          name: "image"
+          widget: "image"
+      - label: "Small Images"
+        name: "smallImages"
+        widget: "list"
+        required: false
+        field:
+          label: "Image"
+          name: "image"
+          widget: "image"
+      - label: "Medium Images"
+        name: "mediumImages"
+        widget: "list"
+        required: false
+        field:
+          label: "Image"
+          name: "image"
+          widget: "image"
+      - label: "Large Images"
+        name: "largeImages"
+        widget: "list"
+        required: false
+        field:
+          label: "Image"
+          name: "image"
+          widget: "image"
+
+  - name: "cv_files"
+    label: "CV Files"
+    description: "Single-file content sources that already fit Decap well."
+    files:
+      - label: "Downloadable CV Markdown"
+        name: "downloadable_cv"
+        file: "CV/download/cv-download.md"
+        fields:
+          - label: "Title"
+            name: "title"
+            widget: "string"
+          - label: "Body"
+            name: "body"
+            widget: "markdown"

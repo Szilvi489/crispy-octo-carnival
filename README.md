@@ -227,6 +227,7 @@ Install dependencies:
 
 ```bash
 bundle install
+npm install
 ```
 
 Run the Jekyll site locally:
@@ -234,6 +235,14 @@ Run the Jekyll site locally:
 ```bash
 bundle exec jekyll serve
 ```
+
+### Decap CMS
+
+A first Decap CMS setup now exists under `/admin/`.
+
+For the local learning flow and backend notes, see:
+
+- `docs/decap-cms.md`
 
 ### Utility script
 

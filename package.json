@@ -3,9 +3,12 @@
   "private": true,
   "scripts": {
     "build:cv-pdf": "node scripts/build-cv-pdf.mjs",
-    "build:site": "npm run build:cv-pdf && bundle exec jekyll build --destination _site_release"
+    "build:site": "npm run build:cv-pdf && bundle exec jekyll build --destination _site_release",
+    "serve:site": "bundle exec jekyll serve",
+    "cms:proxy": "decap-server"
   },
   "devDependencies": {
+    "decap-server": "^3.3.3",
     "marked": "^16.3.0",
     "puppeteer": "^24.40.0"
   }
