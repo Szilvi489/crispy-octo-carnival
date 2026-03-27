@@ -1,9 +1,14 @@
 <section class="slide-show-with-side-show-section">
     <div class="slide-show-with-side-show-images">
        
-        {%- assign gallery_path = "/assets/images/projects/mountains/gallery_images/slide_show_with_side_show/" -%}
-        {%- assign gallery_files = site.static_files | where_exp: "f", "f.path contains gallery_path" -%}
-        {%- assign gallery_list = gallery_files | map: "path" | sort -%}
+        {%- if page.gallery_images and page.gallery_images.size > 0 -%}
+            {%- assign gallery_list = page.gallery_images -%}
+        {%- elsif page.gallery_path and page.gallery_path != blank -%}
+            {%- assign gallery_files = site.static_files | where_exp: "f", "f.path contains page.gallery_path" -%}
+            {%- assign gallery_list = gallery_files | map: "path" | sort -%}
+        {%- else -%}
+            {%- assign gallery_list = empty -%}
+        {%- endif -%}
         {%- assign gallery_count = gallery_list | size -%}
 
         <div class="large-image-description" aria-live="polite"></div>

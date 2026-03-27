@@ -21,6 +21,10 @@ scripts:
 #todo implement the dynamically assignable hero image
 hero_image: /assets/images/projects/bangkokNight/hero/image27.png
 
+gallery_path: /assets/images/projects/bangkokNight/gallery_images/
+
+layout_data_key: bangkokNightLayout
+
 #Define the colour of the nav
 navSquareColour: "#1bee07"
 

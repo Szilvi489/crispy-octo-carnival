@@ -20,6 +20,12 @@ scripts:
 #todo implement the dynamically assignable hero image
 hero_image: /assets/images/projects/cambodiaStreet/hero/image27.png
 
+gallery_path: /assets/images/projects/cambodiaStreet/gallery_images/
+
+layout_data_key: cambodiaLayout
+
+model_path: /assets/images/projects/cambodiaStreet/3DImages/guardian_lion_from_cambodia.glb
+
 #Define the colour of the nav
 navSquareColour: "#ee7307"
 

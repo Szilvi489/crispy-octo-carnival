@@ -5,6 +5,14 @@
         <div class="project-card-flexbox">
             <div class="project-card-title-overlay">
                 <a href="{{ project.permalink }}">{{ project.title }}</a>
+                {% if project.last_modified_at %}
+                <p class="project-card-date">{{ project.last_modified_at | date: "%Y-%m-%d" }}</p>
+                {% else %}
+                {% assign project_modified = project.path | last_modified_at: "%Y-%m-%d" %}
+                {% unless project_modified == project.path %}
+                <p class="project-card-date">{{ project_modified }}</p>
+                {% endunless %}
+                {% endif %}
             </div>
             <div class="project-card-images-flexbox">
                 {% if project.thumbnails %}

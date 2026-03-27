@@ -39,6 +39,8 @@ This project is mainly built with:
 - CSS for page styling, visual identity, layout systems, and animations
 - vanilla JavaScript for interaction logic
 - Ruby and Bundler for the Jekyll development workflow
+- RubyGems plugins such as `jekyll-feed` and `jekyll-last-modified-at`
+- Ruby utility scripts under `scripts/` for gallery scaffolding and other developer tooling
 - PHP for the protected CV entry flow
 - YAML data files for project metadata, page content, and reusable structured content
 
@@ -240,6 +242,12 @@ bundle exec jekyll serve
 
 A first Decap CMS setup now exists under `/admin/`.
 
+The CMS now includes:
+
+- collection configuration in `admin/config.yml`
+- a local watcher script that scaffolds the gallery shell for new photo projects
+- a Ruby scaffold script for creating the same gallery shell directly from the terminal
+
 For the local learning flow and backend notes, see:
 
 - `docs/decap-cms.md`
@@ -253,6 +261,22 @@ node scripts/choose-image-of-the-day.js
 ```
 
 This updates `_data/imageOfTheDay.yml`.
+
+Generate a new photo project scaffold:
+
+```bash
+ruby scripts/scaffold_photo_project.rb --slug myGallery --title "My Gallery"
+```
+
+This creates the starter markdown, layout, include, CSS, JS, and image folder structure for a new photo gallery.
+
+Watch for new CMS-created photo projects and scaffold the rest automatically:
+
+```bash
+npm run cms:watch-projects
+```
+
+The watcher derives the project layout path and support files from the CMS entry slug, so the admin UI no longer needs a layout picker.
 
 ## Deployment Notes
 

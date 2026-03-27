@@ -38,6 +38,7 @@ exclude:
 theme: null
 plugins:
   - jekyll-feed
+  - jekyll-last-modified-at
 
 sass:
   sass_dir: assets/css

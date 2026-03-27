@@ -32,7 +32,7 @@ collections:
   - name: "photo_projects"
     label: "Photo Projects"
     label_singular: "Photo Project"
-    description: "Project front matter from the Jekyll `_projects` collection."
+    description: "Project front matter from the Jekyll `_projects` collection. The project shell is scaffolded from the entry slug."
     folder: "_projects"
     create: true
     delete: false
@@ -42,14 +42,6 @@ collections:
     slug: "{{slug}}"
     summary: "{{title}} -> {{permalink}}"
     fields:
-      - label: "Layout"
-        name: "layout"
-        widget: "select"
-        options:
-          - { label: "Bangkok Night", value: "projects/bangkokNight" }
-          - { label: "Cambodia Street", value: "projects/cambodiaStreet" }
-          - { label: "Mountains", value: "projects/mountains" }
-          - { label: "Forest", value: "projects/forest" }
       - label: "Title"
         name: "title"
         widget: "string"
@@ -64,6 +56,30 @@ collections:
         name: "hero_image"
         widget: "image"
         required: false
+      - label: "Gallery Folder Path"
+        name: "gallery_path"
+        widget: "string"
+        required: false
+        hint: "Optional fallback folder for layouts that scan images from a directory."
+      - label: "Gallery Images"
+        name: "gallery_images"
+        widget: "list"
+        required: false
+        hint: "Optional CMS-managed gallery list. When filled, this overrides folder scanning."
+        field:
+          label: "Gallery Image"
+          name: "image"
+          widget: "image"
+      - label: "Layout Data Key"
+        name: "layout_data_key"
+        widget: "string"
+        required: false
+        hint: "Optional `_data` key for layout-specific structured data, for example `bangkokNightLayout`."
+      - label: "3D Model Path"
+        name: "model_path"
+        widget: "string"
+        required: false
+        hint: "Optional model asset path for layouts like Cambodia Street."
       - label: "Navigation Square Color"
         name: "navSquareColour"
         widget: "string"
@@ -136,6 +152,10 @@ collections:
           label: "Image"
           name: "image"
           widget: "image"
+      - label: "Layout"
+        name: "layout"
+        widget: "hidden"
+        required: false
 
   - name: "cv_files"
     label: "CV Files"

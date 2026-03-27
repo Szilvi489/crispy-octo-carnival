@@ -140,7 +140,9 @@
     track.style.width = `${Math.max(minTrackWidth, contentExtent)}px`;
 
     const placeFloatingText = () => {
-        const phrase = "BANGKOK NIGHT";
+        const phrase = (typeof data.title === "string" && data.title.trim()
+            ? data.title
+            : "PHOTO PROJECT").toUpperCase();
         const letters = phrase.split("");
         const textExtent = Math.max(0, maxExtent);
         const trackWidth = Math.max(0, textExtent);

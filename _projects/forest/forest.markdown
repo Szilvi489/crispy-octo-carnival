@@ -1,5 +1,6 @@
 ---
 layout: projects/forest
+title: Forest
 enable_crosshair: true
 
 description: Nature is pretty cool!

@@ -29,6 +29,8 @@
   }
   const layout = Array.isArray(data.layout) ? data.layout : [];
   const all = Array.isArray(data.all) ? data.all : [];
+  const modelPath = typeof data.modelPath === 'string' ? data.modelPath.trim() : '';
+  const projectTitle = typeof data.title === 'string' ? data.title.trim() : '';
 
   const getImageByPosition = (position) => {
     const match = layout.find((entry) => entry && Number(entry.position) === position && typeof entry.path === 'string');
@@ -93,7 +95,7 @@
     }
   };
 
-  mountTextbox(1, 'h2', 'Siem Reap, Cambodia', 0.55);
+  mountTextbox(1, 'h2', projectTitle, 0.55);
   mountTextbox(2, 'p', '', 0.75);
   mountTextbox(3, 'p', '', 0.75);
   mountTextbox(4, 'p', '', 0.75);
@@ -264,7 +266,12 @@
   };
 
   const loader = new GLTFLoader();
-  loader.load('/assets/images/projects/cambodiaStreet/3DImages/guardian_lion_from_cambodia.glb',
+  if (!modelPath) {
+    console.warn('Cambodia Street model path is missing.');
+    return;
+  }
+
+  loader.load(modelPath,
     (gltf) => {
       modelCambodiaLion = gltf.scene;
       modelCambodiaLion.position.y = -1.9;

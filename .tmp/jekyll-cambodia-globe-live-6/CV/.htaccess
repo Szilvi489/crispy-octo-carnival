@@ -1,9 +1,0 @@
-DirectoryIndex index.php
-Options -Indexes
-
-RewriteEngine On
-
-RewriteRule ^login/?$ login.php [L,QSA]
-RewriteRule ^logout/?$ logout.php [L,QSA]
-RewriteRule ^assets/(.+)$ asset.php?path=$1 [L,QSA]
-RewriteRule ^(?:auth|content)(?:/|$) - [F,L]

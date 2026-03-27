@@ -11,6 +11,8 @@ It is intentionally set up in two layers:
 
 - `admin/index.html`
 - `admin/config.yml`
+- `scripts/scaffold_photo_project.rb`
+- `scripts/watch_photo_project_scaffold.rb`
 - `package.json` scripts for the local Decap proxy and Jekyll dev server
 
 ## Why the backend is `git-gateway`
@@ -45,6 +47,12 @@ Start the Jekyll site in a second terminal:
 npm run serve:site
 ```
 
+Start the local project scaffold watcher in a third terminal if you want new CMS-created photo projects to generate their support files automatically:
+
+```bash
+npm run cms:watch-projects
+```
+
 Then open:
 
 ```text
@@ -73,6 +81,40 @@ It teaches the file collection pattern:
 - one explicit file path
 - a fixed set of fields
 - editing markdown body content through the CMS UI
+
+## Slug-driven project scaffolding
+
+The CMS no longer asks you to choose a project layout.
+
+Instead:
+
+- Decap creates `_projects/<slug>/<slug>.markdown`
+- `scripts/watch_photo_project_scaffold.rb` notices the new file locally
+- the scaffold logic derives the rest of the gallery shell from that same slug
+
+That means the watcher creates:
+
+- `_layouts/projects/<slug>.html`
+- `_includes/projects/<slug>/content.html`
+- `assets/css/projects/<slug>/<slug>.css`
+- `assets/css/projects/<slug>/variables.css`
+- `assets/js/projects/<slug>/<slug>.js`
+- the `gallery_images`, `hero`, and `thumbnails` folders under `assets/images/projects/<slug>/`
+
+It also patches the new markdown entry with deterministic front matter such as:
+
+- `layout: projects/<slug>`
+- stylesheet and script paths for that slug
+- the default gallery and thumbnail folder paths
+
+## Local project scaffolding
+
+The watcher is local developer tooling, not a Decap feature or a Jekyll plugin.
+
+You have two ways to use the same scaffold logic:
+
+- `scripts/scaffold_photo_project.rb` creates a full gallery scaffold from the terminal
+- `scripts/watch_photo_project_scaffold.rb` watches for new CMS-created project markdown files and creates the missing layout, include, CSS, JS, and image folders around them
 
 ## Why the giant YAML files are not in the first pass
 

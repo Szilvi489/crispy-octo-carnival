@@ -2,18 +2,29 @@
 
 <section class="cambodia-street-section">
     <div class="cambodia-street-images">
-        {%- assign gallery_path = "/assets/images/projects/cambodiaStreet/gallery_images/" -%}
-        {%- assign gallery_files = site.static_files | where_exp: "f", "f.path contains gallery_path" -%}
-        {%- assign gallery_list = gallery_files | map: "path" | sort -%}
-        {%- assign layout_data = site.data.cambodiaLayout | default: empty -%}
+        {%- assign layout_data = empty -%}
+        {%- assign model_path = page.model_path | default: "" -%}
+        {%- if page.layout_data_key and page.layout_data_key != blank -%}
+            {%- assign layout_data = site.data[page.layout_data_key] | default: empty -%}
+        {%- endif -%}
+        {%- if page.gallery_images and page.gallery_images.size > 0 -%}
+            {%- assign gallery_list = page.gallery_images -%}
+        {%- elsif page.gallery_path and page.gallery_path != blank -%}
+            {%- assign gallery_files = site.static_files | where_exp: "f", "f.path contains page.gallery_path" -%}
+            {%- assign gallery_list = gallery_files | map: "path" | sort -%}
+        {%- else -%}
+            {%- assign gallery_list = empty -%}
+        {%- endif -%}
     </div>
 
     <div id="container3D"></div>
 
       <script class="cambodia-street-gallery-data" type="application/json">
             {
+              "title": {{ page.title | default: site.title | jsonify }},
               "all": {{ gallery_list | jsonify }},
-              "layout": {{ layout_data | jsonify }}
+              "layout": {{ layout_data | jsonify }},
+              "modelPath": {{ model_path | jsonify }}
             }
             </script>
 </section>

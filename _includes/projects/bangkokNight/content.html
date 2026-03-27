@@ -1,8 +1,17 @@
 <section class="bangkok-night-section">
     <div class="bangkok-night-content" style="--backgroundColour: {{ page.backgroundColour | default: site.backgroundColour }}; --fontColour: {{ page.fontColour | default: site.fontColour }};">
-        {%- assign gallery_path = "/assets/images/projects/bangkokNight/gallery_images/" -%}
-        {%- assign gallery_files = site.static_files | where_exp: "f", "f.path contains gallery_path" -%}
-        {%- assign gallery_list = gallery_files | map: "path" | sort -%}
+        {%- assign layout_data = empty -%}
+        {%- if page.layout_data_key and page.layout_data_key != blank -%}
+            {%- assign layout_data = site.data[page.layout_data_key] | default: empty -%}
+        {%- endif -%}
+        {%- if page.gallery_images and page.gallery_images.size > 0 -%}
+            {%- assign gallery_list = page.gallery_images -%}
+        {%- elsif page.gallery_path and page.gallery_path != blank -%}
+            {%- assign gallery_files = site.static_files | where_exp: "f", "f.path contains page.gallery_path" -%}
+            {%- assign gallery_list = gallery_files | map: "path" | sort -%}
+        {%- else -%}
+            {%- assign gallery_list = empty -%}
+        {%- endif -%}
         <div class="image-carousel" aria-label="Bangkok Night gallery">
             <div class="image-track">
                 <div class="text-layer" aria-hidden="true"></div>
@@ -13,8 +22,9 @@
         </div>
         <script id="bn-gallery-data" type="application/json">
         {
+          "title": {{ page.title | default: site.title | jsonify }},
           "all": {{ gallery_list | jsonify }},
-          "layout": {% if site.data.bangkokNightLayout %}{{ site.data.bangkokNightLayout | jsonify }}{% else %}[]{% endif %},
+          "layout": {{ layout_data | jsonify }},
           "small": {% if page.smallImages %}{{ page.smallImages | jsonify }}{% else %}[]{% endif %},
           "medium": {% if page.mediumImages %}{{ page.mediumImages | jsonify }}{% else %}[]{% endif %},
           "large": {% if page.largeImages %}{{ page.largeImages | jsonify }}{% else %}[]{% endif %}

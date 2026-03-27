@@ -57,10 +57,9 @@
 }
 
 .project-card-title-overlay a,
-.project-card-flexbox p {
+.project-card-title-overlay .project-card-date {
     font-family: "Oswald", sans-serif;
-  color: var(--fontColour);
-  text-decoration: none;
+    color: var(--fontColour);
 }
 
 .project-card-title-overlay.page-loading{
@@ -68,17 +67,35 @@
 }
 
 .project-card-title-overlay {
-   position: fixed;
+    position: fixed;
     left: 24px;
     bottom: 24px;
     z-index: 3;
-    font-size: clamp(2.5rem, 8vw, 10rem);
-    font-weight: 700;
-    letter-spacing: 0.02em;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: clamp(2px, 0.5vh, 8px);
     opacity: 0;
     pointer-events: none;
     transform: translateY(8px);
     transition: opacity 180ms ease, transform 180ms ease;
+}
+
+.project-card-title-overlay a {
+    margin: 0;
+    font-size: clamp(2.5rem, 8vw, 10rem);
+    font-weight: 700;
+    line-height: 0.92;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+}
+
+.project-card-title-overlay .project-card-date {
+    margin: 0;
+    font-size: clamp(0.7rem, 1.35vw, 1.2rem);
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    line-height: 1.1;
 }
 
 
@@ -111,7 +128,7 @@
 }
 
 .project-card-title-overlay a,
-.project-card-flexbox p {
+.project-card-title-overlay .project-card-date {
   color: rgb(27, 238, 7);
 }
 

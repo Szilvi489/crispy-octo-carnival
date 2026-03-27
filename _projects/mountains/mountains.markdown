@@ -1,5 +1,6 @@
 ---
 layout: projects/mountains
+title: Mountains
 
 description: Bangladesh, Nepal, India, Pakistan, Afghanistan
 
@@ -24,6 +25,8 @@ fonts:
 navSquareColour: "#555461"
 
 navFontColour: "#ff2020"
+
+gallery_path: /assets/images/projects/mountains/gallery_images/slide_show_with_side_show/
 
 thumbnails:
 - /assets/images/projects/mountains/thumbnails/
