@@ -1,0 +1,164 @@
+.cv-dreamjob-section {
+    position: relative;
+    min-height: 120vh;
+    padding: 14vh 6vw 8vh;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    z-index: 6;
+    background: linear-gradient(
+        180deg,
+        var(--color-soft-white) 0%,
+        rgba(245, 243, 239, 0.98) 36%,
+        rgba(245, 243, 239, 0.95) 100%
+    );
+}
+
+.cv-dreamjob-content {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: min(100%, 1080px);
+    min-height: calc(120vh - 18vh);
+    gap: clamp(1.2rem, 3.2vh, 2.4rem);
+    text-align: center;
+}
+
+.cv-dreamjob-bean-field {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.cv-dreamjob-bean {
+    position: absolute;
+    width: clamp(26px, var(--dream-bean-size, 6vw), 260px);
+    height: auto;
+    transform: translate(-50%, -50%) rotate(var(--dream-bean-rotation, 0deg));
+    transform-origin: center;
+    pointer-events: none;
+    will-change: transform;
+}
+
+.cv-dreamjob-bean--layer-1 {
+    z-index: 4;
+    opacity: 0.9;
+}
+
+.cv-dreamjob-bean--layer-2 {
+    z-index: 3;
+    opacity: 0.78;
+}
+
+.cv-dreamjob-bean--layer-3 {
+    z-index: 2;
+    opacity: 0.68;
+}
+
+.cv-dreamjob-bean--layer-4 {
+    z-index: 1;
+    opacity: 0.58;
+}
+
+.cv-dreamjob-bean--layer-5 {
+    z-index: 0;
+    opacity: 0.48;
+}
+
+.cv-dreamjob-title {
+    margin: 0;
+    font-family: "Tulpen One", cursive;
+    font-size: clamp(3.4rem, 12vw, 10rem);
+    line-height: 0.9;
+    color: var(--color-bordeau-chocolate);
+}
+
+.cv-dreamjob-copy {
+    width: min(86%, 900px);
+    margin: 0;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: clamp(1.28rem, 2.65vw, 2.18rem);
+    line-height: 1.1;
+    color: rgba(63, 63, 63, 0.9);
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    text-wrap: balance;
+    will-change: color, opacity, transform;
+}
+
+.cv-dreamjob-copy.cv-dreamjob-text-split {
+    animation: none;
+}
+
+.cv-dreamjob-char {
+    display: inline-block;
+    will-change: color, opacity, transform, filter;
+}
+
+.cv-dreamjob-char-space {
+    width: 0.32em;
+}
+
+.cv-dreamjob-word {
+    display: inline-block;
+    white-space: nowrap;
+    margin: 0;
+}
+
+.cv-dreamjob-word--plain {
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 500;
+    letter-spacing: 0.055em;
+    text-transform: uppercase;
+}
+
+.cv-dreamjob-word--focus {
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: 1.12em;
+    letter-spacing: 0.018em;
+    text-transform: uppercase;
+}
+
+.cv-dreamjob-word--script {
+    font-family: "Cormorant Garamond", serif;
+    font-style: italic;
+    font-weight: 600;
+    font-size: 1.34em;
+    letter-spacing: 0.01em;
+    text-transform: none;
+    text-shadow: 0 0 18px rgba(255, 255, 255, 0.22);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .cv-dreamjob-copy {
+        color: rgba(28, 28, 28, 0.94);
+    }
+}
+
+@media (max-width: 768px) {
+    .cv-dreamjob-section {
+        min-height: auto;
+        padding: 14vh 7vw 10vh;
+    }
+
+    .cv-dreamjob-content {
+        min-height: auto;
+    }
+
+    .cv-dreamjob-copy {
+        width: min(100%, 540px);
+        font-size: clamp(1.12rem, 5.35vw, 1.52rem);
+        line-height: 1.14;
+    }
+
+    .cv-dreamjob-word--script {
+        font-size: 1.24em;
+    }
+}
