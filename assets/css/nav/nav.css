@@ -1,5 +1,7 @@
 .navShell {
     --nav-square-size: 60px;
+    --nav-overlay-origin-x: calc(100% - 54px);
+    --nav-overlay-origin-y: 18%;
     position: relative;
     z-index: 40;
 }
@@ -37,16 +39,27 @@
     background-color: var(--navSquareColour);
     inset: 0;
     position: fixed;
-    transform: scale(0);
-    transform-origin: calc(100% - 54px) 18%;
-    transition: transform 260ms ease;
+    opacity: 0;
+    visibility: hidden;
+    clip-path: circle(0 at var(--nav-overlay-origin-x) var(--nav-overlay-origin-y));
+    transition:
+        clip-path 360ms cubic-bezier(0.22, 0.61, 0.36, 1),
+        opacity 180ms ease,
+        visibility 0s linear 360ms;
     z-index: 30;
     pointer-events: none;
+    will-change: clip-path, opacity;
 }
 
 .nav-open #navOverlay {
     pointer-events: auto;
-    transform: scale(1);
+    opacity: 1;
+    visibility: visible;
+    clip-path: circle(150vmax at var(--nav-overlay-origin-x) var(--nav-overlay-origin-y));
+    transition:
+        clip-path 360ms cubic-bezier(0.22, 0.61, 0.36, 1),
+        opacity 180ms ease,
+        visibility 0s linear 0s;
 }
 
 #navClose {
@@ -80,14 +93,17 @@
 
 .navMenu a {
     color: var(--navFontColour);
-    font-size: 58px;
+    font-size: clamp(1.85rem, 5vw + 0.7rem, 3.625rem);
     text-decoration: none;
-    font-family: "Bebas Neue", sans-serif;
-    font-weight: 900;
-    -webkit-text-stroke: 0.7px currentColor;
-    text-shadow:
-        0.6px 0 currentColor,
-        -0.6px 0 currentColor;
+    font-family: var(--font-Bebas-Neue, "Bebas Neue", sans-serif);
+    font-weight: 400;
+    line-height: 0.92;
+    letter-spacing: 0.025em;
+    text-transform: uppercase;
+    text-shadow: none;
+    -webkit-text-stroke: 0;
+    text-rendering: geometricPrecision;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 
@@ -147,29 +163,31 @@
     outline-offset: 4px;
 }
 
-.navIcon {
+.navIconSvg {
     color: currentColor;
-    display: inline-flex;
-    font-size: 22px;
-    line-height: 1;
+    display: block;
+    width: 22px;
+    height: 22px;
+    fill: currentColor;
+    flex: 0 0 auto;
 }
 
-.navHomeIcon {
-    transform: translateY(5px);
+.navHomeIconSvg {
+    width: 23px;
+    height: 23px;
+    transform: translateY(1px);
 }
 
 @media (max-width: 600px) {
   .navShell {
     --nav-square-size: 38px;
+    --nav-overlay-origin-x: calc(100% - 30px);
+    --nav-overlay-origin-y: 12%;
   }
 
   .navSquarePosition {
     right: 12px;
     top: 12%;
-  }
-
-  #navOverlay {
-    transform-origin: calc(100% - 30px) 12%;
   }
 
   #navClose {
@@ -186,7 +204,7 @@
   }
 
   .navMenu a {
-    font-size: 19px;
+    font-size: clamp(1.45rem, 6vw, 1.95rem);
   }
 
   .navIconRow {
@@ -201,8 +219,15 @@
     margin-top: 4px;
   }
 
-  .navIcon {
-    font-size: 16px;
+  .navIconSvg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .navHomeIconSvg {
+    width: 17px;
+    height: 17px;
+    transform: translateY(1px);
   }
 
   .projects-page-menuitem{

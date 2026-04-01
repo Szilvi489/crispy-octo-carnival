@@ -39,7 +39,8 @@
     z-index: 30;
 }
 
-.index-gallery_item img {
+.index-gallery_item img,
+.index-gallery_item video {
     width: 100%;
     height: auto;
     display: block;
@@ -71,7 +72,8 @@ body.cursor-hidden {
 }
 
 @media (hover: hover) and (pointer: fine) {
-    .index-gallery_item img {
+    .index-gallery_item img,
+    .index-gallery_item video {
         cursor: none;
     }
 }

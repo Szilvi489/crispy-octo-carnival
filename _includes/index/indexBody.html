@@ -8,7 +8,21 @@
                     <figure class="index-gallery_item">
                         {% if project.title %}
                         <a href="{{ project.permalink}}">
-                             <img src="{{ image }}" alt="{{ project.title }}" loading="lazy" decoding="async" tooltip="{{ project.title }}">
+                            {% assign image_lower = image | downcase %}
+                            {% if image_lower contains '.mp4' or image_lower contains '.webm' or image_lower contains '.mov' %}
+                                <video
+                                    src="{{ image }}"
+                                    aria-label="{{ project.title }}"
+                                    autoplay
+                                    muted
+                                    loop
+                                    playsinline
+                                    preload="metadata"
+                                    tooltip="{{ project.title }}"
+                                ></video>
+                            {% else %}
+                                <img src="{{ image }}" alt="{{ project.title }}" loading="eager" decoding="async" tooltip="{{ project.title }}">
+                            {% endif %}
                         </a>
                         {% endif %}
                     </figure>

@@ -1,3 +1,83 @@
+const indexImageMetaCache = new Map();
+
+function isIndexVideoSource(src) {
+  return /\.(mp4|webm|mov)$/i.test(src || "");
+}
+
+function preloadIndexImageMeta(src) {
+  if (!src) {
+    return Promise.resolve(null);
+  }
+
+  if (indexImageMetaCache.has(src)) {
+    return Promise.resolve(indexImageMetaCache.get(src));
+  }
+
+  return new Promise((resolve) => {
+    if (isIndexVideoSource(src)) {
+      const video = document.createElement("video");
+      video.preload = "metadata";
+
+      video.onloadedmetadata = () => {
+        const meta = {
+          width: video.videoWidth || 1,
+          height: video.videoHeight || 1,
+          ratio: (video.videoHeight || 1) / (video.videoWidth || 1),
+        };
+        indexImageMetaCache.set(src, meta);
+        resolve(meta);
+      };
+
+      video.onerror = () => resolve(null);
+      video.src = src;
+      return;
+    }
+
+    const image = new Image();
+
+    image.onload = () => {
+      const meta = {
+        width: image.naturalWidth || 1,
+        height: image.naturalHeight || 1,
+        ratio: (image.naturalHeight || 1) / (image.naturalWidth || 1),
+      };
+      indexImageMetaCache.set(src, meta);
+      resolve(meta);
+    };
+
+    image.onerror = () => resolve(null);
+    image.src = src;
+  });
+}
+
+function getIndexImageRatio(item, media) {
+  const cachedRatio = parseFloat(item.dataset.aspectRatio || "");
+  if (Number.isFinite(cachedRatio) && cachedRatio > 0) {
+    return cachedRatio;
+  }
+
+  const src = media?.getAttribute("src");
+  if (src && indexImageMetaCache.has(src)) {
+    const meta = indexImageMetaCache.get(src);
+    item.dataset.aspectRatio = `${meta.ratio}`;
+    return meta.ratio;
+  }
+
+  if (media?.tagName === "VIDEO" && media.videoWidth) {
+    const ratio = media.videoHeight / media.videoWidth;
+    item.dataset.aspectRatio = `${ratio}`;
+    return ratio;
+  }
+
+  if (media?.naturalWidth) {
+    const ratio = media.naturalHeight / media.naturalWidth;
+    item.dataset.aspectRatio = `${ratio}`;
+    return ratio;
+  }
+
+  return null;
+}
+
 function resizeIndexGallery() {
   const grid = document.querySelector(".index-gallery_grid");
   if (!grid) return;
@@ -7,23 +87,29 @@ function resizeIndexGallery() {
   const gap = parseInt(styles.getPropertyValue("gap"), 10);
 
   grid.querySelectorAll(".index-gallery_item").forEach((item) => {
-    const img = item.querySelector("img");
-    if (!img) return;
+    const media = item.querySelector("img, video");
+    if (!media) return;
 
     const applySpan = () => {
       const width = item.clientWidth;
-      if (!width || !img.naturalWidth) return;
+      const ratio = getIndexImageRatio(item, media);
+      if (!width || !ratio) return;
 
-      const ratio = img.naturalHeight / img.naturalWidth;
       const targetHeight = Math.round(width * ratio);
       const rowSpan = Math.ceil((targetHeight + gap) / (rowHeight + gap));
       item.style.gridRowEnd = `span ${rowSpan}`;
     };
 
-    if (img.complete) {
+    if (media.tagName === "VIDEO") {
+      if (media.readyState >= 1) {
+        applySpan();
+      } else {
+        media.addEventListener("loadedmetadata", applySpan, { once: true });
+      }
+    } else if (media.complete) {
       applySpan();
     } else {
-      img.addEventListener("load", applySpan, { once: true });
+      media.addEventListener("load", applySpan, { once: true });
     }
   });
 }
@@ -55,28 +141,63 @@ function setupInfiniteIndexGallery() {
 
   const sources = baseItems
     .map((item) => {
-      const img = item.querySelector("img");
-      if (!img) return null;
-      return { src: img.getAttribute("src"), alt: img.getAttribute("alt") || "" };
+      const link = item.querySelector("a");
+      const media = item.querySelector("img, video");
+      if (!media) return null;
+      return {
+        src: media.getAttribute("src"),
+        alt:
+          media.getAttribute("alt") ||
+          media.getAttribute("aria-label") ||
+          "",
+        href: link?.getAttribute("href") || "",
+        type: media.tagName === "VIDEO" ? "video" : "image",
+      };
     })
     .filter(Boolean);
 
   if (!sources.length) return;
 
   const poolSize = 18;
-  const recycleBatchSize = 5;
+  const appendBatchSize = 5;
 
   let lastSrc = sources[0].src;
   let isAppending = false;
 
-  const createItem = ({ src, alt }) => {
+  const createItem = ({ src, alt, href, type }) => {
     const figure = document.createElement("figure");
     figure.className = "index-gallery_item";
 
-    const img = document.createElement("img");
-    img.src = src;
-    img.alt = alt;
-    figure.appendChild(img);
+    const link = document.createElement("a");
+    link.href = href || "#";
+
+    const media =
+      type === "video" || isIndexVideoSource(src)
+        ? document.createElement("video")
+        : document.createElement("img");
+
+    media.src = src;
+
+    if (media.tagName === "VIDEO") {
+      media.setAttribute("aria-label", alt);
+      media.autoplay = true;
+      media.muted = true;
+      media.loop = true;
+      media.playsInline = true;
+      media.preload = "metadata";
+    } else {
+      media.alt = alt;
+      media.loading = "eager";
+      media.decoding = "async";
+    }
+
+    link.appendChild(media);
+    figure.appendChild(link);
+
+    const cached = indexImageMetaCache.get(src);
+    if (cached) {
+      figure.dataset.aspectRatio = `${cached.ratio}`;
+    }
 
     return figure;
   };
@@ -101,35 +222,21 @@ function setupInfiniteIndexGallery() {
   assignIndexGallerySizes(baseItems);
   resizeIndexGallery();
 
-  const recycleBatch = () => {
-    const currentItems = Array.from(
-      grid.querySelectorAll(".index-gallery_item")
-    );
-    if (!currentItems.length) return;
+  const appendBatch = () => {
+    const nextItems = [];
 
-    const batchSize = Math.min(recycleBatchSize, currentItems.length);
-    const movedItems = [];
-
-    for (let i = 0; i < batchSize; i += 1) {
-      const item = currentItems[i];
-      const img = item.querySelector("img");
-      if (!img) continue;
-
-      const next = getRandomSource();
-      img.src = next.src;
-      img.alt = next.alt;
-      img.addEventListener(
-        "load",
-        () => requestAnimationFrame(resizeIndexGallery),
-        { once: true }
-      );
-
-      movedItems.push(item);
+    for (let i = 0; i < appendBatchSize; i += 1) {
+      nextItems.push(createItem(getRandomSource()));
     }
 
-    assignIndexGallerySizes(movedItems);
-    movedItems.forEach((item) => grid.appendChild(item));
+    assignIndexGallerySizes(nextItems);
+
+    const fragment = document.createDocumentFragment();
+    nextItems.forEach((item) => fragment.appendChild(item));
+    grid.appendChild(fragment);
+
     resizeIndexGallery();
+    requestAnimationFrame(resizeIndexGallery);
   };
 
   const onScroll = () => {
@@ -148,7 +255,7 @@ function setupInfiniteIndexGallery() {
 
     isAppending = true;
     requestAnimationFrame(() => {
-      recycleBatch();
+      appendBatch();
       isAppending = false;
     });
   };
@@ -180,7 +287,7 @@ function setupIndexCursor() {
   });
 
   grid.addEventListener("mouseover", (event) => {
-    const target = event.target.closest(".index-gallery_item img");
+    const target = event.target.closest(".index-gallery_item img, .index-gallery_item video");
     if (!target) return;
     cursor.style.backgroundColor = randomColor();
     cursor.classList.add("is-visible");
@@ -188,16 +295,25 @@ function setupIndexCursor() {
   });
 
   grid.addEventListener("mouseout", (event) => {
-    const target = event.target.closest(".index-gallery_item img");
+    const target = event.target.closest(".index-gallery_item img, .index-gallery_item video");
     if (!target) return;
     const related = event.relatedTarget;
-    if (related && related.closest(".index-gallery_item img")) return;
+    if (related && related.closest(".index-gallery_item img, .index-gallery_item video")) return;
     cursor.classList.remove("is-visible");
     document.body.classList.remove("cursor-hidden");
   });
 }
 
-window.addEventListener("load", () => {
+window.addEventListener("load", async () => {
+  const grid = document.querySelector(".index-gallery_grid");
+  const sources = grid
+    ? Array.from(grid.querySelectorAll(".index-gallery_item img, .index-gallery_item video"))
+        .map((media) => media.getAttribute("src"))
+        .filter(Boolean)
+    : [];
+
+  await Promise.all(sources.map((src) => preloadIndexImageMeta(src)));
+
   setupInfiniteIndexGallery();
   setupIndexCursor();
 });
