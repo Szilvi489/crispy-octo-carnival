@@ -1,159 +1,351 @@
-- path: /assets/images/projects/bangkokNight/gallery_images/DSCF0180.jpg
-  x: 10
-  y: 30
-  size: large
+stage:
+  scroll_length: 5200
 
-- path: /assets/images/projects/bangkokNight/gallery_images/DSCF0286.jpg
-  x: 420
-  y: 140
-  size: medium
+items:
+  - id: BNT01
+    type: text
+    text: "Bangkok Night"
+    tag: h2
+    layer: 4
+    width: 760
+    overlay: false
+    class_name: "is-title"
 
-- path: /assets/images/projects/bangkokNight/gallery_images/DSCF0297.jpg
-  x: 840
-  y: 220
-  size: small
+  - id: BNT02
+    type: text
+    text: "A scroll-bound stage for photos, loops, text fragments, and one drifting retro object."
+    tag: p
+    layer: 2
+    width: 420
+    overlay: false
+    class_name: "is-copy"
 
-- path: /assets/images/projects/bangkokNight/gallery_images/DSCF0298.jpg
-  x: 1260
-  y: 160
-  size: large
+  - id: BN01
+    type: image
+    src: "/assets/images/projects/bangkokNight/gallery_images/DSCF0180.jpg"
+    alt: "Bangkok Night image BN01"
+    height: 420
+    layer: 1
+    overlay: true
+    overlay_title: "Bangkok Night 01"
 
-- path: /assets/images/projects/bangkokNight/gallery_images/DSCF0314.jpg
-  x: 1900
-  y: 100
-  size: small
+  - id: BN02
+    type: image
+    src: "/assets/images/projects/bangkokNight/gallery_images/DSCF0495.jpg"
+    alt: "Bangkok Night image BN02"
+    height: 360
+    layer: 3
+    overlay: true
+    overlay_title: "Bangkok Night 02"
 
-- path: /assets/images/projects/bangkokNight/gallery_images/DSCF0319.jpg
-  x: 2520
-  y: 70
-  size: large
+  - id: BN03
+    type: image
+    src: "/assets/images/projects/bangkokNight/gallery_images/DSCF0829.jpg"
+    alt: "Bangkok Night image BN03"
+    height: 430
+    layer: 4
+    overlay: true
+    overlay_title: "Bangkok Night 03"
 
-- path: /assets/images/projects/bangkokNight/gallery_images/DSCF0330.jpg
-  x: 2600
-  y: 10
-  size: small
+  - id: BN04
+    type: image
+    src: "/assets/images/projects/bangkokNight/gallery_images/DSCF1218.jpg"
+    alt: "Bangkok Night image BN04"
+    height: 330
+    layer: 2
+    overlay: true
+    overlay_title: "Bangkok Night 04"
 
-- path: /assets/images/projects/bangkokNight/gallery_images/DSCF0401.jpg
-  x: 3360
-  y: 100
-  size: large
+  - id: BNV01
+    type: video
+    src: "/assets/images/projects/bangkokNight/gallery_videos/highwayTrafficMoving.mp4"
+    title: "Highway Traffic"
+    height: 290
+    layer: 2
+    overlay: true
+    muted: true
+    loop: true
+    autoplay: true
 
-- path: /assets/images/projects/bangkokNight/gallery_images/DSCF0495.jpg
-  x: 3780
-  y: 60
-  size: large
+  - id: BNV02
+    type: video
+    src: "/assets/images/projects/bangkokNight/gallery_videos/durian.mp4"
+    title: "Durian Stall"
+    height: 250
+    layer: 1
+    overlay: true
+    muted: true
+    loop: true
+    autoplay: true
 
-- path: /assets/images/projects/bangkokNight/gallery_images/DSCF0557.jpg
-  x: 4200
-  y: 210
-  size: medium
+  - id: BNV03
+    type: video
+    src: "/assets/images/projects/bangkokNight/gallery_videos/plantslowlyMoving.mp4"
+    title: "Street Plants"
+    height: 270
+    layer: 3
+    overlay: true
+    muted: true
+    loop: true
+    autoplay: true
 
-- path: /assets/images/projects/bangkokNight/gallery_images/DSCF0673.jpg
-  x: 4620
-  y: 35
-  size: large
+  - id: BNM01
+    type: model
+    src: "/assets/images/projects/bangkokNight/3DImages/vending_machine2k_retro-futuristic.glb"
+    title: "Retro Vending Machine"
+    width: 400
+    height: 520
+    layer: 4
+    overlay: false
+    class_name: "is-model"
 
-- path: /assets/images/projects/bangkokNight/gallery_images/DSCF0757.jpg
-  x: 5450
-  y: 80
-  size: large
+motions:
+  - item: BNT01
+    start: 0.00
+    end: 0.18
+    from:
+      x: -120
+      y: 90
+      autoAlpha: 0
+      rotate: -6
+      scale: 0.88
+    to:
+      x: 86
+      y: 54
+      autoAlpha: 1
+      rotate: 0
+      scale: 1
 
-- path: /assets/images/projects/bangkokNight/gallery_images/DSCF0762.jpg
-  x: 6000
-  y: 115
-  size: medium
+  - item: BNT02
+    start: 0.04
+    end: 0.22
+    from:
+      x: 960
+      y: 160
+      autoAlpha: 0
+      rotate: 8
+      scale: 0.92
+    to:
+      x: 820
+      y: 196
+      autoAlpha: 1
+      rotate: 0
+      scale: 1
 
-- path: /assets/images/projects/bangkokNight/gallery_images/DSCF0776.jpg
-  x: 6500
-  y: 275
-  size: small
+  - item: BN01
+    start: 0.08
+    end: 0.24
+    from:
+      x: -300
+      y: 190
+      autoAlpha: 0
+      rotate: -10
+      scale: 0.86
+    to:
+      x: 140
+      y: 210
+      autoAlpha: 1
+      rotate: -2
+      scale: 1
 
-- path: /assets/images/projects/bangkokNight/gallery_images/DSCF0778.jpg
-  x: 10630
-  y: 70
-  size: large
+  - item: BN02
+    start: 0.12
+    end: 0.28
+    from:
+      x: 1280
+      y: 56
+      autoAlpha: 0
+      rotate: 12
+      scale: 0.84
+    to:
+      x: 900
+      y: 110
+      autoAlpha: 1
+      rotate: 4
+      scale: 1
 
-- path: /assets/images/projects/bangkokNight/gallery_images/DSCF0797.jpg
-  x: 7400
-  y: 205
-  size: medium
+  - item: BNV01
+    start: 0.16
+    end: 0.34
+    from:
+      x: 1080
+      y: 540
+      autoAlpha: 0
+      rotate: 6
+      scale: 0.82
+    to:
+      x: 720
+      y: 510
+      autoAlpha: 1
+      rotate: -2
+      scale: 1
 
-- path: /assets/images/projects/bangkokNight/gallery_images/DSCF0799.jpg
-  x: 7740
-  y: 0
-  size: large
+  - item: BNM01
+    start: 0.22
+    end: 0.44
+    from:
+      x: 1220
+      y: 130
+      autoAlpha: 0
+      rotate: 10
+      scale: 0.8
+    to:
+      x: 980
+      y: 170
+      autoAlpha: 1
+      rotate: 0
+      scale: 1
 
-- path: /assets/images/projects/bangkokNight/gallery_images/DSCF0800.jpg
-  x: 8960
-  y: 30
-  size: large
+  - item: BN03
+    start: 0.28
+    end: 0.46
+    from:
+      x: 340
+      y: 760
+      autoAlpha: 0
+      rotate: -14
+      scale: 0.84
+    to:
+      x: 420
+      y: 360
+      autoAlpha: 1
+      rotate: -4
+      scale: 1
 
-- path: /assets/images/projects/bangkokNight/gallery_images/DSCF0814.jpg
-  x: 9130
-  y: 40
-  size: medium
+  - item: BNV02
+    start: 0.34
+    end: 0.52
+    from:
+      x: -240
+      y: 560
+      autoAlpha: 0
+      rotate: -8
+      scale: 0.88
+    to:
+      x: 96
+      y: 572
+      autoAlpha: 1
+      rotate: 2
+      scale: 1
 
-- path: /assets/images/projects/bangkokNight/gallery_images/DSCF0817.jpg
-  x: 8700
-  y: 10
-  size: small
+  - item: BN04
+    start: 0.40
+    end: 0.58
+    from:
+      x: 1360
+      y: 430
+      autoAlpha: 0
+      rotate: 10
+      scale: 0.86
+    to:
+      x: 1040
+      y: 398
+      autoAlpha: 1
+      rotate: -5
+      scale: 1
 
-- path: /assets/images/projects/bangkokNight/gallery_images/DSCF0824.jpg
-  x: 9520
-  y: 0
-  size: large
+  - item: BNV03
+    start: 0.46
+    end: 0.64
+    from:
+      x: 1120
+      y: 720
+      autoAlpha: 0
+      rotate: 7
+      scale: 0.84
+    to:
+      x: 840
+      y: 640
+      autoAlpha: 1
+      rotate: -3
+      scale: 1
 
-- path: /assets/images/projects/bangkokNight/gallery_images/DSCF0826.jpg
-  x: 10000
-  y: 30
-  size: large
+  - item: BNT01
+    start: 0.54
+    end: 0.72
+    to:
+      x: -180
+      y: -50
+      autoAlpha: 0.16
+      rotate: -12
+      scale: 0.86
 
-- path: /assets/images/projects/bangkokNight/gallery_images/DSCF0827.jpg
-  x: 9660
-  y: 135
-  size: small
+  - item: BN01
+    start: 0.58
+    end: 0.78
+    to:
+      x: 500
+      y: 70
+      autoAlpha: 0.2
+      rotate: 8
+      scale: 0.9
 
-- path: /assets/images/projects/bangkokNight/gallery_images/DSCF0829.jpg
-  x: 9300
-  y: 190
-  size: large
+  - item: BNV01
+    start: 0.62
+    end: 0.80
+    to:
+      x: 300
+      y: 420
+      autoAlpha: 0.22
+      rotate: -10
+      scale: 0.86
 
-- path: /assets/images/projects/bangkokNight/gallery_images/DSCF0929.jpg
-  x: 10850
-  y: 150
-  size: large
+  - item: BNM01
+    start: 0.66
+    end: 0.88
+    to:
+      x: 660
+      y: 150
+      autoAlpha: 0.95
+      rotate: -8
+      scale: 0.92
 
-- path: /assets/images/projects/bangkokNight/gallery_images/DSCF0932.jpg
-  x: 11300
-  y: 220
-  size: small
+  - item: BN03
+    start: 0.70
+    end: 0.92
+    to:
+      x: 860
+      y: 280
+      autoAlpha: 1
+      rotate: 10
+      scale: 1.04
 
-- path: /assets/images/projects/bangkokNight/gallery_images/DSCF0988.jpg
-  x: 12300
-  y: 20
-  size: large
+  - item: BN04
+    start: 0.74
+    end: 0.92
+    to:
+      x: 160
+      y: 116
+      autoAlpha: 1
+      rotate: -10
+      scale: 0.98
 
-- path: /assets/images/projects/bangkokNight/gallery_images/DSCF0998.jpg
-  x: 13260
-  y: 110
-  size: medium
+  - item: BNT02
+    start: 0.80
+    end: 0.96
+    to:
+      x: 980
+      y: 120
+      autoAlpha: 0.1
+      rotate: 12
+      scale: 0.9
 
-- path: /assets/images/projects/bangkokNight/gallery_images/DSCF1026.jpg
-  x: 13180
-  y: 25
-  size: large
+  - item: BNV03
+    start: 0.84
+    end: 1.00
+    to:
+      x: 1080
+      y: 760
+      autoAlpha: 0.08
+      rotate: 12
+      scale: 0.82
 
-- path: /assets/images/projects/bangkokNight/gallery_images/DSCF1049.jpg
-  x: 13900
-  y: 80
-  size: medium
-
-- path: /assets/images/projects/bangkokNight/gallery_images/DSCF1179-Edit.jpg
-  x: 14500
-  y: 60
-  size: large
-
-- path: /assets/images/projects/bangkokNight/gallery_images/DSCF1218.jpg
-  x: 14220
-  y: 35
-  size: medium
+  - item: BN02
+    start: 0.88
+    end: 1.00
+    to:
+      x: 1180
+      y: -120
+      autoAlpha: 0.05
+      rotate: 18
+      scale: 0.74

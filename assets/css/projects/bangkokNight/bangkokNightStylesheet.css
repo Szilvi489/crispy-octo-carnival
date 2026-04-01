@@ -1,104 +1,286 @@
-.bangkok-night-section {
-    background: var(--color-alternative-orange);
-    width: 100%;
+@import url("./variables.css");
 
-}
-.bangkok-night-section .image-carousel {
+.bangkok-night-section {
     position: relative;
+    min-height: 420vh;
     width: 100%;
+    color: var(--bangkok-night-foreground);
+}
+
+.bangkok-night-content {
+    position: relative;
+    width: min(1680px, calc(100% - 2rem));
     height: 100vh;
-    overflow-x: auto;
-    overflow-y: hidden;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+    margin: 0 auto;
+    overflow: hidden;
 }
-.bangkok-night-section .image-carousel::-webkit-scrollbar {
-    width: 0;
-    height: 0;
+
+.bangkok-night-helper {
+    position: absolute;
+    top: 0.75rem;
+    left: 0;
+    z-index: 10;
+    margin: 0;
+    color: var(--bangkok-night-accent);
+    font-size: 0.8rem;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    pointer-events: none;
 }
-.bangkok-night-section .image-track {
-    position: relative;
-    height: 100%;
+
+.bangkok-night-track {
+    position: absolute;
+    inset: 0;
     width: 100%;
-    min-width: 100%;
+    height: 100%;
 }
-.bangkok-night-section .text-layer {
+
+.bangkok-night-layer {
     position: absolute;
     inset: 0;
     pointer-events: none;
+}
+
+.bangkok-night-item {
+    position: absolute;
+    width: var(--item-width, auto);
+    height: var(--item-height, auto);
+    overflow: hidden;
+    box-shadow: 0 22px 70px rgba(0, 0, 0, 0.42);
+    transform-origin: center center;
+    pointer-events: auto;
+}
+
+.bangkok-night-item[data-layer="1"] {
+    z-index: 1;
+}
+
+.bangkok-night-item[data-layer="2"] {
+    z-index: 2;
+}
+
+.bangkok-night-item[data-layer="3"] {
+    z-index: 3;
+}
+
+.bangkok-night-item[data-layer="4"] {
     z-index: 4;
-    overflow: hidden;
 }
-.bangkok-night-section .floating-letter {
-    font-family:"Oswald", sans-serif;
+
+.bangkok-night-item.is-clickable {
+    cursor: pointer;
+}
+
+.bangkok-night-item.is-clickable:focus-visible {
+    outline: 2px solid var(--bangkok-night-accent);
+    outline-offset: 4px;
+}
+
+.bangkok-night-item__id {
     position: absolute;
-    left: var(--x, 0px);
-    top: var(--y, 0px);
-    font-size: clamp(12.5rem, 16vw, 17rem);
-    letter-spacing: 0.06em;
-    font-weight: 700;
+    top: 0.85rem;
+    left: 0.85rem;
+    z-index: 2;
+    padding: 0.38rem 0.56rem;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 999px;
+    background: rgba(11, 11, 14, 0.62);
+    color: var(--bangkok-night-foreground);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: rgba(27, 238, 7);
-    user-select: none;
-    white-space: pre;
+    backdrop-filter: blur(12px);
 }
-.bangkok-night-section .layer {
-    position: absolute;
-    inset: 0;
-}
-.bangkok-night-section .carousel-item {
-    position: absolute;
-    left: var(--x, 0px);
-    top: var(--y, 0px);
-    width: var(--item-w, 320px);
-    height: var(--item-h, 220px);
-    z-index: var(--z, 1);
-    transform: translateX(var(--parallax-x, 0px));
-    transition: transform 200ms ease;
-    scroll-snap-align: start;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-}
-.bangkok-night-section .carousel-item img {
-    width: 84%;
-    max-height: 84%;
-    height: auto;
-    object-fit: contain;
+
+.bangkok-night-item__image,
+.bangkok-night-item__video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
     display: block;
 }
-.bangkok-night-section .size-small {
-    --item-w: 220px;
-    --item-h: auto;
-}
-.bangkok-night-section .size-medium {
-    --item-w: 320px;
-    --item-h: auto;
-}
-.bangkok-night-section .size-large {
-    --item-w: 460px;
-    --item-h: auto;
+
+.bangkok-night-item__video {
+    background: #000;
 }
 
+.bangkok-night-item__layer {
+    position: absolute;
+    right: 0.85rem;
+    bottom: 0.85rem;
+    z-index: 2;
+    color: var(--bangkok-night-muted);
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
 
-@media (max-width: 600px) {
-.bangkok-night-section .image-carousel {
-        height: min(100vh, 560px);
+.bangkok-night-item--text {
+    background: transparent;
+    box-shadow: none;
+    border-radius: 0;
+    overflow: visible;
+}
+
+.bangkok-night-item__text {
+    margin: 0;
+    color: var(--bangkok-night-foreground);
+    text-wrap: balance;
+}
+
+.bangkok-night-item--text.is-title .bangkok-night-item__text {
+    font-size: clamp(4rem, 10vw, 8rem);
+    line-height: 0.88;
+    letter-spacing: -0.08em;
+}
+
+.bangkok-night-item--text.is-copy .bangkok-night-item__text {
+    max-width: 22rem;
+    color: var(--bangkok-night-muted);
+    font-size: 1rem;
+    line-height: 1.65;
+}
+
+.bangkok-night-item--model {
+    background: rgba(10, 10, 12, 0.96);
+}
+
+.bangkok-night-item__model-shell,
+.bangkok-night-item__model-canvas {
+    width: 100%;
+    height: 100%;
+}
+
+.bangkok-night-item__model-shell {
+    position: relative;
+}
+
+.bangkok-night-item__model-canvas canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.bangkok-night-item__model-title {
+    position: absolute;
+    left: 1rem;
+    bottom: 1rem;
+    z-index: 2;
+    padding: 0.4rem 0.7rem;
+    border-radius: 999px;
+    background: rgba(12, 12, 16, 0.72);
+    color: var(--bangkok-night-foreground);
+    font-size: 0.75rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+
+.bangkok-night-overlay[hidden] {
+    display: none;
+}
+
+.bangkok-night-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+}
+
+.bangkok-night-overlay__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(5, 5, 7, 0.84);
+    backdrop-filter: blur(10px);
+}
+
+.bangkok-night-overlay__panel {
+    position: relative;
+    z-index: 1;
+    width: min(1100px, calc(100% - 2rem));
+    margin: 3rem auto;
+    padding: 3.5rem 1rem 1rem;
+    border: 1px solid var(--bangkok-night-outline);
+    border-radius: 1.4rem;
+    background: rgba(14, 14, 18, 0.96);
+    box-shadow: 0 30px 90px rgba(0, 0, 0, 0.42);
+}
+
+.bangkok-night-overlay__close {
+    position: absolute;
+    top: 0.9rem;
+    right: 0.9rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.4rem;
+    height: 2.4rem;
+    border: 0;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--bangkok-night-foreground);
+    cursor: pointer;
+    text-transform: uppercase;
+}
+
+.bangkok-night-overlay__content {
+    display: grid;
+    gap: 1rem;
+}
+
+.bangkok-night-overlay__title {
+    margin: 0;
+    font-size: 0.95rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--bangkok-night-accent);
+}
+
+.bangkok-night-overlay__image,
+.bangkok-night-overlay__video {
+    width: 100%;
+    max-height: 76vh;
+    border-radius: 1rem;
+    display: block;
+    object-fit: contain;
+    background: #000;
+}
+
+.bangkok-night-overlay__text {
+    margin: 0;
+    color: var(--bangkok-night-foreground);
+    font-size: 1.15rem;
+    line-height: 1.7;
+}
+
+@media (max-width: 900px) {
+    .bangkok-night-content {
+        width: min(100%, calc(100% - 1rem));
     }
 
-.bangkok-night-section .size-small {
-        --item-w: 100px;
-        --item-h: auto;
+    .bangkok-night-item--text.is-title .bangkok-night-item__text {
+        font-size: clamp(3rem, 11vw, 5.2rem);
+    }
+}
+
+@media (max-width: 640px) {
+    .bangkok-night-helper {
+        top: 0.55rem;
+        font-size: 0.68rem;
+        letter-spacing: 0.18em;
     }
 
-.bangkok-night-section .size-medium {
-        --item-w: 140px;
-        --item-h: auto;
+    .bangkok-night-item {
+        border-radius: 1rem;
     }
 
-.bangkok-night-section .size-large {
-        --item-w: 240px;
-        --item-h: auto;
+    .bangkok-night-item__id,
+    .bangkok-night-item__layer,
+    .bangkok-night-item__model-title {
+        font-size: 0.64rem;
+    }
+
+    .bangkok-night-overlay__panel {
+        width: calc(100% - 1rem);
+        margin: 1.5rem auto;
     }
 }

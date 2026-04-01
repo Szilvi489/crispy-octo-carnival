@@ -1,33 +1,31 @@
 <section class="bangkok-night-section">
-    <div class="bangkok-night-content" style="--backgroundColour: {{ page.backgroundColour | default: site.backgroundColour }}; --fontColour: {{ page.fontColour | default: site.fontColour }};">
-        {%- assign layout_data = empty -%}
-        {%- if page.layout_data_key and page.layout_data_key != blank -%}
-            {%- assign layout_data = site.data[page.layout_data_key] | default: empty -%}
-        {%- endif -%}
-        {%- if page.gallery_images and page.gallery_images.size > 0 -%}
-            {%- assign gallery_list = page.gallery_images -%}
-        {%- elsif page.gallery_path and page.gallery_path != blank -%}
-            {%- assign gallery_files = site.static_files | where_exp: "f", "f.path contains page.gallery_path" -%}
-            {%- assign gallery_list = gallery_files | map: "path" | sort -%}
-        {%- else -%}
-            {%- assign gallery_list = empty -%}
-        {%- endif -%}
-        <div class="image-carousel" aria-label="Bangkok Night gallery">
-            <div class="image-track">
-                <div class="text-layer" aria-hidden="true"></div>
-                <div class="layer layer-back"></div>
-                <div class="layer layer-middle"></div>
-                <div class="layer layer-front"></div>
+    {%- assign layout_data = empty -%}
+    {%- if page.layout_data_key and page.layout_data_key != blank -%}
+        {%- assign layout_data = site.data[page.layout_data_key] | default: empty -%}
+    {%- endif -%}
+    <div class="bangkok-night-content">
+        <p class="bangkok-night-helper">Scroll through the stage. Click photos and videos to open them.</p>
+        <div class="bangkok-night-track" aria-label="{{ page.title }} gallery">
+            <div class="bangkok-night-layer" data-layer="1"></div>
+            <div class="bangkok-night-layer" data-layer="2"></div>
+            <div class="bangkok-night-layer" data-layer="3"></div>
+            <div class="bangkok-night-layer" data-layer="4"></div>
+        </div>
+        <div class="bangkok-night-overlay" hidden aria-hidden="true">
+            <div class="bangkok-night-overlay__backdrop" data-close-overlay></div>
+            <div class="bangkok-night-overlay__panel" role="dialog" aria-modal="true" aria-label="{{ page.title }} overlay">
+                <button class="bangkok-night-overlay__close" type="button" aria-label="Close overlay" data-close-overlay>
+                    <span aria-hidden="true">x</span>
+                </button>
+                <div class="bangkok-night-overlay__content"></div>
             </div>
         </div>
         <script id="bn-gallery-data" type="application/json">
         {
           "title": {{ page.title | default: site.title | jsonify }},
-          "all": {{ gallery_list | jsonify }},
-          "layout": {{ layout_data | jsonify }},
-          "small": {% if page.smallImages %}{{ page.smallImages | jsonify }}{% else %}[]{% endif %},
-          "medium": {% if page.mediumImages %}{{ page.mediumImages | jsonify }}{% else %}[]{% endif %},
-          "large": {% if page.largeImages %}{{ page.largeImages | jsonify }}{% else %}[]{% endif %}
+          "stage": {{ layout_data.stage | default: empty | jsonify }},
+          "items": {{ layout_data.items | default: empty | jsonify }},
+          "motions": {{ layout_data.motions | default: empty | jsonify }}
         }
         </script>
     </div>
