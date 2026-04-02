@@ -1,5 +1,25 @@
+# Bangkok Night choreography manifest
+# - `start` and `end` are positions on the authored timeline.
+# - `stage.timeline_length` sets the total available timeline space.
+#   Example: if `timeline_length: 3`, you can place beats between 0 and 3.
+# - `initial`, `from`, and `to` can use:
+#   x, y, z, scale, autoAlpha, rotate, rotationX, rotationY, rotationZ, transformOrigin
+# - for DOM items you can also use:
+#   origin/pivot: center | left | right | top | bottom | top-left | top-right | bottom-left | bottom-right
+# - shorthand edge rotations for DOM items:
+#   rotateM = rotate around center
+#   rotateL = rotate around left edge
+#   rotateR = rotate around right edge
+#   rotateT = rotate around top edge
+#   rotateB = rotate around bottom edge
+# - `target: model` animates the inside GLB object itself.
+#   Rotation values are still written in degrees. `scale` is a multiplier.
+
 stage:
-  scroll_length: 5200
+  scroll_length: 18000
+  timeline_length: 3
+  perspective: 2400
+  perspective_origin: "50% 52%"
 
 items:
   - id: BNT01
@@ -7,67 +27,76 @@ items:
     text: "Bangkok Night"
     tag: h2
     layer: 4
-    width: 760
+    width: 860
     overlay: false
     class_name: "is-title"
 
-  - id: BNT02
+  - id: BNT03
     type: text
-    text: "A scroll-bound stage for photos, loops, text fragments, and one drifting retro object."
+    text: "To the Security Guard at My Condo Who Salutes Me Like I Am the King of England. At Ease, Soldier. It is just me. I appreciate the respect. Really, I do. But every time I walk out of the gate to buy a toasted sandwich at 7-Eleven, you slam your heels together, snap your hand to your forehead, and scream: «Sawatdee Krub BOSS!»"
     tag: p
-    layer: 2
-    width: 420
+    layer: 1
+    width: 600
     overlay: false
     class_name: "is-copy"
 
-  - id: BN01
-    type: image
-    src: "/assets/images/projects/bangkokNight/gallery_images/DSCF0180.jpg"
-    alt: "Bangkok Night image BN01"
-    height: 420
+  - id: BNT02
+    type: text
+    text: "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English."
+    tag: p
     layer: 1
-    overlay: true
-    overlay_title: "Bangkok Night 01"
-
-  - id: BN02
-    type: image
-    src: "/assets/images/projects/bangkokNight/gallery_images/DSCF0495.jpg"
-    alt: "Bangkok Night image BN02"
-    height: 360
-    layer: 3
-    overlay: true
-    overlay_title: "Bangkok Night 02"
-
-  - id: BN03
-    type: image
-    src: "/assets/images/projects/bangkokNight/gallery_images/DSCF0829.jpg"
-    alt: "Bangkok Night image BN03"
-    height: 430
-    layer: 4
-    overlay: true
-    overlay_title: "Bangkok Night 03"
-
-  - id: BN04
-    type: image
-    src: "/assets/images/projects/bangkokNight/gallery_images/DSCF1218.jpg"
-    alt: "Bangkok Night image BN04"
-    height: 330
-    layer: 2
-    overlay: true
-    overlay_title: "Bangkok Night 04"
+    width: 600
+    overlay: false
+    class_name: "is-copy"
 
   - id: BNV01
     type: video
     src: "/assets/images/projects/bangkokNight/gallery_videos/highwayTrafficMoving.mp4"
     title: "Highway Traffic"
-    height: 290
-    layer: 2
+    height: 510
+    layer: 1
     overlay: true
     muted: true
     loop: true
     autoplay: true
 
-  - id: BNV02
+  - id: BN01
+    type: image
+    src: "/assets/images/projects/bangkokNight/gallery_images/DSCF0757.jpg"
+    alt: "Bangkok Night image BN01"
+    height: 510
+    layer: 1
+    overlay: true
+    overlay_title: "Bangkok Night 01"
+  
+  - id: BN02
+    type: image
+    src: "/assets/images/projects/bangkokNight/gallery_images/DSCF0762.jpg"
+    alt: "Bangkok Night image BN02"
+    height: 460
+    layer: 2
+    overlay: true
+    overlay_title: "Bangkok Night 01"
+
+  - id: BN03
+    type: image
+    src: "/assets/images/projects/bangkokNight/gallery_images/DSCF0932.jpg"
+    alt: "Bangkok Night image BN03"
+    height: 260
+    layer: 3
+    overlay: true
+    overlay_title: "Bangkok Night 01"
+  
+  - id: BN04
+    type: image
+    src: "/assets/images/projects/bangkokNight/gallery_images/DSCF0929.jpg"
+    alt: "Bangkok Night image BN04"
+    height: 260
+    layer: 3
+    overlay: true
+    overlay_title: "Bangkok Night 01"
+
+  - id: BNV04
     type: video
     src: "/assets/images/projects/bangkokNight/gallery_videos/durian.mp4"
     title: "Durian Stall"
@@ -89,263 +118,217 @@ items:
     loop: true
     autoplay: true
 
+  - id: BNV02
+    type: video
+    src: "/assets/images/projects/bangkokNight/gallery_videos/trafficMovementWithCars.mp4"
+    title: "Street Plants"
+    height: 510
+    layer: 3
+    overlay: true
+    muted: true
+    loop: true
+    autoplay: true
+
   - id: BNM01
     type: model
     src: "/assets/images/projects/bangkokNight/3DImages/vending_machine2k_retro-futuristic.glb"
     title: "Retro Vending Machine"
-    width: 400
-    height: 520
-    layer: 4
+    width: 0
+    height: 0
+    layer: 2
     overlay: false
     class_name: "is-model"
 
 motions:
   - item: BNT01
-    start: 0.00
-    end: 0.18
-    from:
-      x: -120
-      y: 90
-      autoAlpha: 0
-      rotate: -6
-      scale: 0.88
-    to:
-      x: 86
-      y: 54
+    initial:
+      x: 10
+      y: 260
+      z: 0
       autoAlpha: 1
       rotate: 0
+      rotationY: 0
       scale: 1
+    steps:
+      - start: 0.00
+        end: 0.12
+        to:
+          x: -130
+          y: 260
+          z: 80
+          autoAlpha: 1
+          rotate: 0
+          pivot: left
+          rotationY: 98
+          scale: 
 
-  - item: BNT02
-    start: 0.04
-    end: 0.22
-    from:
-      x: 960
-      y: 160
-      autoAlpha: 0
-      rotate: 8
-      scale: 0.92
-    to:
-      x: 820
-      y: 196
-      autoAlpha: 1
-      rotate: 0
-      scale: 1
-
-  - item: BN01
-    start: 0.08
-    end: 0.24
-    from:
-      x: -300
-      y: 190
-      autoAlpha: 0
-      rotate: -10
-      scale: 0.86
-    to:
-      x: 140
-      y: 210
-      autoAlpha: 1
-      rotate: -2
-      scale: 1
-
-  - item: BN02
-    start: 0.12
-    end: 0.28
-    from:
-      x: 1280
-      y: 56
-      autoAlpha: 0
-      rotate: 12
-      scale: 0.84
-    to:
-      x: 900
-      y: 110
-      autoAlpha: 1
-      rotate: 4
-      scale: 1
 
   - item: BNV01
-    start: 0.16
-    end: 0.34
-    from:
-      x: 1080
-      y: 540
-      autoAlpha: 0
-      rotate: 6
-      scale: 0.82
-    to:
-      x: 720
-      y: 510
-      autoAlpha: 1
-      rotate: -2
-      scale: 1
-
-  - item: BNM01
-    start: 0.22
-    end: 0.44
-    from:
-      x: 1220
-      y: 130
-      autoAlpha: 0
-      rotate: 10
-      scale: 0.8
-    to:
-      x: 980
-      y: 170
-      autoAlpha: 1
-      rotate: 0
-      scale: 1
-
-  - item: BN03
-    start: 0.28
-    end: 0.46
-    from:
-      x: 340
-      y: 760
-      autoAlpha: 0
-      rotate: -14
-      scale: 0.84
-    to:
-      x: 420
-      y: 360
-      autoAlpha: 1
-      rotate: -4
-      scale: 1
-
-  - item: BNV02
-    start: 0.34
-    end: 0.52
-    from:
-      x: -240
-      y: 560
-      autoAlpha: 0
-      rotate: -8
-      scale: 0.88
-    to:
-      x: 96
-      y: 572
-      autoAlpha: 1
-      rotate: 2
-      scale: 1
-
-  - item: BN04
-    start: 0.40
-    end: 0.58
-    from:
-      x: 1360
-      y: 430
-      autoAlpha: 0
-      rotate: 10
-      scale: 0.86
-    to:
-      x: 1040
-      y: 398
-      autoAlpha: 1
-      rotate: -5
-      scale: 1
-
-  - item: BNV03
-    start: 0.46
-    end: 0.64
-    from:
-      x: 1120
-      y: 720
-      autoAlpha: 0
-      rotate: 7
-      scale: 0.84
-    to:
-      x: 840
-      y: 640
-      autoAlpha: 1
-      rotate: -3
-      scale: 1
-
-  - item: BNT01
-    start: 0.54
-    end: 0.72
-    to:
-      x: -180
-      y: -50
-      autoAlpha: 0.16
-      rotate: -12
-      scale: 0.86
-
-  - item: BN01
-    start: 0.58
-    end: 0.78
-    to:
-      x: 500
-      y: 70
-      autoAlpha: 0.2
-      rotate: 8
-      scale: 0.9
-
-  - item: BNV01
-    start: 0.62
-    end: 0.80
-    to:
-      x: 300
-      y: 420
-      autoAlpha: 0.22
-      rotate: -10
-      scale: 0.86
-
-  - item: BNM01
-    start: 0.66
-    end: 0.88
-    to:
-      x: 660
-      y: 150
-      autoAlpha: 0.95
-      rotate: -8
-      scale: 0.92
-
-  - item: BN03
-    start: 0.70
-    end: 0.92
-    to:
-      x: 860
-      y: 280
-      autoAlpha: 1
-      rotate: 10
-      scale: 1.04
-
-  - item: BN04
-    start: 0.74
-    end: 0.92
-    to:
+    initial:
       x: 160
-      y: 116
+      y: 260
+      z: -600
+      autoAlpha: 0
+      rotate: 0
+      rotationY: 0
+      scale: 0
+    steps:
+      - start: 0
+        end: 0.22
+        to:
+          x: 160
+          y: 260
+          z: 20
+          autoAlpha: 1
+          rotate: 0
+          rotationY: 0
+          scale: 1
+      - start: 0.38
+        end: 0.382
+        to:
+          x: 160
+          y: 260
+          z: 20
+          autoAlpha: 0
+          rotate: 
+          rotationY: 
+          scale: 1
+
+
+  - item: BN01
+    initial:
+      x: 260
+      y: 260
+      z: -700
+      autoAlpha: 0
+      rotate: 0
+      rotationY: 0
+      scale: 0
+    steps:
+      - start: 0
+        end: 0.22
+        to:
+          x: 630
+          y: 260
+          z: 10
+          autoAlpha: 1
+          rotate: 0
+          rotationY: 0
+          scale: 1
+      - start: 0.366
+        end: 0.366
+        to:
+          x: 630
+          y: 260
+          z: 10
+          autoAlpha: 0
+          rotate: 0
+          rotationY: 0
+          scale: 1
+  
+
+  - item: BN03
+    initial:
+      x: 1100
+      y: -300
+      z: 0
       autoAlpha: 1
-      rotate: -10
-      scale: 0.98
+      rotate: 0
+      rotationY: 0
+      scale: 1
+    steps:
+      - start: 0.24
+        end: 0.29
+        to:
+          x: 1100
+          y: 240
+          z: 10
+          autoAlpha: 1
+          rotate: 0
+          rotationY: 0
+          scale: 1
+
+  - item: BN04
+    initial:
+      x: 1100
+      y: -300
+      z: 0
+      autoAlpha: 1
+      rotate: 0
+      rotationY: 0
+      scale: 1
+    steps:
+      - start: 0.22
+        end: 0.27
+        to:
+          x: 1100
+          y: 530
+          z: 10
+          autoAlpha: 1
+          rotate: 0
+          rotationY: 0
+          scale: 1
+
+  - item: BNM01
+    initial:
+      x: 1800
+      y: 664
+      z: -520
+      autoAlpha: 0
+      rotate: 8
+      rotationY: 58
+      scale: 0.76
+      transformOrigin: "50% 50%"
+    steps:
+      - start: 0.23
+        end: 0.40
+        to:
+          x: 980
+          y: 370
+          z: 420
+          autoAlpha: 1
+          rotate: 0
+          rotationY: 18
+          scale: 1.5
 
   - item: BNT02
-    start: 0.80
-    end: 0.96
-    to:
-      x: 980
-      y: 120
-      autoAlpha: 0.1
-      rotate: 12
-      scale: 0.9
+    initial:
+      x: 630
+      y: 260
+      z: 0
+      autoAlpha: 0
+      rotate: 0
+      rotationY: 0
+      scale: 1
+    steps:
+      - start: 0.366
+        end: 0.368
+        to:
+          x: 630
+          y: 280
+          z: 40
+          autoAlpha: 1
+          rotate: 0
+          rotationY: 0
+          scale: 1.1
 
-  - item: BNV03
-    start: 0.84
-    end: 1.00
-    to:
-      x: 1080
-      y: 760
-      autoAlpha: 0.08
-      rotate: 12
-      scale: 0.82
-
-  - item: BN02
-    start: 0.88
-    end: 1.00
-    to:
-      x: 1180
-      y: -120
-      autoAlpha: 0.05
-      rotate: 18
-      scale: 0.74
+  - item: BNT03
+    initial:
+      x: 160
+      y: 260
+      z: 0
+      autoAlpha: 0
+      rotate: 0
+      rotationY: 0
+      scale: 1
+    steps:
+      - start: 0.382
+        end: 0.384
+        to:
+          x: 160
+          y: 280
+          z: 40
+          autoAlpha: 1
+          rotate: 0
+          rotationY: 0
+          scale: 1.1

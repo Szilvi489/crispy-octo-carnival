@@ -5,6 +5,7 @@
     min-height: 420vh;
     width: 100%;
     color: var(--bangkok-night-foreground);
+    background: var(--bangkok-night-background);
 }
 
 .bangkok-night-content {
@@ -13,6 +14,10 @@
     height: 100vh;
     margin: 0 auto;
     overflow: hidden;
+    background: var(--bangkok-night-background);
+    perspective: var(--bangkok-night-perspective, 2200px);
+    perspective-origin: var(--bangkok-night-perspective-origin, 50% 50%);
+    transform-style: preserve-3d;
 }
 
 .bangkok-night-helper {
@@ -33,12 +38,30 @@
     inset: 0;
     width: 100%;
     height: 100%;
+    isolation: isolate;
 }
 
 .bangkok-night-layer {
     position: absolute;
     inset: 0;
     pointer-events: none;
+    transform-style: flat;
+}
+
+.bangkok-night-layer[data-layer="1"] {
+    z-index: 1;
+}
+
+.bangkok-night-layer[data-layer="2"] {
+    z-index: 2;
+}
+
+.bangkok-night-layer[data-layer="3"] {
+    z-index: 3;
+}
+
+.bangkok-night-layer[data-layer="4"] {
+    z-index: 4;
 }
 
 .bangkok-night-item {
@@ -48,6 +71,9 @@
     overflow: hidden;
     box-shadow: 0 22px 70px rgba(0, 0, 0, 0.42);
     transform-origin: center center;
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+    will-change: transform, opacity;
     pointer-events: auto;
 }
 
@@ -99,6 +125,7 @@
     height: 100%;
     object-fit: cover;
     display: block;
+    backface-visibility: hidden;
 }
 
 .bangkok-night-item__video {
@@ -130,7 +157,7 @@
 }
 
 .bangkok-night-item--text.is-title .bangkok-night-item__text {
-    font-size: clamp(4rem, 10vw, 8rem);
+    font-size: clamp(6rem, 14vw, 12rem);
     line-height: 0.88;
     letter-spacing: -0.08em;
 }
@@ -143,37 +170,27 @@
 }
 
 .bangkok-night-item--model {
-    background: rgba(10, 10, 12, 0.96);
+    background: transparent;
+    box-shadow: none;
+    overflow: visible;
+    pointer-events: none;
 }
 
-.bangkok-night-item__model-shell,
-.bangkok-night-item__model-canvas {
+.bangkok-night-model-stage {
+    position: absolute;
+    inset: 0;
     width: 100%;
     height: 100%;
+    background: transparent;
+    pointer-events: none;
+    z-index: 0;
 }
 
-.bangkok-night-item__model-shell {
-    position: relative;
-}
-
-.bangkok-night-item__model-canvas canvas {
+.bangkok-night-model-stage canvas {
     width: 100%;
     height: 100%;
     display: block;
-}
-
-.bangkok-night-item__model-title {
-    position: absolute;
-    left: 1rem;
-    bottom: 1rem;
-    z-index: 2;
-    padding: 0.4rem 0.7rem;
-    border-radius: 999px;
-    background: rgba(12, 12, 16, 0.72);
-    color: var(--bangkok-night-foreground);
-    font-size: 0.75rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
+    pointer-events: none;
 }
 
 .bangkok-night-overlay[hidden] {
@@ -274,8 +291,7 @@
     }
 
     .bangkok-night-item__id,
-    .bangkok-night-item__layer,
-    .bangkok-night-item__model-title {
+    .bangkok-night-item__layer {
         font-size: 0.64rem;
     }
 
