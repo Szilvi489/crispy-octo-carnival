@@ -19,5 +19,9 @@ navFontColour: "#ffffff"
 thumbnails:
   - "/assets/images/projects/thailandSunset/thumbnails/"
 
-indexImage: []
+indexImage:
+- assets/images/projects/thailandSunset/gallery_images/DSCF4122.jpg
+- assets/images/projects/thailandSunset/gallery_images/DSCF4004.jpg
+- assets/images/projects/thailandSunset/gallery_images/DSCF3980.jpg
+- assets/images/projects/thailandSunset/gallery_images/DSCF2690.jpg
 ---

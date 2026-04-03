@@ -1,0 +1,330 @@
+@import url("./variables.css");
+
+.bangkok-night-section {
+    position: relative;
+    min-height: 420vh;
+    width: 100%;
+    color: var(--bangkok-night-foreground);
+    background: var(--bangkok-night-background);
+    isolation: isolate;
+}
+
+.bangkok-night-content {
+    position: relative;
+    z-index: 1;
+    width: min(1680px, calc(100% - 2rem));
+    height: 100vh;
+    margin: 0 auto;
+    overflow: hidden;
+    background: transparent;
+    perspective: var(--bangkok-night-perspective, 2200px);
+    perspective-origin: var(--bangkok-night-perspective-origin, 50% 50%);
+    transform-style: preserve-3d;
+}
+
+.bangkok-night-backgrounds {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.bangkok-night-background-layer {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    will-change: opacity;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.bangkok-night-helper {
+    position: absolute;
+    top: 0.75rem;
+    left: 0;
+    z-index: 10;
+    margin: 0;
+    color: var(--bangkok-night-accent);
+    font-size: 0.8rem;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    pointer-events: none;
+}
+
+.bangkok-night-track {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    isolation: isolate;
+}
+
+.bangkok-night-layer {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    transform-style: flat;
+}
+
+.bangkok-night-layer[data-layer="1"] {
+    z-index: 1;
+}
+
+.bangkok-night-layer[data-layer="2"] {
+    z-index: 2;
+}
+
+.bangkok-night-layer[data-layer="3"] {
+    z-index: 3;
+}
+
+.bangkok-night-layer[data-layer="4"] {
+    z-index: 4;
+}
+
+.bangkok-night-item {
+    position: absolute;
+    width: var(--item-width, auto);
+    height: var(--item-height, auto);
+    overflow: hidden;
+    box-shadow: 0 22px 70px rgba(0, 0, 0, 0.42);
+    transform-origin: center center;
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+    will-change: transform, opacity;
+    pointer-events: auto;
+}
+
+.bangkok-night-item__idle-layer {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
+    transform-origin: center center;
+    will-change: transform;
+}
+
+.bangkok-night-item[data-layer="1"] {
+    z-index: 1;
+}
+
+.bangkok-night-item[data-layer="2"] {
+    z-index: 2;
+}
+
+.bangkok-night-item[data-layer="3"] {
+    z-index: 3;
+}
+
+.bangkok-night-item[data-layer="4"] {
+    z-index: 4;
+}
+
+.bangkok-night-item.is-clickable {
+    cursor: pointer;
+}
+
+.bangkok-night-item.is-clickable:focus-visible {
+    outline: 2px solid var(--bangkok-night-accent);
+    outline-offset: 4px;
+}
+
+.bangkok-night-item__id {
+    position: absolute;
+    top: 0.85rem;
+    left: 0.85rem;
+    z-index: 2;
+    padding: 0.38rem 0.56rem;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 999px;
+    background: rgba(11, 11, 14, 0.62);
+    color: var(--bangkok-night-foreground);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    backdrop-filter: blur(12px);
+}
+
+.bangkok-night-item__image,
+.bangkok-night-item__video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    backface-visibility: hidden;
+}
+
+.bangkok-night-item__video {
+    background: #000;
+}
+
+.bangkok-night-item__layer {
+    position: absolute;
+    right: 0.85rem;
+    bottom: 0.85rem;
+    z-index: 2;
+    color: var(--bangkok-night-muted);
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.bangkok-night-item--text {
+    background: transparent;
+    box-shadow: none;
+    border-radius: 0;
+    overflow: visible;
+}
+
+.bangkok-night-item__text {
+    margin: 0;
+    color: var(--bangkok-night-foreground);
+    text-wrap: balance;
+}
+
+.bangkok-night-item--text.is-title .bangkok-night-item__text {
+    font-size: clamp(6rem, 14vw, 12rem);
+    line-height: 0.88;
+    letter-spacing: -0.08em;
+}
+
+.bangkok-night-item--text.is-copy .bangkok-night-item__text {
+    max-width: 22rem;
+    color: var(--bangkok-night-muted);
+    font-size: 1rem;
+    line-height: 1.65;
+}
+
+.bangkok-night-item--model {
+    background: transparent;
+    box-shadow: none;
+    overflow: visible;
+    pointer-events: none;
+}
+
+.bangkok-night-model-stage {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.bangkok-night-model-stage canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+    pointer-events: none;
+}
+
+.bangkok-night-overlay[hidden] {
+    display: none;
+}
+
+.bangkok-night-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+}
+
+.bangkok-night-overlay__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(5, 5, 7, 0.84);
+    backdrop-filter: blur(10px);
+}
+
+.bangkok-night-overlay__panel {
+    position: relative;
+    z-index: 1;
+    width: min(1100px, calc(100% - 2rem));
+    margin: 3rem auto;
+    padding: 3.5rem 1rem 1rem;
+    border: 1px solid var(--bangkok-night-outline);
+    border-radius: 1.4rem;
+    background: rgba(14, 14, 18, 0.96);
+    box-shadow: 0 30px 90px rgba(0, 0, 0, 0.42);
+}
+
+.bangkok-night-overlay__close {
+    position: absolute;
+    top: 0.9rem;
+    right: 0.9rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.4rem;
+    height: 2.4rem;
+    border: 0;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--bangkok-night-foreground);
+    cursor: pointer;
+    text-transform: uppercase;
+}
+
+.bangkok-night-overlay__content {
+    display: grid;
+    gap: 1rem;
+}
+
+.bangkok-night-overlay__title {
+    margin: 0;
+    font-size: 0.95rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--bangkok-night-accent);
+}
+
+.bangkok-night-overlay__image,
+.bangkok-night-overlay__video {
+    width: 100%;
+    max-height: 76vh;
+    border-radius: 1rem;
+    display: block;
+    object-fit: contain;
+    background: #000;
+}
+
+.bangkok-night-overlay__text {
+    margin: 0;
+    color: var(--bangkok-night-foreground);
+    font-size: 1.15rem;
+    line-height: 1.7;
+}
+
+@media (max-width: 900px) {
+    .bangkok-night-content {
+        width: min(100%, calc(100% - 1rem));
+    }
+
+    .bangkok-night-item--text.is-title .bangkok-night-item__text {
+        font-size: clamp(3rem, 11vw, 5.2rem);
+    }
+}
+
+@media (max-width: 640px) {
+    .bangkok-night-helper {
+        top: 0.55rem;
+        font-size: 0.68rem;
+        letter-spacing: 0.18em;
+    }
+
+    .bangkok-night-item {
+        border-radius: 1rem;
+    }
+
+    .bangkok-night-item__id,
+    .bangkok-night-item__layer {
+        font-size: 0.64rem;
+    }
+
+    .bangkok-night-overlay__panel {
+        width: calc(100% - 1rem);
+        margin: 1.5rem auto;
+    }
+}

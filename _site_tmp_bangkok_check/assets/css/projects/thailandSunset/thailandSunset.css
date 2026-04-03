@@ -1,0 +1,15 @@
+@import url("./variables.css");
+
+.thailand-sunset-section {
+    position: relative;
+    min-height: 100vh;
+    width: 100%;
+    background: var(--thailand-sunset-background);
+    color: var(--thailand-sunset-foreground);
+}
+
+.thailand-sunset-content {
+    width: min(1200px, calc(100% - 2rem));
+    margin: 0 auto;
+    padding: 6rem 0;
+}

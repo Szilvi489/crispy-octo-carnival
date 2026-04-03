@@ -19,5 +19,8 @@ navFontColour: "#ffffff"
 thumbnails:
   - "/assets/images/projects/phuket/thumbnails/"
 
-indexImage: []
+indexImage: 
+- assets/images/projects/phuket/gallery_images/DSCF2005.jpg
+- assets/images/projects/phuket/gallery_images/DSCF1988.jpg
+- assets/images/projects/phuket/gallery_images/DSCF2047.jpg
 ---

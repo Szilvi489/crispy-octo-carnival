@@ -14,12 +14,33 @@
 #   rotateB = rotate around bottom edge
 # - `target: model` animates the inside GLB object itself.
 #   Rotation values are still written in degrees. `scale` is a multiplier.
+# - any item can also use optional `idle_motion` for subtle autonomous motion
+#   after a chosen authored beat (`start_at`). Values are amplitudes:
+#   x, y, z, rotationX, rotationY, rotationZ, scale, plus `speed` and `phase`.
+# - `stage.background_shifts` lets the page background color drift over scroll.
+#   Add timeline beats with `at` and either `background` or `color`.
+#   Colors and gradients crossfade smoothly between beats.
+# - `stage.design_width` / `stage.design_height` define the authored scene size.
+#   The full Bangkok Night track scales down proportionally on smaller screens.
 
 stage:
   scroll_length: 18000
   timeline_length: 3
+  design_width: 1680
+  design_height: 900
   perspective: 2400
   perspective_origin: "50% 52%"
+  background_shifts:
+    - at: 0
+      background: "linear-gradient(180deg,rgba(238, 234, 7, 1) 18%, rgba(14, 27, 51, 1) 100%)"
+    - at: 0.45
+      background: "linear-gradient(357deg,rgba(42, 76, 120, 1) 0%, rgba(14, 27, 51, 1) 65%)"
+    - at: 0.62
+      color: "#17100c"
+    - at: 0.78
+      color: "#0b1618"
+    - at: 1.02
+      color: "#100a14"
 
 items:
   - id: BNT01
@@ -30,24 +51,6 @@ items:
     width: 860
     overlay: false
     class_name: "is-title"
-
-  - id: BNT03
-    type: text
-    text: "To the Security Guard at My Condo Who Salutes Me Like I Am the King of England. At Ease, Soldier. It is just me. I appreciate the respect. Really, I do. But every time I walk out of the gate to buy a toasted sandwich at 7-Eleven, you slam your heels together, snap your hand to your forehead, and scream: «Sawatdee Krub BOSS!»"
-    tag: p
-    layer: 1
-    width: 600
-    overlay: false
-    class_name: "is-copy"
-
-  - id: BNT02
-    type: text
-    text: "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English."
-    tag: p
-    layer: 1
-    width: 600
-    overlay: false
-    class_name: "is-copy"
 
   - id: BNV01
     type: video
@@ -76,7 +79,7 @@ items:
     height: 460
     layer: 2
     overlay: true
-    overlay_title: "Bangkok Night 01"
+    overlay_title: "Bangkok Night 02"
 
   - id: BN03
     type: image
@@ -85,7 +88,7 @@ items:
     height: 260
     layer: 3
     overlay: true
-    overlay_title: "Bangkok Night 01"
+    overlay_title: "Bangkok Night 03"
   
   - id: BN04
     type: image
@@ -94,7 +97,71 @@ items:
     height: 260
     layer: 3
     overlay: true
-    overlay_title: "Bangkok Night 01"
+    overlay_title: "Bangkok Night 04"
+  
+  - id: BNT03
+    type: text
+    text: "To the Security Guard at My Condo Who Salutes Me Like I Am the King of England. At Ease, Soldier. It is just me.I appreciate the respect. Really, I do. But every time I walk out of the gate to buy a toasted sandwich at 7-Eleven, you slam your heels together, snap your hand to your forehead, and scream:«Sawatdee Krub BOSS!» It is 7:00 AM. I am wearing pyjamas and flip-flops. You are wearing a uniform that looks like you are commanding a naval fleet. You have gold braids, four medals of honor, combat boots, and a beret.Sir, you are guarding a parking lot in Thong Lor, not the border of a war zone.And the whistle. We need to talk about the whistle.When I drive my car out, you don’t just guide me. You perform a jazz symphony. Preeet! Preeet! PREEET!You jump into the middle of Sukhumvit Road. You stop a speeding ten-wheel truck with nothing but your bare hand and pure confidence. You risk your life just so I can merge my little Toyota into traffic.I admire the bravery, but I am terrified I am going to watch you die for my morning commute."
+    tag: p
+    text_start:
+      length: 1
+      class_name: "is-dropcap"
+    layer: 1
+    width: 600
+    overlay: false
+    class_name: "is-copy is-all-caps"
+
+  - id: BNT02
+    type: text
+    text: "And then, the «Night Mode.» I come home at 2:00 AM, and the military discipline has vanished. You are in your booth, head tipped back, mouth open, sleeping so peacefully. The radio is playing soft country folk songs. I don’t even tap my key card because I don’t want to wake you up. You look like a sleeping angel in a tactical vest.But the best part is how you treat the delivery drivers.My GrabFood driver is just trying to bring me a pizza. Why do you treat him like an international spy? You inspect his ID card, you make him sign the logbook, you stare him down.Meanwhile, you wave me through without looking.Thank you for your service, General. I feel safe. Mostly because the sound of your whistle scares away the ghosts."
+    tag: p
+    layer: 1
+    width: 600
+    overlay: false
+    class_name: "is-copy is-all-caps"
+  
+  - id: BNB01
+    type: image
+    src: "/assets/images/projects/bangkokNight/backgrounds/texture3.png"
+    alt: "Bangkok Night Background Image BNB01"
+    height: 900
+    layer: 4
+  
+  - id: BN05
+    type: image
+    src: "/assets/images/projects/bangkokNight/gallery_images/DSCF0988.jpg"
+    alt: "Bangkok Night image BN05"
+    height: 760
+    layer: 3
+    overlay: true
+    overlay_title: "Bangkok Night 05"
+
+  - id: BN06
+    type: image
+    src: "/assets/images/projects/bangkokNight/gallery_images/DSCF0319.jpg"
+    alt: "Bangkok Night image BN06"
+    height: 760
+    layer: 3
+    overlay: true
+    overlay_title: "Bangkok Night 06"
+
+  - id: BN07
+    type: image
+    src: "/assets/images/projects/bangkokNight/gallery_images/DSCF0330.jpg"
+    alt: "Bangkok Night image BN07"
+    height: 760
+    layer: 4
+    overlay: true
+    overlay_title: "Bangkok Night 07"
+  
+  - id: BN08
+    type: image
+    src: "/assets/images/projects/bangkokNight/gallery_images/DSCF0401.jpg"
+    alt: "Bangkok Night image BN08"
+    height: 760
+    layer: 4
+    overlay: true
+    overlay_title: "Bangkok Night 08"
 
   - id: BNV04
     type: video
@@ -138,6 +205,26 @@ items:
     layer: 2
     overlay: false
     class_name: "is-model"
+
+  - id: BNM02
+    type: model
+    src: "/assets/images/projects/bangkokNight/3DImages/security_room_parking.glb"
+    title: "Security booth"
+    width: 0
+    height: 0
+    layer: 2
+    overlay: false
+    class_name: "is-model"
+    idle_motion:
+      start_at: 0.45
+      y: 18
+      z: 10
+      rotationY: 6
+      rotationZ: 1.8
+      scale: 0.03
+      speed: 0.85
+      phase: 0.4
+
 
 motions:
   - item: BNT01
@@ -230,15 +317,15 @@ motions:
   - item: BN03
     initial:
       x: 1100
-      y: -300
+      y: -500
       z: 0
       autoAlpha: 1
       rotate: 0
       rotationY: 0
       scale: 1
     steps:
-      - start: 0.24
-        end: 0.29
+      - start: 0.23
+        end: 0.28
         to:
           x: 1100
           y: 240
@@ -247,11 +334,21 @@ motions:
           rotate: 0
           rotationY: 0
           scale: 1
+      - start: 0.36
+        end: 0.38
+        to:
+          x: 1100
+          y: -500
+          z: -10
+          autoAlpha: 1
+          rotate: 0
+          rotationY: 0
+          scale: 1
 
   - item: BN04
     initial:
       x: 1100
-      y: -300
+      y: -500
       z: 0
       autoAlpha: 1
       rotate: 0
@@ -264,6 +361,16 @@ motions:
           x: 1100
           y: 530
           z: 10
+          autoAlpha: 1
+          rotate: 0
+          rotationY: 0
+          scale: 1
+      - start: 0.36
+        end: 0.39
+        to:
+          x: 1100
+          y: -320
+          z: -10
           autoAlpha: 1
           rotate: 0
           rotationY: 0
@@ -294,7 +401,7 @@ motions:
   - item: BNT02
     initial:
       x: 630
-      y: 260
+      y: 200
       z: 0
       autoAlpha: 0
       rotate: 0
@@ -305,30 +412,185 @@ motions:
         end: 0.368
         to:
           x: 630
-          y: 280
-          z: 40
+          y: 220
+          z: 0
           autoAlpha: 1
           rotate: 0
           rotationY: 0
+          scale: 1.1
+      - start: 0.48
+        end: 0.49
+        to:
+          x: 630
+          y: 920
+          z: 0
+          autoAlpha: 1
+          rotate: 0
           scale: 1.1
 
   - item: BNT03
     initial:
       x: 160
-      y: 260
-      z: 0
-      autoAlpha: 0
-      rotate: 0
-      rotationY: 0
+      y: 200
       scale: 1
     steps:
       - start: 0.382
         end: 0.384
         to:
           x: 160
-          y: 280
-          z: 40
+          y: 220
+          z: 0
+          autoAlpha: 1
+          scale: 1.1
+      - start: 0.48
+        end: 0.49
+        to:
+          x: 160
+          y: 920
+          z: 0
           autoAlpha: 1
           rotate: 0
-          rotationY: 0
           scale: 1.1
+  
+  - item: BNB01
+    initial:
+      x: 80
+      y: 80
+      z: 0
+      autoAlpha: 0
+      rotate: 0
+      scale: 1
+    steps:
+      - start: 0.37
+        end: 0.40
+        to:
+          x: 80
+          y: 120
+          z: 0
+          autoAlpha: 1
+      - start: 0.48
+        end: 0.492
+        to:
+          x: 80
+          y: 920
+          z: 0
+          autoAlpha: 1
+          scale: 1
+
+
+  - item: BNM02
+    initial:
+      x: 1100
+      y: 900
+      z: -20
+      autoAlpha: 0
+      rotate: 28
+      rotationY: 58
+      scale: 0.76
+      transformOrigin: "50% 50%"
+    steps:
+      - start: 0.35
+        end: 0.45
+        to:
+          x: 1100
+          y: 300
+          z: 90
+          autoAlpha: 1
+          rotate: 0
+          rotationY: 40
+          scale: 2.5
+      - start: 0.51
+        end: 0.54
+        to:
+          scale: 2
+      - start: 0.54
+        end: 0.595
+        to:
+          autoAlpha: 0
+  
+  - item: BN05
+    initial:
+      x: 200
+      y: 100
+      z: 0
+      autoAlpha: 0
+      scale: 1
+      clipPath: "inset(0% 0% 80% 0%)"
+    steps:
+      - start: 0.49
+        end: 0.51
+        to:
+          x: 200
+          y: 100
+          z: 0
+          autoAlpha: 1
+          scale: 1
+          clipPath: "inset(0% 0% 0% 0%)"
+      - start: 0.52
+        end: 0.535
+        to:
+          x: 200
+          y: 100
+          z: 0
+          autoAlpha: 1
+          scale: 1
+          clipPath: "inset(100% 0% 0% 0%)"
+
+  - item: BN06
+    initial:
+      x: 200
+      y: 100
+      z: 0
+      autoAlpha: 1
+      scale: 1
+      clipPath: "inset(0% 0% 100% 0%)"
+    steps:
+      - start: 0.54
+        end: 0.558
+        to:
+          x: 200
+          y: 100
+          z: 0
+          autoAlpha: 1
+          scale: 1
+          clipPath: "inset(0% 0% 0% 0%)"
+
+  - item: BN07
+    initial:
+      x: 200
+      y: 100
+      z: 0
+      autoAlpha: 1
+      scale: 1
+      clipPath: "inset(0% 0% 100% 0%)"
+    steps:
+      - start: 0.54
+        end: 0.558
+        to:
+          x: 200
+          y: 100
+          z: 0
+          autoAlpha: 1
+          scale: 1
+          clipPath: "inset(0% 0% 0% 0%)"
+  
+  - item: BN08
+    initial:
+      x: 200
+      y: 100
+      z: 0
+      autoAlpha: 1
+      scale: 1
+      clipPath: "inset(0% 0% 100% 0%)"
+    steps:
+      - start: 0.54
+        end: 0.558
+        to:
+          x: 200
+          y: 100
+          z: 0
+          autoAlpha: 1
+          scale: 1
+          clipPath: "inset(0% 0% 0% 0%)"
+    
+    

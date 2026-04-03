@@ -17,7 +17,7 @@ navFontColour: "#06073b"
 
 permalink: /projects/forest/
 
-thumbnails:
+indexImage:
   - /assets/images/projects/forest/thumbnails/DSCF2168.jpg
   - /assets/images/projects/forest/thumbnails/DSCF2374.jpg
   - /assets/images/projects/forest/thumbnails/DSCF2510.jpg

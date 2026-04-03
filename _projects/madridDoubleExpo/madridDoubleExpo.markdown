@@ -19,5 +19,10 @@ navFontColour: "#ffffff"
 thumbnails:
   - "/assets/images/projects/madridDoubleExpo/thumbnails/"
 
-indexImage: []
+indexImage: 
+- assets/images/projects/madridDoubleExpo/gallery_videos/cutrain.mp4
+- assets/images/projects/madridDoubleExpo/gallery_images/000074580015 copy.tiff
+- assets/images/projects/madridDoubleExpo/gallery_images/000074590006 copy.tiff
+- assets/images/projects/madridDoubleExpo/gallery_images/000074590030 copy.tiff
+- assets/images/projects/madridDoubleExpo/gallery_images/000074590034 copy.tiff
 ---

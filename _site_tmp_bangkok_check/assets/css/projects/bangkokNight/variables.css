@@ -1,0 +1,9 @@
+:root {
+    --bangkok-night-background: #080809;
+    --bangkok-night-foreground: #f4efe8;
+    --bangkok-night-muted: rgba(244, 239, 232, 0.72);
+    --bangkok-night-accent: #ffbf66;
+    --bangkok-night-panel: #141418;
+    --bangkok-night-outline: rgba(255, 255, 255, 0.08);
+    --bangkok-night-perspective: 2200px;
+}

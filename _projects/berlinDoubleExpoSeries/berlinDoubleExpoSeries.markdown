@@ -19,5 +19,10 @@ navFontColour: "#ffffff"
 thumbnails:
   - "/assets/images/projects/berlinDoubleExpoSeries/thumbnails/"
 
-indexImage: []
+indexImage:
+- assets/images/projects/berlinDoubleExpoSeries/gallery_images/000041230019.jpg
+- assets/images/projects/berlinDoubleExpoSeries/gallery_images/000041230008.jpg
+- assets/images/projects/berlinDoubleExpoSeries/gallery_images/000041230017.jpg
+- assets/images/projects/berlinDoubleExpoSeries/gallery_videos/bratislava_UFO.mp4
+- assets/images/projects/berlinDoubleExpoSeries/gallery_images/000041230012.jpg
 ---

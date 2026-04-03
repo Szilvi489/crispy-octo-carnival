@@ -40,7 +40,7 @@ thumbnails:
 indexImage:
   - /assets/images/projects/cambodiaStreet/gallery_images/DSCF1433.jpg
   - /assets/images/projects/cambodiaStreet/gallery_images/DSCF1465.jpg
-  - /assets/images/projects/cambodiaStreet/gallery_images/DSCF1476.jpg
+  - assets/images/projects/cambodiaStreet/gallery_videos/templeRitual.mp4
   - /assets/images/projects/cambodiaStreet/gallery_images/DSCF1497.jpg
   - /assets/images/projects/cambodiaStreet/gallery_images/DSCF1523.jpg
   - /assets/images/projects/cambodiaStreet/gallery_images/DSCF1631.jpg

@@ -19,5 +19,12 @@ navFontColour: "#ffffff"
 thumbnails:
   - "/assets/images/projects/grafenegg/thumbnails/"
 
-indexImage: []
+indexImage: 
+- assets/images/projects/grafenegg/gallery_images/9 copy.jpg
+
+- assets/images/projects/grafenegg/gallery_images/13 copy.jpg
+
+- assets/images/projects/grafenegg/gallery_images/1C.jpg
+
+- assets/images/projects/grafenegg/gallery_images/10 copy.jpg
 ---

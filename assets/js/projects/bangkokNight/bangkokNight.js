@@ -55,6 +55,9 @@
         Number.parseFloat(stageConfig.timeline_length) || 1
     );
     const timelineSpan = timelineLength * 100;
+    const backgroundShiftEntries = Array.isArray(stageConfig.background_shifts)
+        ? stageConfig.background_shifts
+        : [];
     const toTimelinePosition = (value, fallback = 0) => {
         const parsed = toFiniteNumber(value);
         return clamp(parsed === null ? fallback : parsed, 0, timelineLength) * 100;
@@ -90,18 +93,78 @@
         const normalized = value.trim().toLowerCase();
         return ORIGIN_MAP[normalized] || value.trim();
     };
+    const parseIdleMotion = (source) => {
+        if (!source || typeof source !== "object") {
+            return null;
+        }
+
+        return {
+            startAt: toFiniteNumber(source.start_at) ?? 0,
+            x: toFiniteNumber(source.x) ?? 0,
+            y: toFiniteNumber(source.y) ?? 0,
+            z: toFiniteNumber(source.z) ?? 0,
+            rotationX: toFiniteNumber(source.rotationX) ?? 0,
+            rotationY: toFiniteNumber(source.rotationY) ?? 0,
+            rotationZ: toFiniteNumber(source.rotationZ) ?? 0,
+            scale: toFiniteNumber(source.scale) ?? 0,
+            speed: Math.max(0.05, toFiniteNumber(source.speed) ?? 0.7),
+            phase: toFiniteNumber(source.phase) ?? 0
+        };
+    };
 
     const scrollLength = Math.max(
         2600,
         Number.parseFloat(stageConfig.scroll_length) || 5200
     );
+    const designWidth = Math.max(
+        320,
+        Number.parseFloat(stageConfig.design_width) || 1680
+    );
+    const designHeight = Math.max(
+        320,
+        Number.parseFloat(stageConfig.design_height) || 900
+    );
     const perspective = Math.max(
         800,
         Number.parseFloat(stageConfig.perspective) || 2200
     );
+    const sceneMetrics = {
+        width: designWidth,
+        height: designHeight,
+        scale: 1,
+        offsetX: 0,
+        offsetY: 0
+    };
+    const applySceneScale = () => {
+        const stageWidth = Math.max(1, stage.clientWidth || window.innerWidth || 1);
+        const stageHeight = Math.max(
+            1,
+            stage.clientHeight || window.innerHeight || 1
+        );
+        const scale = Math.min(
+            1,
+            stageWidth / designWidth,
+            stageHeight / designHeight
+        );
+
+        sceneMetrics.scale = Number.isFinite(scale) && scale > 0 ? scale : 1;
+        sceneMetrics.offsetX = Math.max(
+            0,
+            (stageWidth - designWidth * sceneMetrics.scale) / 2
+        );
+        sceneMetrics.offsetY = Math.max(
+            0,
+            (stageHeight - designHeight * sceneMetrics.scale) / 2
+        );
+
+        track.style.width = `${designWidth}px`;
+        track.style.height = `${designHeight}px`;
+        track.style.transform = `translate3d(${sceneMetrics.offsetX}px, ${sceneMetrics.offsetY}px, 0) scale(${sceneMetrics.scale})`;
+    };
 
     section.style.minHeight = `${scrollLength}px`;
     stage.style.setProperty("--bangkok-night-perspective", `${perspective}px`);
+    applySceneScale();
 
     if (
         typeof stageConfig.perspective_origin === "string" &&
@@ -111,6 +174,56 @@
             "--bangkok-night-perspective-origin",
             stageConfig.perspective_origin.trim()
         );
+    }
+
+    const backgroundShifts = backgroundShiftEntries
+        .map((entry) => {
+            if (!entry || typeof entry !== "object") {
+                return null;
+            }
+
+            const backgroundValue =
+                typeof entry.background === "string" && entry.background.trim()
+                    ? entry.background.trim()
+                    : typeof entry.color === "string" && entry.color.trim()
+                      ? entry.color.trim()
+                      : "";
+
+            if (!backgroundValue) {
+                return null;
+            }
+
+            return {
+                at: toTimelinePosition(entry.at, 0),
+                background: backgroundValue
+            };
+        })
+        .filter(Boolean)
+        .sort((a, b) => a.at - b.at);
+
+    let backgroundLayers = null;
+    if (backgroundShifts.length) {
+        const backgroundShell = document.createElement("div");
+        const baseLayer = document.createElement("div");
+        const blendLayer = document.createElement("div");
+
+        backgroundShell.className = "bangkok-night-backgrounds";
+        baseLayer.className = "bangkok-night-background-layer is-base";
+        blendLayer.className = "bangkok-night-background-layer is-blend";
+
+        baseLayer.style.background = backgroundShifts[0].background;
+        baseLayer.style.opacity = "1";
+        blendLayer.style.opacity = "0";
+
+        backgroundShell.appendChild(baseLayer);
+        backgroundShell.appendChild(blendLayer);
+        section.prepend(backgroundShell);
+
+        backgroundLayers = {
+            shell: backgroundShell,
+            baseLayer,
+            blendLayer
+        };
     }
 
     const layerEls = new Map(
@@ -125,6 +238,20 @@
     const itemMap = new Map();
     const modelRuntimes = [];
     const modelLayerStages = new Map();
+    let currentTimelinePosition = 0;
+
+    if (typeof ResizeObserver === "function") {
+        const stageResizeObserver = new ResizeObserver(() => {
+            applySceneScale();
+            scrollTriggerApi.refresh();
+        });
+        stageResizeObserver.observe(stage);
+    }
+
+    window.addEventListener("resize", () => {
+        applySceneScale();
+        scrollTriggerApi.refresh();
+    });
 
     const openOverlay = (item) => {
         if (!overlay || !overlayContent) {
@@ -214,7 +341,8 @@
                         ? entry.overlay_title
                         : "",
                 class_name:
-                    typeof entry.class_name === "string" ? entry.class_name : ""
+                    typeof entry.class_name === "string" ? entry.class_name : "",
+                idle_motion: parseIdleMotion(entry.idle_motion)
             };
 
             if (entry.type === "image") {
@@ -287,10 +415,27 @@
             }
 
             if (entry.type === "text") {
+                const textStartSource =
+                    entry.text_start && typeof entry.text_start === "object"
+                        ? entry.text_start
+                        : null;
+
                 resolve({
                     ...base,
                     tag: typeof entry.tag === "string" ? entry.tag : "p",
                     text: typeof entry.text === "string" ? entry.text : "",
+                    text_start: textStartSource
+                        ? {
+                              length: Math.max(
+                                  1,
+                                  Number.parseInt(textStartSource.length, 10) || 1
+                              ),
+                              class_name:
+                                  typeof textStartSource.class_name === "string"
+                                      ? textStartSource.class_name
+                                      : ""
+                          }
+                        : null,
                     width: Math.max(160, Number.parseFloat(entry.width) || 280),
                     height: Number.parseFloat(entry.height) || null
                 });
@@ -326,9 +471,15 @@
     const createItemElement = (runtime) => {
         const item = runtime.item;
         const root = document.createElement("article");
+        const idleLayer = document.createElement("div");
         root.className = `bangkok-night-item bangkok-night-item--${item.type}`;
         if (item.class_name) {
-            root.classList.add(item.class_name);
+            item.class_name
+                .split(/\s+/)
+                .filter(Boolean)
+                .forEach((className) => {
+                    root.classList.add(className);
+                });
         }
 
         root.dataset.id = item.id;
@@ -337,13 +488,16 @@
         if (item.height) {
             root.style.setProperty("--item-height", `${item.height}px`);
         }
+        idleLayer.className = "bangkok-night-item__idle-layer";
+        root.appendChild(idleLayer);
+        runtime.idleLayer = idleLayer;
 
         if (item.type === "image") {
             const image = document.createElement("img");
             image.className = "bangkok-night-item__image";
             image.src = item.src;
             image.alt = item.alt || item.id;
-            root.appendChild(image);
+            idleLayer.appendChild(image);
         } else if (item.type === "video") {
             const video = document.createElement("video");
             video.className = "bangkok-night-item__video";
@@ -353,24 +507,44 @@
             video.loop = item.loop;
             video.playsInline = true;
             video.preload = "metadata";
-            root.appendChild(video);
+            idleLayer.appendChild(video);
         } else if (item.type === "text") {
             const textNode = document.createElement(item.tag || "p");
             textNode.className = "bangkok-night-item__text";
-            textNode.textContent = item.text;
-            root.appendChild(textNode);
-            return root;
+
+            if (item.text_start && item.text) {
+                const leadLength = Math.min(
+                    item.text.length,
+                    Math.max(1, item.text_start.length || 1)
+                );
+                const leadSpan = document.createElement("span");
+                leadSpan.className = "bangkok-night-item__text-start";
+                if (item.text_start.class_name) {
+                    leadSpan.classList.add(item.text_start.class_name);
+                }
+                leadSpan.textContent = item.text.slice(0, leadLength);
+                textNode.appendChild(leadSpan);
+                textNode.appendChild(
+                    document.createTextNode(item.text.slice(leadLength))
+                );
+            } else {
+                textNode.textContent = item.text;
+            }
+
+            idleLayer.appendChild(textNode);
         }
 
-        const idTag = document.createElement("span");
-        idTag.className = "bangkok-night-item__id";
-        idTag.textContent = item.id;
-        root.appendChild(idTag);
+        if (item.type !== "text") {
+            const idTag = document.createElement("span");
+            idTag.className = "bangkok-night-item__id";
+            idTag.textContent = item.id;
+            idleLayer.appendChild(idTag);
 
-        const layerTag = document.createElement("span");
-        layerTag.className = "bangkok-night-item__layer";
-        layerTag.textContent = `Layer ${item.layer}`;
-        root.appendChild(layerTag);
+            const layerTag = document.createElement("span");
+            layerTag.className = "bangkok-night-item__layer";
+            layerTag.textContent = `Layer ${item.layer}`;
+            idleLayer.appendChild(layerTag);
+        }
 
         makeInteractive(root, item);
         return root;
@@ -380,6 +554,8 @@
     if (!resolvedItems.length) {
         return;
     }
+
+    const idleRuntimes = [];
 
     resolvedItems.forEach((item) => {
         const layerEl = layerEls.get(item.layer);
@@ -418,8 +594,10 @@
             modelLayerStage: null,
             anchorGroup: null,
             innerGroup: null,
+            idleLayer: null,
             modelObject: null,
-            opacityApplied: 1
+            opacityApplied: 1,
+            idleMotion: item.idle_motion || null
         };
 
         if (item.type === "model") {
@@ -427,6 +605,10 @@
         } else {
             runtime.root = createItemElement(runtime);
             layerEl.appendChild(runtime.root);
+        }
+
+        if (runtime.idleMotion) {
+            idleRuntimes.push(runtime);
         }
 
         itemMap.set(item.id, runtime);
@@ -574,6 +756,82 @@
 
         return runtime.root;
     };
+    const getIdleMotionState = (runtime, now, alpha) => {
+        const idleMotion = runtime.idleMotion;
+
+        if (!idleMotion || alpha <= 0.01) {
+            return {
+                x: 0,
+                y: 0,
+                z: 0,
+                rotationX: 0,
+                rotationY: 0,
+                rotationZ: 0,
+                scale: 1
+            };
+        }
+
+        const idleStart = toTimelinePosition(idleMotion.startAt, 0);
+        if (currentTimelinePosition < idleStart) {
+            return {
+                x: 0,
+                y: 0,
+                z: 0,
+                rotationX: 0,
+                rotationY: 0,
+                rotationZ: 0,
+                scale: 1
+            };
+        }
+
+        const idlePrimary = Math.sin(now * idleMotion.speed + idleMotion.phase);
+        const idleSecondary = Math.cos(
+            now * (idleMotion.speed * 0.73) + idleMotion.phase * 1.31
+        );
+        const idleTertiary = Math.sin(
+            now * (idleMotion.speed * 0.51) + idleMotion.phase * 0.67
+        );
+
+        return {
+            x: idleMotion.x * idleSecondary,
+            y: idleMotion.y * idlePrimary,
+            z: idleMotion.z * idleTertiary,
+            rotationX: toRadians(idleMotion.rotationX * idleSecondary),
+            rotationY: toRadians(idleMotion.rotationY * idlePrimary),
+            rotationZ: toRadians(idleMotion.rotationZ * idleTertiary),
+            scale: 1 + idleMotion.scale * idlePrimary
+        };
+    };
+    const setActorOpacity = (runtime, alpha) => {
+        if (!runtime.modelObject) {
+            return;
+        }
+
+        const nextAlpha = clamp(alpha, 0, 1);
+        const appliedAlpha = nextAlpha > 0.01 ? 1 : 0;
+        if (Math.abs(nextAlpha - runtime.opacityApplied) < 0.01) {
+            return;
+        }
+
+        runtime.opacityApplied = nextAlpha;
+        runtime.modelObject.traverse((node) => {
+            if (!node || !node.isMesh || !node.material) {
+                return;
+            }
+
+            const applyMaterial = (material) => {
+                material.transparent = appliedAlpha < 1;
+                material.opacity = appliedAlpha;
+                material.depthWrite = appliedAlpha === 1;
+            };
+
+            if (Array.isArray(node.material)) {
+                node.material.forEach(applyMaterial);
+            } else {
+                applyMaterial(node.material);
+            }
+        });
+    };
 
     const setupModelItems = async () => {
         if (!modelRuntimes.length) {
@@ -650,11 +908,8 @@
         };
 
         const updateLayerStageSize = (layerStage) => {
-            const width = Math.max(1, stage.clientWidth || window.innerWidth || 1);
-            const height = Math.max(
-                1,
-                stage.clientHeight || window.innerHeight || 1
-            );
+            const width = Math.max(1, sceneMetrics.width || designWidth || 1);
+            const height = Math.max(1, sceneMetrics.height || designHeight || 1);
             const cameraDistance =
                 height / (2 * Math.tan((layerStage.fov * Math.PI) / 360));
 
@@ -673,37 +928,6 @@
 
         const updateAllLayerStageSizes = () => {
             modelLayerStages.forEach(updateLayerStageSize);
-        };
-
-        const setActorOpacity = (runtime, alpha) => {
-            if (!runtime.modelObject) {
-                return;
-            }
-
-            const nextAlpha = clamp(alpha, 0, 1);
-            const appliedAlpha = nextAlpha > 0.01 ? 1 : 0;
-            if (Math.abs(nextAlpha - runtime.opacityApplied) < 0.01) {
-                return;
-            }
-
-            runtime.opacityApplied = nextAlpha;
-            runtime.modelObject.traverse((node) => {
-                if (!node || !node.isMesh || !node.material) {
-                    return;
-                }
-
-                const applyMaterial = (material) => {
-                    material.transparent = appliedAlpha < 1;
-                    material.opacity = appliedAlpha;
-                    material.depthWrite = appliedAlpha === 1;
-                };
-
-                if (Array.isArray(node.material)) {
-                    node.material.forEach(applyMaterial);
-                } else {
-                    applyMaterial(node.material);
-                }
-            });
         };
 
         const loader = new GLTFLoader();
@@ -781,7 +1005,15 @@
 
         window.addEventListener("resize", updateAllLayerStageSizes);
 
-        const renderLoop = () => {
+    };
+    const startRuntimeLoop = () => {
+        if (!modelRuntimes.length && !idleRuntimes.length) {
+            return;
+        }
+
+        const runtimeLoop = () => {
+            const now = performance.now() / 1000;
+
             modelRuntimes.forEach((runtime) => {
                 if (
                     !runtime.modelLayerStage ||
@@ -806,6 +1038,7 @@
                     0,
                     1
                 );
+                const idleState = getIdleMotionState(runtime, now, alpha);
 
                 runtime.anchorGroup.visible = alpha > 0.01;
                 setActorOpacity(runtime, alpha);
@@ -822,29 +1055,54 @@
                 );
                 runtime.anchorGroup.scale.setScalar(actorScale);
 
-                runtime.innerGroup.position.set(localX, -localY, localZ);
-                runtime.innerGroup.rotation.set(
-                    toFiniteNumber(runtime.modelProxy.rotationX) ?? 0,
-                    toFiniteNumber(runtime.modelProxy.rotationY) ?? 0,
-                    toFiniteNumber(runtime.modelProxy.rotationZ) ?? 0
+                runtime.innerGroup.position.set(
+                    localX + idleState.x,
+                    -(localY + idleState.y),
+                    localZ + idleState.z
                 );
-                runtime.innerGroup.scale.setScalar(innerScale);
+                runtime.innerGroup.rotation.set(
+                    (toFiniteNumber(runtime.modelProxy.rotationX) ?? 0) +
+                        idleState.rotationX,
+                    (toFiniteNumber(runtime.modelProxy.rotationY) ?? 0) +
+                        idleState.rotationY,
+                    (toFiniteNumber(runtime.modelProxy.rotationZ) ?? 0) +
+                        idleState.rotationZ
+                );
+                runtime.innerGroup.scale.setScalar(innerScale * idleState.scale);
+            });
+
+            idleRuntimes.forEach((runtime) => {
+                if (!runtime.root || !runtime.idleLayer || runtime.item.type === "model") {
+                    return;
+                }
+
+                const alpha = clamp(
+                    toFiniteNumber(runtime.root.style.opacity) ?? 1,
+                    0,
+                    1
+                );
+                const idleState = getIdleMotionState(runtime, now, alpha);
+
+                runtime.idleLayer.style.transform = `translate3d(${idleState.x}px, ${idleState.y}px, ${idleState.z}px) rotateX(${idleState.rotationX}rad) rotateY(${idleState.rotationY}rad) rotateZ(${idleState.rotationZ}rad) scale(${idleState.scale})`;
             });
 
             modelLayerStages.forEach((layerStage) => {
                 layerStage.renderer.render(layerStage.scene, layerStage.camera);
             });
 
-            requestAnimationFrame(renderLoop);
+            requestAnimationFrame(runtimeLoop);
         };
 
-        renderLoop();
+        runtimeLoop();
     };
 
     const buildTimeline = () => {
         const timeline = gsapApi.timeline({
             defaults: {
                 ease: "none"
+            },
+            onUpdate: () => {
+                currentTimelinePosition = timeline.time();
             },
             scrollTrigger: {
                 trigger: section,
@@ -856,6 +1114,69 @@
                 invalidateOnRefresh: true
             }
         });
+
+        if (backgroundLayers && backgroundShifts.length) {
+            const { baseLayer, blendLayer } = backgroundLayers;
+
+            backgroundShifts.forEach((shift, index) => {
+                const nextShift = backgroundShifts[index + 1];
+
+                if (index === 0) {
+                    timeline.set(
+                        baseLayer,
+                        {
+                            background: shift.background,
+                            opacity: 1,
+                            immediateRender: false
+                        },
+                        shift.at
+                    );
+                }
+
+                if (!nextShift) {
+                    return;
+                }
+
+                timeline.set(
+                    blendLayer,
+                    {
+                        background: nextShift.background,
+                        opacity: 0,
+                        immediateRender: false
+                    },
+                    shift.at
+                );
+
+                timeline.to(
+                    blendLayer,
+                    {
+                        opacity: 1,
+                        duration: Math.max(0.01, nextShift.at - shift.at),
+                        ease: "none"
+                    },
+                    shift.at
+                );
+
+                timeline.set(
+                    baseLayer,
+                    {
+                        background: nextShift.background,
+                        opacity: 1,
+                        immediateRender: false
+                    },
+                    nextShift.at
+                );
+
+                timeline.set(
+                    blendLayer,
+                    {
+                        opacity: 0,
+                        immediateRender: false
+                    },
+                    nextShift.at
+                );
+            });
+        }
 
         const defaultDomState = {
             autoAlpha: 0,
@@ -1056,9 +1377,11 @@
         // only uses the early portion of it, so later beats can be added
         // without slowing down the existing choreography.
         timeline.to({ hold: 0 }, { hold: 0, duration: 0.001 }, timelineSpan);
+        currentTimelinePosition = timeline.time();
     };
 
     await setupModelItems();
     buildTimeline();
+    startRuntimeLoop();
     scrollTriggerApi.refresh();
 })();

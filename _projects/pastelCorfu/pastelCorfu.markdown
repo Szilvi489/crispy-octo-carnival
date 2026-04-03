@@ -19,5 +19,8 @@ navFontColour: "#ffffff"
 thumbnails:
   - "/assets/images/projects/pastelCorfu/thumbnails/"
 
-indexImage: []
+indexImage: 
+- assets/images/projects/pastelCorfu/gallery_videos/lassu_viz_partot_mos.mp4
+- assets/images/projects/pastelCorfu/gallery_images/000019570035.jpg
+- assets/images/projects/pastelCorfu/gallery_images/000019570024.jpg
 ---

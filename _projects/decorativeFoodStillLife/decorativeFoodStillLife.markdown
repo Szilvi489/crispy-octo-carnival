@@ -19,5 +19,8 @@ navFontColour: "#ffffff"
 thumbnails:
   - "/assets/images/projects/decorativeFoodStillLife/thumbnails/"
 
-indexImage: []
+indexImage:
+- assets/images/projects/decorativeFoodStillLife/gallery_images/unbenannt-2361.jpg
+
+- assets/images/projects/decorativeFoodStillLife/gallery_videos/pack _in.mp4
 ---

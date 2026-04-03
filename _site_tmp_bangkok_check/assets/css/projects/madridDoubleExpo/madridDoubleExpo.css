@@ -1,0 +1,15 @@
+@import url("./variables.css");
+
+.madrid-double-expo-section {
+    position: relative;
+    min-height: 100vh;
+    width: 100%;
+    background: var(--madrid-double-expo-background);
+    color: var(--madrid-double-expo-foreground);
+}
+
+.madrid-double-expo-content {
+    width: min(1200px, calc(100% - 2rem));
+    margin: 0 auto;
+    padding: 6rem 0;
+}
