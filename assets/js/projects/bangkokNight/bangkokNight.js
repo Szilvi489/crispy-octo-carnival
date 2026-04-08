@@ -5,6 +5,18 @@
     const section = document.querySelector(".bangkok-night-section");
     const stage = document.querySelector(".bangkok-night-content");
     const track = document.querySelector(".bangkok-night-track");
+    const stageLayerShell = stage
+        ? stage.querySelector(".bangkok-night-stage-layers")
+        : null;
+    const tileOverlayEl = stage
+        ? stage.querySelector(".bangkok-night-tile-overlay")
+        : null;
+    const sunStage = track
+        ? track.querySelector(".bangkok-night-sun-stage")
+        : null;
+    const sunDisc = sunStage
+        ? sunStage.querySelector(".bangkok-night-sun-disc")
+        : null;
     const overlay = document.querySelector(".bangkok-night-overlay");
     const overlayContent = overlay
         ? overlay.querySelector(".bangkok-night-overlay__content")
@@ -128,6 +140,220 @@
         800,
         Number.parseFloat(stageConfig.perspective) || 2200
     );
+    const parseSunsetDisc = (source) => {
+        if (!source || typeof source !== "object") {
+            return null;
+        }
+
+        const size = Math.max(320, toFiniteNumber(source.size) ?? 1500);
+        const initialY = toFiniteNumber(source.y) ?? 150;
+        const startAt = toTimelinePosition(
+            source.start !== undefined ? source.start : source.at,
+            0
+        );
+        const requestedEnd = toTimelinePosition(source.end, 0.24);
+        const endAt = Math.max(startAt + 0.01, requestedEnd);
+        const sinkY =
+            toFiniteNumber(source.sink_y) ?? designHeight + size * 0.58;
+
+        return {
+            startAt,
+            endAt,
+            x: toFiniteNumber(source.x) ?? 90,
+            y: initialY,
+            sinkY,
+            size,
+            opacity: clamp(toFiniteNumber(source.opacity) ?? 1, 0, 1),
+            background:
+                typeof source.background === "string" && source.background.trim()
+                    ? source.background.trim()
+                    : "linear-gradient(180deg, #ffca28 0%, #f0660a 56%, #b31244 100%)",
+            shadow:
+                typeof source.shadow === "string" && source.shadow.trim()
+                    ? source.shadow.trim()
+                    : "0 -18px 140px rgba(255, 116, 22, 0.38)"
+        };
+    };
+    const parseTileOverlayStep = (source, defaults = {}) => {
+        if (!source || typeof source !== "object") {
+            return null;
+        }
+
+        const startAt = toTimelinePosition(
+            source.start !== undefined
+                ? source.start
+                : source.at !== undefined
+                  ? source.at
+                  : defaults.start,
+            0.58
+        );
+        const requestedEnd = toTimelinePosition(
+            source.end !== undefined ? source.end : defaults.end,
+            0.7
+        );
+        const endAt = Math.max(startAt + 0.01, requestedEnd);
+        const modeSource =
+            typeof source.mode === "string" && source.mode.trim()
+                ? source.mode.trim().toLowerCase()
+                : defaults.mode;
+        const orderSource =
+            typeof source.order === "string" && source.order.trim()
+                ? source.order.trim().toLowerCase()
+                : defaults.order;
+        const backgroundValue =
+            typeof source.background === "string" && source.background.trim()
+                ? source.background.trim()
+                : typeof source.color === "string" && source.color.trim()
+                  ? source.color.trim()
+                  : defaults.background;
+
+        return {
+            startAt,
+            endAt,
+            mode: modeSource === "uncover" ? "uncover" : "cover",
+            order: ["start", "end", "center", "edges", "random"].includes(
+                orderSource
+            )
+                ? orderSource
+                : "random",
+            background: backgroundValue || "#0e1b33",
+            opacity: clamp(
+                toFiniteNumber(
+                    source.opacity !== undefined ? source.opacity : defaults.opacity
+                ) ?? 1,
+                0,
+                1
+            )
+        };
+    };
+    const parseTileOverlay = (source) => {
+        if (!source || typeof source !== "object") {
+            return null;
+        }
+
+        const tileSize = Math.max(
+            24,
+            toFiniteNumber(source.tile_size ?? source.tileSize) ?? 96
+        );
+        const defaults = {
+            start:
+                source.start !== undefined
+                    ? source.start
+                    : source.at !== undefined
+                      ? source.at
+                      : 0.58,
+            end: source.end !== undefined ? source.end : 0.7,
+            mode:
+                typeof source.mode === "string" && source.mode.trim()
+                    ? source.mode.trim().toLowerCase()
+                    : "cover",
+            order:
+                typeof source.order === "string" && source.order.trim()
+                    ? source.order.trim().toLowerCase()
+                    : "random",
+            background:
+                typeof source.background === "string" && source.background.trim()
+                    ? source.background.trim()
+                    : typeof source.color === "string" && source.color.trim()
+                      ? source.color.trim()
+                      : "#0e1b33",
+            src:
+                typeof source.src === "string" && source.src.trim()
+                    ? source.src.trim()
+                    : "",
+            sceneLayerId:
+                typeof source.scene_layer === "string" && source.scene_layer.trim()
+                    ? source.scene_layer.trim()
+                    : "",
+            opacity: clamp(toFiniteNumber(source.opacity) ?? 1, 0, 1)
+        };
+        const stepSources =
+            Array.isArray(source.steps) && source.steps.length
+                ? source.steps
+                : [source];
+        const steps = stepSources
+            .map((entry) => parseTileOverlayStep(entry, defaults))
+            .filter(Boolean)
+            .sort((a, b) => a.startAt - b.startAt);
+
+        if (!steps.length) {
+            return null;
+        }
+
+        return {
+            tileSize,
+            src: defaults.src,
+            sceneLayerId: defaults.sceneLayerId,
+            background: defaults.background,
+            steps
+        };
+    };
+    const parseSceneLayers = (source) => {
+        if (!Array.isArray(source)) {
+            return [];
+        }
+
+        return source
+            .map((entry, index) => {
+                if (!entry || typeof entry !== "object") {
+                    return null;
+                }
+
+                const id =
+                    typeof entry.id === "string" && entry.id.trim()
+                        ? entry.id.trim()
+                        : `scene-layer-${index + 1}`;
+                const src =
+                    typeof entry.src === "string" && entry.src.trim()
+                        ? entry.src.trim()
+                        : "";
+                const background =
+                    typeof entry.background === "string" && entry.background.trim()
+                        ? entry.background.trim()
+                        : typeof entry.color === "string" && entry.color.trim()
+                          ? entry.color.trim()
+                          : "";
+
+                if (!src && !background) {
+                    return null;
+                }
+
+                return {
+                    ...entry,
+                    id,
+                    src,
+                    background,
+                    size:
+                        typeof entry.size === "string" && entry.size.trim()
+                            ? entry.size.trim()
+                            : "cover",
+                    position:
+                        typeof entry.position === "string" && entry.position.trim()
+                            ? entry.position.trim()
+                            : "center center",
+                    repeat:
+                        typeof entry.repeat === "string" && entry.repeat.trim()
+                            ? entry.repeat.trim()
+                            : "no-repeat",
+                    blend_mode:
+                        typeof entry.blend_mode === "string" &&
+                        entry.blend_mode.trim()
+                            ? entry.blend_mode.trim()
+                            : "",
+                    class_name:
+                        typeof entry.class_name === "string"
+                            ? entry.class_name
+                            : ""
+                };
+            })
+            .filter(Boolean);
+    };
+    const sunsetDisc = parseSunsetDisc(stageConfig.sunset_disc);
+    const tileOverlayConfig = parseTileOverlay(stageConfig.tile_overlay);
+    const sceneLayerConfigs = parseSceneLayers(stageConfig.scene_layers);
+    const sceneLayerConfigMap = new Map(
+        sceneLayerConfigs.map((layer) => [layer.id, layer])
+    );
     const sceneMetrics = {
         width: designWidth,
         height: designHeight,
@@ -174,6 +400,125 @@
             "--bangkok-night-perspective-origin",
             stageConfig.perspective_origin.trim()
         );
+    }
+
+    if (sunStage && sunDisc && sunsetDisc) {
+        sunStage.hidden = false;
+        sunStage.style.width = `${sunsetDisc.size}px`;
+        sunStage.style.height = `${sunsetDisc.size}px`;
+        sunStage.style.left = `${sunsetDisc.x}px`;
+        sunStage.style.top = `${sunsetDisc.y}px`;
+        sunStage.style.opacity = `${sunsetDisc.opacity}`;
+        sunDisc.style.background = sunsetDisc.background;
+        sunDisc.style.boxShadow = sunsetDisc.shadow;
+    } else if (sunStage) {
+        sunStage.hidden = true;
+    }
+
+    const stageLayerRuntimes = [];
+    if (stageLayerShell && sceneLayerConfigs.length) {
+        const fragment = document.createDocumentFragment();
+
+        stageLayerShell.hidden = false;
+        stageLayerShell.innerHTML = "";
+
+        sceneLayerConfigs.forEach((layer) => {
+            const layerEl = document.createElement("div");
+            layerEl.className = "bangkok-night-stage-layer";
+            layerEl.dataset.sceneLayerId = layer.id;
+            layerEl.style.backgroundPosition = layer.position;
+            layerEl.style.backgroundRepeat = layer.repeat;
+            layerEl.style.backgroundSize = layer.size;
+
+            if (layer.src) {
+                layerEl.style.backgroundImage = `url("${layer.src}")`;
+            } else if (layer.background) {
+                layerEl.style.background = layer.background;
+            }
+
+            if (layer.blend_mode) {
+                layerEl.style.mixBlendMode = layer.blend_mode;
+            }
+
+            if (typeof layer.class_name === "string" && layer.class_name.trim()) {
+                layer.class_name
+                    .trim()
+                    .split(/\s+/)
+                    .forEach((className) => layerEl.classList.add(className));
+            }
+
+            fragment.appendChild(layerEl);
+            stageLayerRuntimes.push({
+                layer,
+                root: layerEl
+            });
+        });
+
+        stageLayerShell.appendChild(fragment);
+    } else if (stageLayerShell) {
+        stageLayerShell.hidden = true;
+        stageLayerShell.innerHTML = "";
+    }
+
+    let tileOverlay = null;
+    if (tileOverlayEl && tileOverlayConfig) {
+        const stageWidth = Math.max(1, stage.clientWidth || window.innerWidth || 1);
+        const stageHeight = Math.max(
+            1,
+            stage.clientHeight || window.innerHeight || 1
+        );
+        const columns = Math.max(1, Math.ceil(stageWidth / tileOverlayConfig.tileSize));
+        const rows = Math.max(1, Math.ceil(stageHeight / tileOverlayConfig.tileSize));
+        const fragment = document.createDocumentFragment();
+        const referencedSceneLayer = tileOverlayConfig.sceneLayerId
+            ? sceneLayerConfigMap.get(tileOverlayConfig.sceneLayerId)
+            : null;
+        const tileImageSrc =
+            tileOverlayConfig.src ||
+            (referencedSceneLayer && referencedSceneLayer.src
+                ? referencedSceneLayer.src
+                : "");
+        const tileBackground =
+            tileImageSrc ||
+            (referencedSceneLayer && referencedSceneLayer.background
+                ? referencedSceneLayer.background
+                : tileOverlayConfig.background);
+        const tileWidth = stageWidth / columns;
+        const tileHeight = stageHeight / rows;
+
+        tileOverlayEl.innerHTML = "";
+        tileOverlayEl.hidden = false;
+        tileOverlayEl.style.gridTemplateColumns = `repeat(${columns}, minmax(0, 1fr))`;
+        tileOverlayEl.style.gridTemplateRows = `repeat(${rows}, minmax(0, 1fr))`;
+
+        for (let index = 0; index < rows * columns; index += 1) {
+            const tile = document.createElement("span");
+            const row = Math.floor(index / columns);
+            const column = index % columns;
+
+            tile.className = "bangkok-night-tile";
+            if (tileImageSrc) {
+                tile.style.backgroundImage = `url("${tileImageSrc}")`;
+                tile.style.backgroundSize = `${stageWidth}px ${stageHeight}px`;
+                tile.style.backgroundPosition = `${-column * tileWidth}px ${-row * tileHeight}px`;
+                tile.style.backgroundRepeat = "no-repeat";
+            } else {
+                tile.style.background = tileBackground;
+            }
+            fragment.appendChild(tile);
+        }
+
+        tileOverlayEl.appendChild(fragment);
+        tileOverlay = {
+            shell: tileOverlayEl,
+            tiles: Array.from(tileOverlayEl.children),
+            rows,
+            columns,
+            usesImageSource: Boolean(tileImageSrc)
+        };
+    } else if (tileOverlayEl) {
+        tileOverlayEl.hidden = true;
+        tileOverlayEl.innerHTML = "";
     }
 
     const backgroundShifts = backgroundShiftEntries
@@ -283,6 +628,20 @@
             media.muted = false;
             media.playsInline = true;
             overlayContent.appendChild(media);
+        } else if (item.type === "shape") {
+            const shape = document.createElement("div");
+            shape.className = "bangkok-night-overlay__shape";
+            shape.style.background = item.background;
+            if (item.borderRadius) {
+                shape.style.borderRadius = item.borderRadius;
+            }
+            if (item.border) {
+                shape.style.border = item.border;
+            }
+            if (item.boxShadow) {
+                shape.style.boxShadow = item.boxShadow;
+            }
+            overlayContent.appendChild(shape);
         } else if (item.type === "text") {
             const copy = document.createElement("p");
             copy.className = "bangkok-night-overlay__text";
@@ -442,6 +801,53 @@
                 return;
             }
 
+            if (entry.type === "shape") {
+                const width = Math.max(16, Number.parseFloat(entry.width) || 180);
+                const height = Math.max(16, Number.parseFloat(entry.height) || 180);
+                const background =
+                    typeof entry.background === "string" && entry.background.trim()
+                        ? entry.background.trim()
+                        : typeof entry.color === "string" && entry.color.trim()
+                          ? entry.color.trim()
+                          : "#ffffff";
+
+                resolve({
+                    ...base,
+                    width,
+                    height,
+                    background,
+                    borderRadius:
+                        typeof entry.border_radius === "string" &&
+                        entry.border_radius.trim()
+                            ? entry.border_radius.trim()
+                            : typeof entry.borderRadius === "string" &&
+                                entry.borderRadius.trim()
+                              ? entry.borderRadius.trim()
+                              : "",
+                    border:
+                        typeof entry.border === "string" && entry.border.trim()
+                            ? entry.border.trim()
+                            : "",
+                    boxShadow:
+                        typeof entry.box_shadow === "string" &&
+                        entry.box_shadow.trim()
+                            ? entry.box_shadow.trim()
+                            : typeof entry.boxShadow === "string" &&
+                                entry.boxShadow.trim()
+                              ? entry.boxShadow.trim()
+                              : "",
+                    backdropFilter:
+                        typeof entry.backdrop_filter === "string" &&
+                        entry.backdrop_filter.trim()
+                            ? entry.backdrop_filter.trim()
+                            : typeof entry.backdropFilter === "string" &&
+                                entry.backdropFilter.trim()
+                              ? entry.backdropFilter.trim()
+                              : ""
+                });
+                return;
+            }
+
             resolve(null);
         });
 
@@ -532,6 +938,23 @@
             }
 
             idleLayer.appendChild(textNode);
+        } else if (item.type === "shape") {
+            const shape = document.createElement("div");
+            shape.className = "bangkok-night-item__shape";
+            shape.style.background = item.background;
+            if (item.borderRadius) {
+                shape.style.borderRadius = item.borderRadius;
+            }
+            if (item.border) {
+                shape.style.border = item.border;
+            }
+            if (item.boxShadow) {
+                shape.style.boxShadow = item.boxShadow;
+            }
+            if (item.backdropFilter) {
+                shape.style.backdropFilter = item.backdropFilter;
+            }
+            idleLayer.appendChild(shape);
         }
 
         if (item.type !== "text") {
@@ -744,6 +1167,41 @@
             }
         ];
     };
+    const resolveScheduledMotionSteps = (motion) =>
+        resolveMotionSteps(motion)
+            .map((step) => {
+                const start = toTimelinePosition(
+                    step.start !== undefined ? step.start : step.at,
+                    0
+                );
+                const explicitEnd =
+                    step.end !== undefined && step.end !== null
+                        ? toTimelinePosition(step.end, 0)
+                        : null;
+                const fallbackDuration = clamp(
+                    toFiniteNumber(step.duration ?? motion.duration) ?? 0.16,
+                    0.02,
+                    1
+                );
+                const end =
+                    explicitEnd !== null
+                        ? explicitEnd
+                        : start + fallbackDuration * 100;
+
+                return {
+                    start,
+                    end: Math.max(start + 0.01, end),
+                    from: step.from,
+                    to: step.to,
+                    ease:
+                        typeof step.ease === "string"
+                            ? step.ease
+                            : typeof motion.ease === "string"
+                              ? motion.ease
+                              : "none"
+                };
+            })
+            .sort((a, b) => a.start - b.start);
 
     const resolveMotionTarget = (runtime, targetKind) => {
         if (targetKind === "modelItem") {
@@ -1178,6 +1636,173 @@
             });
         }
 
+        if (sunStage && sunsetDisc) {
+            timeline.set(
+                sunStage,
+                {
+                    y: 0,
+                    autoAlpha: sunsetDisc.opacity,
+                    immediateRender: false
+                },
+                0
+            );
+
+            timeline.to(
+                sunStage,
+                {
+                    y: sunsetDisc.sinkY - sunsetDisc.y,
+                    duration: Math.max(0.01, sunsetDisc.endAt - sunsetDisc.startAt),
+                    ease: "none"
+                },
+                sunsetDisc.startAt
+            );
+        }
+
+        if (tileOverlay && tileOverlay.tiles.length && tileOverlayConfig) {
+            const [firstStep] = tileOverlayConfig.steps;
+            const initialOpacity =
+                firstStep && firstStep.mode === "uncover" ? firstStep.opacity : 0;
+
+            if (firstStep && !tileOverlay.usesImageSource) {
+                timeline.set(
+                    tileOverlay.tiles,
+                    {
+                        background: firstStep.background,
+                        immediateRender: false
+                    },
+                    0
+                );
+            }
+
+            timeline.set(
+                tileOverlay.tiles,
+                {
+                    autoAlpha: initialOpacity,
+                    immediateRender: false
+                },
+                0
+            );
+
+            tileOverlayConfig.steps.forEach((step) => {
+                const overlaySpan = Math.max(0.01, step.endAt - step.startAt);
+                const tileDuration = Math.max(
+                    0.01,
+                    Math.min(overlaySpan, overlaySpan * 0.22)
+                );
+
+                if (!tileOverlay.usesImageSource) {
+                    timeline.set(
+                        tileOverlay.tiles,
+                        {
+                            background: step.background,
+                            immediateRender: false
+                        },
+                        step.startAt
+                    );
+                }
+
+                timeline.to(
+                    tileOverlay.tiles,
+                    {
+                        autoAlpha: step.mode === "uncover" ? 0 : step.opacity,
+                        duration: tileDuration,
+                        ease: "none",
+                        stagger: {
+                            amount: Math.max(0, overlaySpan - tileDuration),
+                            grid: [tileOverlay.rows, tileOverlay.columns],
+                            from: step.order
+                        }
+                    },
+                    step.startAt
+                );
+            });
+        }
+
+        if (stageLayerRuntimes.length) {
+            const stageLayerDefaultState = {
+                autoAlpha: 0,
+                x: 0,
+                y: 0,
+                z: 0,
+                scale: 1,
+                rotation: 0,
+                rotationX: 0,
+                rotationY: 0,
+                transformOrigin: "50% 50%",
+                force3D: true
+            };
+            const stageLayerInitialStates = new Map();
+            const stageLayerTweens = [];
+
+            stageLayerRuntimes.forEach((runtime) => {
+                const steps = resolveScheduledMotionSteps(runtime.layer);
+                const initialVars = normalizeMotionVars(
+                    runtime.layer.initial || steps[0]?.from || null,
+                    "item"
+                );
+
+                stageLayerInitialStates.set(runtime.layer.id, {
+                    root: runtime.root,
+                    vars: initialVars
+                });
+
+                steps.forEach((step) => {
+                    stageLayerTweens.push({
+                        root: runtime.root,
+                        start: step.start,
+                        duration: Math.max(0.01, step.end - step.start),
+                        fromVars: normalizeMotionVars(step.from, "item"),
+                        toVars: normalizeMotionVars(step.to, "item"),
+                        ease: step.ease
+                    });
+                });
+            });
+
+            stageLayerRuntimes.forEach((runtime) => {
+                gsapApi.set(runtime.root, stageLayerDefaultState);
+            });
+
+            stageLayerInitialStates.forEach(({ root, vars }) => {
+                gsapApi.set(root, {
+                    ...stageLayerDefaultState,
+                    ...vars
+                });
+            });
+
+            stageLayerTweens
+                .sort((a, b) => a.start - b.start)
+                .forEach(({ root, start, duration, fromVars, toVars, ease }) => {
+                    if (!Object.keys(toVars).length) {
+                        return;
+                    }
+
+                    if (Object.keys(fromVars).length) {
+                        timeline.fromTo(
+                            root,
+                            fromVars,
+                            {
+                                ...toVars,
+                                duration,
+                                ease,
+                                immediateRender: false
+                            },
+                            start
+                        );
+                        return;
+                    }
+
+                    timeline.to(
+                        root,
+                        {
+                            ...toVars,
+                            duration,
+                            ease
+                        },
+                        start
+                    );
+                });
+        }
+
         const defaultDomState = {
             autoAlpha: 0,
             x: 0,
@@ -1229,40 +1854,7 @@
                 return;
             }
 
-            const steps = resolveMotionSteps(motion)
-                .map((step) => {
-                    const start = toTimelinePosition(
-                        step.start !== undefined ? step.start : step.at,
-                        0
-                    );
-                    const explicitEnd =
-                        step.end !== undefined && step.end !== null
-                            ? toTimelinePosition(step.end, 0)
-                            : null;
-                    const fallbackDuration = clamp(
-                        toFiniteNumber(step.duration ?? motion.duration) ?? 0.16,
-                        0.02,
-                        1
-                    );
-                    const end =
-                        explicitEnd !== null
-                            ? explicitEnd
-                            : start + fallbackDuration * 100;
-
-                    return {
-                        start,
-                        end: Math.max(start + 0.01, end),
-                        from: step.from,
-                        to: step.to,
-                        ease:
-                            typeof step.ease === "string"
-                                ? step.ease
-                                : typeof motion.ease === "string"
-                                  ? motion.ease
-                                  : "none"
-                    };
-                })
-                .sort((a, b) => a.start - b.start);
+            const steps = resolveScheduledMotionSteps(motion);
 
             if (!steps.length) {
                 return;
@@ -1380,8 +1972,8 @@
         currentTimelinePosition = timeline.time();
     };
 
-    await setupModelItems();
     buildTimeline();
+    await setupModelItems();
     startRuntimeLoop();
     scrollTriggerApi.refresh();
 })();

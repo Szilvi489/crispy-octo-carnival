@@ -9,13 +9,32 @@
     {%- if page.description or site.description -%}
     <meta name="description" content="{{ page.description | default: site.description }}">
     {%- endif -%}
+    {%- if page.keywords -%}
+    {%- assign keyword_content = page.keywords | join: ", " -%}
+    {%- if keyword_content == "" -%}
+    {%- assign keyword_content = page.keywords -%}
+    {%- endif -%}
+    {%- if keyword_content != "" -%}
+    <meta name="keywords" content="{{ keyword_content | escape }}">
+    {%- endif -%}
+    {%- endif -%}
+
+    {%- assign active_stylesheets = page.stylesheets -%}
+    {%- assign active_scripts = page.scripts -%}
+    {%- assign active_crosshair = page.enable_crosshair -%}
+    {%- assign normalized_project_mode = page.project_mode | default: "" | downcase -%}
+    {%- if normalized_project_mode != "" and normalized_project_mode != "custom" -%}
+    {%- assign active_stylesheets = "/assets/css/projects/projectShell.css" | split: "|" -%}
+    {%- assign active_scripts = "/assets/js/projects/projectShell.js" | split: "|" -%}
+    {%- assign active_crosshair = false -%}
+    {%- endif -%}
 
     <link rel="stylesheet" href="/assets/main.css">
-    {%- if page.enable_crosshair -%}
+    {%- if active_crosshair -%}
     <link rel="stylesheet" href="/assets/css/base/crosshair.css">
     {%- endif -%}
-    {%- if page.stylesheets -%}
-    {%- for href in page.stylesheets -%}
+    {%- if active_stylesheets -%}
+    {%- for href in active_stylesheets -%}
     <link rel="stylesheet" href="{{ href }}">
     {%- endfor -%}
     {%- endif -%}
@@ -74,11 +93,11 @@
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
     {%- endif -%}
-    {%- if page.enable_crosshair -%}
+    {%- if active_crosshair -%}
     <script src="/assets/js/base/crosshair.js" defer></script>
     {%- endif -%}
-    {%- if page.scripts -%}
-    {%- for src in page.scripts -%}
+    {%- if active_scripts -%}
+    {%- for src in active_scripts -%}
     <script src="{{ src }}" defer></script>
     {%- endfor -%}
     {%- endif -%}

@@ -1,5 +1,6 @@
 require "fileutils"
 require "yaml"
+require "date"
 
 class PhotoProjectScaffold
   class PendingWriteError < StandardError; end
@@ -120,7 +121,6 @@ class PhotoProjectScaffold
 
   def file_targets
     targets = {
-      layout_path => layout_content,
       include_path => include_content,
       css_path => css_content,
       variables_css_path => variables_css_content,
@@ -140,7 +140,6 @@ class PhotoProjectScaffold
   def directories
     [
       File.dirname(project_markdown_path),
-      File.dirname(layout_path),
       File.dirname(include_path),
       File.dirname(css_path),
       File.dirname(js_path),
@@ -169,10 +168,6 @@ class PhotoProjectScaffold
 
   def project_markdown_path
     File.join(root_path, "_projects", code_slug, "#{code_slug}.markdown")
-  end
-
-  def layout_path
-    File.join(root_path, "_layouts", "projects", "#{code_slug}.html")
   end
 
   def include_path
@@ -208,6 +203,12 @@ class PhotoProjectScaffold
 
     lines << "layout: #{yaml_inline(merged_data.fetch("layout"))}"
     lines << "title: #{yaml_inline(merged_data.fetch("title"))}"
+    lines << "project_mode: #{yaml_inline(merged_data.fetch("project_mode"))}"
+    lines << "custom_include: #{yaml_inline(merged_data.fetch("custom_include"))}"
+    lines << "project_date: #{yaml_inline(merged_data.fetch("project_date"))}"
+    lines << "location: #{yaml_inline(merged_data.fetch("location"))}"
+    append_list(lines, "keywords", merged_data.fetch("keywords"))
+    lines << ""
     lines << "description: #{yaml_inline(merged_data.fetch("description"))}"
     lines << "permalink: #{yaml_inline(merged_data.fetch("permalink"))}"
     lines << ""
@@ -246,17 +247,6 @@ class PhotoProjectScaffold
     lines << "---"
     lines << ""
     lines.join("\n")
-  end
-
-  def layout_content
-    <<~LAYOUT
-      ---
-      layout: base
-      title: #{title.inspect}
-      ---
-
-      {%- include projects/#{code_slug}/content.html -%}
-    LAYOUT
   end
 
   def include_content
@@ -312,8 +302,13 @@ class PhotoProjectScaffold
   def merged_data
     @merged_data ||= begin
       defaults = {
-        "layout" => "projects/#{code_slug}",
+        "layout" => "projects/project",
         "title" => title,
+        "project_mode" => "minimal",
+        "custom_include" => "projects/#{code_slug}/content.html",
+        "project_date" => Date.today.iso8601,
+        "location" => "",
+        "keywords" => [],
         "description" => description,
         "permalink" => permalink,
         "stylesheets" => ["/assets/css/projects/#{code_slug}/#{code_slug}.css"],
@@ -326,7 +321,17 @@ class PhotoProjectScaffold
         "indexImage" => [],
       }
 
-      defaults.merge(existing_data.reject { |_, value| value.nil? || value == "" })
+      data = defaults.merge(existing_data.reject { |_, value| value.nil? || value == "" })
+
+      if data["layout"] == "projects/#{code_slug}"
+        data["layout"] = "projects/project"
+      end
+
+      data["custom_include"] = "projects/#{code_slug}/content.html" if data["custom_include"].to_s.strip.empty?
+      data["project_mode"] = defaults["project_mode"] if data["project_mode"].to_s.strip.empty?
+      data["project_date"] = defaults["project_date"] if data["project_date"].to_s.strip.empty?
+      data["keywords"] = Array(data["keywords"])
+      data
     end
   end
 

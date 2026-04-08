@@ -17,11 +17,25 @@
 # - any item can also use optional `idle_motion` for subtle autonomous motion
 #   after a chosen authored beat (`start_at`). Values are amplitudes:
 #   x, y, z, rotationX, rotationY, rotationZ, scale, plus `speed` and `phase`.
+# - `type: shape` creates a plain positioned block with `width`, `height`,
+#   `background` or `color`, plus optional `border_radius`, `border`,
+#   `box_shadow`, and `backdrop_filter`.
 # - `stage.background_shifts` lets the page background color drift over scroll.
 #   Add timeline beats with `at` and either `background` or `color`.
 #   Colors and gradients crossfade smoothly between beats.
 # - `stage.design_width` / `stage.design_height` define the authored scene size.
 #   The full Bangkok Night track scales down proportionally on smaller screens.
+# - `stage.sunset_disc` adds a decorative half-sun behind the opening beats.
+#   Tune it with `start`, `end`, `x`, `y`, `sink_y`, `size`, `background`,
+#   `shadow`, and `opacity`.
+# - `stage.scene_layers` adds full-screen "universe" layers above the scene.
+#   Each layer can use `src` or `background`, plus `initial` and `steps`
+#   using the same motion syntax as items.
+# - `stage.tile_overlay` adds a full-stage square grid that can cover or uncover
+#   the visible scene. Use `tile_size` and either a single timed step or
+#   a `steps` array with `start`, `end`, `mode`, `order`, `background`/`color`,
+#   and `opacity`. It can also source one full-screen image via `scene_layer`
+#   or `src` so the squares form an actual picture instead of a flat fill.
 
 stage:
   scroll_length: 18000
@@ -30,19 +44,83 @@ stage:
   design_height: 900
   perspective: 2400
   perspective_origin: "50% 52%"
+  sunset_disc:
+    start: 0
+    end: 0.24
+    x: 90
+    y: 150
+    sink_y: 1040
+    size: 1500
+    opacity: 1
+    background: "linear-gradient(180deg, #ffca28 0%, #f0660a 56%, #b31244 100%)"
+    shadow: "0 -18px 140px rgba(255, 116, 22, 0.38)"
+  scene_layers:
+  - id: U2A
+    src: "/assets/images/projects/bangkokNight/gallery_images/DSCF0829.jpg"
+    size: "cover"
+    position: "center center"
+    initial:
+      autoAlpha: 0
+      scale: 1.04
+
+  tile_overlay:
+    tile_size: 96
+    scene_layer: "U2A"
+    steps:
+    - start: 0.60
+      end: 0.70
+      mode: "cover"
+      order: "random"
+      color: "#0e1b33"
+      opacity: 1
+    - start: 0.75
+      end: 0.90
+      mode: "uncover"
+      order: "random"
+      color: "#0e1b33"
+      opacity: 1
+  
   background_shifts:
-    - at: 0
-      background: "linear-gradient(180deg,rgba(238, 234, 7, 1) 18%, rgba(14, 27, 51, 1) 100%)"
-    - at: 0.45
-      background: "linear-gradient(357deg,rgba(42, 76, 120, 1) 0%, rgba(14, 27, 51, 1) 65%)"
-    - at: 0.62
-      color: "#17100c"
-    - at: 0.78
-      color: "#0b1618"
-    - at: 1.02
-      color: "#100a14"
+  - at: 0
+    background: "linear-gradient(180deg, #e0a106 0%, #d96b11 58%, #6e3d52 100%)"
+  - at: 0.18
+    background: "linear-gradient(180deg, #d96b11 0%, #a63a50 60%, #4c3f6b 100%)"
+  - at: 0.36
+    background: "linear-gradient(180deg, #a63a50 0%, #5b3567 58%, #2f4f7f 100%)"
+  - at: 0.58
+    background: "linear-gradient(180deg, #415b88 0%, #1f3358 62%, #0e1b33 100%)"
+  - at: 1
+    color: "#0e1b33"
+  - at: 1.30
+    color: "#030C1F"
+  - at: 1.60
+    color: "#01050D"
 
 items:
+  - id: BNM03
+    type: model
+    src: "/assets/images/projects/bangkokNight/3DImages/vespa.glb"
+    title: "Yellow"
+    layer: 2
+    overlay: false
+    class_name: "is-model"
+
+  - id: BNM04
+    type: model
+    src: "/assets/images/projects/bangkokNight/3DImages/vespa__scooter.glb"
+    title: "Vespa Black"
+    layer: 2
+    overlay: false
+    class_name: "is-model"
+  
+  - id: BNM05
+    type: model
+    src: "/assets/images/projects/bangkokNight/3DImages/vespa__scooter.glb"
+    title: "Vespa Blue"
+    layer: 2
+    overlay: false
+    class_name: "is-model"
+
   - id: BNT01
     type: text
     text: "Bangkok Night"
@@ -150,7 +228,7 @@ items:
     src: "/assets/images/projects/bangkokNight/gallery_images/DSCF0330.jpg"
     alt: "Bangkok Night image BN07"
     height: 760
-    layer: 4
+    layer: 3
     overlay: true
     overlay_title: "Bangkok Night 07"
   
@@ -162,17 +240,6 @@ items:
     layer: 4
     overlay: true
     overlay_title: "Bangkok Night 08"
-
-  - id: BNV04
-    type: video
-    src: "/assets/images/projects/bangkokNight/gallery_videos/durian.mp4"
-    title: "Durian Stall"
-    height: 250
-    layer: 1
-    overlay: true
-    muted: true
-    loop: true
-    autoplay: true
 
   - id: BNV03
     type: video
@@ -224,13 +291,161 @@ items:
       scale: 0.03
       speed: 0.85
       phase: 0.4
+  
+  - id: BNV04
+    type: video
+    src: "/assets/images/projects/bangkokNight/gallery_videos/durian.mp4"
+    title: "Durian Stall"
+    height: 350
+    layer: 3
+    overlay: true
+    muted: true
+    loop: true
+    autoplay: true
+    
+  - id: BN09
+    type: image
+    src: "/assets/images/projects/bangkokNight/gallery_images/DSCF0797.jpg"
+    alt: "Bangkok Night image BN09"
+    height: 1200
+    layer: 2
+    overlay: true
+    overlay_title: "Bangkok Night 09"
+
+  - id: BN10
+    type: image
+    src: "/assets/images/projects/bangkokNight/gallery_images/DSCF0799.jpg"
+    alt: "Bangkok Night image BN10"
+    height: 700
+    layer: 4
+    overlay: true
+    overlay_title: "Bangkok Night 10"
+
+  - id: BNS01
+    type: shape
+    width: 800
+    height: 1800
+    layer: 3
+    background: "#0B330D"
+  
+  - id: BN11
+    type: image
+    src: "/assets/images/projects/bangkokNight/gallery_images/DSCF0826.jpg"
+    alt: "Bangkok Night image BN11"
+    height: 1200
+    layer: 1
+    overlay: true
+    overlay_title: "Bangkok Night 11"
+  
+  - id: BNM06
+    type: model
+    src: "/assets/images/projects/bangkokNight/3DImages/fish.glb"
+    title: "Fish1"
+    layer: 2
+    overlay: false
+    class_name: "is-model"
+    idle_motion:
+      start_at: 1.70
+      x: 10
+      y: 12
+      rotationZ: 3
+      speed: 0.55
+      phase: 0.1
+  
+  - id: BNM07
+    type: model
+    src: "/assets/images/projects/bangkokNight/3DImages/fish.glb"
+    title: "Fish2"
+    layer: 2
+    overlay: false
+    class_name: "is-model"
+    idle_motion:
+      start_at: 1.70
+      x: 12
+      y: 10
+      rotationZ: 4
+      speed: 0.6
+      phase: 0.55
+  
+  - id: BNM08
+    type: model
+    src: "/assets/images/projects/bangkokNight/3DImages/fish.glb"
+    title: "Fish3"
+    layer: 2
+    overlay: false
+    class_name: "is-model"
+    idle_motion:
+      start_at: 1.70
+      x: 9
+      y: 14
+      rotationZ: 3
+      speed: 0.58
+      phase: 0.9
+  
+  - id: BNM09
+    type: model
+    src: "/assets/images/projects/bangkokNight/3DImages/fish.glb"
+    title: "Fish4"
+    layer: 2
+    overlay: false
+    class_name: "is-model"
+    idle_motion:
+      start_at: 1.70
+      x: 11
+      y: 9
+      rotationZ: 4
+      speed: 0.52
+      phase: 1.25
+  
+  
 
 
 motions:
+  - item: BNM03
+    initial:
+      x: 460
+      y: 250
+      z: 200
+      autoAlpha: 1
+      rotationY: 130
+      scale: 6.50
+      transformOrigin: "50% 50%"
+    steps:
+      - start: 0
+        end: 0.2
+        to:
+          x: -1620
+          y: 370
+          z: -300
+          autoAlpha: 1
+          rotate: -10
+          rotationY: 200
+          scale: 5.50
+
+
+  - item: BNM05
+    initial:
+      x: 900
+      y: 370
+      z: -200
+      autoAlpha: 1
+      rotationY: -70
+      scale: 6.20
+      transformOrigin: "50% 50%"
+    steps:
+      - start: 0
+        end: 0.2
+        to:
+          rotationY: -210
+          y: 150
+          z: 2500
+
+
+
   - item: BNT01
     initial:
       x: 10
-      y: 260
+      y: 410
       z: 0
       autoAlpha: 1
       rotate: 0
@@ -247,7 +462,6 @@ motions:
           rotate: 0
           pivot: left
           rotationY: 98
-          scale: 
 
 
   - item: BNV01
@@ -369,12 +583,12 @@ motions:
         end: 0.39
         to:
           x: 1100
-          y: -320
+          y: -420
           z: -10
           autoAlpha: 1
           rotate: 0
           rotationY: 0
-          scale: 1
+          scale: 0.80
 
   - item: BNM01
     initial:
@@ -418,11 +632,12 @@ motions:
           rotate: 0
           rotationY: 0
           scale: 1.1
-      - start: 0.48
-        end: 0.49
+      - start: 0.46
+        end: 0.51
+        ease: "none"
         to:
           x: 630
-          y: 920
+          y: 1700
           z: 0
           autoAlpha: 1
           rotate: 0
@@ -442,11 +657,12 @@ motions:
           z: 0
           autoAlpha: 1
           scale: 1.1
-      - start: 0.48
-        end: 0.49
+      - start: 0.46
+        end: 0.51
+        ease: "none"
         to:
           x: 160
-          y: 920
+          y: 1700
           z: 0
           autoAlpha: 1
           rotate: 0
@@ -468,11 +684,12 @@ motions:
           y: 120
           z: 0
           autoAlpha: 1
-      - start: 0.48
-        end: 0.492
+      - start: 0.46
+        end: 0.51
+        ease: "none"
         to:
           x: 80
-          y: 920
+          y: 1700
           z: 0
           autoAlpha: 1
           scale: 1
@@ -500,32 +717,31 @@ motions:
           rotationY: 40
           scale: 2.5
       - start: 0.51
-        end: 0.54
+        end: 0.59
         to:
-          scale: 2
-      - start: 0.54
-        end: 0.595
+          scale: 1
+      - start: 0.58
+        end: 0.585
         to:
           autoAlpha: 0
   
   - item: BN05
     initial:
       x: 200
-      y: 100
+      y: -900
       z: 0
       autoAlpha: 0
       scale: 1
-      clipPath: "inset(0% 0% 80% 0%)"
     steps:
-      - start: 0.49
-        end: 0.51
+      - start: 0.46
+        end: 0.50
+        ease: "none"
         to:
           x: 200
           y: 100
           z: 0
           autoAlpha: 1
           scale: 1
-          clipPath: "inset(0% 0% 0% 0%)"
       - start: 0.52
         end: 0.535
         to:
@@ -554,6 +770,18 @@ motions:
           autoAlpha: 1
           scale: 1
           clipPath: "inset(0% 0% 0% 0%)"
+      - start: 0.54
+        end: 0.558
+        to:
+          x: 120
+          y: 100
+          scale: 0.8
+      - start: 0.68
+        end: 0.69
+        to:
+          autoAlpha: 0
+  
+
 
   - item: BN07
     initial:
@@ -573,6 +801,16 @@ motions:
           autoAlpha: 1
           scale: 1
           clipPath: "inset(0% 0% 0% 0%)"
+      - start: 0.558
+        end: 0.57
+        to:
+          x: 1100
+          scale: 0.8
+      - start: 0.68
+        end: 0.69
+        to:
+          autoAlpha: 0
+
   
   - item: BN08
     initial:
@@ -592,5 +830,180 @@ motions:
           autoAlpha: 1
           scale: 1
           clipPath: "inset(0% 0% 0% 0%)"
+      - start: 0.558
+        end: 0.57
+        to:
+          x: 600
+          y: 100
+          scale: 0.8
+      - start: 0.68
+        end: 0.69
+        to:
+          autoAlpha: 0
+   
+  - item: BNV04
+    initial:
+      x: 200
+      y: 200
+      autoAlpha: 0
+    steps:
+      - start: 0.68
+        end: 0.79
+        to:
+          autoAlpha: 1
+      - start: 0.90
+        end: 1.35
+        to:
+          y: 1200
+      - start: 1.35
+        end: 1.36
+        autoAlpha: 0
+
+  - item: BN09
+    initial:
+      x: 400
+      y: -50
+      autoAlpha: 0
+    steps:
+      - start: 0.68
+        end: 0.79
+        to:
+          autoAlpha: 1
+      - start: 0.95
+        end: 1.30
+        to:
+          scale: 3
+      - start: 1.72
+        end: 1.99
+        to:
+          x: 2500
+  
+  - item: BN10
+    initial:
+      x: 200
+      y: -900
+      autoAlpha: 1
+    steps:
+      - start: 1
+        end: 1.70
+        to:
+          autoAlpha: 1
+          y: 110
+  
+  - item: BNS01
+    initial:
+      x: 0
+      y: -2000
+      autoAlpha: 0
+    steps:
+      - start: 0.85
+        end: 0.86
+        to:
+          autoAlpha: 1
+      - start: 1.40
+        end: 1.60
+        to:
+          autoAlpha: 1
+          y: -50
+
+  - item: BN11
+    initial:
+      x: 630
+      y: -2100
+      scale: 2
+      autoAlpha: 0
+    steps:
+      - start: 1.61
+        end: 1.615
+        to:
+          autoAlpha: 1
+      - start: 1.69
+        end: 1.70
+        to:
+          autoAlpha: 1
+          y: 90
+
+  - item: BNM06
+    initial:
+      x: 760
+      y: -220
+      z: 80
+      autoAlpha: 0
+      rotate: -12
+      scale: 1.65
+    steps:
+      - start: 1.45
+        end: 1.70
+        to:
+          autoAlpha: 1
+          x: 760
+          y: 240
+          z: 120
+          rotate: -18
+          scale: 1.85
+
+  - item: BNM07
+    initial:
+      x: 910
+      y: -260
+      z: 60
+      autoAlpha: 0
+      rotate: 8
+      scale: 1.45
+    steps:
+      - start: 1.45
+        end: 1.70
+        to:
+          autoAlpha: 1
+          x: 920
+          y: 420
+          z: 100
+          rotate: 10
+          scale: 1.7
+
+  - item: BNM08
+    initial:
+      x: 1030
+      y: -340
+      z: 40
+      autoAlpha: 0
+      rotate: -6
+      scale: 1.55
+    steps:
+      - start: 1.45
+        end: 1.70
+        to:
+          autoAlpha: 1
+          x: 1070
+          y: 560
+          z: 90
+          rotate: -8
+          scale: 1.8
+
+  - item: BNM09
+    initial:
+      x: 1160
+      y: -260
+      z: 70
+      autoAlpha: 0
+      rotate: 14
+      scale: 1.35
+    steps:
+      - start: 1.45
+        end: 1.70
+        to:
+          autoAlpha: 1
+          x: 1180
+          y: 330
+          z: 120
+          rotate: 16
+          scale: 1.6
+      
+
+  
+
+        
+
+        
     
     

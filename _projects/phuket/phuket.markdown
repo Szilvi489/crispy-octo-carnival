@@ -1,6 +1,15 @@
 ---
-layout: "projects/phuket"
+layout: projects/project
 title: "Phuket"
+project_mode: minimal
+custom_include: projects/phuket/content.html
+project_date: "2026-04-01"
+location: "Phuket, Thailand"
+keywords:
+  - phuket
+  - thailand
+  - coast
+  - travel
 description: ""
 permalink: "/projects/phuket/"
 

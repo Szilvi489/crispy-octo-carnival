@@ -2,10 +2,12 @@
     <div class="projects-page-flexbox">
       <p class="counter">0</p>
         {% for project in site.projects %}
-        <div class="project-card-flexbox">
+        <div class="project-card-flexbox" data-project-mode="{{ project.project_mode | default: 'custom' }}" data-project-location="{{ project.location | escape }}" data-project-keywords="{{ project.keywords | join: ', ' | escape }}">
             <div class="project-card-title-overlay">
                 <a href="{{ project.permalink }}">{{ project.title }}</a>
-                {% if project.last_modified_at %}
+                {% if project.project_date %}
+                <p class="project-card-date">{{ project.project_date }}</p>
+                {% elsif project.last_modified_at %}
                 <p class="project-card-date">{{ project.last_modified_at | date: "%Y-%m-%d" }}</p>
                 {% else %}
                 {% assign project_modified = project.path | last_modified_at: "%Y-%m-%d" %}

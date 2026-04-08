@@ -1,6 +1,15 @@
 ---
-layout: "projects/grafenegg"
+layout: projects/project
 title: "Grafenegg"
+project_mode: minimal
+custom_include: projects/grafenegg/content.html
+project_date: "2026-04-01"
+location: "Grafenegg, Austria"
+keywords:
+  - grafenegg
+  - architecture
+  - culture
+  - austria
 description: ""
 permalink: "/projects/grafenegg/"
 

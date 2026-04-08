@@ -1,6 +1,15 @@
 ---
-layout: projects/bangkokNight
+layout: projects/project
 title: Bangkok Night
+project_mode: custom
+custom_include: projects/bangkokNight/content.html
+project_date: "2026-01-16"
+location: "Bangkok, Thailand"
+keywords:
+  - bangkok
+  - night
+  - street
+  - neon
 description: ""
 permalink: /projects/bangkok-night/
 

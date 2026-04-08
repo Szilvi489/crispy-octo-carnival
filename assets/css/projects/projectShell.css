@@ -1,0 +1,399 @@
+@font-face {
+    font-family: "EuropeanTeletext";
+    src: url("/assets/fonts/european_teletext/EuropeanTeletextNuevo.ttf") format("truetype");
+    font-display: swap;
+}
+
+:root {
+    --project-shell-background-start: #ffd98e;
+    --project-shell-background-mid: #ef7a3a;
+    --project-shell-background-end: #8a1836;
+    --project-shell-text-strong: rgba(255, 244, 228, 0.95);
+    --project-shell-text-soft: rgba(255, 229, 206, 0.78);
+    --project-shell-line: rgba(255, 236, 219, 0.28);
+    --project-shell-shadow: 0 38px 110px rgba(29, 7, 10, 0.34);
+}
+
+.project-shell {
+    position: relative;
+    min-height: 100svh;
+    overflow: clip;
+    background:
+        radial-gradient(circle at 15% 18%, rgba(255, 228, 130, 0.82), transparent 24%),
+        radial-gradient(circle at 76% 18%, rgba(255, 142, 66, 0.36), transparent 25%),
+        radial-gradient(circle at 85% 76%, rgba(255, 104, 63, 0.3), transparent 26%),
+        linear-gradient(132deg, var(--project-shell-background-start) 0%, #ffab57 16%, var(--project-shell-background-mid) 36%, #bc3a37 62%, var(--project-shell-background-end) 100%);
+    color: var(--project-shell-text-strong);
+}
+
+.project-shell::before,
+.project-shell::after {
+    content: "";
+    inset: 0;
+    pointer-events: none;
+    position: absolute;
+}
+
+.project-shell::before {
+    background:
+        radial-gradient(circle at 54% 12%, rgba(255, 249, 227, 0.74), transparent 18%),
+        radial-gradient(circle at 67% 52%, rgba(39, 14, 15, 0.38), transparent 25%),
+        radial-gradient(circle at 40% 46%, rgba(255, 198, 112, 0.14), transparent 36%);
+    filter: blur(14px);
+    opacity: 0.9;
+}
+
+.project-shell::after {
+    background:
+        linear-gradient(115deg, rgba(31, 7, 11, 0.06), transparent 22%, rgba(31, 7, 11, 0.18) 74%, rgba(16, 4, 6, 0.34) 100%),
+        radial-gradient(circle at 86% 16%, rgba(255, 224, 174, 0.18), transparent 22%);
+    mix-blend-mode: multiply;
+    opacity: 0.92;
+}
+
+.project-shell__gradient,
+.project-shell__grain,
+.project-shell__meta,
+.project-shell__gallery,
+.project-shell__status-panel {
+    position: relative;
+    z-index: 1;
+}
+
+.project-shell__gradient,
+.project-shell__grain {
+    inset: 0;
+    pointer-events: none;
+    position: absolute;
+}
+
+.project-shell__gradient {
+    background:
+        radial-gradient(circle at 17% 74%, rgba(255, 244, 225, 0.2), transparent 30%),
+        radial-gradient(circle at 72% 74%, rgba(255, 219, 181, 0.18), transparent 24%),
+        linear-gradient(180deg, rgba(255, 218, 160, 0.04), rgba(38, 8, 12, 0.16));
+    opacity: 1;
+}
+
+.project-shell__grain {
+    background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.92' numOctaves='5' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23noise)' opacity='0.72'/%3E%3C/svg%3E"),
+        linear-gradient(rgba(255, 255, 255, 0.06) 50%, rgba(0, 0, 0, 0.08) 50%);
+    background-repeat: repeat, repeat;
+    background-size: 160px 160px, 100% 4px;
+    mix-blend-mode: multiply;
+    opacity: 0.42;
+}
+
+.project-shell__meta {
+    display: grid;
+    grid-template-areas:
+        "title description"
+        "date location";
+    grid-template-columns: minmax(0, 1.2fr) minmax(18rem, 0.9fr);
+    inset: 0;
+    padding: clamp(1.25rem, 3vw, 2.5rem);
+    pointer-events: none;
+    position: fixed;
+    width: 100%;
+    min-height: 100svh;
+    text-shadow:
+        0 1px 0 rgba(48, 15, 16, 0.28),
+        0 12px 30px rgba(31, 7, 10, 0.26);
+}
+
+.project-shell__meta-item {
+    margin: 0;
+}
+
+.project-shell__meta-item--title {
+    align-self: start;
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: clamp(2.1rem, 4.4vw, 4.25rem);
+    font-weight: 500;
+    grid-area: title;
+    letter-spacing: -0.03em;
+    line-height: 0.92;
+    max-width: 10ch;
+}
+
+.project-shell__meta-item--description,
+.project-shell__meta-item--date,
+.project-shell__meta-item--location,
+.project-shell__eyebrow {
+    font-family: "EuropeanTeletext", "IBM Plex Mono", monospace;
+    font-size: clamp(0.76rem, 0.78vw, 0.96rem);
+    letter-spacing: 0.08em;
+    line-height: 1.5;
+    text-transform: uppercase;
+}
+
+.project-shell__meta-item--description {
+    align-self: start;
+    color: var(--project-shell-text-soft);
+    grid-area: description;
+    justify-self: end;
+    max-width: 28ch;
+    text-align: right;
+}
+
+.project-shell__meta-item--date {
+    align-self: end;
+    grid-area: date;
+}
+
+.project-shell__meta-item--location {
+    align-self: end;
+    color: var(--project-shell-text-soft);
+    grid-area: location;
+    justify-self: end;
+    text-align: right;
+}
+
+.project-shell__gallery {
+    align-items: center;
+    display: flex;
+    gap: clamp(2rem, 4.6vw, 5.4rem);
+    min-height: 100svh;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding:
+        clamp(8.2rem, 19vh, 10.5rem)
+        clamp(7rem, 10vw, 12rem)
+        clamp(7rem, 18vh, 9rem);
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    width: 100%;
+}
+
+.project-shell__gallery::-webkit-scrollbar {
+    display: none;
+}
+
+.project-shell__item {
+    flex: 0 0 auto;
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+    will-change: opacity, transform;
+    z-index: 1;
+}
+
+.project-shell--enhanced .project-shell__item {
+    opacity: 0;
+    transform: translate3d(0, 1.25rem, 0);
+}
+
+.project-shell__item.is-visible {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+}
+
+.project-shell__image {
+    border: 1px solid rgba(255, 235, 217, 0.26);
+    box-shadow: var(--project-shell-shadow);
+    display: block;
+    filter: saturate(0.95) contrast(1.04) brightness(0.98);
+    height: calc(clamp(18rem, 54vh, 41rem) * var(--image-scale, 1));
+    max-width: min(56vw, 38rem);
+    object-fit: cover;
+    transform-origin: 50% 50%;
+    width: auto;
+    will-change: transform, filter;
+}
+
+.project-shell--minimal,
+.project-shell--under-construction {
+    background:
+        radial-gradient(circle at 18% 16%, rgba(127, 152, 186, 0.18), transparent 24%),
+        radial-gradient(circle at 78% 20%, rgba(176, 111, 76, 0.16), transparent 22%),
+        radial-gradient(circle at 52% 82%, rgba(103, 76, 95, 0.2), transparent 24%),
+        linear-gradient(135deg, #0f1012 0%, #16181c 24%, #1d2025 52%, #131417 76%, #0f1012 100%);
+    color: rgba(240, 242, 245, 0.96);
+}
+
+.project-shell--minimal::before,
+.project-shell--under-construction::before {
+    background:
+        radial-gradient(circle at 52% 16%, rgba(218, 226, 255, 0.14), transparent 18%),
+        radial-gradient(circle at 70% 46%, rgba(225, 123, 84, 0.12), transparent 18%),
+        radial-gradient(circle at 24% 76%, rgba(140, 144, 164, 0.12), transparent 22%);
+    filter: blur(28px);
+    opacity: 1;
+}
+
+.project-shell--minimal::after,
+.project-shell--under-construction::after {
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(0, 0, 0, 0.24)),
+        radial-gradient(circle at 82% 12%, rgba(245, 182, 126, 0.08), transparent 18%);
+    mix-blend-mode: normal;
+    opacity: 1;
+}
+
+.project-shell--minimal .project-shell__gradient,
+.project-shell--under-construction .project-shell__gradient {
+    background:
+        radial-gradient(circle at 12% 72%, rgba(109, 149, 212, 0.08), transparent 24%),
+        radial-gradient(circle at 74% 76%, rgba(214, 120, 77, 0.08), transparent 22%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(0, 0, 0, 0.16));
+}
+
+.project-shell--minimal .project-shell__grain,
+.project-shell--under-construction .project-shell__grain {
+    background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.95' numOctaves='5' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23noise)' opacity='0.9'/%3E%3C/svg%3E"),
+        linear-gradient(rgba(255, 255, 255, 0.035) 50%, rgba(0, 0, 0, 0.08) 50%);
+    background-repeat: repeat, repeat;
+    background-size: 120px 120px, 100% 3px;
+    mix-blend-mode: soft-light;
+    opacity: 0.62;
+}
+
+.project-shell--minimal .project-shell__meta,
+.project-shell--under-construction .project-shell__meta {
+    text-shadow:
+        0 1px 0 rgba(0, 0, 0, 0.24),
+        0 10px 28px rgba(0, 0, 0, 0.16);
+}
+
+.project-shell--minimal .project-shell__meta-item--description,
+.project-shell--minimal .project-shell__meta-item--location,
+.project-shell--under-construction .project-shell__meta-item--description,
+.project-shell--under-construction .project-shell__meta-item--location {
+    color: rgba(220, 224, 231, 0.72);
+}
+
+.project-shell--minimal .project-shell__gallery {
+    gap: clamp(4.5rem, 11vw, 13rem);
+    padding:
+        clamp(8rem, 18vh, 10.5rem)
+        clamp(8rem, 12vw, 15rem)
+        clamp(7rem, 18vh, 9rem);
+}
+
+.project-shell--minimal .project-shell__image {
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 28px 80px rgba(0, 0, 0, 0.32);
+    filter: saturate(0.9) contrast(1.02) brightness(0.98);
+    height: calc(clamp(18rem, 52vh, 40rem) * var(--image-scale, 1));
+    max-width: min(50vw, 34rem);
+}
+
+.project-shell--minimal .project-shell__empty-state {
+    background: rgba(255, 255, 255, 0.035);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.22);
+}
+
+.project-shell--under-construction .project-shell__status-panel {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.24);
+}
+
+.project-shell--under-construction .project-shell__status-copy {
+    color: rgba(220, 224, 231, 0.72);
+}
+
+.project-shell__empty-state,
+.project-shell__status-panel {
+    backdrop-filter: blur(14px);
+    background: rgba(76, 14, 24, 0.18);
+    border: 1px solid rgba(255, 236, 219, 0.26);
+    box-shadow: 0 18px 80px rgba(23, 4, 8, 0.22);
+}
+
+.project-shell__empty-state {
+    margin: auto;
+    max-width: 32rem;
+    padding: 1.5rem 1.75rem;
+}
+
+.project-shell--under-construction {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    padding: clamp(6rem, 10vw, 9rem) clamp(1.5rem, 5vw, 3rem);
+}
+
+.project-shell__status-panel {
+    max-width: 34rem;
+    padding: clamp(1.75rem, 3vw, 2.6rem);
+}
+
+.project-shell__status-title {
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: clamp(2.3rem, 6vw, 4.8rem);
+    font-style: italic;
+    font-weight: 500;
+    letter-spacing: -0.035em;
+    line-height: 0.94;
+    margin: 0.35rem 0 1rem;
+}
+
+.project-shell__status-copy {
+    color: var(--project-shell-text-soft);
+    font-size: clamp(0.96rem, 1.4vw, 1.08rem);
+    line-height: 1.65;
+    margin: 0;
+    max-width: 34ch;
+}
+
+@media (max-width: 840px) {
+    .project-shell__meta {
+        grid-template-areas:
+            "title title"
+            "description description"
+            "date location";
+        grid-template-columns: 1fr 1fr;
+        padding: 1rem 1rem 1.25rem;
+    }
+
+    .project-shell__meta-item--title {
+        font-size: clamp(1.8rem, 8vw, 3rem);
+        max-width: 12ch;
+    }
+
+    .project-shell__meta-item--description {
+        justify-self: start;
+        margin-top: 0.6rem;
+        max-width: 30ch;
+        text-align: left;
+    }
+
+    .project-shell__gallery {
+        align-items: flex-start;
+        padding:
+            clamp(7.8rem, 22vh, 9.2rem)
+            1.2rem
+            clamp(5.8rem, 16vh, 6.7rem);
+    }
+
+    .project-shell__image {
+        height: calc(clamp(15rem, 40vh, 27rem) * var(--image-scale, 1));
+        max-width: 74vw;
+    }
+
+    .project-shell--minimal .project-shell__gallery {
+        gap: clamp(2.6rem, 9vw, 5rem);
+        padding:
+            clamp(7.8rem, 22vh, 9.2rem)
+            1.4rem
+            clamp(5.8rem, 16vh, 6.7rem);
+    }
+
+    .project-shell--minimal .project-shell__image {
+        max-width: 78vw;
+    }
+
+    .project-shell__status-panel {
+        margin-top: 2.5rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .project-shell__item,
+    .project-shell__image {
+        transition: none;
+    }
+}

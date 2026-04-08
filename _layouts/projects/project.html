@@ -1,0 +1,28 @@
+---
+layout: base
+---
+
+{%- assign raw_project_mode = page.project_mode | default: "custom" | downcase -%}
+{%- assign project_mode = raw_project_mode -%}
+
+{%- if raw_project_mode == "base" or raw_project_mode == "basic" -%}
+{%- assign project_mode = "minimal" -%}
+{%- elsif raw_project_mode == "under-construction" -%}
+{%- assign project_mode = "under_construction" -%}
+{%- endif -%}
+
+{%- case project_mode -%}
+{%- when "minimal" -%}
+{%- include projects/shared/minimal-gallery.html -%}
+{%- when "under_construction" -%}
+{%- include projects/shared/under-construction.html -%}
+{%- when "custom" -%}
+{%- assign custom_include = page.custom_include | default: "" -%}
+{%- if custom_include != "" -%}
+{% include {{ custom_include }} %}
+{%- else -%}
+{%- include projects/shared/under-construction.html -%}
+{%- endif -%}
+{%- else -%}
+{%- include projects/shared/under-construction.html -%}
+{%- endcase -%}

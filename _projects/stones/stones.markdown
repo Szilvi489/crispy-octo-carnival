@@ -1,6 +1,15 @@
 ---
-layout: "projects/stones"
+layout: projects/project
 title: "Stones"
+project_mode: minimal
+custom_include: projects/stones/content.html
+project_date: "2026-04-01"
+location: "Coastline"
+keywords:
+  - stones
+  - sea
+  - shoreline
+  - texture
 description: ""
 permalink: "/projects/stones/"
 

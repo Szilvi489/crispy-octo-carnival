@@ -1,6 +1,15 @@
 ---
-layout: "projects/decorativeFoodStillLife"
+layout: projects/project
 title: "Decorative Food Still Life"
+project_mode: minimal
+custom_include: projects/decorativeFoodStillLife/content.html
+project_date: "2026-04-01"
+location: "Studio"
+keywords:
+  - still life
+  - food
+  - studio
+  - editorial
 description: ""
 permalink: "/projects/decorative-food-still-life/"
 

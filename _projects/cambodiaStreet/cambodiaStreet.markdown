@@ -1,6 +1,15 @@
 ---
-layout: projects/cambodiaStreet
+layout: projects/project
 title: Cambodia Street
+project_mode: custom
+custom_include: projects/cambodiaStreet/content.html
+project_date: "2026-02-20"
+location: "Cambodia"
+keywords:
+  - cambodia
+  - street
+  - documentary
+  - travel
 description: Street photography in Cambodia
 
 #the link where this page lives

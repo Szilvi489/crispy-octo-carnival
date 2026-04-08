@@ -78,6 +78,16 @@ The site uses Jekyll collections and Liquid loops to generate content dynamicall
 
 This makes the site easier to extend and turns content into structured data rather than one-off markup.
 
+### Project mode switch
+
+Photography project entries in `_projects/` now support a front matter level mode switch:
+
+- `project_mode: minimal` uses the shared minimalist horizontal gallery shell
+- `project_mode: under_construction` uses the shared placeholder state
+- `project_mode: custom` renders the project-specific include referenced by `custom_include`
+
+Each project entry also carries shared metadata fields such as `project_date`, `location`, and `keywords`, so the base shell can render consistent corner details without custom page logic.
+
 ## Site Sections
 
 ### 1. Home page

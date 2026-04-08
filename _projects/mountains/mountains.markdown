@@ -1,6 +1,15 @@
 ---
-layout: projects/mountains
+layout: projects/project
 title: Mountains
+project_mode: custom
+custom_include: projects/mountains/content.html
+project_date: "2026-01-16"
+location: "Bangladesh, Nepal, India, Pakistan, Afghanistan"
+keywords:
+  - mountains
+  - travel
+  - altitude
+  - landscape
 
 description: Bangladesh, Nepal, India, Pakistan, Afghanistan
 

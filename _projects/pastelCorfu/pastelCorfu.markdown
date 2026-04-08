@@ -1,6 +1,15 @@
 ---
-layout: "projects/pastelCorfu"
+layout: projects/project
 title: "Pastel Corfu"
+project_mode: minimal
+custom_include: projects/pastelCorfu/content.html
+project_date: "2026-04-01"
+location: "Corfu, Greece"
+keywords:
+  - corfu
+  - pastel
+  - sea
+  - mediterranean
 description: ""
 permalink: "/projects/pastel-corfu/"
 

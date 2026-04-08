@@ -1,0 +1,15 @@
+{%- assign project_date = page.project_date | default: "" -%}
+{%- if project_date == "" and page.date -%}
+{%- assign project_date = page.date | date: "%Y-%m-%d" -%}
+{%- endif -%}
+{%- if project_date == "" and page.last_modified_at -%}
+{%- assign project_date = page.last_modified_at | date: "%Y-%m-%d" -%}
+{%- endif -%}
+{%- assign project_location = page.location | default: "" -%}
+
+<div class="project-shell__meta">
+    <p class="project-shell__meta-item project-shell__meta-item--title">{{ page.title }}</p>
+    <p class="project-shell__meta-item project-shell__meta-item--description">{{ page.description }}</p>
+    <p class="project-shell__meta-item project-shell__meta-item--date">{{ project_date }}</p>
+    <p class="project-shell__meta-item project-shell__meta-item--location">{{ project_location }}</p>
+</div>

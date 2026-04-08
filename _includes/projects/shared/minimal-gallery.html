@@ -1,0 +1,62 @@
+<section class="project-shell project-shell--minimal" data-project-shell="minimal">
+    {%- include projects/shared/project-shell-meta.html -%}
+    <div class="project-shell__gradient" aria-hidden="true"></div>
+    <div class="project-shell__grain" aria-hidden="true"></div>
+
+    <div class="project-shell__gallery" data-horizontal-gallery tabindex="0" aria-label="{{ page.title }} image gallery">
+        {%- assign explicit_gallery_count = page.gallery_images | size -%}
+        {%- assign index_image_count = page.indexImage | size -%}
+        {%- assign thumbnail_count = page.thumbnails | size -%}
+
+        {%- if explicit_gallery_count > 0 -%}
+            {%- for source in page.gallery_images -%}
+                {%- assign lowered_source = source | downcase -%}
+                {%- if lowered_source contains ".jpg" or lowered_source contains ".jpeg" or lowered_source contains ".png" or lowered_source contains ".webp" or lowered_source contains ".gif" or lowered_source contains ".avif" -%}
+                <article class="project-shell__item" data-project-shell-item>
+                    <img class="project-shell__image" src="{{ source }}" alt="{{ page.title }} photograph {{ forloop.index }}" {% if forloop.index <= 3 %}fetchpriority="high"{% else %}loading="lazy"{% endif %} decoding="async">
+                </article>
+                {%- endif -%}
+            {%- endfor -%}
+        {%- elsif page.gallery_path -%}
+            {%- assign gallery_candidates = site.static_files | where_exp: "file", "file.path contains page.gallery_path" | sort: "path" -%}
+            {%- for file in gallery_candidates -%}
+                {%- if file.extname == ".jpg" or file.extname == ".jpeg" or file.extname == ".png" or file.extname == ".webp" or file.extname == ".gif" or file.extname == ".avif" -%}
+                <article class="project-shell__item" data-project-shell-item>
+                    <img class="project-shell__image" src="{{ file.path }}" alt="{{ page.title }} photograph {{ forloop.index }}" {% if forloop.index <= 3 %}fetchpriority="high"{% else %}loading="lazy"{% endif %} decoding="async">
+                </article>
+                {%- endif -%}
+            {%- endfor -%}
+        {%- elsif index_image_count > 0 -%}
+            {%- for source in page.indexImage -%}
+                {%- assign lowered_source = source | downcase -%}
+                {%- if lowered_source contains ".jpg" or lowered_source contains ".jpeg" or lowered_source contains ".png" or lowered_source contains ".webp" or lowered_source contains ".gif" or lowered_source contains ".avif" -%}
+                <article class="project-shell__item" data-project-shell-item>
+                    <img class="project-shell__image" src="{{ source }}" alt="{{ page.title }} photograph {{ forloop.index }}" {% if forloop.index <= 3 %}fetchpriority="high"{% else %}loading="lazy"{% endif %} decoding="async">
+                </article>
+                {%- endif -%}
+            {%- endfor -%}
+        {%- elsif thumbnail_count > 0 -%}
+            {%- for thumbnail_source in page.thumbnails -%}
+                {%- assign lowered_source = thumbnail_source | downcase -%}
+                {%- if lowered_source contains ".jpg" or lowered_source contains ".jpeg" or lowered_source contains ".png" or lowered_source contains ".webp" or lowered_source contains ".gif" or lowered_source contains ".avif" -%}
+                <article class="project-shell__item" data-project-shell-item>
+                    <img class="project-shell__image" src="{{ thumbnail_source }}" alt="{{ page.title }} photograph {{ forloop.index }}" {% if forloop.index <= 3 %}fetchpriority="high"{% else %}loading="lazy"{% endif %} decoding="async">
+                </article>
+                {%- else -%}
+                    {%- assign thumbnail_files = site.static_files | where_exp: "file", "file.path contains thumbnail_source" | sort: "path" -%}
+                    {%- for file in thumbnail_files -%}
+                        {%- if file.extname == ".jpg" or file.extname == ".jpeg" or file.extname == ".png" or file.extname == ".webp" or file.extname == ".gif" or file.extname == ".avif" -%}
+                        <article class="project-shell__item" data-project-shell-item>
+                            <img class="project-shell__image" src="{{ file.path }}" alt="{{ page.title }} photograph {{ forloop.parentloop.index }}.{{ forloop.index }}" loading="lazy" decoding="async">
+                        </article>
+                        {%- endif -%}
+                    {%- endfor -%}
+                {%- endif -%}
+            {%- endfor -%}
+        {%- else -%}
+        <div class="project-shell__empty-state">
+            <p>This gallery is ready for images. Add photographs to this project entry and they will appear here in the shared horizontal shell.</p>
+        </div>
+        {%- endif -%}
+    </div>
+</section>

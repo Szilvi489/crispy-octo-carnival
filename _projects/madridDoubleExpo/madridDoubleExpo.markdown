@@ -1,6 +1,15 @@
 ---
-layout: "projects/madridDoubleExpo"
+layout: projects/project
 title: "Madrid DoubleExpo"
+project_mode: minimal
+custom_include: projects/madridDoubleExpo/content.html
+project_date: "2026-04-01"
+location: "Madrid, Spain"
+keywords:
+  - madrid
+  - double exposure
+  - film
+  - urban
 description: ""
 permalink: "/projects/madrid-double-expo/"
 

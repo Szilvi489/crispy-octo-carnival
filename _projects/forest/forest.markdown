@@ -1,6 +1,15 @@
 ---
-layout: projects/forest
+layout: projects/project
 title: Forest
+project_mode: minimal
+custom_include: projects/forest/content.html
+project_date: "2026-01-16"
+location: "Location TBD"
+keywords:
+  - forest
+  - nature
+  - woods
+  - quiet
 enable_crosshair: true
 
 description: Nature is pretty cool!

@@ -1,6 +1,15 @@
 ---
-layout: "projects/thailandSunset"
+layout: projects/project
 title: "Thailand Sunset"
+project_mode: minimal
+custom_include: projects/thailandSunset/content.html
+project_date: "2026-04-01"
+location: "Thailand"
+keywords:
+  - thailand
+  - sunset
+  - light
+  - travel
 description: ""
 permalink: "/projects/thailand-sunset/"
 
