@@ -1,17 +1,22 @@
-// assets/js/projects/forest/animatedImageRow.js
 (() => {
-  const sections = document.querySelectorAll('.slide-show-with-side-show-section');
+  const sections = document.querySelectorAll(".slide-show-with-side-show-section");
   if (!sections.length) return;
 
-
-  const clamp = (v, min, max) => Math.min(Math.max(v, min), max);
-  const wrapIndex = (i, count) => ((i % count) + count) % count;
+  const gsapApi = window.gsap;
+  const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
+  const wrapIndex = (index, count) => ((index % count) + count) % count;
   const smoothstep = (t) => t * t * (3 - 2 * t);
   const WHEEL_STEP_THRESHOLD = 100;
   const WHEEL_COOLDOWN_MS = 140;
   const BINOCULAR_ZOOM = 2;
   const MIN_BINOCULAR_SIZE = 72;
   const DESKTOP_MEDIA_QUERY = "(min-width: 601px)";
+  const IMAGE_FADE_OUT_DURATION = 0.18;
+  const IMAGE_FADE_IN_DURATION = 0.34;
+  const COPY_FADE_DURATION = 0.18;
+  const THUMB_DURATION = 0.24;
+
+  const hasGsap = !!(gsapApi && typeof gsapApi.to === "function" && typeof gsapApi.set === "function");
 
   const setupSection = (section) => {
     const dataEl = section.querySelector(".mountains-gallery-data");
@@ -41,9 +46,11 @@
       largeImage.decoding = "async";
       largeImageContainer.appendChild(largeImage);
     }
+
     if (!largeImage || !largeImageContainer || !thumbsWrap || !Array.isArray(data.all)) {
       return null;
     }
+
     const descriptionMap = data.descriptions && typeof data.descriptions === "object"
       ? data.descriptions
       : {};
@@ -79,12 +86,15 @@
       }
       return path;
     };
+
     const getFileName = (path) => (path.split("/").pop() || "").trim();
+
     const getDescription = (src) => {
       const path = getImagePath(src);
       const fileName = getFileName(path);
       return descriptionMap[path] || descriptionMap[fileName] || "";
     };
+
     const getTitle = (src) => {
       const path = getImagePath(src);
       const fileName = getFileName(path);
@@ -100,13 +110,12 @@
     binocular.className = "binocular-cursor";
     binocular.setAttribute("aria-hidden", "true");
 
-    const paneClasses = [
+    const panes = [
       "binocular-pane top-left",
       "binocular-pane top-right",
       "binocular-pane bottom-left",
       "binocular-pane bottom-right"
-    ];
-    const panes = paneClasses.map((className) => {
+    ].map((className) => {
       const pane = document.createElement("div");
       pane.className = className;
       binocular.appendChild(pane);
@@ -171,15 +180,15 @@
 
       const bgSize = `${rect.width * BINOCULAR_ZOOM}px ${rect.height * BINOCULAR_ZOOM}px`;
       const sourceOffsets = [
-        { dx: quarter, dy: quarter },   // display TL gets source 2B
-        { dx: -quarter, dy: quarter },  // display TR gets source 1B
-        { dx: quarter, dy: -quarter },  // display BL gets source 2A
-        { dx: -quarter, dy: -quarter }  // display BR gets source 1A
+        { dx: quarter, dy: quarter },
+        { dx: -quarter, dy: quarter },
+        { dx: quarter, dy: -quarter },
+        { dx: -quarter, dy: -quarter }
       ];
 
-      panes.forEach((pane, i) => {
-        const sourceX = clamp(x + sourceOffsets[i].dx, 0, rect.width);
-        const sourceY = clamp(y + sourceOffsets[i].dy, 0, rect.height);
+      panes.forEach((pane, index) => {
+        const sourceX = clamp(x + sourceOffsets[index].dx, 0, rect.width);
+        const sourceY = clamp(y + sourceOffsets[index].dy, 0, rect.height);
         const posX = paneSize / 2 - sourceX * BINOCULAR_ZOOM;
         const posY = paneSize / 2 - sourceY * BINOCULAR_ZOOM;
         pane.style.width = `${paneSize}px`;
@@ -188,7 +197,6 @@
         pane.style.backgroundPosition = `${posX}px ${posY}px`;
       });
 
-      // Recover from any stale inline hide styles left by previous runs/hot reload.
       binocular.style.removeProperty("display");
       binocular.style.removeProperty("visibility");
       binocular.style.removeProperty("opacity");
@@ -222,62 +230,182 @@
       }
     };
 
+    const animateCopyText = (element, nextText, animate) => {
+      if (!element) return;
+      const resolvedText = nextText || "";
+      if (element.dataset.currentText === resolvedText) {
+        return;
+      }
+      element.dataset.currentText = resolvedText;
+
+      if (!hasGsap || !animate) {
+        element.textContent = resolvedText;
+        return;
+      }
+
+      gsapApi.killTweensOf(element);
+      const timeline = gsapApi.timeline();
+      timeline.to(element, {
+        autoAlpha: 0,
+        y: 6,
+        duration: COPY_FADE_DURATION * 0.7,
+        ease: "power1.out",
+        overwrite: "auto"
+      });
+      timeline.add(() => {
+        element.textContent = resolvedText;
+      });
+      timeline.to(element, {
+        autoAlpha: 1,
+        y: 0,
+        duration: COPY_FADE_DURATION,
+        ease: "power2.out",
+        overwrite: "auto"
+      });
+    };
+
+    let imageSwapToken = 0;
+    const setLargeImageSource = (nextSrc, animate) => {
+      if (!nextSrc) return;
+      const token = ++imageSwapToken;
+      const revealImage = () => {
+        if (token !== imageSwapToken) return;
+        updateBinocularImage();
+        if (!hasGsap || !animate) {
+          if (hasGsap) {
+            gsapApi.set(largeImage, { autoAlpha: 1, y: 0, scale: 1 });
+          }
+          return;
+        }
+        gsapApi.set(largeImage, { autoAlpha: 0, y: 10, scale: 0.985 });
+        gsapApi.to(largeImage, {
+          autoAlpha: 1,
+          y: 0,
+          scale: 1,
+          duration: IMAGE_FADE_IN_DURATION,
+          ease: "power2.out",
+          overwrite: "auto"
+        });
+      };
+
+      if (largeImage.src === nextSrc) {
+        revealImage();
+        return;
+      }
+
+      const applyNextSource = () => {
+        if (token !== imageSwapToken) return;
+        largeImage.src = nextSrc;
+        if (largeImage.complete) {
+          revealImage();
+        } else {
+          largeImage.addEventListener("load", revealImage, { once: true });
+        }
+      };
+
+      if (!hasGsap || !animate) {
+        applyNextSource();
+        return;
+      }
+
+      gsapApi.killTweensOf(largeImage);
+      gsapApi.to(largeImage, {
+        autoAlpha: 0,
+        y: -8,
+        scale: 1.01,
+        duration: IMAGE_FADE_OUT_DURATION,
+        ease: "power2.in",
+        overwrite: "auto",
+        onComplete: applyNextSource
+      });
+    };
+
+    const updateThumbState = (activeIndex, animate) => {
+      thumbs.forEach((thumb, index) => {
+        const isActive = index === activeIndex;
+        thumb.classList.toggle("is-active", isActive);
+        if (!hasGsap) {
+          return;
+        }
+        gsapApi.to(thumb, {
+          opacity: isActive ? 1 : 0.5,
+          scale: isActive ? 1.02 : 0.98,
+          boxShadow: isActive
+            ? "0 6px 16px rgba(0, 0, 0, 0.35)"
+            : "0 0 0 rgba(0, 0, 0, 0)",
+          duration: animate ? THUMB_DURATION : 0,
+          ease: "power2.out",
+          overwrite: "auto"
+        });
+      });
+    };
+
+    if (hasGsap) {
+      gsapApi.set(largeImage, { autoAlpha: 1, y: 0, scale: 1 });
+      gsapApi.set([descriptionEl, mobileTitleEl], { autoAlpha: 1, y: 0 });
+    }
+
+    let renderedIndex = -1;
     const setActive = (index, scrollIntoView = true, smoothScroll = true) => {
       const activeIndex = wrapIndex(index, thumbs.length);
       const activeThumb = thumbs[activeIndex];
-      if (largeImage.src !== activeThumb.src) {
-        largeImage.src = activeThumb.src;
-        updateBinocularImage();
+      const isInitial = renderedIndex < 0;
+      const hasChanged = activeIndex !== renderedIndex;
+
+      if (hasChanged) {
+        setLargeImageSource(activeThumb.src, !isInitial);
+        const nextDescription = getDescription(activeThumb.src);
+        animateCopyText(descriptionEl, nextDescription, !isInitial);
+        animateCopyText(
+          mobileTitleEl,
+          getTitle(activeThumb.src) || nextDescription,
+          !isInitial
+        );
+        if (articleController && typeof articleController.onImageChange === "function") {
+          articleController.onImageChange(activeThumb.src);
+        }
+        section.dispatchEvent(new CustomEvent("slideshow:indexchange", {
+          detail: {
+            index: activeIndex + 1,
+            total: thumbs.length
+          }
+        }));
       }
-      if (descriptionEl) {
-        descriptionEl.textContent = getDescription(activeThumb.src);
-      }
-      if (mobileTitleEl) {
-        mobileTitleEl.textContent = getTitle(activeThumb.src) || getDescription(activeThumb.src);
-      }
-      if (articleController && typeof articleController.onImageChange === "function") {
-        articleController.onImageChange(activeThumb.src);
-      }
-      thumbs.forEach((thumb, i) => {
-        thumb.classList.toggle("is-active", i === activeIndex);
-      });
+
+      updateThumbState(activeIndex, !isInitial);
+
       if (scrollIntoView) {
         centerThumb(activeThumb, smoothScroll);
       } else {
         centerThumb(activeThumb, false);
       }
-      section.dispatchEvent(new CustomEvent("slideshow:indexchange", {
-        detail: {
-          index: activeIndex + 1,
-          total: thumbs.length
-        }
-      }));
+
+      renderedIndex = activeIndex;
     };
 
     let currentIndex = 0;
     let wheelAccum = 0;
     let lastWheelStepAt = 0;
-    setActive(currentIndex, false);
+    setActive(currentIndex, false, false);
 
     const onWheel = (event) => {
       if (galleryFrame && galleryFrame.classList.contains("is-article-open")) {
-        // In article mode, let native scrolling handle wheel input.
         return;
       }
+
       const deltaBase = event.deltaY !== 0 ? event.deltaY : event.deltaX;
       if (deltaBase === 0) return;
 
-      // Normalize delta so line/page wheel modes are comparable to pixels.
       const modeScale = event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? 800 : 1;
       const delta = deltaBase * modeScale;
       if (delta === 0) return;
+
       event.preventDefault();
 
       const now = performance.now();
       const prevWheelAccum = wheelAccum;
       wheelAccum += delta;
 
-      // If direction changes, keep only the fresh direction's momentum.
       if ((prevWheelAccum > 0 && delta < 0) || (prevWheelAccum < 0 && delta > 0)) {
         wheelAccum = delta;
       }
@@ -289,17 +417,16 @@
       const nextIndex = wrapIndex(currentIndex + step, thumbs.length);
       const isWrappingForward = currentIndex === thumbs.length - 1 && step === 1;
       const isWrappingBackward = currentIndex === 0 && step === -1;
-      const isWrapping = isWrappingForward || isWrappingBackward;
       currentIndex = nextIndex;
-      setActive(currentIndex, true, !isWrapping);
+      setActive(currentIndex, true, !(isWrappingForward || isWrappingBackward));
       lastWheelStepAt = now;
       wheelAccum = 0;
     };
 
     section.addEventListener("wheel", onWheel, { passive: false });
-    thumbs.forEach((thumb, i) => {
+    thumbs.forEach((thumb, index) => {
       thumb.addEventListener("click", () => {
-        currentIndex = i;
+        currentIndex = index;
         setActive(currentIndex, true);
       });
     });
@@ -318,25 +445,25 @@
   let rafId = null;
   const update = () => {
     rafId = null;
-    const vh = window.innerHeight || 1;
 
     instances.forEach(({ section, setActive, count }) => {
       const rect = section.getBoundingClientRect();
-      // Start changing only after the section is fully in view.
       const raw = rect.top <= 0 ? (-rect.top / (rect.height || 1)) : 0;
       const t = smoothstep(clamp(raw, 0, 1));
       const index = Math.floor(t * (count - 1 + 0.0001));
       setActive(index, false);
-      section.style.setProperty('--t', t.toFixed(4));
+      section.style.setProperty("--t", t.toFixed(4));
     });
   };
 
   const onScroll = () => {
-    if (!rafId) rafId = requestAnimationFrame(update);
+    if (!rafId) {
+      rafId = window.requestAnimationFrame(update);
+    }
   };
 
-  window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('resize', onScroll);
-  window.addEventListener('load', onScroll);
+  window.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("resize", onScroll);
+  window.addEventListener("load", onScroll);
   update();
 })();

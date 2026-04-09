@@ -3,7 +3,7 @@ layout: projects/project
 title: "Berlin Double Expo Series"
 project_mode: minimal
 custom_include: projects/berlinDoubleExpoSeries/content.html
-project_date: "2026-04-01"
+project_date: "2023-June"
 location: "Berlin, Germany"
 keywords:
   - berlin

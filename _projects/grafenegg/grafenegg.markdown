@@ -3,7 +3,7 @@ layout: projects/project
 title: "Grafenegg"
 project_mode: minimal
 custom_include: projects/grafenegg/content.html
-project_date: "2026-04-01"
+project_date: "2021-July"
 location: "Grafenegg, Austria"
 keywords:
   - grafenegg

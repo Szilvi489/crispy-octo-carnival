@@ -1,0 +1,449 @@
+@media (max-width: 900px) {
+    .cv-section {
+        cursor: auto;
+    }
+
+    .cv-section.is-mobile-layout .cv-content {
+        overflow-x: hidden;
+    }
+
+    .cv-section.is-mobile-layout .cv-horizontal-intro-education {
+        display: flex;
+        flex-direction: column;
+        height: auto;
+        overflow: visible;
+    }
+
+    .cv-section.is-mobile-layout .cv-horizontal-intro-layer,
+    .cv-section.is-mobile-layout .cv-horizontal-education-track {
+        position: relative;
+        inset: auto;
+        height: auto;
+        overflow: visible;
+        pointer-events: auto;
+    }
+
+    .cv-section.is-mobile-layout .cv-intro-section {
+        min-height: auto;
+        padding: 5rem 1rem 3rem;
+    }
+
+    .cv-section.is-mobile-layout .cv-intro-content,
+    .cv-section.is-mobile-layout .cv-intro-hero {
+        width: 100%;
+    }
+
+    .cv-section.is-mobile-layout .cv-intro-hero {
+        min-height: clamp(320px, 54vh, 480px);
+        margin-bottom: 1.4rem;
+        justify-content: center;
+    }
+
+    .cv-section.is-mobile-layout .cv-intro-orbit-stage {
+        width: min(94vw, 430px);
+    }
+
+    .cv-section.is-mobile-layout .cv-intro-title-wrapper {
+        position: relative;
+        top: auto;
+        left: auto;
+        transform: none;
+        width: min(100%, 28rem);
+        min-height: auto;
+        margin: 0 auto 1rem;
+        padding: 0.35rem 0;
+    }
+
+    .cv-section.is-mobile-layout .cv-intro-title-wrapper.is-education-hidden {
+        opacity: 1;
+        transform: none;
+    }
+
+    .cv-section.is-mobile-layout .cv-intro-text {
+        font-size: clamp(1rem, 4.4vw, 1.4rem);
+    }
+
+    .cv-section.is-mobile-layout .cv-intro-scroll-hint {
+        position: relative;
+        left: auto;
+        bottom: auto;
+        rotate: 0deg;
+        transform: none;
+        margin: 0.8rem auto 0;
+        font-size: clamp(0.72rem, 3.3vw, 0.92rem);
+        text-align: center;
+    }
+
+    .cv-section.is-mobile-layout .cv-intro-scroll-hint.is-education-hidden {
+        opacity: 0.8;
+        transform: none;
+    }
+
+    .cv-section.is-mobile-layout .cv-education-section {
+        width: 100%;
+        height: auto;
+        flex: 0 0 auto;
+        overflow: hidden;
+        background: linear-gradient(94deg, rgba(245, 243, 239, 1) 22%, rgba(94, 204, 244, 1) 90%);
+    }
+
+    .cv-section.is-mobile-layout .cv-education-panels {
+        display: block;
+        width: 100%;
+        height: auto;
+    }
+
+    .cv-section.is-mobile-layout .cv-education-panel {
+        width: 100%;
+        height: auto;
+        flex: 0 0 auto;
+    }
+
+    .cv-section.is-mobile-layout .cv-education-panel-intro {
+        min-height: auto;
+        padding: 4.5rem 1rem 1rem;
+        background: transparent;
+    }
+
+    .cv-section.is-mobile-layout .cv-education-title-wrap {
+        width: 100%;
+    }
+
+    .cv-section.is-mobile-layout .cv-education-title {
+        font-size: clamp(3.2rem, 20vw, 7rem);
+        line-height: 0.86;
+        white-space: normal;
+        letter-spacing: -0.08em;
+        transform: none;
+    }
+
+    .cv-section.is-mobile-layout .cv-education-click-hint,
+    .cv-section.is-mobile-layout .cv-education-sky-deco {
+        display: none;
+    }
+
+    .cv-section.is-mobile-layout .cv-education-panel-content {
+        width: 100%;
+        padding: 0 1rem 3rem;
+        transform: none;
+        align-items: stretch;
+    }
+
+    .cv-section.is-mobile-layout .cv-education-content {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1.4rem;
+        height: auto;
+        align-items: start;
+        padding-top: 0.5rem;
+    }
+
+    .cv-section.is-mobile-layout .cv-school-item {
+        --school-offset-x: 0vw;
+        --school-offset-y: 0vh;
+        --school-height: auto;
+        --school-lift: 0px;
+        position: relative;
+        display: grid;
+        justify-items: center;
+        align-items: start;
+        height: auto;
+        transform: none;
+        padding: 0.5rem 0 0;
+    }
+
+    .cv-section.is-mobile-layout .cv-school-year {
+        position: relative;
+        left: auto;
+        bottom: auto;
+        transform: none;
+        margin-bottom: 0.8rem;
+    }
+
+    .cv-section.is-mobile-layout .cv-school-image {
+        width: min(82vw, 360px);
+        max-width: 100%;
+        height: auto;
+        transform: none;
+        cursor: default;
+    }
+
+    .cv-section.is-mobile-layout .cv-school-info,
+    .cv-section.is-mobile-layout .cv-school-item.is-open .cv-school-info {
+        position: relative;
+        left: auto;
+        bottom: auto;
+        width: min(100%, 32rem);
+        height: auto !important;
+        margin-top: 0.8rem;
+        padding: 1rem 1rem 1.1rem;
+        opacity: 1;
+        transform: none;
+        pointer-events: auto;
+    }
+
+    .cv-section.is-mobile-layout .cv-school-item.is-open .cv-school-image {
+        filter: drop-shadow(0 10px 16px rgba(43, 27, 27, 0.16));
+    }
+
+    .cv-section.is-mobile-layout .cv-experience-section {
+        min-height: auto;
+        padding: 4.5rem 1rem 3rem;
+    }
+
+    .cv-section.is-mobile-layout .cv-experience-grid {
+        grid-template-columns: 1fr;
+        min-height: auto;
+        overflow: visible;
+    }
+
+    .cv-section.is-mobile-layout .cv-experience-panel {
+        overflow: visible;
+        border-right: 0;
+        border-bottom: 1px solid rgba(43, 27, 27, 0.14);
+    }
+
+    .cv-section.is-mobile-layout .cv-experience-panel:last-child {
+        border-bottom: 0;
+    }
+
+    .cv-section.is-mobile-layout .cv-skills-section {
+        width: 100%;
+        margin-left: 0;
+        min-height: auto;
+        height: auto;
+        padding: 4.5rem 1rem 2.5rem;
+        overflow: visible;
+    }
+
+    .cv-section.is-mobile-layout .cv-skills-title {
+        position: relative;
+        top: auto;
+        left: auto;
+        margin-bottom: 1rem;
+        font-size: clamp(2.6rem, 14vw, 5rem);
+        transform: none;
+        opacity: 1;
+    }
+
+    .cv-section.is-mobile-layout .cv-skills-grid {
+        position: relative;
+        inset: auto;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.6rem;
+    }
+
+    .cv-section.is-mobile-layout .cv-skill-tile {
+        position: relative;
+        left: auto !important;
+        top: auto !important;
+        width: auto !important;
+        height: auto !important;
+        min-height: 102px;
+        transform: none !important;
+        opacity: 1 !important;
+        padding: 0.7rem 0.55rem;
+    }
+
+    .cv-section.is-mobile-layout .cv-skill-tile-logo {
+        width: min(34%, 42px);
+        max-height: min(30%, 42px);
+    }
+
+    .cv-section.is-mobile-layout .cv-skill-tile-logo-fallback {
+        width: 28px;
+        height: 28px;
+        font-size: 0.56rem;
+    }
+
+    .cv-section.is-mobile-layout .cv-skill-tile-name {
+        margin-top: 0.32rem;
+        font-size: clamp(0.56rem, 2.6vw, 0.7rem);
+        line-height: 1.05;
+    }
+
+    .cv-section.is-mobile-layout .cv-skill-score {
+        margin-top: 0.18rem;
+        font-size: clamp(0.52rem, 2.3vw, 0.64rem);
+    }
+
+    .cv-section.is-mobile-layout .cv-programming-projects-section {
+        min-height: auto;
+        padding: 4.5rem 1rem 2.5rem;
+        overflow: hidden;
+    }
+
+    .cv-section.is-mobile-layout .cv-programming-projects-section::before {
+        display: none;
+    }
+
+    .cv-section.is-mobile-layout .cv-programming-projects-heading {
+        position: relative;
+        inset: auto;
+        width: auto;
+        margin: 0 0 1rem;
+        transform: none;
+        opacity: 1;
+    }
+
+    .cv-section.is-mobile-layout .cv-programming-projects-stage {
+        position: relative;
+        top: auto;
+        display: block;
+        height: auto;
+        padding: 0;
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .cv-section.is-mobile-layout .cv-programming-projects-group-panel {
+        display: none;
+    }
+
+    .cv-section.is-mobile-layout .cv-programming-projects-cards-panel {
+        height: auto;
+        overflow: visible;
+        perspective: none;
+    }
+
+    .cv-section.is-mobile-layout .cv-programming-projects-card-track {
+        display: grid;
+        gap: 1rem;
+        height: auto;
+        transform-style: flat;
+    }
+
+    .cv-section.is-mobile-layout .cv-programming-projects-card {
+        position: relative;
+        inset: auto;
+        transform: none !important;
+        opacity: 1 !important;
+        filter: none !important;
+        z-index: auto !important;
+        pointer-events: auto !important;
+    }
+
+    .cv-section.is-mobile-layout .cv-programming-projects-card-head {
+        align-items: flex-start;
+    }
+
+    .cv-section.is-mobile-layout .cv-programming-projects-card-title {
+        max-width: 100%;
+        font-size: clamp(1.6rem, 8vw, 2.3rem);
+    }
+
+    .cv-section.is-mobile-layout .cv-programming-projects-card-meta {
+        align-items: flex-start;
+    }
+
+    .cv-section.is-mobile-layout .cv-programming-projects-tech-groups {
+        grid-template-columns: 1fr;
+    }
+
+    .cv-section.is-mobile-layout .cv-facts-marquee-section {
+        margin-top: 0;
+    }
+
+    .cv-section.is-mobile-layout .cv-personal-section {
+        min-height: max(820px, 110svh);
+        padding-bottom: 11rem;
+        overflow: hidden;
+    }
+
+    .cv-section.is-mobile-layout .cv-personal-prelude {
+        height: auto;
+        padding: 4.5rem 1rem 0;
+        text-align: center;
+        pointer-events: auto;
+    }
+
+    .cv-section.is-mobile-layout .cv-personal-prelude-title {
+        margin: 0;
+        font-family: "Stalinist One", sans-serif;
+        font-size: clamp(2.4rem, 14vw, 4.6rem);
+        line-height: 0.94;
+        color: rgba(245, 243, 239, 0.96);
+    }
+
+    .cv-section.is-mobile-layout .cv-personal-prelude-description {
+        max-width: 34rem;
+        margin: 0.8rem auto 0;
+        font-family: "Aldrich", sans-serif;
+        font-size: clamp(0.96rem, 4vw, 1.08rem);
+        line-height: 1.48;
+        color: rgba(245, 243, 239, 0.88);
+    }
+
+    .cv-section.is-mobile-layout .cv-personal-image-layer {
+        inset: 11.5rem 0 8.5rem;
+    }
+
+    .cv-section.is-mobile-layout .cv-personal-item {
+        width: clamp(42px, calc(var(--cv-personal-item-width, 8vw) * 1.8), 132px);
+    }
+
+    .cv-section.is-mobile-layout .cv-personal-transition-clouds {
+        bottom: -8vh;
+        height: 32vh;
+    }
+
+    .cv-section.is-mobile-layout .cv-personal-prelude-cloud {
+        width: min(210vw, 1500px);
+    }
+
+    .cv-section.is-mobile-layout .cv-dreamjob-section {
+        min-height: auto;
+        padding: 4.5rem 1rem 4rem;
+    }
+
+    .cv-section.is-mobile-layout .cv-dreamjob-copy {
+        width: min(100%, 40rem);
+    }
+
+    .cv-section.is-mobile-layout .cv-footer-download {
+        padding: 0 1rem 4rem;
+    }
+}
+
+@media (max-width: 520px) {
+    .cv-section.is-mobile-layout .cv-education-section,
+    .cv-section.is-mobile-layout .cv-education-panel-intro,
+    .cv-section.is-mobile-layout .cv-education-panel-content {
+        background: rgba(94, 204, 244, 1);
+    }
+
+    .cv-section.is-mobile-layout .cv-education-panel-content {
+        padding-bottom: 2rem;
+    }
+
+    .cv-section.is-mobile-layout .cv-school-image {
+        display: none;
+    }
+
+    .cv-section.is-mobile-layout .cv-school-year {
+        margin-bottom: 0.55rem;
+    }
+
+    .cv-section.is-mobile-layout .cv-school-info,
+    .cv-section.is-mobile-layout .cv-school-item.is-open .cv-school-info {
+        width: 100%;
+        margin-top: 0;
+    }
+
+    .cv-section.is-mobile-layout .cv-skill-tile {
+        min-height: 90px;
+    }
+
+    .cv-section.is-mobile-layout .cv-programming-projects-card {
+        padding: 1rem;
+    }
+
+    .cv-section.is-mobile-layout .cv-personal-image-layer {
+        inset: 12.5rem 0 8rem;
+    }
+
+    .cv-section.is-mobile-layout .cv-personal-section {
+        display: none;
+    }
+}

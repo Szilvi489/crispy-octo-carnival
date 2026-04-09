@@ -3,7 +3,7 @@ layout: projects/project
 title: "Madrid DoubleExpo"
 project_mode: minimal
 custom_include: projects/madridDoubleExpo/content.html
-project_date: "2026-04-01"
+project_date: "2022-August"
 location: "Madrid, Spain"
 keywords:
   - madrid

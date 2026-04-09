@@ -24,7 +24,12 @@
 #   Add timeline beats with `at` and either `background` or `color`.
 #   Colors and gradients crossfade smoothly between beats.
 # - `stage.design_width` / `stage.design_height` define the authored scene size.
-#   The full Bangkok Night track scales down proportionally on smaller screens.
+# - `stage.viewport_fit` controls how the scene camera fits the viewport:
+#   `cover` crops the artboard like a full-bleed stage, `contain` keeps the
+#   whole artboard visible.
+# - `stage.align_x` / `stage.align_y` control the crop anchor from 0 to 1.
+#   You can override them per orientation with `portrait_align_x/y` and
+#   `landscape_align_x/y`.
 # - `stage.sunset_disc` adds a decorative half-sun behind the opening beats.
 #   Tune it with `start`, `end`, `x`, `y`, `sink_y`, `size`, `background`,
 #   `shadow`, and `opacity`.
@@ -42,6 +47,9 @@ stage:
   timeline_length: 3
   design_width: 1680
   design_height: 900
+  viewport_fit: "cover"
+  align_x: 0.5
+  align_y: 0.5
   perspective: 2400
   perspective_origin: "50% 52%"
   sunset_disc:

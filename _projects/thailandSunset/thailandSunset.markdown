@@ -3,8 +3,8 @@ layout: projects/project
 title: "Thailand Sunset"
 project_mode: minimal
 custom_include: projects/thailandSunset/content.html
-project_date: "2026-04-01"
-location: "Thailand"
+project_date: "2026-January"
+location: "Ko Pha Ngan, Koh Jum, Thailand"
 keywords:
   - thailand
   - sunset

@@ -96,8 +96,14 @@ body.cursor-hidden {
         bottom: 8px;
     }
 
-    .index-gallery_item img{
-        cursor: pointer;
+    .index-gallery_item a {
+        pointer-events: none;
+        cursor: default;
+    }
+
+    .index-gallery_item img,
+    .index-gallery_item video {
+        cursor: default;
     }
 
     .index-gallery_grid {

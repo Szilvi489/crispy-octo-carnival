@@ -18,6 +18,7 @@ stylesheets:
   - /CV/assets/css/CV/dreamjob.css
   - /CV/assets/css/CV/footerWithPdfDownload.css
   - /CV/assets/css/CV/factsMarguee.css
+  - /CV/assets/css/CV/mobile.css
 
 scripts:
   - /CV/assets/js/CV/cv.js

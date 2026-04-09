@@ -34,7 +34,7 @@
         }
 
         isNavTarget = !!target.closest(
-            ".cv-nav a, .cv-school-image, .navSquareColour, .navMenu a, .navHeartButton, .navHomeButton, #navClose, .contact-page-section .contact-input, .project-card-images-flexbox a, .project-card-images-flexbox img, .project-card-title-overlay a"
+            ".cv-nav a, .cv-school-image, .navSquareColour, .navMenu a, .navHomeButton, #navClose, .contact-page-section .contact-input, .project-card-images-flexbox a, .project-card-images-flexbox img, .project-card-title-overlay a"
         );
         isSkillTileTarget = !!target.closest(".cv-skill-tile");
         crosshairOverlay.classList.toggle("is-nav-hover", isNavTarget);

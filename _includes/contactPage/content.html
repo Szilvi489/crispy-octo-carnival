@@ -2,16 +2,16 @@
 <p class="title titleP1 ">Contact</p>
 <p class="title titleP2 ">Me</p>
 
-<div class="contact-form">
+<form class="contact-form" method="post" action="/contactPage/send.php" novalidate>
   <div class="row">
       <h2 class="contact-text contactTextPart1">Hi Szilvi, My name is</h2>
-      <input type="text" placeholder="Your Name" class="contact-input contact-input-name">
+      <input type="text" name="name" placeholder="Your Name" class="contact-input contact-input-name" autocomplete="name" maxlength="120" required>
       <h2 class="contact-text contactTextComma">,</h2>
   </div>
 
   <div class="row">
     <h2 class="contact-text contactTextPart2">I am reaching out, because</h2>
-    <select id="contactReason" name="reason" class="contact-input contact-input-reason">
+    <select id="contactReason" name="reason" class="contact-input contact-input-reason" required>
       <option value="" selected disabled>Please choose</option>
       <option value="job">Job opportunity</option>
       <option value="freelance-project">Freelance Project</option>
@@ -23,24 +23,30 @@
 
   <div class="row">
       <h2 class="contact-text contactTextPart3">About</h2>
-      <input type="text" placeholder="Company or Project name" class="contact-input contact-input-about">
+      <input type="text" name="about" placeholder="Company or Project name" class="contact-input contact-input-about" autocomplete="organization" maxlength="180">
   </div>
 
   <div class="column">
     <h2 class="contact-text contactTextPart4">My message:</h2>
-    <textarea class="contact-input contact-input-message" placeholder="Type your message here..." spellcheck="false" autocorrect="off" autocapitalize="off"></textarea>
+    <textarea name="message" class="contact-input contact-input-message" placeholder="Type your message here..." spellcheck="false" autocorrect="off" autocapitalize="off" maxlength="5000" required></textarea>
   </div>
 
   <div class="row">
     <h2 class="contact-text contactTextPart5">You can reach me at</h2>
-    <input type="email" placeholder="Your Email" class="contact-input contact-input-email">
+    <input type="email" name="email" placeholder="Your Email" class="contact-input contact-input-email" autocomplete="email" maxlength="160" required>
+  </div>
+
+  <div class="contact-honeypot" aria-hidden="true">
+    <label for="contactWebsite">Leave this field empty</label>
+    <input id="contactWebsite" type="text" name="website" tabindex="-1" autocomplete="off">
   </div>
 
   <div class="row contact-submit-row">
-    <button type="button" class="contact-submit-button">Send Message</button>
+    <p class="contact-form-status" aria-live="polite"></p>
+    <button type="submit" class="contact-submit-button">Send Message</button>
   </div>
 
-</div>
+</form>
 
 
 

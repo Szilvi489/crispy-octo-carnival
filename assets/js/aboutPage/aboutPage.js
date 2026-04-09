@@ -9,6 +9,13 @@
         third: document.querySelector(".about-page-panel--third"),
         final: document.querySelector(".about-page-panel--final")
     };
+    var panelList = [
+        panels.intro,
+        panels.first,
+        panels.second,
+        panels.third,
+        panels.final
+    ].filter(Boolean);
     var globeFactory;
     var globeInstance;
     var controls;
@@ -16,6 +23,9 @@
     var gsapApi = window.gsap;
     var scrollTriggerApi = window.ScrollTrigger;
     var sceneLights;
+    var aboutTimeline = null;
+    var currentLayoutMode = "";
+    var compactLayoutQuery = window.matchMedia("(max-width: 900px)");
     var starCount = 110;
     var twinkleRatio = 0.26;
     var sceneState = {
@@ -28,6 +38,18 @@
         globeSizeVmin: 56,
         ambient: 1.3,
         directional: 0.78
+    };
+    var desktopSceneState = Object.assign({}, sceneState);
+    var compactSceneState = {
+        lat: 20,
+        lng: 30,
+        altitude: 1.88,
+        gradientAngle: 118,
+        globeLeft: 50,
+        globeTop: 50,
+        globeSizeVmin: 70,
+        ambient: 1.18,
+        directional: 0.56
     };
 
     function randomBetween(min, max) {
@@ -137,6 +159,43 @@
         panels.intro.style.transform = "translate3d(0, 0, 0)";
     }
 
+    function showStaticPanels() {
+        if (!panelList.length) {
+            return;
+        }
+
+        if (gsapApi && typeof gsapApi.set === "function") {
+            gsapApi.set(panelList, {
+                clearProps: "opacity,visibility,transform,x,y"
+            });
+            gsapApi.set(panelList, {
+                autoAlpha: 1,
+                x: 0,
+                y: 0
+            });
+            return;
+        }
+
+        panelList.forEach(function (panel) {
+            panel.style.opacity = "1";
+            panel.style.visibility = "visible";
+            panel.style.transform = "none";
+        });
+    }
+
+    function killScrollSequence() {
+        if (!aboutTimeline) {
+            return;
+        }
+
+        if (aboutTimeline.scrollTrigger) {
+            aboutTimeline.scrollTrigger.kill();
+        }
+
+        aboutTimeline.kill();
+        aboutTimeline = null;
+    }
+
     function setupPanelStates() {
         if (!gsapApi || typeof gsapApi.set !== "function") {
             return;
@@ -156,7 +215,17 @@
     }
 
     function buildScrollSequence() {
-        var aboutTimeline;
+        var panelTiming = {
+            introInAt: 0,
+            introOutAt: 0.96,
+            firstInAt: 1.16,
+            firstOutAt: 2.18,
+            secondInAt: 2.32,
+            secondOutAt: 3.5,
+            thirdInAt: 4.10,
+            thirdOutAt: 5.20,
+            finalInAt: 5.90
+        };
 
         if (
             !aboutSection ||
@@ -197,18 +266,18 @@
 
         aboutTimeline
             .fromTo(panels.intro, {
-                autoAlpha: 0,
+                autoAlpha: 1,
                 y: 48
             }, {
                 autoAlpha: 1,
                 y: 0,
                 duration: 0.42
-            }, 0)
+            }, panelTiming.introInAt)
             .to(panels.intro, {
                 autoAlpha: 0,
-                y: -140,
-                duration: 0.62
-            }, 0.92)
+                y: -440,
+                duration: 0.54
+            }, panelTiming.introOutAt)
             .fromTo(panels.first, {
                 autoAlpha: 0,
                 y: 140
@@ -216,12 +285,12 @@
                 autoAlpha: 1,
                 y: 0,
                 duration: 0.66
-            }, 0.9)
+            }, panelTiming.firstInAt)
             .to(panels.first, {
                 autoAlpha: 0,
                 y: -150,
-                duration: 0.58
-            }, 1.92)
+                duration: 0.92
+            }, panelTiming.firstOutAt)
             .fromTo(panels.second, {
                 autoAlpha: 0,
                 y: 150
@@ -229,12 +298,12 @@
                 autoAlpha: 1,
                 y: 0,
                 duration: 0.76
-            }, 1.88)
+            }, panelTiming.secondInAt)
             .to(panels.second, {
                 autoAlpha: 0,
                 y: -160,
-                duration: 0.6
-            }, 3.05)
+                duration: 0.54
+            }, panelTiming.secondOutAt)
             .fromTo(panels.third, {
                 autoAlpha: 0,
                 y: 160
@@ -242,12 +311,12 @@
                 autoAlpha: 1,
                 y: 0,
                 duration: 0.78
-            }, 3.0)
+            }, panelTiming.thirdInAt)
             .to(panels.third, {
                 autoAlpha: 0,
                 y: -170,
-                duration: 0.58
-            }, 4.18)
+                duration: 0.52
+            }, panelTiming.thirdOutAt)
             .fromTo(panels.final, {
                 autoAlpha: 0,
                 y: 140
@@ -255,7 +324,7 @@
                 autoAlpha: 1,
                 y: 0,
                 duration: 0.72
-            }, 4.12)
+            }, panelTiming.finalInAt)
             .to(sceneState, {
                 lng: 145,
                 gradientAngle: 118,
@@ -301,6 +370,56 @@
             }, 4.02);
 
         renderScene();
+        return aboutTimeline;
+    }
+
+    function applyResponsiveLayout(forceRebuild) {
+        var nextLayoutMode = compactLayoutQuery.matches ? "compact" : "desktop";
+
+        if (!forceRebuild && nextLayoutMode === currentLayoutMode) {
+            if (nextLayoutMode === "compact") {
+                showStaticPanels();
+            } else if (
+                scrollTriggerApi &&
+                typeof scrollTriggerApi.refresh === "function"
+            ) {
+                scrollTriggerApi.refresh();
+            }
+            renderScene();
+            return;
+        }
+
+        killScrollSequence();
+        currentLayoutMode = nextLayoutMode;
+
+        if (aboutSection) {
+            aboutSection.classList.toggle(
+                "is-compact-layout",
+                nextLayoutMode === "compact"
+            );
+        }
+
+        if (nextLayoutMode === "compact") {
+            Object.assign(sceneState, compactSceneState);
+            showStaticPanels();
+            renderScene();
+            if (
+                scrollTriggerApi &&
+                typeof scrollTriggerApi.refresh === "function"
+            ) {
+                scrollTriggerApi.refresh();
+            }
+            return;
+        }
+
+        Object.assign(sceneState, desktopSceneState);
+        aboutTimeline = buildScrollSequence();
+        if (
+            scrollTriggerApi &&
+            typeof scrollTriggerApi.refresh === "function"
+        ) {
+            scrollTriggerApi.refresh();
+        }
     }
 
     if (!globeMount) {
@@ -371,7 +490,7 @@
         renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
     }
 
-    buildScrollSequence();
+    applyResponsiveLayout(true);
 
     globeMount.addEventListener("pointerdown", function () {
         globeMount.classList.add("is-dragging");
@@ -387,9 +506,6 @@
 
     window.addEventListener("resize", function () {
         syncGlobeSize();
-        renderScene();
-        if (scrollTriggerApi && typeof scrollTriggerApi.refresh === "function") {
-            scrollTriggerApi.refresh();
-        }
+        applyResponsiveLayout(false);
     });
 })();

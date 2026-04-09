@@ -7,6 +7,7 @@
     var dataNode = section ? section.querySelector(".cv-programming-projects-data") : null;
     var gsapApi = window.gsap;
     var scrollTriggerApi = window.ScrollTrigger;
+    var mobileLayoutQuery = window.matchMedia ? window.matchMedia("(max-width: 900px)") : null;
     var rafId = null;
     var scrollDriver = null;
     var cards = [];
@@ -23,6 +24,7 @@
     var totalScrollDistance = 1;
     var stageShown = false;
     var cachedViewportHeight = 0;
+    var currentLayoutMode = "";
 
     if (!section || !heading || !stage || !groupTrack || !cardTrack || !dataNode) {
         return;
@@ -562,14 +564,96 @@
         return true;
     }
 
+    function teardownScrollDriver() {
+        if (scrollDriver && typeof scrollDriver.kill === "function") {
+            scrollDriver.kill();
+        }
+
+        scrollDriver = null;
+    }
+
+    function applyStaticCardState() {
+        cards.forEach(function (card) {
+            card.style.removeProperty("transform");
+            card.style.removeProperty("opacity");
+            card.style.removeProperty("filter");
+            card.style.removeProperty("z-index");
+            card.style.removeProperty("pointer-events");
+            card.setAttribute("aria-hidden", "false");
+        });
+
+        groupCards.forEach(function (card) {
+            card.style.removeProperty("transform");
+            card.style.removeProperty("opacity");
+            card.style.removeProperty("filter");
+            card.style.removeProperty("z-index");
+        });
+    }
+
+    function activateMobileLayout() {
+        teardownScrollDriver();
+        currentLayoutMode = "mobile";
+        stageShown = true;
+        section.classList.add("is-mobile-layout");
+        stage.classList.add("is-visible");
+        section.style.minHeight = "";
+        setCssVar("--cv-programming-projects-stage-alpha", "1");
+        setCssVar("--cv-programming-projects-title-opacity", "1");
+        setCssVar("--cv-programming-projects-title-scale", "1");
+        setCssVar("--cv-programming-projects-title-x", "0");
+        setCssVar("--cv-programming-projects-title-y", "0");
+        setCssVar("--cv-programming-projects-title-scroll-offset", "0px");
+        applyStaticCardState();
+    }
+
+    function activateDesktopLayout() {
+        var usingGsap;
+
+        currentLayoutMode = "desktop";
+        stageShown = false;
+        section.classList.remove("is-mobile-layout");
+        stage.classList.remove("is-visible");
+        cachedViewportHeight = 0;
+        usingGsap = setupGsapScrollDriver();
+
+        if (usingGsap && scrollTriggerApi && typeof scrollTriggerApi.refresh === "function") {
+            scrollTriggerApi.refresh();
+            return;
+        }
+
+        updateTimelineFromDom();
+    }
+
+    function applyResponsiveLayout(force) {
+        var nextLayoutMode = mobileLayoutQuery && mobileLayoutQuery.matches ? "mobile" : "desktop";
+
+        if (!force && nextLayoutMode === currentLayoutMode) {
+            if (nextLayoutMode === "desktop") {
+                if (scrollDriver && scrollTriggerApi && typeof scrollTriggerApi.refresh === "function") {
+                    scrollTriggerApi.refresh();
+                } else {
+                    updateTimelineFromDom();
+                }
+            } else {
+                activateMobileLayout();
+            }
+            return;
+        }
+
+        if (nextLayoutMode === "mobile") {
+            activateMobileLayout();
+            return;
+        }
+
+        activateDesktopLayout();
+    }
+
     (function bootstrap() {
         var data = parseData();
         var githubIconPath = toPlainObject(data.base.technology_catalog).github
             ? toPlainObject(data.base.technology_catalog).github.icon || ""
             : "";
         var githubAriaLabel = data.i18n.github_link_label || "Open GitHub repository";
-        var usingGsap;
-
         projects = resolveProjects(data);
         if (!projects.length) {
             setCssVar("--cv-programming-projects-stage-alpha", "0");
@@ -581,30 +665,20 @@
         groups = buildGroups(projects);
         renderCards(projects, githubIconPath, githubAriaLabel);
         renderGroupCards(groups);
-        usingGsap = setupGsapScrollDriver();
+        applyResponsiveLayout(true);
 
-        if (usingGsap && scrollTriggerApi && typeof scrollTriggerApi.refresh === "function") {
-            scrollTriggerApi.refresh();
-        } else {
-            updateTimelineFromDom();
-            window.addEventListener("scroll", queueRevealUpdate, { passive: true });
-        }
+        window.addEventListener("scroll", function () {
+            if (!scrollDriver && currentLayoutMode === "desktop") {
+                queueRevealUpdate();
+            }
+        }, { passive: true });
 
         window.addEventListener("resize", function () {
-            cachedViewportHeight = 0;
-            if (scrollDriver && scrollTriggerApi && typeof scrollTriggerApi.refresh === "function") {
-                scrollTriggerApi.refresh();
-                return;
-            }
-            queueRevealUpdate();
+            applyResponsiveLayout(false);
         });
 
         window.addEventListener("load", function () {
-            if (scrollDriver && scrollTriggerApi && typeof scrollTriggerApi.refresh === "function") {
-                scrollTriggerApi.refresh();
-                return;
-            }
-            queueRevealUpdate();
+            applyResponsiveLayout(false);
         });
     })();
 })();

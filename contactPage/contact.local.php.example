@@ -1,0 +1,12 @@
+<?php
+declare(strict_types=1);
+
+return [
+    'recipient_email' => 'mail@example.com',
+    'from_email' => 'mail@example.com',
+    'from_name' => 'Portfolio Contact',
+    'subject_prefix' => 'Portfolio contact',
+    'success_message' => 'Thanks, your message has been sent.',
+    'rate_limit_window' => 900,
+    'rate_limit_max' => 4,
+];

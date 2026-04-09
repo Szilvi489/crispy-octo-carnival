@@ -3,7 +3,7 @@ layout: projects/project
 title: Mountains
 project_mode: custom
 custom_include: projects/mountains/content.html
-project_date: "2026-01-16"
+project_date: "2026-January"
 location: "Bangladesh, Nepal, India, Pakistan, Afghanistan"
 keywords:
   - mountains
@@ -14,7 +14,6 @@ keywords:
 description: Bangladesh, Nepal, India, Pakistan, Afghanistan
 
 stylesheets:
-  - /assets/css/projects/mountains/mountainsStylesheet.css
   - /assets/css/projects/mountains/slideShowWithSideShow.css
   - /assets/css/projects/mountains/slideShowWithSideShowArticle.css
   - /assets/css/projects/mountains/imageNumberingComponent.css
@@ -35,17 +34,18 @@ navSquareColour: "#555461"
 
 navFontColour: "#ff2020"
 
-gallery_path: /assets/images/projects/mountains/gallery_images/slide_show_with_side_show/
+gallery_path: /assets/images/projects/mountains/gallery_images/
 
 thumbnails:
 - /assets/images/projects/mountains/thumbnails/
 
 permalink: /projects/mountains/
+enable_gsap: true
 
 indexImage:
-  - /assets/images/projects/mountains/gallery_images/slide_show_with_side_show/DSCF4297.jpg
-  - /assets/images/projects/mountains/gallery_images/slide_show_with_side_show/DSCF4300.jpg
-  - /assets/images/projects/mountains/gallery_images/slide_show_with_side_show/DSCF4332.jpg
+  - /assets/images/projects/mountains/gallery_images/DSCF4297.jpg
+  - /assets/images/projects/mountains/gallery_images/DSCF4300.jpg
+  - /assets/images/projects/mountains/gallery_images/DSCF4332.jpg
 
 gallery_descriptions:
 

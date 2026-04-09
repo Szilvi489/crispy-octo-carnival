@@ -24,9 +24,15 @@
         : [];
     var gsapApi = window.gsap;
     var scrollTriggerApi = window.ScrollTrigger;
+    var mobileLayoutQuery = window.matchMedia ? window.matchMedia("(max-width: 900px)") : null;
     var lastEducationVisible = null;
     var lastEducationInteractive = null;
     var resizeRafId = null;
+    var horizontalTween = null;
+    var skyDecorRevealTween = null;
+    var educationContentTween = null;
+    var currentLayoutMode = "";
+    var skyFloatTweensReady = false;
 
     if (!wrapper || !educationSection || !gsapApi || !scrollTriggerApi || typeof gsapApi.to !== "function") {
         return;
@@ -188,6 +194,17 @@
     }
 
     function refreshEducationLayout() {
+        if (mobileLayoutQuery && mobileLayoutQuery.matches) {
+            resizeRafId = null;
+            updateSchoolLiftDistances();
+            lastEducationVisible = false;
+            lastEducationInteractive = true;
+            if (educationTrack) {
+                educationTrack.classList.add("is-interactive");
+            }
+            return;
+        }
+
         resizeRafId = null;
         updateContentPanelOffset();
         updateSchoolLiftDistances();
@@ -202,26 +219,6 @@
 
         resizeRafId = window.requestAnimationFrame(refreshEducationLayout);
     }
-
-    gsapApi.set(educationSection, {
-        x: function () {
-            return window.innerWidth;
-        }
-    });
-
-    refreshEducationLayout();
-    if (document.fonts && typeof document.fonts.ready === "object") {
-        document.fonts.ready.then(function () {
-            queueEducationLayoutRefresh();
-        });
-    }
-    window.addEventListener("resize", queueEducationLayoutRefresh);
-    window.addEventListener("load", function () {
-        queueEducationLayoutRefresh();
-        if (scrollTriggerApi && typeof scrollTriggerApi.refresh === "function") {
-            scrollTriggerApi.refresh();
-        }
-    });
 
     schoolItems.forEach(function (item) {
         var image = item.querySelector(".cv-school-image");
@@ -245,79 +242,30 @@
     setOpenSchool(null);
 
     schoolImages.forEach(function (image) {
-        if (!image) {
-            return;
-        }
-
-        if (image.complete) {
+        if (!image || image.complete) {
             return;
         }
 
         image.addEventListener("load", function () {
             queueEducationLayoutRefresh();
-            if (scrollTriggerApi && typeof scrollTriggerApi.refresh === "function") {
+            if (
+                !mobileLayoutQuery.matches &&
+                scrollTriggerApi &&
+                typeof scrollTriggerApi.refresh === "function"
+            ) {
                 scrollTriggerApi.refresh();
             }
         }, { once: true });
     });
 
-    var horizontalTween = gsapApi.to(educationSection, {
-        x: function () {
-            return -getTrackTravelDistance();
-        },
-        ease: "none",
-        scrollTrigger: {
-            trigger: wrapper,
-            start: "top top",
-            end: function () {
-                return "+=" + getTrackTravelDistance();
-            },
-            scrub: true,
-            pin: true,
-            anticipatePin: 1,
-            invalidateOnRefresh: true,
-            onRefresh: function () {
-                refreshEducationLayout();
-            },
-            onUpdate: updateEducationVisibility
+    function setupSkyFloatTweens() {
+        var skyFloatProfiles;
+
+        if (skyFloatTweensReady || !skyDecorImages.length) {
+            return;
         }
-    });
 
-    if (skyDecorItems.length && typeof gsapApi.fromTo === "function") {
-        gsapApi.fromTo(
-            skyDecorItems,
-            {
-                autoAlpha: 0,
-                yPercent: 16,
-                xPercent: function (index) {
-                    if (index % 2 === 0) {
-                        return -8;
-                    }
-                    return 8;
-                },
-                scale: 0.9
-            },
-            {
-                autoAlpha: 1,
-                yPercent: 0,
-                xPercent: 0,
-                scale: 1,
-                ease: "power2.out",
-                stagger: 0.08,
-                scrollTrigger: {
-                    trigger: ".cv-education-panel-content",
-                    containerAnimation: horizontalTween,
-                    start: "left right",
-                    end: "left 72%",
-                    scrub: true,
-                    invalidateOnRefresh: true
-                }
-            }
-        );
-    }
-
-    if (skyDecorImages.length) {
-        var skyFloatProfiles = [
+        skyFloatProfiles = [
             { y: -18, scale: 1.08, rotation: -1.8, duration: 7.4 },
             { y: -14, scale: 1.06, rotation: 1.6, duration: 8.2 },
             { y: -10, scale: 1.03, rotation: -1.1, duration: 6.8 },
@@ -336,27 +284,185 @@
                 repeat: -1
             });
         });
+
+        skyFloatTweensReady = true;
     }
 
-    if (!educationContent || typeof gsapApi.fromTo !== "function") {
-        return;
+    function teardownDesktopEducationLayout() {
+        if (skyDecorRevealTween) {
+            if (skyDecorRevealTween.scrollTrigger) {
+                skyDecorRevealTween.scrollTrigger.kill();
+            }
+            skyDecorRevealTween.kill();
+            skyDecorRevealTween = null;
+        }
+
+        if (educationContentTween) {
+            if (educationContentTween.scrollTrigger) {
+                educationContentTween.scrollTrigger.kill();
+            }
+            educationContentTween.kill();
+            educationContentTween = null;
+        }
+
+        if (horizontalTween) {
+            if (horizontalTween.scrollTrigger) {
+                horizontalTween.scrollTrigger.kill();
+            }
+            horizontalTween.kill();
+            horizontalTween = null;
+        }
+
+        gsapApi.set(educationSection, { clearProps: "x" });
     }
 
-    gsapApi.fromTo(
-        educationContent,
-        { xPercent: 0, autoAlpha: 1 },
-        {
-            xPercent: 0,
-            autoAlpha: 1,
+    function setupDesktopEducationLayout() {
+        if (horizontalTween) {
+            if (scrollTriggerApi && typeof scrollTriggerApi.refresh === "function") {
+                scrollTriggerApi.refresh();
+            }
+            return;
+        }
+
+        gsapApi.set(educationSection, {
+            x: function () {
+                return window.innerWidth;
+            }
+        });
+
+        refreshEducationLayout();
+        setupSkyFloatTweens();
+
+        horizontalTween = gsapApi.to(educationSection, {
+            x: function () {
+                return -getTrackTravelDistance();
+            },
             ease: "none",
             scrollTrigger: {
-                trigger: ".cv-education-panel-content",
-                containerAnimation: horizontalTween,
-                start: "left right",
-                end: "left center",
+                trigger: wrapper,
+                start: "top top",
+                end: function () {
+                    return "+=" + getTrackTravelDistance();
+                },
                 scrub: true,
-                invalidateOnRefresh: true
+                pin: true,
+                anticipatePin: 1,
+                invalidateOnRefresh: true,
+                onRefresh: function () {
+                    refreshEducationLayout();
+                },
+                onUpdate: updateEducationVisibility
             }
+        });
+
+        if (skyDecorItems.length && typeof gsapApi.fromTo === "function") {
+            skyDecorRevealTween = gsapApi.fromTo(
+                skyDecorItems,
+                {
+                    autoAlpha: 0,
+                    yPercent: 16,
+                    xPercent: function (index) {
+                        if (index % 2 === 0) {
+                            return -8;
+                        }
+                        return 8;
+                    },
+                    scale: 0.9
+                },
+                {
+                    autoAlpha: 1,
+                    yPercent: 0,
+                    xPercent: 0,
+                    scale: 1,
+                    ease: "power2.out",
+                    stagger: 0.08,
+                    scrollTrigger: {
+                        trigger: ".cv-education-panel-content",
+                        containerAnimation: horizontalTween,
+                        start: "left right",
+                        end: "left 72%",
+                        scrub: true,
+                        invalidateOnRefresh: true
+                    }
+                }
+            );
         }
-    );
+
+        if (educationContent && typeof gsapApi.fromTo === "function") {
+            educationContentTween = gsapApi.fromTo(
+                educationContent,
+                { xPercent: 0, autoAlpha: 1 },
+                {
+                    xPercent: 0,
+                    autoAlpha: 1,
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: ".cv-education-panel-content",
+                        containerAnimation: horizontalTween,
+                        start: "left right",
+                        end: "left center",
+                        scrub: true,
+                        invalidateOnRefresh: true
+                    }
+                }
+            );
+        }
+    }
+
+    function setupMobileEducationLayout() {
+        teardownDesktopEducationLayout();
+        lastEducationVisible = false;
+        lastEducationInteractive = true;
+        announceEducationVisibility(false);
+        if (educationTrack) {
+            educationTrack.classList.add("is-interactive");
+        }
+        updateSchoolLiftDistances();
+    }
+
+    function applyResponsiveLayout(force) {
+        var nextLayoutMode = mobileLayoutQuery && mobileLayoutQuery.matches ? "mobile" : "desktop";
+
+        if (!force && nextLayoutMode === currentLayoutMode) {
+            if (nextLayoutMode === "desktop" && scrollTriggerApi && typeof scrollTriggerApi.refresh === "function") {
+                scrollTriggerApi.refresh();
+            } else if (nextLayoutMode === "mobile") {
+                setupMobileEducationLayout();
+            }
+            return;
+        }
+
+        currentLayoutMode = nextLayoutMode;
+
+        if (nextLayoutMode === "mobile") {
+            setupMobileEducationLayout();
+            return;
+        }
+
+        setupDesktopEducationLayout();
+        if (scrollTriggerApi && typeof scrollTriggerApi.refresh === "function") {
+            scrollTriggerApi.refresh();
+        }
+    }
+
+    setupSkyFloatTweens();
+    refreshEducationLayout();
+    applyResponsiveLayout(true);
+
+    if (document.fonts && typeof document.fonts.ready === "object") {
+        document.fonts.ready.then(function () {
+            queueEducationLayoutRefresh();
+            applyResponsiveLayout(false);
+        });
+    }
+
+    window.addEventListener("resize", function () {
+        queueEducationLayoutRefresh();
+        applyResponsiveLayout(false);
+    });
+
+    window.addEventListener("load", function () {
+        queueEducationLayoutRefresh();
+        applyResponsiveLayout(false);
+    });
 })();

@@ -1,9 +1,9 @@
 ---
 layout: projects/project
 title: Cambodia Street
-project_mode: custom
+project_mode: minimal
 custom_include: projects/cambodiaStreet/content.html
-project_date: "2026-02-20"
+project_date: "2025-December"
 location: "Cambodia"
 keywords:
   - cambodia

@@ -1,9 +1,9 @@
 ---
 layout: projects/project
 title: Bangkok Night
-project_mode: custom
+project_mode: minimal
 custom_include: projects/bangkokNight/content.html
-project_date: "2026-01-16"
+project_date: "2025-December"
 location: "Bangkok, Thailand"
 keywords:
   - bangkok

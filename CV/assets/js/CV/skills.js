@@ -5,6 +5,7 @@
     var grid = section ? section.querySelector(".cv-skills-grid") : null;
     var hoverCard = section ? section.querySelector(".cv-skills-hover-card") : null;
     var skillsDataNode = section ? section.querySelector("#cv-skills-data") : null;
+    var mobileLayoutQuery = window.matchMedia ? window.matchMedia("(max-width: 900px)") : null;
     var rafId = null;
     var activeSkill = null;
     var activePointer = { x: 0, y: 0 };
@@ -12,6 +13,7 @@
     var neonBaseHsl = null;
     var scoreExponent = 2.35;
     var minimumWeight = 0.02;
+    var currentLayoutMode = "";
     var knowledgeLabel = skillsDataNode ? (skillsDataNode.dataset.knowledgeLabel || "Knowledge") : "Knowledge";
     var noteFallback = skillsDataNode ? (skillsDataNode.dataset.noteFallback || "Add your note in the CV language data file.") : "Add your note in the CV language data file.";
     var ariaLabelSuffix = skillsDataNode ? (skillsDataNode.dataset.ariaLabelSuffix || "skill") : "skill";
@@ -302,6 +304,10 @@
     }
 
     function layoutTiles() {
+        if (mobileLayoutQuery && mobileLayoutQuery.matches) {
+            return;
+        }
+
         var gridRect = grid.getBoundingClientRect();
         var width = gridRect.width;
         var height = gridRect.height;
@@ -473,6 +479,9 @@
         tile.addEventListener("blur", hideHoverCard);
 
         tile.addEventListener("focus", function () {
+            if (mobileLayoutQuery && mobileLayoutQuery.matches) {
+                return;
+            }
             var rect = tile.getBoundingClientRect();
             showHoverCard(skill, rect.right + 10, rect.top + 10);
         });
@@ -543,6 +552,11 @@
     }
 
     function updateSkillsState() {
+        if (mobileLayoutQuery && mobileLayoutQuery.matches) {
+            rafId = null;
+            return;
+        }
+
         var rect = section.getBoundingClientRect();
         var viewportHeight = window.innerHeight || document.documentElement.clientHeight || 1;
         var raw = (viewportHeight - rect.top) / (viewportHeight * 0.9);
@@ -580,12 +594,63 @@
         rafId = window.requestAnimationFrame(updateSkillsState);
     }
 
+    function clearTileInlineLayout() {
+        Array.prototype.forEach.call(grid.children, function (tile) {
+            tile.style.removeProperty("left");
+            tile.style.removeProperty("top");
+            tile.style.removeProperty("width");
+            tile.style.removeProperty("height");
+            tile.style.removeProperty("transform");
+            tile.style.removeProperty("opacity");
+            tile.style.removeProperty("pointer-events");
+        });
+    }
+
+    function applyMobileLayout() {
+        currentLayoutMode = "mobile";
+        section.classList.add("is-mobile-layout");
+        title.style.setProperty("--skills-fill-progress", "100%");
+        title.style.setProperty("--skills-exit-x", "0vw");
+        section.classList.remove("skills-breakup-active");
+        section.classList.add("skills-tiles-visible");
+        hideHoverCard();
+        resetTileBreakup();
+        clearTileInlineLayout();
+    }
+
+    function applyDesktopLayout() {
+        currentLayoutMode = "desktop";
+        section.classList.remove("is-mobile-layout");
+        layoutTiles();
+        updateSkillsState();
+    }
+
+    function applyResponsiveLayout(force) {
+        var nextLayoutMode = mobileLayoutQuery && mobileLayoutQuery.matches ? "mobile" : "desktop";
+
+        if (!force && nextLayoutMode === currentLayoutMode) {
+            if (nextLayoutMode === "desktop") {
+                layoutTiles();
+                updateSkillsState();
+            } else {
+                applyMobileLayout();
+            }
+            return;
+        }
+
+        if (nextLayoutMode === "mobile") {
+            applyMobileLayout();
+            return;
+        }
+
+        applyDesktopLayout();
+    }
+
     window.addEventListener("scroll", queueUpdate, { passive: true });
     window.addEventListener("resize", function () {
-        layoutTiles();
-        queueUpdate();
+        applyResponsiveLayout(false);
     });
 
     renderSkillTiles();
-    updateSkillsState();
+    applyResponsiveLayout(true);
 })();

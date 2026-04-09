@@ -4,8 +4,8 @@
         {%- if page.gallery_images and page.gallery_images.size > 0 -%}
             {%- assign gallery_list = page.gallery_images -%}
         {%- elsif page.gallery_path and page.gallery_path != blank -%}
-            {%- assign gallery_files = site.static_files | where_exp: "f", "f.path contains page.gallery_path" -%}
-            {%- assign gallery_list = gallery_files | map: "path" | sort -%}
+            {%- assign gallery_files = site.static_files | where_exp: "f", "f.path contains page.gallery_path" | where_exp: "f", "f.extname != ''" | sort: "path" -%}
+            {%- assign gallery_list = gallery_files | map: "path" -%}
         {%- else -%}
             {%- assign gallery_list = empty -%}
         {%- endif -%}

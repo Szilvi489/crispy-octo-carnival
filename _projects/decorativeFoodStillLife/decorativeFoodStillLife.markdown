@@ -3,8 +3,8 @@ layout: projects/project
 title: "Decorative Food Still Life"
 project_mode: minimal
 custom_include: projects/decorativeFoodStillLife/content.html
-project_date: "2026-04-01"
-location: "Studio"
+project_date: "2020-August"
+location: "Vienna Studio"
 keywords:
   - still life
   - food

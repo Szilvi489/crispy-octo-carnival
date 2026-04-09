@@ -3,7 +3,7 @@ layout: projects/project
 title: "Phuket"
 project_mode: minimal
 custom_include: projects/phuket/content.html
-project_date: "2026-04-01"
+project_date: "2025-December"
 location: "Phuket, Thailand"
 keywords:
   - phuket

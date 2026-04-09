@@ -52,8 +52,6 @@ External libraries and services used in the project include:
 - Google Fonts for typography
 - `flag-icons` for country flag styling on the mountains project
 
-There is also a small Node.js utility script used to generate the "image of the day" data file.
-
 ## Architecture And Project Structure
 
 The project is built as a custom Jekyll site instead of using a ready-made theme.
@@ -261,16 +259,6 @@ The CMS now includes:
 For the local learning flow and backend notes, see:
 
 - `docs/decap-cms.md`
-
-### Utility script
-
-Generate a random "image of the day" entry:
-
-```bash
-node scripts/choose-image-of-the-day.js
-```
-
-This updates `_data/imageOfTheDay.yml`.
 
 Generate a new photo project scaffold:
 

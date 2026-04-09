@@ -3,8 +3,8 @@ layout: projects/project
 title: "Stones"
 project_mode: minimal
 custom_include: projects/stones/content.html
-project_date: "2026-04-01"
-location: "Coastline"
+project_date: "2026-January"
+location: "Koh Jum / Koh Yao Yai, Thailand"
 keywords:
   - stones
   - sea

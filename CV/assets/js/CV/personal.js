@@ -17,6 +17,7 @@
         : [];
     var gsapApi = window.gsap;
     var scrollTriggerApi = window.ScrollTrigger;
+    var mobileLayoutQuery = window.matchMedia ? window.matchMedia("(max-width: 900px)") : null;
     var head = document.head || document.getElementsByTagName("head")[0];
     var visibilityRafId = null;
     var mouseReactiveRafId = null;
@@ -28,7 +29,9 @@
     var pointerClientX = 0;
     var pointerClientY = 0;
     var pointerIsActive = false;
+    var currentLayoutMode = "";
     var canUsePointerReactiveMotion = !!(window.matchMedia && window.matchMedia("(hover: hover) and (pointer: fine)").matches);
+    var mobileStaticProgress = 0.82;
     var personalScrollTriggerStart = "top top";
     var personalScrollTravelViewportHeights = 3.4;
     var personalScrollScrubSeconds = 0.9;
@@ -463,6 +466,14 @@
         renderPersonalItems(personalScrollDriver.progress || 0);
     }
 
+    function teardownPersonalScrollMotion() {
+        if (personalScrollDriver && typeof personalScrollDriver.kill === "function") {
+            personalScrollDriver.kill();
+        }
+
+        personalScrollDriver = null;
+    }
+
     function setupPersonalPointerMotion() {
         if (!personalSection || !personalItemConfigs.length || !canUsePointerReactiveMotion) {
             return;
@@ -660,16 +671,57 @@
     createBeanElements();
     animateBeans();
     updateBeanVisibility();
-    setupPersonalScrollMotion();
+    
+    function applyMobileLayout() {
+        currentLayoutMode = "mobile";
+        if (personalSection) {
+            personalSection.classList.add("is-mobile-layout");
+        }
+        teardownPersonalScrollMotion();
+        buildPersonalCloudConfigs();
+        buildPersonalItemConfigs();
+        renderPersonalBackground(mobileStaticProgress);
+        renderPersonalClouds(mobileStaticProgress);
+        renderPersonalItems(mobileStaticProgress);
+    }
+
+    function applyDesktopLayout() {
+        currentLayoutMode = "desktop";
+        if (personalSection) {
+            personalSection.classList.remove("is-mobile-layout");
+        }
+        setupPersonalScrollMotion();
+    }
+
+    function applyResponsiveLayout(force) {
+        var nextLayoutMode = mobileLayoutQuery && mobileLayoutQuery.matches ? "mobile" : "desktop";
+
+        if (!force && nextLayoutMode === currentLayoutMode) {
+            if (nextLayoutMode === "desktop" && scrollTriggerApi && typeof scrollTriggerApi.refresh === "function") {
+                scrollTriggerApi.refresh();
+            } else if (nextLayoutMode === "mobile") {
+                applyMobileLayout();
+            }
+            return;
+        }
+
+        if (nextLayoutMode === "mobile") {
+            applyMobileLayout();
+            return;
+        }
+
+        applyDesktopLayout();
+        if (scrollTriggerApi && typeof scrollTriggerApi.refresh === "function") {
+            scrollTriggerApi.refresh();
+        }
+    }
+
+    applyResponsiveLayout(true);
     setupPersonalPointerMotion();
     window.addEventListener("scroll", queueVisibilityUpdate, { passive: true });
     window.addEventListener("resize", queueVisibilityUpdate);
     window.addEventListener("load", function () {
-        if (scrollTriggerApi && typeof scrollTriggerApi.refresh === "function") {
-            scrollTriggerApi.refresh();
-        } else {
-            renderPersonalItems(0);
-        }
+        applyResponsiveLayout(false);
 
         if (pointerIsActive && canUsePointerReactiveMotion) {
             updatePointerReactiveTargets();
@@ -677,11 +729,7 @@
         }
     });
     window.addEventListener("resize", function () {
-        if (scrollTriggerApi && typeof scrollTriggerApi.refresh === "function") {
-            scrollTriggerApi.refresh();
-        } else {
-            renderPersonalItems(0);
-        }
+        applyResponsiveLayout(false);
 
         if (pointerIsActive && canUsePointerReactiveMotion) {
             updatePointerReactiveTargets();

@@ -4,7 +4,7 @@ title: Forest
 project_mode: minimal
 custom_include: projects/forest/content.html
 project_date: "2026-01-16"
-location: "Location TBD"
+location: "Ko Pha Ngan, Thailand"
 keywords:
   - forest
   - nature
@@ -18,7 +18,6 @@ stylesheets:
   - /assets/css/projects/forest/forestStylesheet.css
 
 scripts:
-  - /assets/js/projects/forest/forest.js
 
 navSquareColour: "#ee0707"
 

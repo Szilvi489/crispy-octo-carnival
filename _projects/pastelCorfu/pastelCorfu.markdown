@@ -3,7 +3,7 @@ layout: projects/project
 title: "Pastel Corfu"
 project_mode: minimal
 custom_include: projects/pastelCorfu/content.html
-project_date: "2026-04-01"
+project_date: "2024-October"
 location: "Corfu, Greece"
 keywords:
   - corfu

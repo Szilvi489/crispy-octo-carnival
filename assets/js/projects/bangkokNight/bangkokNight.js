@@ -62,6 +62,10 @@
         const parsed = Number.parseFloat(value);
         return Number.isFinite(parsed) ? parsed : null;
     };
+    const clampUnit = (value, fallback = 0.5) => {
+        const parsed = toFiniteNumber(value);
+        return clamp(parsed === null ? fallback : parsed, 0, 1);
+    };
     const timelineLength = Math.max(
         1,
         Number.parseFloat(stageConfig.timeline_length) || 1
@@ -139,6 +143,35 @@
     const perspective = Math.max(
         800,
         Number.parseFloat(stageConfig.perspective) || 2200
+    );
+    const viewportFit =
+        typeof stageConfig.viewport_fit === "string" &&
+        stageConfig.viewport_fit.trim().toLowerCase() === "contain"
+            ? "contain"
+            : "cover";
+    const baseAlignX = clampUnit(
+        stageConfig.align_x ?? stageConfig.alignX,
+        0.5
+    );
+    const baseAlignY = clampUnit(
+        stageConfig.align_y ?? stageConfig.alignY,
+        0.5
+    );
+    const portraitAlignX = clampUnit(
+        stageConfig.portrait_align_x ?? stageConfig.portraitAlignX,
+        baseAlignX
+    );
+    const portraitAlignY = clampUnit(
+        stageConfig.portrait_align_y ?? stageConfig.portraitAlignY,
+        baseAlignY
+    );
+    const landscapeAlignX = clampUnit(
+        stageConfig.landscape_align_x ?? stageConfig.landscapeAlignX,
+        baseAlignX
+    );
+    const landscapeAlignY = clampUnit(
+        stageConfig.landscape_align_y ?? stageConfig.landscapeAlignY,
+        baseAlignY
     );
     const parseSunsetDisc = (source) => {
         if (!source || typeof source !== "object") {
@@ -367,21 +400,21 @@
             1,
             stage.clientHeight || window.innerHeight || 1
         );
-        const scale = Math.min(
-            1,
-            stageWidth / designWidth,
-            stageHeight / designHeight
-        );
+        const widthScale = stageWidth / designWidth;
+        const heightScale = stageHeight / designHeight;
+        const scale =
+            viewportFit === "contain"
+                ? Math.min(1, widthScale, heightScale)
+                : Math.max(widthScale, heightScale);
+        const isPortrait = stageHeight > stageWidth;
+        const alignX = isPortrait ? portraitAlignX : landscapeAlignX;
+        const alignY = isPortrait ? portraitAlignY : landscapeAlignY;
 
         sceneMetrics.scale = Number.isFinite(scale) && scale > 0 ? scale : 1;
-        sceneMetrics.offsetX = Math.max(
-            0,
-            (stageWidth - designWidth * sceneMetrics.scale) / 2
-        );
-        sceneMetrics.offsetY = Math.max(
-            0,
-            (stageHeight - designHeight * sceneMetrics.scale) / 2
-        );
+        sceneMetrics.offsetX =
+            (stageWidth - designWidth * sceneMetrics.scale) * alignX;
+        sceneMetrics.offsetY =
+            (stageHeight - designHeight * sceneMetrics.scale) * alignY;
 
         track.style.width = `${designWidth}px`;
         track.style.height = `${designHeight}px`;

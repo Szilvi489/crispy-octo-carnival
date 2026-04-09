@@ -1,4 +1,12 @@
 (() => {
+  const gsapApi = window.gsap;
+  const hasGsap = !!(gsapApi && typeof gsapApi.timeline === "function" && typeof gsapApi.to === "function");
+  const META_OFFSETS = [-140, 140, -140, 140];
+
+  const buildClipPath = (topBottom, side, radius) => (
+    `inset(${topBottom} ${side} ${topBottom} ${side} round ${radius})`
+  );
+
   window.setupSlideShowWithSideShowArticle = ({
     section,
     data,
@@ -9,7 +17,11 @@
     getDescription
   }) => {
     const galleryFrame = section.querySelector(".slide-show-with-side-show-images");
+    const descriptionEl = section.querySelector(".large-image-description");
+    const largeImageContainer = section.querySelector(".large-image-container");
+    const thumbsWrap = section.querySelector(".slide-images-container");
     const articlePanel = section.querySelector(".slide-show-article-panel");
+    const articleContentEl = section.querySelector(".slide-show-article-content");
     const articleTitleEl = section.querySelector(".slide-show-article-title");
     const articleIntroTitleEl = section.querySelector(".slide-show-article-intro-title");
     const articleIntroMainEl = section.querySelector(".slide-show-article-intro-main");
@@ -32,6 +44,9 @@
     const articleMap = data.articles && typeof data.articles === "object"
       ? data.articles
       : {};
+    const metaItems = Array.from(section.querySelectorAll(".slide-show-article-meta-item"));
+    const articleContentChildren = articleContentEl ? Array.from(articleContentEl.children) : [];
+    const frameTargets = [descriptionEl, largeImageContainer, thumbsWrap].filter(Boolean);
 
     if (!articleMapImageEl && articleMapImageWrapEl) {
       articleMapImageEl = document.createElement("img");
@@ -46,7 +61,6 @@
       return null;
     }
 
-
     const getImagePath = (src) => {
       let path = src || "";
       try {
@@ -56,7 +70,9 @@
       }
       return path;
     };
+
     const getFileName = (path) => (path.split("/").pop() || "").trim();
+
     const resolveMapImageSrc = (mapImageName) => {
       if (!mapImageName || typeof mapImageName !== "string") return "";
       const trimmed = mapImageName.trim();
@@ -66,6 +82,7 @@
       }
       return `/assets/images/projects/mountains/maps/${trimmed}`;
     };
+
     const getArticleData = (src) => {
       const path = getImagePath(src);
       const fileName = getFileName(path);
@@ -78,6 +95,21 @@
       return typeof localName === "string" && localName.trim() ? localName.trim() : "";
     };
 
+    const getClipStates = () => {
+      const styles = window.getComputedStyle(articlePanel);
+      const startTb = styles.getPropertyValue("--article-unfold-start-tb").trim() || "40.6%";
+      const startSide = styles.getPropertyValue("--article-unfold-start-side").trim() || "48%";
+      const holdTb = styles.getPropertyValue("--article-unfold-hold-tb").trim() || "49.4%";
+      const holdSide = styles.getPropertyValue("--article-unfold-hold-side").trim() || "5%";
+      const midTb = styles.getPropertyValue("--article-unfold-mid-tb").trim() || "46.5%";
+      const midSide = styles.getPropertyValue("--article-unfold-mid-side").trim() || "3%";
+      return {
+        start: buildClipPath(startTb, startSide, "999px"),
+        hold: buildClipPath(holdTb, holdSide, "999px"),
+        mid: buildClipPath(midTb, midSide, "16px"),
+        end: "inset(0% 0% 0% 0% round 0px)"
+      };
+    };
 
     const isValidTimeZone = (timeZone) => {
       if (!timeZone || typeof timeZone !== "string") return false;
@@ -88,6 +120,7 @@
         return false;
       }
     };
+
     const weatherCodeMap = {
       0: "Clear ☀️",
       1: "Mainly clear 🌤️",
@@ -124,8 +157,16 @@
     let currentLongitude = null;
     let currentCountryCode = "";
     let timeTimerId = null;
+    let metaRevealRafId = null;
+    let isArticleOpen = false;
+    let hasMetaRevealed = false;
+    let containersExited = false;
+    let box3Revealed = false;
+    let articleIntroTimeline = null;
+    let articleCloseTimeline = null;
     const weatherCache = new Map();
     const countryCache = new Map();
+
     const updateLiveTime = () => {
       if (!timeValueEl) return;
       if (!isValidTimeZone(currentTimeZone)) {
@@ -140,21 +181,25 @@
       }).format(new Date());
       timeValueEl.textContent = timeText;
     };
+
     const startLiveTime = () => {
       if (timeTimerId) clearInterval(timeTimerId);
       updateLiveTime();
       timeTimerId = window.setInterval(updateLiveTime, 1000);
     };
+
     const stopLiveTime = () => {
       if (timeTimerId) {
         clearInterval(timeTimerId);
         timeTimerId = null;
       }
     };
+
     const toNumber = (value) => {
-      const n = Number(value);
-      return Number.isFinite(n) ? n : null;
+      const number = Number(value);
+      return Number.isFinite(number) ? number : null;
     };
+
     const updateWeather = async () => {
       if (!weatherValueEl) return;
       if (!Number.isFinite(currentLatitude) || !Number.isFinite(currentLongitude)) {
@@ -192,6 +237,7 @@
         weatherValueEl.textContent = "Weather unavailable";
       }
     };
+
     const updateCountryInfo = async () => {
       if (!countryValueEl) return;
       const code = (currentCountryCode || "").trim().toLowerCase();
@@ -228,6 +274,126 @@
       }
     };
 
+    const setFrameOpenState = (open, immediate = false) => {
+      if (!hasGsap) return;
+      const duration = immediate ? 0 : 0.42;
+      frameTargets.forEach((target) => {
+        gsapApi.killTweensOf(target);
+      });
+      if (descriptionEl) {
+        gsapApi.to(descriptionEl, {
+          xPercent: open ? -130 : 0,
+          autoAlpha: open ? 0 : 1,
+          duration,
+          ease: "power2.inOut",
+          overwrite: "auto"
+        });
+      }
+      if (largeImageContainer) {
+        gsapApi.to(largeImageContainer, {
+          xPercent: open ? -24 : 0,
+          autoAlpha: open ? 0 : 1,
+          duration,
+          ease: "power2.inOut",
+          overwrite: "auto"
+        });
+      }
+      if (thumbsWrap) {
+        gsapApi.to(thumbsWrap, {
+          xPercent: open ? 130 : 0,
+          autoAlpha: open ? 0 : 1,
+          duration,
+          ease: "power2.inOut",
+          overwrite: "auto"
+        });
+      }
+      gsapApi.set(frameTargets, {
+        pointerEvents: open ? "none" : "auto"
+      });
+    };
+
+    const resetRevealStates = () => {
+      hasMetaRevealed = false;
+      containersExited = false;
+      box3Revealed = false;
+
+      if (!hasGsap) {
+        if (articleMetaBoxEl) {
+          articleMetaBoxEl.classList.remove("is-visible");
+          articleMetaBoxEl.classList.remove("is-past-mid");
+        }
+        if (articleContentBox3El) {
+          articleContentBox3El.classList.remove("is-revealed");
+        }
+        return;
+      }
+
+      if (articleMetaBoxEl) {
+        articleMetaBoxEl.classList.remove("is-visible");
+        articleMetaBoxEl.classList.remove("is-past-mid");
+      }
+      if (articleContentBox3El) {
+        articleContentBox3El.classList.remove("is-revealed");
+      }
+      gsapApi.set(metaItems, {
+        autoAlpha: 0,
+        x: (index) => META_OFFSETS[index] || 0
+      });
+      if (articleContainerAEl) {
+        gsapApi.set(articleContainerAEl, { xPercent: 0, autoAlpha: 1 });
+      }
+      if (articleContainerBEl) {
+        gsapApi.set(articleContainerBEl, { xPercent: 0, autoAlpha: 1 });
+      }
+      if (articleContentBox3El) {
+        gsapApi.set(articleContentBox3El, {
+          autoAlpha: 0,
+          y: 90,
+          pointerEvents: "none"
+        });
+      }
+    };
+
+    const resetPanelState = () => {
+      if (!hasGsap) {
+        articlePanel.style.removeProperty("opacity");
+        articlePanel.style.removeProperty("transform");
+        return;
+      }
+      gsapApi.set(articlePanel, {
+        autoAlpha: 0,
+        y: 16,
+        pointerEvents: "none"
+      });
+      if (articleIntroTitleEl) {
+        gsapApi.set(articleIntroTitleEl, { autoAlpha: 0 });
+      }
+      if (articleIntroMainEl) {
+        gsapApi.set(articleIntroMainEl, { autoAlpha: 0, y: 24 });
+      }
+      if (articleIntroSubEl) {
+        gsapApi.set(articleIntroSubEl, { autoAlpha: 0, y: -24 });
+      }
+      if (articleCloseBtn) {
+        gsapApi.set(articleCloseBtn, { autoAlpha: 0, pointerEvents: "none" });
+      }
+      if (articleContentEl) {
+        gsapApi.set(articleContentEl, {
+          clipPath: "inset(0% 0% 0% 0% round 0px)",
+          pointerEvents: "none"
+        });
+      }
+      if (articleContentChildren.length) {
+        gsapApi.set(articleContentChildren, { autoAlpha: 0, y: 14 });
+      }
+    };
+
+    if (hasGsap) {
+      resetPanelState();
+      resetRevealStates();
+      setFrameOpenState(false, true);
+    }
+
     const renderArticle = (src) => {
       const articleData = getArticleData(src) || {};
       const localName = getLocalName(articleData);
@@ -240,6 +406,7 @@
       if (articleTitleEl) {
         articleTitleEl.textContent = fullTitle;
       }
+
       if (articleIntroTitleEl) {
         const commaParts = fullTitle.split(",").map((part) => part.trim()).filter(Boolean);
         let introMain = fullTitle;
@@ -262,9 +429,11 @@
           articleIntroSubEl.hidden = !introSub;
         }
       }
+
       if (articleTextEl) {
         articleTextEl.textContent = articleData.story || getDescription(src) || "Add your story here.";
       }
+
       if (articleMapImageEl && articleMapImageWrapEl) {
         const mapSrc = resolveMapImageSrc(articleData.map_image_name);
         if (mapSrc) {
@@ -280,9 +449,6 @@
 
       if (localNameEl) {
         localNameEl.textContent = localName;
-      }
-      if (articleContentBox3El) {
-        articleContentBox3El.classList.remove("is-revealed");
       }
 
       currentTimeZone = typeof articleData.timezone === "string" ? articleData.timezone : "";
@@ -327,48 +493,111 @@
       }
     };
 
-    let isArticleOpen = false;
-    let introTimerId = null;
-    let metaRevealRafId = null;
-    let hasMetaRevealed = false;
+    const revealMetaItems = () => {
+      if (hasMetaRevealed) return;
+      hasMetaRevealed = true;
+      if (!hasGsap) {
+        articleMetaBoxEl?.classList.add("is-visible");
+        return;
+      }
+      gsapApi.to(metaItems, {
+        autoAlpha: 1,
+        x: 0,
+        duration: 0.95,
+        ease: "power3.out",
+        stagger: 0.12,
+        overwrite: "auto"
+      });
+    };
+
     const updateMetaRevealState = () => {
       if (!articleMetaBoxEl) return;
       if (!isArticleOpen) {
-        articleMetaBoxEl.classList.remove("is-visible");
         hasMetaRevealed = false;
+        articleMetaBoxEl.classList.remove("is-visible");
         return;
       }
       if (hasMetaRevealed) return;
+
       const revealAt = Math.max(1, articleMetaBoxEl.offsetTop - articlePanel.clientHeight * 0.9);
       if (articlePanel.scrollTop >= revealAt) {
-        articleMetaBoxEl.classList.add("is-visible");
-        hasMetaRevealed = true;
+        revealMetaItems();
       }
     };
+
     const updateContainerSideExitState = () => {
       if (!articleMetaBoxEl || !articleContainerAEl || !articleContainerBEl) return;
       if (!isArticleOpen) {
+        containersExited = false;
         articleMetaBoxEl.classList.remove("is-past-mid");
         return;
       }
+
       const panelRect = articlePanel.getBoundingClientRect();
       const boxRect = articleMetaBoxEl.getBoundingClientRect();
       const panelMid = panelRect.top + panelRect.height * 0.4;
       const boxMid = boxRect.top + boxRect.height * 0.5;
-      articleMetaBoxEl.classList.toggle("is-past-mid", boxMid < panelMid);
+      const shouldExit = boxMid < panelMid;
+      if (shouldExit === containersExited) return;
+
+      containersExited = shouldExit;
+      if (!hasGsap) {
+        articleMetaBoxEl.classList.toggle("is-past-mid", shouldExit);
+        return;
+      }
+
+      gsapApi.to(articleContainerAEl, {
+        xPercent: shouldExit ? -115 : 0,
+        autoAlpha: shouldExit ? 0 : 1,
+        duration: 0.72,
+        ease: "power3.inOut",
+        overwrite: "auto"
+      });
+      gsapApi.to(articleContainerBEl, {
+        xPercent: shouldExit ? 115 : 0,
+        autoAlpha: shouldExit ? 0 : 1,
+        duration: 0.72,
+        ease: "power3.inOut",
+        overwrite: "auto"
+      });
     };
+
     const updateBox3RevealState = () => {
       if (!articlePanel || !articleContainerCEl || !articleContentBox3El) return;
       if (!isArticleOpen) {
+        box3Revealed = false;
         articleContentBox3El.classList.remove("is-revealed");
         return;
       }
 
       const panelRect = articlePanel.getBoundingClientRect();
       const panelMid = panelRect.top + panelRect.height * 0.5;
-      const containerCMid = articleContainerCEl.getBoundingClientRect().top + (articleContainerCEl.getBoundingClientRect().height * 0.5);
-      articleContentBox3El.classList.toggle("is-revealed", containerCMid < panelMid);
+      const containerRect = articleContainerCEl.getBoundingClientRect();
+      const containerCMid = containerRect.top + containerRect.height * 0.5;
+      const shouldReveal = containerCMid < panelMid;
+      if (shouldReveal === box3Revealed) return;
+
+      box3Revealed = shouldReveal;
+      if (!hasGsap) {
+        articleContentBox3El.classList.toggle("is-revealed", shouldReveal);
+        return;
+      }
+
+      gsapApi.to(articleContentBox3El, {
+        autoAlpha: shouldReveal ? 1 : 0,
+        y: shouldReveal ? 0 : 90,
+        duration: 0.82,
+        ease: shouldReveal ? "power3.out" : "power2.inOut",
+        overwrite: "auto",
+        onStart: () => {
+          articleContentBox3El.style.pointerEvents = shouldReveal ? "auto" : "none";
+        },
+        onComplete: () => {
+          articleContentBox3El.style.pointerEvents = shouldReveal ? "auto" : "none";
+        }
+      });
     };
+
     const queueMetaRevealUpdate = () => {
       if (metaRevealRafId) return;
       metaRevealRafId = window.requestAnimationFrame(() => {
@@ -378,44 +607,161 @@
         updateBox3RevealState();
       });
     };
+
     const playArticleIntro = () => {
-      if (introTimerId) {
-        clearTimeout(introTimerId);
+      if (!hasGsap) {
+        articlePanel.style.opacity = "1";
+        articlePanel.style.transform = "translateY(0)";
+        articlePanel.style.pointerEvents = "auto";
+        return;
       }
-      articlePanel.classList.remove("is-intro-playing");
-      void articlePanel.offsetWidth;
-      articlePanel.classList.add("is-intro-playing");
-      introTimerId = window.setTimeout(() => {
-        articlePanel.classList.remove("is-intro-playing");
-        introTimerId = null;
-      }, 4250);
+
+      if (articleIntroTimeline) {
+        articleIntroTimeline.kill();
+      }
+
+      const clipStates = getClipStates();
+      resetPanelState();
+      resetRevealStates();
+
+      gsapApi.set(articlePanel, {
+        autoAlpha: 0,
+        y: 16,
+        pointerEvents: "auto"
+      });
+      if (articleCloseBtn) {
+        gsapApi.set(articleCloseBtn, { autoAlpha: 0, pointerEvents: "none" });
+      }
+      if (articleIntroTitleEl) {
+        gsapApi.set(articleIntroTitleEl, { autoAlpha: 0 });
+      }
+      if (articleIntroMainEl) {
+        gsapApi.set(articleIntroMainEl, { autoAlpha: 0, y: 24 });
+      }
+      if (articleIntroSubEl) {
+        gsapApi.set(articleIntroSubEl, { autoAlpha: 0, y: -24 });
+      }
+      if (articleContentEl) {
+        gsapApi.set(articleContentEl, {
+          clipPath: clipStates.start,
+          pointerEvents: "none"
+        });
+      }
+      if (articleContentChildren.length) {
+        gsapApi.set(articleContentChildren, { autoAlpha: 0, y: 14 });
+      }
+
+      articleIntroTimeline = gsapApi.timeline();
+      articleIntroTimeline
+        .to(articlePanel, {
+          autoAlpha: 1,
+          y: 0,
+          duration: 0.38,
+          ease: "power2.out"
+        }, 0)
+        .to(articleCloseBtn, {
+          autoAlpha: 1,
+          duration: 0.2,
+          ease: "power1.out",
+          onStart: () => {
+            if (articleCloseBtn) {
+              articleCloseBtn.style.pointerEvents = "auto";
+            }
+          }
+        }, 0.16)
+        .to(articleIntroTitleEl, {
+          autoAlpha: 1,
+          duration: 0.3,
+          ease: "power1.out"
+        }, 0.08)
+        .to(articleIntroMainEl, {
+          autoAlpha: 1,
+          y: 0,
+          duration: 0.55,
+          ease: "power3.out"
+        }, 0.08)
+        .to(articleIntroSubEl, {
+          autoAlpha: 0.9,
+          y: 0,
+          duration: 0.55,
+          ease: "power3.out"
+        }, 0.12)
+        .to(articleContentEl, {
+          clipPath: clipStates.hold,
+          duration: 0.42,
+          ease: "power2.inOut"
+        }, 0)
+        .to(articleContentEl, {
+          clipPath: clipStates.mid,
+          duration: 0.66,
+          ease: "power2.inOut"
+        }, 0.42)
+        .to(articleContentEl, {
+          clipPath: clipStates.end,
+          duration: 1.36,
+          ease: "power3.inOut"
+        }, 1.08)
+        .to(articleIntroMainEl, {
+          y: () => -((window.innerHeight || 900) * 1.1),
+          autoAlpha: 0,
+          duration: 0.92,
+          ease: "power2.in"
+        }, 1.3)
+        .to(articleIntroSubEl, {
+          y: () => ((window.innerHeight || 900) * 1.1),
+          autoAlpha: 0,
+          duration: 0.92,
+          ease: "power2.in"
+        }, 1.3)
+        .to(articleIntroTitleEl, {
+          autoAlpha: 0,
+          duration: 0.2,
+          ease: "power1.out"
+        }, 1.95)
+        .to(articleContentChildren, {
+          autoAlpha: 1,
+          y: 0,
+          duration: 0.55,
+          ease: "power2.out",
+          stagger: 0.09
+        }, 2.08)
+        .add(() => {
+          if (articleContentEl) {
+            articleContentEl.style.pointerEvents = "auto";
+          }
+        }, 2.7);
     };
 
     const openArticle = () => {
-      if (!desktopMq.matches || !largeImage.src) return;
+      if (!desktopMq.matches || !largeImage.src || isArticleOpen) return;
+
       if (typeof hideBinocular === "function") {
         hideBinocular();
       }
+      if (articleCloseTimeline) {
+        articleCloseTimeline.kill();
+        articleCloseTimeline = null;
+      }
+
       renderArticle(largeImage.src);
       galleryFrame.classList.add("is-article-open");
       isArticleOpen = true;
       articlePanel.scrollTop = 0;
-      if (articleMetaBoxEl) {
-        articleMetaBoxEl.classList.remove("is-visible");
-        articleMetaBoxEl.classList.remove("is-past-mid");
-      }
-      if (articleContentBox3El) {
-        articleContentBox3El.classList.remove("is-revealed");
-      }
-      hasMetaRevealed = false;
       startLiveTime();
+
+      if (hasGsap) {
+        setFrameOpenState(true);
+      }
       playArticleIntro();
       queueMetaRevealUpdate();
     };
 
     const closeArticle = () => {
-      galleryFrame.classList.remove("is-article-open");
+      if (!galleryFrame.classList.contains("is-article-open")) return;
+
       isArticleOpen = false;
+      stopLiveTime();
+
       if (typeof hideBinocular === "function") {
         hideBinocular();
       }
@@ -424,24 +770,84 @@
         binocular.style.removeProperty("visibility");
         binocular.style.removeProperty("opacity");
       }
-      stopLiveTime();
-      if (introTimerId) {
-        clearTimeout(introTimerId);
-        introTimerId = null;
-      }
-      articlePanel.classList.remove("is-intro-playing");
-      if (articleMetaBoxEl) {
-        articleMetaBoxEl.classList.remove("is-visible");
-        articleMetaBoxEl.classList.remove("is-past-mid");
-      }
-      if (articleContentBox3El) {
-        articleContentBox3El.classList.remove("is-revealed");
-      }
-      hasMetaRevealed = false;
       if (metaRevealRafId) {
         window.cancelAnimationFrame(metaRevealRafId);
         metaRevealRafId = null;
       }
+      if (articleIntroTimeline) {
+        articleIntroTimeline.kill();
+        articleIntroTimeline = null;
+      }
+
+      if (!hasGsap) {
+        galleryFrame.classList.remove("is-article-open");
+        articlePanel.style.opacity = "0";
+        articlePanel.style.transform = "translateY(16px)";
+        articlePanel.style.pointerEvents = "none";
+        return;
+      }
+
+      gsapApi.killTweensOf([
+        articlePanel,
+        articleIntroTitleEl,
+        articleIntroMainEl,
+        articleIntroSubEl,
+        articleContentEl,
+        articleCloseBtn,
+        articleContentChildren,
+        articleContainerAEl,
+        articleContainerBEl,
+        articleContentBox3El,
+        ...metaItems,
+        ...frameTargets
+      ].filter(Boolean));
+
+      articleCloseTimeline = gsapApi.timeline({
+        defaults: { ease: "power2.inOut" },
+        onComplete: () => {
+          galleryFrame.classList.remove("is-article-open");
+          resetPanelState();
+          resetRevealStates();
+          setFrameOpenState(false, true);
+          articleCloseTimeline = null;
+        }
+      });
+
+      articleCloseTimeline
+        .set(articlePanel, { pointerEvents: "none" }, 0)
+        .set(articleCloseBtn, { pointerEvents: "none" }, 0)
+        .to(articlePanel, {
+          autoAlpha: 0,
+          y: 20,
+          duration: 0.28,
+          ease: "power2.in"
+        }, 0)
+        .to(articleIntroTitleEl, {
+          autoAlpha: 0,
+          duration: 0.14
+        }, 0)
+        .to(articleContentChildren, {
+          autoAlpha: 0,
+          y: 10,
+          duration: 0.18,
+          stagger: 0.02,
+          ease: "power1.in"
+        }, 0)
+        .to(descriptionEl, {
+          xPercent: 0,
+          autoAlpha: 1,
+          duration: 0.34
+        }, 0.06)
+        .to(largeImageContainer, {
+          xPercent: 0,
+          autoAlpha: 1,
+          duration: 0.34
+        }, 0.06)
+        .to(thumbsWrap, {
+          xPercent: 0,
+          autoAlpha: 1,
+          duration: 0.34
+        }, 0.06);
     };
 
     largeImage.addEventListener("click", openArticle);
@@ -452,12 +858,19 @@
       articleCloseBtn.addEventListener("click", closeArticle);
     }
     articlePanel.addEventListener("scroll", queueMetaRevealUpdate, { passive: true });
-    window.addEventListener("resize", queueMetaRevealUpdate);
+    window.addEventListener("resize", () => {
+      if (!desktopMq.matches && isArticleOpen) {
+        closeArticle();
+        return;
+      }
+      queueMetaRevealUpdate();
+    });
     document.addEventListener("keydown", (event) => {
       if (event.key === "Escape" && isArticleOpen) {
         closeArticle();
       }
     });
+
     return {
       onImageChange: (src) => {
         if (!isArticleOpen) return;

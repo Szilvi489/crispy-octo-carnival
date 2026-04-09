@@ -8,6 +8,7 @@ vendor
 node_modules
 Gemfile.lock
 CV/auth/password.local.php
+contactPage/contact.local.php
 CV/assets/pdf/*.pdf
 
 # Keep only the currently used Cambodia model in git; ignore other large local model files.
