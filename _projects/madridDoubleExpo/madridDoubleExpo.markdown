@@ -30,8 +30,8 @@ thumbnails:
 
 indexImage: 
 - assets/images/projects/madridDoubleExpo/gallery_videos/cutrain.mp4
-- assets/images/projects/madridDoubleExpo/gallery_images/000074580015 copy.tiff
-- assets/images/projects/madridDoubleExpo/gallery_images/000074590006 copy.tiff
-- assets/images/projects/madridDoubleExpo/gallery_images/000074590030 copy.tiff
-- assets/images/projects/madridDoubleExpo/gallery_images/000074590034 copy.tiff
+- /assets/images/projects/madridDoubleExpo/thumbnails/000074580004 copy.jpg
+- /assets/images/projects/madridDoubleExpo/thumbnails/000074580009 copy.jpg
+- /assets/images/projects/madridDoubleExpo/thumbnails/000074590005 copy.jpg
+- /assets/images/projects/madridDoubleExpo/thumbnails/000074590031 copy.jpg
 ---

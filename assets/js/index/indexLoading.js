@@ -2,9 +2,91 @@
     var gsapApi = window.gsap;
     var hasAnimatedLoaderIn = false;
     var STACKED_BREAKPOINT = 700;
+    var counterProgress = 0;
+    var counterTarget = 0;
+    var counterRafId = null;
+    var counterAmbientTimerId = null;
+    var hasFinishedCounter = false;
 
     function clamp(value, min, max) {
         return Math.min(Math.max(value, min), max);
+    }
+
+    function renderCounter(counterEl) {
+        if (!counterEl) {
+            return;
+        }
+
+        counterEl.textContent = Math.round(clamp(counterProgress, 0, 100)) + "%";
+    }
+
+    function stopCounterAnimation() {
+        if (counterRafId !== null) {
+            window.cancelAnimationFrame(counterRafId);
+            counterRafId = null;
+        }
+    }
+
+    function stopAmbientProgress() {
+        if (counterAmbientTimerId !== null) {
+            window.clearInterval(counterAmbientTimerId);
+            counterAmbientTimerId = null;
+        }
+    }
+
+    function tickCounter() {
+        var refs = getLoaderRefs();
+        var delta;
+
+        if (!refs || !refs.counterEl) {
+            stopCounterAnimation();
+            return;
+        }
+
+        delta = counterTarget - counterProgress;
+
+        if (Math.abs(delta) <= 0.2) {
+            counterProgress = counterTarget;
+            renderCounter(refs.counterEl);
+            counterRafId = null;
+            return;
+        }
+
+        counterProgress += delta * 0.18 + (delta > 0 ? 0.2 : -0.2);
+
+        if (delta > 0 && counterProgress > counterTarget) {
+            counterProgress = counterTarget;
+        }
+
+        if (delta < 0 && counterProgress < counterTarget) {
+            counterProgress = counterTarget;
+        }
+
+        renderCounter(refs.counterEl);
+        counterRafId = window.requestAnimationFrame(tickCounter);
+    }
+
+    function queueCounterRender() {
+        if (counterRafId === null) {
+            counterRafId = window.requestAnimationFrame(tickCounter);
+        }
+    }
+
+    function setCounterTarget(progress) {
+        counterTarget = clamp(Math.max(counterTarget, progress), 0, 100);
+        queueCounterRender();
+    }
+
+    function startAmbientProgress() {
+        stopAmbientProgress();
+        counterAmbientTimerId = window.setInterval(() => {
+            if (hasFinishedCounter || counterTarget >= 28) {
+                stopAmbientProgress();
+                return;
+            }
+
+            setCounterTarget(counterTarget + 2.5);
+        }, 180);
     }
 
     function getLoaderMotion() {
@@ -61,6 +143,7 @@
     function getLoaderRefs() {
         var loaderSection = document.querySelector(".index-loading-section");
         var loadingText = document.querySelector(".loading-text");
+        var counterEl = document.querySelector(".index-loading-counter");
         var parts;
         var firstPart;
         var secondPart;
@@ -83,10 +166,45 @@
         return {
             loaderSection: loaderSection,
             loadingText: loadingText,
+            counterEl: counterEl,
             firstEl: loadingText.querySelector(".loading-text__part--first"),
             secondEl: loadingText.querySelector(".loading-text__part--second")
         };
     }
+
+    window.startIndexLoaderProgress = function () {
+        var refs = getLoaderRefs();
+
+        stopCounterAnimation();
+        stopAmbientProgress();
+
+        hasFinishedCounter = false;
+        counterProgress = 0;
+        counterTarget = 0;
+
+        if (refs && refs.counterEl) {
+            renderCounter(refs.counterEl);
+        }
+
+        startAmbientProgress();
+    };
+
+    window.setIndexLoaderProgress = function (percent) {
+        var normalized = clamp(percent, 0, 100);
+        var mappedProgress = 30 + (normalized * 0.69);
+
+        if (hasFinishedCounter) {
+            return;
+        }
+
+        setCounterTarget(mappedProgress);
+    };
+
+    window.finishIndexLoaderProgress = function () {
+        hasFinishedCounter = true;
+        stopAmbientProgress();
+        setCounterTarget(100);
+    };
 
     window.playIndexLoaderIn = function () {
         var refs = getLoaderRefs();
@@ -97,6 +215,7 @@
 
         var motion = getLoaderMotion();
 
+        window.startIndexLoaderProgress?.();
         gsapApi.set(refs.loaderSection, { autoAlpha: 1 });
         gsapApi.set(refs.loadingText, { autoAlpha: 1 });
         gsapApi.set([refs.firstEl, refs.secondEl], {
@@ -133,6 +252,8 @@
         }
 
         var motion = getLoaderMotion();
+
+        window.finishIndexLoaderProgress?.();
 
         return new Promise((resolve) => {
             gsapApi.timeline({

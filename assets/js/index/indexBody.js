@@ -4,6 +4,41 @@ function isIndexVideoSource(src) {
   return /\.(mp4|webm|mov)$/i.test(src || "");
 }
 
+function normalizeIndexMediaSrc(src) {
+  if (!src) {
+    return "";
+  }
+
+  try {
+    return new URL(src, window.location.origin).toString();
+  } catch (error) {
+    return src;
+  }
+}
+
+function attachIndexMediaRetry(media) {
+  if (!media || media.dataset.retryBound === "true") {
+    return;
+  }
+
+  media.dataset.retryBound = "true";
+  media.addEventListener("error", () => {
+    const originalSrc = media.dataset.originalSrc || media.getAttribute("src") || "";
+    if (!originalSrc || media.dataset.retryAttempted === "true") {
+      return;
+    }
+
+    media.dataset.retryAttempted = "true";
+    try {
+      const url = new URL(originalSrc, window.location.origin);
+      url.searchParams.set("retry", String(Date.now()));
+      media.src = url.toString();
+    } catch (error) {
+      media.src = originalSrc;
+    }
+  });
+}
+
 function preloadIndexImageMeta(src) {
   if (!src) {
     return Promise.resolve(null);
@@ -89,6 +124,7 @@ function resizeIndexGallery() {
   grid.querySelectorAll(".index-gallery_item").forEach((item) => {
     const media = item.querySelector("img, video");
     if (!media) return;
+    attachIndexMediaRetry(media);
 
     const applySpan = () => {
       const width = item.clientWidth;
@@ -145,7 +181,7 @@ function setupInfiniteIndexGallery() {
       const media = item.querySelector("img, video");
       if (!media) return null;
       return {
-        src: media.getAttribute("src"),
+        src: normalizeIndexMediaSrc(media.getAttribute("src") || media.currentSrc || media.src),
         alt:
           media.getAttribute("alt") ||
           media.getAttribute("aria-label") ||
@@ -177,6 +213,8 @@ function setupInfiniteIndexGallery() {
         : document.createElement("img");
 
     media.src = src;
+    media.dataset.originalSrc = src;
+    attachIndexMediaRetry(media);
 
     if (media.tagName === "VIDEO") {
       media.setAttribute("aria-label", alt);
@@ -187,7 +225,7 @@ function setupInfiniteIndexGallery() {
       media.preload = "metadata";
     } else {
       media.alt = alt;
-      media.loading = "eager";
+      media.loading = "lazy";
       media.decoding = "async";
     }
 
@@ -332,7 +370,29 @@ window.initIndexBody = async function () {
         .filter(Boolean)
     : [];
 
-  await Promise.all(sources.map((src) => preloadIndexImageMeta(src)));
+  if (!sources.length) {
+    window.setIndexLoaderProgress?.(100);
+  } else {
+    let loadedSources = 0;
+
+    window.setIndexLoaderProgress?.(0);
+
+    await Promise.all(
+      sources.map(async (src) => {
+        await preloadIndexImageMeta(src);
+        loadedSources += 1;
+        window.setIndexLoaderProgress?.((loadedSources / sources.length) * 100);
+      })
+    );
+  }
+
+  if (grid) {
+    grid.querySelectorAll(".index-gallery_item img, .index-gallery_item video").forEach((media) => {
+      const src = normalizeIndexMediaSrc(media.getAttribute("src") || media.currentSrc || media.src);
+      media.dataset.originalSrc = src;
+      attachIndexMediaRetry(media);
+    });
+  }
 
   setupInfiniteIndexGallery();
   setupIndexCursor();

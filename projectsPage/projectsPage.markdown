@@ -17,8 +17,8 @@ description: "A list of photography galleries"
 fonts:
   - https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap
 
-navSquareColour: "#001b91"
-navFontColour: "#f8ff93"
+navSquareColour: 'var(--color-trendy-neon-green)'
+navFontColour: 'var(--color-deep-mandarin)'
 backgroundColour: "#ffffff"
 fontColour: "#000000"
 ---

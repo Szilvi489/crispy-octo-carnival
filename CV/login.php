@@ -43,6 +43,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body class="cv-login-page">
     <main class="cv-login-shell">
+        <aside
+            class="cv-login-screen-note"
+            aria-label="For the full visual experience, view this CV on a larger screen."
+        >
+            <svg class="cv-login-screen-note-svg" viewBox="0 0 120 120" role="presentation" aria-hidden="true">
+                <defs>
+                    <path
+                        id="cv-login-screen-note-path"
+                        d="M 60,60 m -43,0 a 43,43 0 1,1 86,0 a 43,43 0 1,1 -86,0"
+                    />
+                </defs>
+                <circle class="cv-login-screen-note-ring" cx="60" cy="60" r="47"></circle>
+                <circle class="cv-login-screen-note-core" cx="60" cy="60" r="33"></circle>
+                <text class="cv-login-screen-note-text">
+                    <textPath href="#cv-login-screen-note-path">
+                        BEST VIEWED ON A LARGER SCREEN FOR THE FULL VISUAL EXPERIENCE
+                    </textPath>
+                </text>
+            </svg>
+        </aside>
         <section class="cv-login-card" aria-labelledby="cv-login-title">
             <p class="cv-login-eyebrow">Protected CV</p>
             <h1 id="cv-login-title">Enter Password</h1>
@@ -50,10 +70,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <?php if ($errorMessage !== ''): ?>
                 <p class="cv-login-alert" role="alert"><?= htmlspecialchars($errorMessage, ENT_QUOTES, 'UTF-8') ?></p>
-            <?php endif; ?>
-
-            <?php if (!$isConfigured): ?>
-                <p class="cv-login-help">Set a password hash in <code>CV/auth/password.local.php</code> before deploying this page.</p>
             <?php endif; ?>
 
             <form class="cv-login-form" method="post" action="<?= htmlspecialchars(cvAuthPath('login/'), ENT_QUOTES, 'UTF-8') ?>">

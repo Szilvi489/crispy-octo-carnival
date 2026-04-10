@@ -24,7 +24,6 @@
     const introEnterDurationMs = 1180;
     let delayedHideTimerId = null;
     let introEnterCleanupTimerId = null;
-    let typingCursorTween = null;
     let orbitBackgroundFrameId = null;
     let orbitViewportOpacityFrameId = null;
 
@@ -218,12 +217,6 @@
         originalText = introText.dataset.originalText || introText.textContent || "";
         introText.textContent = originalText;
         introText.classList.remove("is-typing");
-        introText.style.removeProperty("border-right-color");
-
-        if (typingCursorTween && typeof typingCursorTween.kill === "function") {
-            typingCursorTween.kill();
-            typingCursorTween = null;
-        }
 
         if (canUseGsap && typeof gsapApi.killTweensOf === "function") {
             gsapApi.killTweensOf(introText);
@@ -263,13 +256,6 @@
                 },
                 onComplete: () => {
                     introText.textContent = originalText;
-                    typingCursorTween = gsapApi.to(introText, {
-                        borderRightColor: "rgba(255,255,255,0)",
-                        duration: 0.5,
-                        repeat: -1,
-                        yoyo: true,
-                        ease: "none"
-                    });
                 }
             });
             return;

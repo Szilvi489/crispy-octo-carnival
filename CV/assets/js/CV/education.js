@@ -97,6 +97,7 @@
         titleEndX = titleRect.right - introRect.left;
         gapAfterTitle = 0;
         overlap = Math.max(0, titleEndX - introRect.width + gapAfterTitle);
+        educationSection.style.setProperty("--edu-title-end-x", titleEndX.toFixed(2) + "px");
         educationSection.style.setProperty("--edu-content-shift", overlap.toFixed(2) + "px");
     }
 

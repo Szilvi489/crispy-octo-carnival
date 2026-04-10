@@ -1,6 +1,7 @@
 .cv-education-section {
     --edu-content-shift: 0px;
     --edu-base-content-width: 200vw;
+    --edu-title-end-x: 100vw;
     --edu-total-width: calc(100vw + var(--edu-base-content-width) + var(--edu-content-shift));
     position: relative;
     z-index: 20;
@@ -58,16 +59,16 @@
 
 .cv-education-click-hint {
     position: absolute;
-    top: 0;
-    right: 0;
-    z-index: 24;
-    width: clamp(156px, 15vw, 198px);
+    left: calc(var(--edu-title-end-x) - clamp(3.2rem, 4.8vw, 5rem));
+    bottom: clamp(14vh, 48vh, 55vh);
+    z-index: 26;
+    width: clamp(154px, 14vw, 192px);
     aspect-ratio: 1;
     display: grid;
     place-items: center;
     color: rgba(43, 27, 27, 0.94);
     pointer-events: none;
-    transform: translate(62%, -24%);
+    transform: translate(-50%, 0);
 }
 
 .cv-education-click-hint-svg {
@@ -80,14 +81,16 @@
 
 .cv-education-click-hint-ring {
     fill: none;
-    stroke: rgba(43, 27, 27, 0.86);
-    stroke-width: 1.9;
+    stroke: rgba(43, 27, 27, 0.56);
+    stroke-width: 1.5;
+    stroke-dasharray: 10 9;
+    stroke-linecap: round;
 }
 
 .cv-education-click-hint-core {
-    fill: rgba(245, 243, 239, 0.94);
-    stroke: rgba(43, 27, 27, 0.22);
-    stroke-width: 1.5;
+    fill: rgba(245, 243, 239, 0.9);
+    stroke: rgba(43, 27, 27, 0.1);
+    stroke-width: 1.1;
 }
 
 .cv-education-click-hint-text {
@@ -353,11 +356,6 @@
     animation: cvSchoolHintPulse 2.4s ease-in-out infinite;
 }
 
-.cv-education-click-hint {
-    left: clamp(1.25rem, 3.2vw, 4.5rem);
-    bottom: clamp(18vh, 37vh, 48vh);
-}
-
 @keyframes cvSchoolHintPulse {
     0%,
     100% {
@@ -446,8 +444,10 @@
     }
 
     .cv-education-click-hint {
+        left: calc(var(--edu-title-end-x) - clamp(2.2rem, 5vw, 3.4rem));
+        bottom: clamp(14vh, 18vh, 22vh);
         width: clamp(112px, 24vw, 138px);
-        transform: translate(44%, -12%);
+        transform: translate(-50%, 0);
     }
 
     .cv-education-click-hint-text {

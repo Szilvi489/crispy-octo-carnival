@@ -26,12 +26,22 @@
     var aboutTimeline = null;
     var currentLayoutMode = "";
     var compactLayoutQuery = window.matchMedia("(max-width: 900px)");
+    var autoRotateResumeTimerId = null;
     var starCount = 110;
     var twinkleRatio = 0.26;
+    var globeMarkers = [
+        {
+            lat: 48.2082,
+            lng: 16.3738,
+            altitude: 0.018,
+            label: "Vienna"
+        }
+    ];
     var sceneState = {
         lat: 24,
         lng: 18,
         altitude: 2.05,
+        atmosphereAltitude: 0.28,
         gradientAngle: 71,
         globeLeft: 74,
         globeTop: 50,
@@ -44,6 +54,7 @@
         lat: 20,
         lng: 30,
         altitude: 1.88,
+        atmosphereAltitude: 0.14,
         gradientAngle: 118,
         globeLeft: 50,
         globeTop: 50,
@@ -54,6 +65,64 @@
 
     function randomBetween(min, max) {
         return min + (Math.random() * (max - min));
+    }
+
+    function createGlobeMarkerElement(marker) {
+        var pinEl;
+        var headEl;
+        var coreEl;
+        var tailEl;
+
+        if (marker.element) {
+            return marker.element;
+        }
+
+        pinEl = document.createElement("div");
+        pinEl.className = "about-page-vienna-pin";
+        pinEl.setAttribute("aria-hidden", "true");
+        if (marker.label) {
+            pinEl.title = marker.label;
+        }
+
+        headEl = document.createElement("span");
+        headEl.className = "about-page-vienna-pin__head";
+
+        coreEl = document.createElement("span");
+        coreEl.className = "about-page-vienna-pin__core";
+        headEl.appendChild(coreEl);
+
+        tailEl = document.createElement("span");
+        tailEl.className = "about-page-vienna-pin__tail";
+
+        pinEl.appendChild(headEl);
+        pinEl.appendChild(tailEl);
+
+        marker.element = pinEl;
+        return pinEl;
+    }
+
+    function clearAutoRotateResume() {
+        if (autoRotateResumeTimerId !== null) {
+            window.clearTimeout(autoRotateResumeTimerId);
+            autoRotateResumeTimerId = null;
+        }
+    }
+
+    function setAutoRotate(isEnabled) {
+        if (!controls) {
+            return;
+        }
+
+        controls.autoRotate = isEnabled;
+        controls.autoRotateSpeed = isEnabled ? 2.5 : 0;
+    }
+
+    function scheduleAutoRotateResume(delayMs) {
+        clearAutoRotateResume();
+        autoRotateResumeTimerId = window.setTimeout(function () {
+            setAutoRotate(true);
+            autoRotateResumeTimerId = null;
+        }, delayMs);
     }
 
     function syncGlobeSize() {
@@ -100,6 +169,9 @@
         }
 
         if (globeInstance) {
+            if (typeof globeInstance.atmosphereAltitude === "function") {
+                globeInstance.atmosphereAltitude(sceneState.atmosphereAltitude);
+            }
             globeInstance.pointOfView({
                 lat: sceneState.lat,
                 lng: sceneState.lng,
@@ -442,7 +514,13 @@
         .bumpImageUrl("https://cdn.jsdelivr.net/npm/three-globe/example/img/earth-topology.png")
         .atmosphereColor("#ffffff")
         .atmosphereAltitude(0.28)
-        .showGraticules(true);
+        .showGraticules(true)
+        .htmlElementsData(globeMarkers)
+        .htmlLat("lat")
+        .htmlLng("lng")
+        .htmlAltitude("altitude")
+        .htmlTransitionDuration(0)
+        .htmlElement(createGlobeMarkerElement);
 
     sceneLights = typeof globeInstance.lights === "function" ? globeInstance.lights() : null;
     renderScene();
@@ -477,8 +555,8 @@
         controls.enableDamping = true;
         controls.dampingFactor = 0.08;
         controls.rotateSpeed = 1;
-        controls.autoRotate = false;
-        controls.autoRotateSpeed = 0;
+        controls.autoRotate = true;
+        controls.autoRotateSpeed = 2.5;
 
         if (typeof controls.zoomSpeed !== "undefined") {
             controls.zoomSpeed = 0;
@@ -493,11 +571,14 @@
     applyResponsiveLayout(true);
 
     globeMount.addEventListener("pointerdown", function () {
+        clearAutoRotateResume();
+        setAutoRotate(false);
         globeMount.classList.add("is-dragging");
     });
 
     window.addEventListener("pointerup", function () {
         globeMount.classList.remove("is-dragging");
+        scheduleAutoRotateResume(1100);
     });
 
     globeMount.addEventListener("pointerleave", function () {

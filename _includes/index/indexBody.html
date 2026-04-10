@@ -11,7 +11,7 @@
                             {% assign image_lower = image | downcase %}
                             {% if image_lower contains '.mp4' or image_lower contains '.webm' or image_lower contains '.mov' %}
                                 <video
-                                    src="{{ image }}"
+                                    src="{{ image | relative_url }}"
                                     aria-label="{{ project.title }}"
                                     autoplay
                                     muted
@@ -21,7 +21,7 @@
                                     tooltip="{{ project.title }}"
                                 ></video>
                             {% else %}
-                                <img src="{{ image }}" alt="{{ project.title }}" loading="eager" decoding="async" tooltip="{{ project.title }}">
+                                <img src="{{ image | relative_url }}" alt="{{ project.title }}" loading="lazy" decoding="async" tooltip="{{ project.title }}">
                             {% endif %}
                         </a>
                         {% endif %}

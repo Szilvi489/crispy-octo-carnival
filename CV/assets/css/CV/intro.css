@@ -96,7 +96,6 @@ color: var(--color-alternative-orange);
     width: 100%;
     white-space: normal;
     overflow: visible;
-    border-right: 2px solid rgba(255, 255, 255, 0.75);
     text-wrap: balance;
     overflow-wrap: anywhere;
 }

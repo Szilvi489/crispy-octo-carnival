@@ -144,6 +144,28 @@
     height: 100%;
 }
 
+.about-page-vienna-pin {
+    position: relative;
+    width: 12px;
+    height: 40px;
+    transform: translate(-50%, -100%);
+    pointer-events: none;
+    user-select: none;
+    filter: drop-shadow(0 0 10px rgba(255, 43, 43, 0.5));
+}
+
+.about-page-vienna-pin__tail {
+    position: absolute;
+    left: 7px;
+    top: 12px;
+    width: 8px;
+    height: 14px;
+    border-radius: 2px 2px 12px 12px;
+    background: linear-gradient(180deg, #df1515 0%, #710000 100%);
+    transform: rotate(45deg);
+    transform-origin: center top;
+}
+
 @media (max-width: 980px) {
     .about-page-panel {
         max-width: min(34rem, calc(100vw - 2.5rem));

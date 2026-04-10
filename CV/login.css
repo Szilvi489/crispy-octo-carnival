@@ -9,13 +9,70 @@
 }
 
 .cv-login-shell {
+    position: relative;
     min-height: 100vh;
     display: grid;
     place-items: center;
     padding: 32px 18px;
 }
 
+.cv-login-screen-note {
+    position: absolute;
+    top: clamp(22px, 7vh, 58px);
+    right: clamp(22px, 4vw, 48px);
+    z-index: 1;
+    width: clamp(128px, 12vw, 164px);
+    aspect-ratio: 1;
+    display: grid;
+    place-items: center;
+    color: rgba(246, 238, 229, 0.9);
+    pointer-events: none;
+}
+
+.cv-login-screen-note-svg {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    animation: cvLoginScreenNoteSpin 18s linear infinite;
+    transform-origin: 50% 50%;
+}
+
+.cv-login-screen-note-ring {
+    fill: none;
+    stroke: rgba(246, 238, 229, 0.52);
+    stroke-width: 1.5;
+    stroke-dasharray: 10 9;
+    stroke-linecap: round;
+}
+
+.cv-login-screen-note-core {
+    fill: rgba(255, 140, 48, 0.12);
+    stroke: rgba(255, 255, 255, 0.08);
+    stroke-width: 1.1;
+}
+
+.cv-login-screen-note-text {
+    fill: currentColor;
+    font-family: "Aldrich", sans-serif;
+    font-size: 7.1px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+
+@keyframes cvLoginScreenNoteSpin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
 .cv-login-card {
+    position: relative;
+    z-index: 2;
     width: min(100%, 520px);
     padding: 32px 28px;
     border: 1px solid rgba(255, 255, 255, 0.14);
@@ -104,8 +161,22 @@
 }
 
 @media (max-width: 640px) {
+    .cv-login-screen-note {
+        top: 14px;
+        right: 50%;
+        width: 116px;
+        transform: translateX(50%);
+    }
+
     .cv-login-card {
+        margin-top: 88px;
         padding: 24px 18px;
         border-radius: 18px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .cv-login-screen-note-svg {
+        animation: none;
     }
 }

@@ -6,9 +6,23 @@
     align-items: center;
     justify-content: center;
     background:#9b9b9b;
-    color: #f4efe8;
+    color: rgb(27, 238, 7);
     overflow: hidden;
     perspective : 1200px;
+}
+
+.index-loading-counter {
+    position: absolute;
+    left: clamp(18px, 3vw, 34px);
+    top: clamp(18px, 3vw, 34px);
+    margin: 0;
+    pointer-events: none;
+    font-family: "Oswald", sans-serif;
+    font-size: clamp(0.3rem, 4vw, 7rem);
+    font-weight: 700;
+    line-height: 0.9;
+    color: rgb(27, 238, 7);
+    text-transform: uppercase;
 }
 
 .loading-text {
@@ -39,6 +53,12 @@
 @media (max-width: 700px) {
     .index-loading-section {
         padding: 8vw 6vw;
+    }
+
+    .index-loading-counter {
+        left: 6vw;
+        bottom: 6vw;
+        font-size: clamp(2rem, 16vw, 4.8rem);
     }
 
     .loading-text {
